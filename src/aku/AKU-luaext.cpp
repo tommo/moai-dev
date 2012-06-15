@@ -10,11 +10,19 @@ extern "C" {
 	extern int luaopen_luacurl			( lua_State *L );
 	extern int luaopen_luasql_sqlite3	( lua_State *L );
 	extern int luapreload_fullluasocket ( lua_State *L );
+  	extern int luaopen_lpeg ( lua_State *L );
 }
 
 //================================================================//
 // AKU-luaext
 //================================================================//
+
+//----------------------------------------------------------------//
+void AKUExtLoadLPeg () {
+    
+	lua_State* state = AKUGetLuaState ();
+	luaopen_lpeg ( state );
+}
 
 //----------------------------------------------------------------//
 void AKUExtLoadLuacrypto () {
