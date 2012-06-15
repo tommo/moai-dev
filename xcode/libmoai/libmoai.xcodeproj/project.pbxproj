@@ -1083,6 +1083,10 @@
 		03B2EC1713C503B400F8B3CF /* MOAIMotionSensor.h in Headers */ = {isa = PBXBuildFile; fileRef = 03B2EC1313C503B400F8B3CF /* MOAIMotionSensor.h */; };
 		03E4E94113664F7C008D079B /* MOAIParticle.h in Headers */ = {isa = PBXBuildFile; fileRef = 03E4E94013664F7C008D079B /* MOAIParticle.h */; };
 		03E4E94213664F7C008D079B /* MOAIParticle.h in Headers */ = {isa = PBXBuildFile; fileRef = 03E4E94013664F7C008D079B /* MOAIParticle.h */; };
+		044C5ECD158AE88A0083D18E /* lpeg.c in Sources */ = {isa = PBXBuildFile; fileRef = 044C5EC7158AE88A0083D18E /* lpeg.c */; };
+		044C5ECE158AE88A0083D18E /* lpeg.c in Sources */ = {isa = PBXBuildFile; fileRef = 044C5EC7158AE88A0083D18E /* lpeg.c */; };
+		044C5ECF158AE88A0083D18E /* lpeg.h in Headers */ = {isa = PBXBuildFile; fileRef = 044C5EC8158AE88A0083D18E /* lpeg.h */; };
+		044C5ED0158AE88A0083D18E /* lpeg.h in Headers */ = {isa = PBXBuildFile; fileRef = 044C5EC8158AE88A0083D18E /* lpeg.h */; };
 		071398D214F46C5A00745A12 /* AdColonyPublic.h in Headers */ = {isa = PBXBuildFile; fileRef = 0725E2EC14F45AE200551DB5 /* AdColonyPublic.h */; };
 		075110E9149AD7C3006C0B61 /* MOAIGridPathGraph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 075110E1149AD7C3006C0B61 /* MOAIGridPathGraph.cpp */; };
 		075110EA149AD7C3006C0B61 /* MOAIGridPathGraph.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 075110E1149AD7C3006C0B61 /* MOAIGridPathGraph.cpp */; };
@@ -3893,6 +3897,14 @@
 		03B2EC1313C503B400F8B3CF /* MOAIMotionSensor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIMotionSensor.h; sourceTree = "<group>"; };
 		03C2F6F4104DE130009A2D5D /* libmoai-ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		03E4E94013664F7C008D079B /* MOAIParticle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIParticle.h; sourceTree = "<group>"; };
+		044C5EC5158AE88A0083D18E /* HISTORY */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = HISTORY; sourceTree = "<group>"; };
+		044C5EC6158AE88A0083D18E /* lpeg-128.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "lpeg-128.gif"; sourceTree = "<group>"; };
+		044C5EC7158AE88A0083D18E /* lpeg.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lpeg.c; sourceTree = "<group>"; };
+		044C5EC8158AE88A0083D18E /* lpeg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lpeg.h; sourceTree = "<group>"; };
+		044C5EC9158AE88A0083D18E /* lpeg.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = lpeg.html; sourceTree = "<group>"; };
+		044C5ECA158AE88A0083D18E /* re.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = re.html; sourceTree = "<group>"; };
+		044C5ECB158AE88A0083D18E /* re.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = re.lua; sourceTree = "<group>"; };
+		044C5ECC158AE88A0083D18E /* test.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test.lua; sourceTree = "<group>"; };
 		0705D8C014F46A6D009537C3 /* libmoai-ios-adcolony.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-adcolony.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		071106EE13C6353400EE7C53 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		071398D414F46E9E00745A12 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.0.sdk/System/Library/Frameworks/CoreTelephony.framework; sourceTree = DEVELOPER_DIR; };
@@ -5790,6 +5802,7 @@
 		032409EE13564CAF000ADC60 /* 3rd party */ = {
 			isa = PBXGroup;
 			children = (
+				044C5EC4158AE88A0083D18E /* lpeg-0.10.2 */,
 				66A643AD15462EBF009796A3 /* c-ares-1.7.5 */,
 				0725E2EB14F45AC700551DB5 /* adcolony */,
 				032409EF13564CAF000ADC60 /* box2d */,
@@ -6491,6 +6504,22 @@
 				CDDD30A51574AE0F00C410A0 /* liblibmoai-osx-fmod-designer.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		044C5EC4158AE88A0083D18E /* lpeg-0.10.2 */ = {
+			isa = PBXGroup;
+			children = (
+				044C5EC5158AE88A0083D18E /* HISTORY */,
+				044C5EC6158AE88A0083D18E /* lpeg-128.gif */,
+				044C5EC7158AE88A0083D18E /* lpeg.c */,
+				044C5EC8158AE88A0083D18E /* lpeg.h */,
+				044C5EC9158AE88A0083D18E /* lpeg.html */,
+				044C5ECA158AE88A0083D18E /* re.html */,
+				044C5ECB158AE88A0083D18E /* re.lua */,
+				044C5ECC158AE88A0083D18E /* test.lua */,
+			);
+			name = "lpeg-0.10.2";
+			path = "../../3rdparty/lpeg-0.10.2";
 			sourceTree = "<group>";
 		};
 		0725E2EB14F45AC700551DB5 /* adcolony */ = {
@@ -11047,6 +11076,7 @@
 				CDD06E551398B5A500AB0420 /* AKU-luaext.h in Headers */,
 				E9940D6A14B7A217006465CC /* lfs.h in Headers */,
 				E9940D7014B7A414006465CC /* MOAICoroutine.h in Headers */,
+				044C5ECF158AE88A0083D18E /* lpeg.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11073,6 +11103,7 @@
 				CDD06E571398B5A500AB0420 /* AKU-luaext.h in Headers */,
 				E9940D6B14B7A217006465CC /* lfs.h in Headers */,
 				E9940D7114B7A414006465CC /* MOAICoroutine.h in Headers */,
+				044C5ED0158AE88A0083D18E /* lpeg.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13519,6 +13550,7 @@
 				CDD06E541398B5A500AB0420 /* AKU-luaext.cpp in Sources */,
 				E9940D6814B7A217006465CC /* lfs.c in Sources */,
 				E9940D6E14B7A414006465CC /* MOAICoroutine.cpp in Sources */,
+				044C5ECD158AE88A0083D18E /* lpeg.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13544,6 +13576,7 @@
 				CDD06E561398B5A500AB0420 /* AKU-luaext.cpp in Sources */,
 				E9940D6914B7A217006465CC /* lfs.c in Sources */,
 				E9940D6F14B7A414006465CC /* MOAICoroutine.cpp in Sources */,
+				044C5ECE158AE88A0083D18E /* lpeg.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
