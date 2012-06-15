@@ -715,7 +715,7 @@
 		07E6C6A0140C5EBD004D1227 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		07EF3E43147BAAA5006CFDCE /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		1D6058910D05DD3D006BFB54 /* moai.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = moai.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D6058910D05DD3D006BFB54 /* Lost Spell.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Lost Spell.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		32CA4F630368D1EE00C91783 /* MoaiSample_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoaiSample_Prefix.pch; sourceTree = "<group>"; };
@@ -972,7 +972,7 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1D6058910D05DD3D006BFB54 /* moai.app */,
+				1D6058910D05DD3D006BFB54 /* Lost Spell.app */,
 				CD508AA2155E3AF90002FC3B /* moai-fmod-ex.app */,
 				CDDD307E1574AC7300C410A0 /* moai-fmod-designer.app */,
 			);
@@ -1160,9 +1160,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		1D6058900D05DD3D006BFB54 /* moai */ = {
+		1D6058900D05DD3D006BFB54 /* lost-spell */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "moai" */;
+			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "lost-spell" */;
 			buildPhases = (
 				03E27D9413C7C05B00EE3B0D /* ShellScript */,
 				1D60588D0D05DD3D006BFB54 /* Resources */,
@@ -1180,9 +1180,9 @@
 				07E9F73D13B50574006396F3 /* PBXTargetDependency */,
 				E9AA1CC414D8C4750086E9DE /* PBXTargetDependency */,
 			);
-			name = moai;
+			name = "lost-spell";
 			productName = MoaiSample;
-			productReference = 1D6058910D05DD3D006BFB54 /* moai.app */;
+			productReference = 1D6058910D05DD3D006BFB54 /* Lost Spell.app */;
 			productType = "com.apple.product-type.application";
 		};
 		CD508A07155E3AF90002FC3B /* moai-fmod-ex */ = {
@@ -1263,7 +1263,7 @@
 			);
 			projectRoot = "";
 			targets = (
-				1D6058900D05DD3D006BFB54 /* moai */,
+				1D6058900D05DD3D006BFB54 /* lost-spell */,
 				CDDD2FE51574AC7300C410A0 /* moai-fmod-designer */,
 				CD508A07155E3AF90002FC3B /* moai-fmod-ex */,
 			);
@@ -1929,7 +1929,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PREPROCESSOR_DEFINITIONS = USE_UNTZ;
-				PRODUCT_NAME = moai;
+				PRODUCT_NAME = "Lost Spell";
 			};
 			name = Debug;
 		};
@@ -1937,7 +1937,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PREPROCESSOR_DEFINITIONS = USE_UNTZ;
-				PRODUCT_NAME = moai;
+				PRODUCT_NAME = "Lost Spell";
 			};
 			name = Release;
 		};
@@ -2068,7 +2068,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "moai" */ = {
+		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "lost-spell" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1D6058940D05DD3E006BFB54 /* Debug */,
