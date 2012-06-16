@@ -48,17 +48,17 @@
                 "Supported Device Orientations"
          */
         
-        //if (( interfaceOrientation == UIInterfaceOrientationLandscapeLeft ) || ( interfaceOrientation == UIInterfaceOrientationLandscapeRight )) {
-        //    return true;
-        //}
+        if (( interfaceOrientation == UIInterfaceOrientationLandscapeLeft ) || ( interfaceOrientation == UIInterfaceOrientationLandscapeRight )) {
+            return false;
+        }
         
-        //return false;
+        return true; //only allow potrait mode
         
         /*
             The following is used to support all view orientations.
          */
         
-        return true;
+//        return true;
 	}
 	
 	//----------------------------------------------------------------//
