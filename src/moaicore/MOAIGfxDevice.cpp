@@ -1570,8 +1570,9 @@ void MOAIGfxDevice::SetViewport ( USRect rect ) {
 	
 	GLsizei w = ( GLsizei )( deviceRect.Width () + 0.5f );
 	GLsizei h = ( GLsizei )( deviceRect.Height () + 0.5f );
-	
+	// MOAIPrint("Viewport: %d,%d,%d,%d\n",x,y,w,h);
 	glViewport ( x, y, w, h );
+	// glViewport ( 100,00,200,200 );
 	this->mViewRect = rect;
 }
 
@@ -1790,10 +1791,10 @@ USRect MOAIGfxDevice::WndRectToDevice ( USRect rect ) const {
 	
 		float width = ( float )this->mWidth;
 		
-		float xMin = rect.mYMin;
-		float yMin = width - rect.mXMax;
-		float xMax = rect.mYMax;
-		float yMax = width - rect.mXMin;
+		float xMin = rect.mXMin;
+		float yMin = width - rect.mYMax;
+		float xMax = rect.mXMax;
+		float yMax = width - rect.mYMin;
 		
 		rect.mXMin = xMin;
 		rect.mYMin = yMin;
@@ -1814,6 +1815,28 @@ USRect MOAIGfxDevice::WndRectToDevice ( USRect rect ) const {
 		rect.mXMax = xMax;
 		rect.mYMax = yMax;
 	}
+
+	rect.Scale ( this->mDeviceScale, this->mDeviceScale );
+	return rect;
+}
+
+//----------------------------------------------------------------//
+USRect MOAIGfxDevice::WndRectToDeviceNoRotate ( USRect rect ) const {
+
+	rect.Bless ();
+
+	float height = ( float )this->mHeight;
+	
+	float xMin = rect.mXMin;
+	float yMin = height - rect.mYMax;
+	float xMax = rect.mXMax;
+	float yMax = height - rect.mYMin;
+	
+	rect.mXMin = xMin;
+	rect.mYMin = yMin;
+	rect.mXMax = xMax;
+	rect.mYMax = yMax;
+
 
 	rect.Scale ( this->mDeviceScale, this->mDeviceScale );
 	return rect;

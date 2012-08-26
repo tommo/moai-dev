@@ -46,6 +46,8 @@
 		[ application setStatusBarHidden:true ];
 		
 		mMoaiView = [[ MoaiView alloc ] initWithFrame:[ UIScreen mainScreen ].bounds ];
+        
+
 		[ mMoaiView setUserInteractionEnabled:YES ];
 		[ mMoaiView setMultipleTouchEnabled:YES ];
 		[ mMoaiView setOpaque:YES ];
@@ -69,8 +71,18 @@
 		NSString* luaFolder = [[[ NSBundle mainBundle ] resourcePath ] stringByAppendingString:@"/lua" ];
 		AKUSetWorkingDirectory ([ luaFolder UTF8String ]);
 		
+		UIInterfaceOrientation orientation= [[UIApplication sharedApplication] statusBarOrientation];
+//		[mMoaiVC updateOrientation:orientation];
+        if((orientation == UIInterfaceOrientationLandscapeLeft ) || ( orientation == UIInterfaceOrientationLandscapeRight)){
+            AKUSetOrientation ( AKU_ORIENTATION_LANDSCAPE );
+			NSLog(@"Landscape");
+        }else{
+            AKUSetOrientation ( AKU_ORIENTATION_PORTRAIT );
+			NSLog(@"Portrait");
+        }
+
 		// run scripts
-		[ mMoaiView run:@"main.lua" ];
+		[ mMoaiView run:@"main.l2" ];
 		
         // check to see if the app was lanuched from a remote notification
         NSDictionary* pushBundle = [ launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey ];
@@ -105,15 +117,17 @@
 	
 	//----------------------------------------------------------------//
 	-( void ) applicationDidEnterBackground:( UIApplication* )application {
+        AKUAppWillEndSession();
 	}
 	
 	//----------------------------------------------------------------//
 	-( void ) applicationWillEnterForeground:( UIApplication* )application {
+        AKUAppDidStartSession(true);
 	}
 	
 	//----------------------------------------------------------------//
 	-( void ) applicationWillResignActive:( UIApplication* )application {
-	
+        
 		// pause moai view
 		[ mMoaiView pause:YES ];
 	}

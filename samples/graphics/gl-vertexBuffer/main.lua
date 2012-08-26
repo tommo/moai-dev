@@ -1,3 +1,44 @@
+local tmpvbo=MOAIVertexBuffer.new()
+local writeFloat=tmpvbo.writeFloat
+local writeColor32=tmpvbo.writeColor32
+local bless=tmpvbo.bless
+local setFormat=tmpvbo.setFormat
+local reserveVerts=tmpvbo.reserveVerts
+local newVBO=MOAIVertexBuffer.new
+local defaultVertexFormat = MOAIVertexFormat.new ()
+
+-- Moai's default shaders expect loc, uv, color
+defaultVertexFormat:declareCoord ( 1, MOAIVertexFormat.GL_FLOAT, 2 )
+defaultVertexFormat:declareUV ( 2, MOAIVertexFormat.GL_FLOAT, 2 )
+defaultVertexFormat:declareColor ( 3, MOAIVertexFormat.GL_UNSIGNED_BYTE )
+local function loadVBO(data)
+	
+	local r,g,b,a
+	if data.color then 
+		r,g,b,a=unpack(data.color)
+		r,g,b,a=r or 1,g or 1,b or 1,a or 1
+	else
+		r,g,b,a=1,1,1,1
+	end
+	local size=#data
+	local vbo=newVBO()
+
+	setFormat(vbo,defaultVertexFormat)
+	reserveVerts(vbo,size)
+	for  i=1,size do
+		local v=data[i]
+		writeFloat(vbo,v[1],v[2])
+		writeFloat(vbo,v[3],v[4])
+		if v[5] then
+			writeColor32(vbo,v[5],v[6],v[7],v[8])
+		else
+			writeColor32(vbo,r,g,b,a)
+		end
+	end
+	bless(vbo)
+	return vbo
+end
+
 ----------------------------------------------------------------
 -- Copyright (c) 2010-2011 Zipline Games, Inc. 
 -- All Rights Reserved. 
@@ -21,59 +62,69 @@ vertexFormat:declareCoord ( 1, MOAIVertexFormat.GL_FLOAT, 2 )
 vertexFormat:declareUV ( 2, MOAIVertexFormat.GL_FLOAT, 2 )
 vertexFormat:declareColor ( 3, MOAIVertexFormat.GL_UNSIGNED_BYTE )
 
-vbo = MOAIVertexBuffer.new ()
-vbo:setFormat ( vertexFormat )
-vbo:reserveVerts ( 4 )
+-- vbo = MOAIVertexBuffer.new ()
+-- vbo:setFormat ( vertexFormat )
+-- vbo:reserveVerts ( 4 )
 
-vbo:writeFloat ( -64, -64 )
-vbo:writeFloat ( 0, 1 )
-vbo:writeColor32 ( 1, 0, 0 )
+-- vbo:writeFloat ( -64, -64 )
+-- vbo:writeFloat ( 0, 1 )
+-- vbo:writeColor32 ( 1, 0, 0 )
 
-vbo:writeFloat ( 64, -64 )
-vbo:writeFloat ( 1, 1 )
-vbo:writeColor32 ( 1, 1, 0 )
+-- vbo:writeFloat ( 64, -64 )
+-- vbo:writeFloat ( 1, 1 )
+-- vbo:writeColor32 ( 1, 1, 0 )
 
-vbo:writeFloat ( 64, 64 )
-vbo:writeFloat ( 1, 0 )
-vbo:writeColor32 ( 0, 1, 0 )
+-- vbo:writeFloat ( 64, 64 )
+-- vbo:writeFloat ( 1, 0 )
+-- vbo:writeColor32 ( 0, 1, 0 )
 
-vbo:writeFloat ( -64, 64 )
-vbo:writeFloat ( 0, 0 )
-vbo:writeColor32 ( 0, 0, 1 )
+-- vbo:writeFloat ( -64, 64 )
+-- vbo:writeFloat ( 0, 0 )
+-- vbo:writeColor32 ( 0, 0, 1 )
 
-vbo:bless ()
+-- vbo:bless ()
+
+vbo=loadVBO{
+	color={1,0,0,.1},
+
+	{-24,-64,  0,1,  0,1,1,.02},
+	{64,-64,  1,1},
+	{64,64,  1,0},
+	{-64,64,  0,0},
+}
 
 mesh = MOAIMesh.new ()
 mesh:setTexture ( "moai.png" )
 mesh:setVertexBuffer ( vbo )
 mesh:setPrimType ( MOAIMesh.GL_TRIANGLE_FAN )
 
-if MOAIGfxDevice.isProgrammable () then
+-- if MOAIGfxDevice.isProgrammable () then
 
-	file = assert ( io.open ( 'shader.vsh', mode ))
-	vsh = file:read ( '*all' )
-	file:close ()
+-- 	file = assert ( io.open ( 'shader.vsh', mode ))
+-- 	vsh = file:read ( '*all' )
+-- 	file:close ()
 
-	file = assert ( io.open ( 'shader.fsh', mode ))
-	fsh = file:read ( '*all' )
-	file:close ()
+-- 	file = assert ( io.open ( 'shader.fsh', mode ))
+-- 	fsh = file:read ( '*all' )
+-- 	file:close ()
 
-	shader = MOAIShader.new ()
+-- 	shader = MOAIShader.new ()
 
-	shader:reserveUniforms ( 1 )
-	shader:declareUniform ( 1, 'transform', MOAIShader.UNIFORM_WORLD_VIEW_PROJ )
+-- 	shader:reserveUniforms ( 1 )
+-- 	shader:declareUniform ( 1, 'transform', MOAIShader.UNIFORM_WORLD_VIEW_PROJ )
 	
-	shader:setVertexAttribute ( 1, 'position' )
-	shader:setVertexAttribute ( 2, 'uv' )
-	shader:setVertexAttribute ( 3, 'color' )
+-- 	shader:setVertexAttribute ( 1, 'position' )
+-- 	shader:setVertexAttribute ( 2, 'uv' )
+-- 	shader:setVertexAttribute ( 3, 'color' )
 
-	shader:load ( vsh, fsh )
+-- 	shader:load ( vsh, fsh )
 	
-	mesh:setShader ( shader )
+-- 	mesh:setShader ( shader )
+-- end
+for i=1, 10 do
+	prop = MOAIProp2D.new ()
+	prop:setDeck ( mesh )
+	prop:setBlendMode(MOAIProp2D.BLEND_ADD)
+	prop:moveRot ( 360, i*0.1 )
+	layer:insertProp ( prop )
 end
-
-prop = MOAIProp2D.new ()
-prop:setDeck ( mesh )
-prop:moveRot ( 360, 1.5 )
-layer:insertProp ( prop )
-

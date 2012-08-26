@@ -59,9 +59,33 @@ function removeFile {
 	fi
 }
 
+function compileLJ {
+	
+	for f in $1/* ; do
+
+		if [ ${f##*.} = 'lua' ] ; then
+			output=${f%.*}.l2
+			echo compiling $f "->" $output 
+
+			if [ -f $output ]; then 
+				rm -f $output
+			fi
+			luajit -b -g $f $output
+			rm -f $f
+		fi
+
+		if [ -d $f ] ; then
+			compileLJ $f
+		fi
+	done
+}
+
 removeFile $target_dir/run.bat
 removeFile $target_dir/run.sh
 removeFile $target_dir/$target_file-ext
 
 # mark contents of target folder as read-only
+rm -rf $target_dir/data/sfx-wav
+rm -rf $target_dir/data/music-ogg
+compileLJ $target_dir
 chmod -R 555 $target_dir

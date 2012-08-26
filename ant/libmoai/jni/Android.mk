@@ -89,7 +89,8 @@
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/jansson-2.1/src
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/jpeg-8c
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/lpng140
-	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/lua-5.1.3/src
+	#MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/lua-5.1.3/src
+	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/lua-5.1.3/android
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/luacrypto-0.2.0/src
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/luacurl-1.2.1
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/luafilesystem-1.5.0/src
@@ -102,6 +103,7 @@
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/tinyxml
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/tlsf-2.0
 	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/3rdparty/zlib-1.2.3
+	MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/3rdparty/lpeg-0.10.2
 
 	ifeq ($(USE_FMOD),true)
 		MY_HEADER_SEARCH_PATHS += $(MY_MOAI_ROOT)/src/moaiext-fmod-ex
@@ -154,12 +156,14 @@
 	LOCAL_STATIC_LIBRARIES += libfreetype
 	LOCAL_STATIC_LIBRARIES += libjpg
 	LOCAL_STATIC_LIBRARIES += libjson
-	LOCAL_STATIC_LIBRARIES += liblua
+	#LOCAL_STATIC_LIBRARIES += liblua
+	LOCAL_STATIC_LIBRARIES += libluajit
 	LOCAL_STATIC_LIBRARIES += libpng
 	LOCAL_STATIC_LIBRARIES += libsqlite
 	LOCAL_STATIC_LIBRARIES += libssl
 	LOCAL_STATIC_LIBRARIES += libtinyxml
 	LOCAL_STATIC_LIBRARIES += libzlcore
+	LOCAL_STATIC_LIBRARIES += liblpeg
 
 	include $(BUILD_SHARED_LIBRARY)
 
@@ -176,7 +180,8 @@
 	include freetype/Android.mk
 	include jpg/Android.mk
 	include json/Android.mk
-	include lua/Android.mk
+	#include lua/Android.mk
+	include luajit/Android.mk
 	include moaiext-android/Android.mk
 	include moaiext-luaext/Android.mk
 	
@@ -195,7 +200,9 @@
 	include ssl/Android.mk
 	include tinyxml/Android.mk
 	include zlcore/Android.mk
+	include lpeg/Android.mk
 
 	include aku/Android.mk
 	include moaicore/Android.mk
 	include uslscore/Android.mk
+

@@ -47,12 +47,11 @@
             To complete this feature, you must specify the correct Landscapes as the only supported orientations in your plist under the setting,
                 "Supported Device Orientations"
          */
-        
-        if (( interfaceOrientation == UIInterfaceOrientationLandscapeLeft ) || ( interfaceOrientation == UIInterfaceOrientationLandscapeRight )) {
-            return false;
-        }
-        
-        return true; //only allow potrait mode
+//        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad){
+//            return ( interfaceOrientation == UIInterfaceOrientationLandscapeLeft ) || ( interfaceOrientation == UIInterfaceOrientationLandscapeRight );  	          
+//    	  }else{
+              return ( interfaceOrientation == UIInterfaceOrientationPortrait) || ( interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown );
+//    	  }
         
         /*
             The following is used to support all view orientations.
@@ -69,14 +68,16 @@
 		if (( orientation == UIInterfaceOrientationPortrait ) || ( orientation == UIInterfaceOrientationPortraitUpsideDown )) {
             
             if ([ view akuInitialized ] != 0 ) {
+				NSLog(@"Turning Portrait");
                 AKUSetOrientation ( AKU_ORIENTATION_PORTRAIT );
                 AKUSetViewSize (( int )view.width, ( int )view.height );
             }
 		}
 		else if (( orientation == UIInterfaceOrientationLandscapeLeft ) || ( orientation == UIInterfaceOrientationLandscapeRight )) {
             if ([ view akuInitialized ] != 0 ) {
+				NSLog(@"Turning Landscape");
                 AKUSetOrientation ( AKU_ORIENTATION_LANDSCAPE );
-                AKUSetViewSize (( int )view.height, ( int )view.width);
+                AKUSetViewSize (( int )view.width, ( int )view.height);
             }
 		}
 	}

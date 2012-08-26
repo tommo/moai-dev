@@ -185,6 +185,7 @@ private:
 	void					UpdateGpuVertexMtx		();
 	void					UpdateUVMtx				();
 	USRect					WndRectToDevice			( USRect rect ) const;
+	USRect					WndRectToDeviceNoRotate			( USRect rect ) const;
 	
 public:
 	

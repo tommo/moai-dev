@@ -52,6 +52,7 @@ private:
 	//----------------------------------------------------------------//
 	static int		_getAge						( lua_State* L );
 	static int		_softRelease				( lua_State* L );
+	static int		_affirm						( lua_State* L );
 
 protected:
 

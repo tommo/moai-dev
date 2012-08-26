@@ -23,6 +23,8 @@
 	
 	AKUContextID					mAku;
 	NSTimeInterval					mAnimInterval;
+    float                           mRenderInterval;
+    float                           mRenderTime;
     RefPtr < CADisplayLink >		mDisplayLink;
 	RefPtr < LocationObserver >		mLocationObserver;
 }

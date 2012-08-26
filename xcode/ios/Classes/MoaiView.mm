@@ -168,10 +168,10 @@ namespace MoaiInputDeviceSensorID {
 		mAku = AKUCreateContext ();
 		AKUSetUserdata ( self );
 		
-		AKUExtLoadLuasql ();
-		AKUExtLoadLuacurl ();
+//		AKUExtLoadLuasql ();
+//		AKUExtLoadLuacurl ();
 		AKUExtLoadLuacrypto ();
-		AKUExtLoadLuasocket ();
+//		AKUExtLoadLuasocket ();
         AKUExtLoadLPeg ();
 		#ifdef USE_UNTZ
 			AKUUntzInit ();
@@ -205,20 +205,24 @@ namespace MoaiInputDeviceSensorID {
 		AKUSetDefaultFrameBuffer ( mFramebuffer );
 		AKUDetectGfxContext ();
 		
+        float FPS=60;
+        mRenderTime=0;
 		mAnimInterval = 1; // 1 for 60fps, 2 for 30fps
 		
-		mLocationObserver = [[[ LocationObserver alloc ] init ] autorelease ];
+        mRenderInterval=1;//FPS/60*mAnimInterval;
+        
+//		mLocationObserver = [[[ LocationObserver alloc ] init ] autorelease ];
 		
-		[ mLocationObserver setHeadingDelegate:self :@selector ( onUpdateHeading: )];
-		[ mLocationObserver setLocationDelegate:self :@selector ( onUpdateLocation: )];
+//		[ mLocationObserver setHeadingDelegate:self :@selector ( onUpdateHeading: )];
+//		[ mLocationObserver setLocationDelegate:self :@selector ( onUpdateLocation: )];
 		
-		UIAccelerometer* accel = [ UIAccelerometer sharedAccelerometer ];
-		accel.delegate = self;
-		accel.updateInterval = mAnimInterval / 60;
+//		UIAccelerometer* accel = [ UIAccelerometer sharedAccelerometer ];
+//		accel.delegate = self;
+//		accel.updateInterval = mAnimInterval / 60;
 		
 		// init aku
 		AKUIphoneInit ( application );
-		AKURunBytecode ( moai_lua, moai_lua_SIZE );
+//		AKURunBytecode ( moai_lua, moai_lua_SIZE );
 		
 		// add in the particle presets
 		ParticlePresets ();
@@ -230,10 +234,17 @@ namespace MoaiInputDeviceSensorID {
 		[ self openContext ];
 		AKUSetContext ( mAku );
 		AKUUpdate ();
-		[ self drawView ];
+        mRenderTime += mRenderInterval;
         
-        //sometimes the input handler will get 'locked out' by the render, this will allow it to run
-        [ self performSelector: @selector(dummyFunc) withObject:self afterDelay: 0 ];
+        if(mRenderTime>=1){
+            mRenderTime -= 1;
+            [ self drawView ];
+            
+            //sometimes the input handler will get 'locked out' by the render, this will allow it to run
+            [ self performSelector: @selector(dummyFunc) withObject:self afterDelay: 0 ];
+
+        }
+        
 	}
 	
 	//----------------------------------------------------------------//

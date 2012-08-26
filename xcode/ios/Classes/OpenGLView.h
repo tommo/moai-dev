@@ -37,5 +37,6 @@ class USTexture;
 	-( void )	drawView;
 	-( void )	endDrawing;
 	-( void )	openContext;
+    -( bool )   resizeBuffers;
 
 @end

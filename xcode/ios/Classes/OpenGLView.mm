@@ -58,7 +58,10 @@
 		glGenRenderbuffersOES ( 1, &mRenderbuffer );
 		glBindRenderbufferOES ( GL_RENDERBUFFER_OES, mRenderbuffer );
 		
-		[ mContext renderbufferStorage :GL_RENDERBUFFER_OES fromDrawable :(CAEAGLLayer*)self.layer ];
+		if(![ mContext renderbufferStorage :GL_RENDERBUFFER_OES fromDrawable :(CAEAGLLayer*)self.layer ]){
+            NSLog(@"renderBufferStorage unsucessful!");
+        }
+        
 		glGetRenderbufferParameterivOES ( GL_RENDERBUFFER_OES, GL_RENDERBUFFER_WIDTH_OES, &mWidth );
 		glGetRenderbufferParameterivOES ( GL_RENDERBUFFER_OES, GL_RENDERBUFFER_HEIGHT_OES, &mHeight );
 		
@@ -78,6 +81,32 @@
 
 		return true;
 	}
+
+    -( bool ) resizeBuffers{
+        
+        glBindRenderbufferOES ( GL_RENDERBUFFER_OES, mRenderbuffer );
+		
+		if(![ mContext renderbufferStorage :GL_RENDERBUFFER_OES fromDrawable :(CAEAGLLayer*)self.layer ]){
+            NSLog(@"renderBufferStorage unsucessful!");
+        }
+
+		glGetRenderbufferParameterivOES ( GL_RENDERBUFFER_OES, GL_RENDERBUFFER_WIDTH_OES, &mWidth );
+		glGetRenderbufferParameterivOES ( GL_RENDERBUFFER_OES, GL_RENDERBUFFER_HEIGHT_OES, &mHeight );
+		NSLog ( @"resizing %d, %d", mWidth, mHeight);
+        
+//		glFramebufferRenderbufferOES ( GL_FRAMEBUFFER_OES, GL_COLOR_ATTACHMENT0_OES, GL_RENDERBUFFER_OES, mRenderbuffer );
+			
+		if ( glCheckFramebufferStatusOES ( GL_FRAMEBUFFER_OES ) != GL_FRAMEBUFFER_COMPLETE_OES ) {
+			NSLog ( @"failed to make complete framebuffer object %x", glCheckFramebufferStatusOES ( GL_FRAMEBUFFER_OES ));
+			return false;
+		}
+        return true;
+    }
+
+    - (void) layoutSubviews
+    {
+        [self resizeBuffers];
+    }
 
 	//----------------------------------------------------------------//
 	-( void ) createContext {

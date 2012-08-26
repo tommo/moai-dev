@@ -71,6 +71,14 @@ int MOAIGfxResource::_softRelease ( lua_State* L ) {
 	return 1;
 }
 
+
+int MOAIGfxResource::_affirm ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGfxResource, "U" )
+	self->Affirm();
+	return 0;
+}
+
+
 //================================================================//
 // MOAIGfxResource
 //================================================================//
@@ -191,6 +199,7 @@ void MOAIGfxResource::RegisterLuaFuncs ( MOAILuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "getAge",					_getAge },
 		{ "softRelease",			_softRelease },
+		{ "affirm",			_affirm },
 		{ NULL, NULL }
 	};
 	luaL_register ( state, 0, regTable );
