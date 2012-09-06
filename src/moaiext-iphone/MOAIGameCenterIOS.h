@@ -32,13 +32,17 @@ private:
 	static int	_authenticatePlayer			( lua_State* L );
 	static int	_getPlayerAlias				( lua_State* L );
 	static int	_getScores					( lua_State* L );
+	static int	_getAchievements					( lua_State* L );
 	static int	_isSupported				( lua_State* L );
 	static int	_reportAchievementProgress	( lua_State* L );
 	static int	_reportScore				( lua_State* L );
 	static int	_setGetScoresCallback		( lua_State* L );
+	static int	_setAchievementReadyCallback		( lua_State* L );
+	static int	_setReportCompletionCallback		( lua_State* L );
 	static int	_showDefaultAchievements	( lua_State* L );
 	static int	_showDefaultLeaderboard		( lua_State* L );
-	
+	static int	_showLeaderboard		( lua_State* L );
+
 public:
 	
 	DECL_LUA_SINGLETON ( MOAIGameCenterIOS );
@@ -55,12 +59,20 @@ public:
 	};
 	
 	MOAILuaRef								mGetScoresCallback;
+	MOAILuaRef								mReportCompletionCallback;
+	MOAILuaRef								mAuthenticationCallback;
+	MOAILuaRef								mAchievementReadyCallback;
+
 	BOOL									mIsGameCenterSupported;
 	MOAIGameCenterIOSLeaderboardDelegate*	mLeaderboardDelegate;
 	MOAIGameCenterIOSAchievementDelegate*	mAchievementDelegate;
 	NSMutableDictionary*        			mAchievementsDictionary;
 	GKLocalPlayer*							mLocalPlayer;
 	
+	void			CallReportScoreCompletionCallback			( NSError* error );
+	void			CallReportAchievementCompletionCallback			( NSError* error );
+	void			CallAuthenticationCallback	(NSError* error);
+	void			CallAchievementReadyCallback	(NSError* error);
 	void			CallScoresCallback				( NSArray* scores );
 	void			CreateAchievementDictionary		( NSArray* achievements );
 	void			GetAchievements					();

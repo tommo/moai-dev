@@ -3,7 +3,7 @@
 echo $PWD
 
 target_file=moai-target
-target_dir=lua
+target_dir=content
 
 PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:$PATH
 
@@ -83,6 +83,11 @@ function compileLJ {
 removeFile $target_dir/run.bat
 removeFile $target_dir/run.sh
 removeFile $target_dir/$target_file-ext
+removeFile $target_dir/news
+removeFile $target_dir/profile
+removeFile $target_dir/run
+rm $target_dir/spell.sublime*
+
 
 # mark contents of target folder as read-only
 rm -rf $target_dir/data/sfx-wav

@@ -102,6 +102,10 @@ void AKUIphoneInit ( UIApplication* application ) {
 	#ifndef DISABLE_FACEBOOK
 		REGISTER_LUA_CLASS ( MOAIFacebookIOS )
 	#endif
+
+  #ifndef DISABLE_FLURRY
+    REGISTER_LUA_CLASS( MOAIFlurryIOS )
+  #endif
 	
 	// Device properties
 	MOAIEnvironment& environment = MOAIEnvironment::Get ();

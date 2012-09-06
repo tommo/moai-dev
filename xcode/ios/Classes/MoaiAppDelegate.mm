@@ -68,7 +68,7 @@
 		[ mMoaiView moaiInit:application ];
 		
 		// select product folder
-		NSString* luaFolder = [[[ NSBundle mainBundle ] resourcePath ] stringByAppendingString:@"/lua" ];
+		NSString* luaFolder = [[[ NSBundle mainBundle ] resourcePath ] stringByAppendingString:@"/content" ];
 		AKUSetWorkingDirectory ([ luaFolder UTF8String ]);
 		
 		UIInterfaceOrientation orientation= [[UIApplication sharedApplication] statusBarOrientation];

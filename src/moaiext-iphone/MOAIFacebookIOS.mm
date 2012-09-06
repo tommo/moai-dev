@@ -33,16 +33,16 @@ int MOAIFacebookIOS::_extendToken ( lua_State* L ) {
 int MOAIFacebookIOS::_getToken ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
-		
-	MOAIFacebookIOS::Get ().mToken = [[ MOAIFacebookIOS::Get ().mFacebook accessToken ] UTF8String ];
-	if ( !MOAIFacebookIOS::Get ().mToken.empty ()) {
-		
-		lua_pushstring ( L, MOAIFacebookIOS::Get ().mToken.c_str ());
-	} else {
-		
-		lua_pushnil ( L );
+	NSString* token=[ MOAIFacebookIOS::Get ().mFacebook accessToken ];
+
+	if(token!=nil){
+		MOAIFacebookIOS::Get ().mToken = [token UTF8String ];
+		if ( !MOAIFacebookIOS::Get ().mToken.empty ()) {
+			lua_pushstring ( L, MOAIFacebookIOS::Get ().mToken.c_str ());
+			return 1;
+		}
 	}
-	
+	lua_pushnil ( L );	
 	return 1;
 }
 

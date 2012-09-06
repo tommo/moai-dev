@@ -25,9 +25,11 @@
 		03CC911C13B3C49400B2724C /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC911B13B3C49400B2724C /* SystemConfiguration.framework */; };
 		03CC912213B3C4A400B2724C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC912113B3C4A400B2724C /* QuartzCore.framework */; };
 		03CC912C13B3C4C000B2724C /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC912B13B3C4C000B2724C /* StoreKit.framework */; };
+		0402C49215F8A691009386C5 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0402C49115F8A691009386C5 /* icon.png */; };
+		04398FD415E9F591004CF6EF /* libFlurry.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04398FD315E9F591004CF6EF /* libFlurry.a */; };
 		0482CC8515BCD9B900A45F75 /* libluajit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0482CC8415BCD9B900A45F75 /* libluajit.a */; };
+		049670F215F397C5008BA8D4 /* content in Resources */ = {isa = PBXBuildFile; fileRef = 049670F115F397C5008BA8D4 /* content */; };
 		0711070513C637F000EE7C53 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0711070413C637F000EE7C53 /* CoreTelephony.framework */; };
-		074C469E14240A180066B1EB /* lua in Resources */ = {isa = PBXBuildFile; fileRef = 074C469A14240A180066B1EB /* lua */; };
 		074C46A014240A250066B1EB /* moai-target in Resources */ = {isa = PBXBuildFile; fileRef = 074C469F14240A250066B1EB /* moai-target */; };
 		078D630113BA9EA30072F273 /* MoaiVC.mm in Sources */ = {isa = PBXBuildFile; fileRef = 078D630013BA9EA30072F273 /* MoaiVC.mm */; };
 		079530CE1447A0FF00143A72 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 079530CD1447A0FF00143A72 /* MediaPlayer.framework */; };
@@ -707,8 +709,11 @@
 		03CC911B13B3C49400B2724C /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		03CC912113B3C4A400B2724C /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		03CC912B13B3C4C000B2724C /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		0402C49115F8A691009386C5 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		04234B1815970DA000C00091 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		04398FD315E9F591004CF6EF /* libFlurry.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libFlurry.a; path = ../../3rdparty/FlurryiOS/libFlurry.a; sourceTree = "<group>"; };
 		0482CC8415BCD9B900A45F75 /* libluajit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libluajit.a; path = "../../3rdparty/lua-5.1.3/iOS/libluajit.a"; sourceTree = "<group>"; };
+		049670F115F397C5008BA8D4 /* content */ = {isa = PBXFileReference; lastKnownFileType = folder; path = content; sourceTree = "<group>"; };
 		04D2BB6A1596092100135822 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		04ECADFB15DF6A0A0037714D /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		04ECADFD15DF6A0F0037714D /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
@@ -856,6 +861,7 @@
 				07EF3E44147BAAA5006CFDCE /* Twitter.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				0482CC8515BCD9B900A45F75 /* libluajit.a in Frameworks */,
+				04398FD415E9F591004CF6EF /* libFlurry.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -990,6 +996,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				0402C49115F8A691009386C5 /* icon.png */,
 				04ECADFF15DF6A160037714D /* Default-Portrait~ipad.png */,
 				04ECADFD15DF6A0F0037714D /* Default@2x.png */,
 				04ECADFB15DF6A0A0037714D /* Default.png */,
@@ -1022,6 +1029,7 @@
 				E91A4CCD151921910008F1A5 /* Facebook */,
 				CDB607BA14527D39006EBFB5 /* Tapjoy */,
 				03CC90AA13B3C38800B2724C /* Entitlements.plist */,
+				049670F115F397C5008BA8D4 /* content */,
 				03CC904F13B3C1B700B2724C /* Icon-72.png */,
 				03CC905013B3C1B700B2724C /* Icon-Small-50.png */,
 				03CC905113B3C1B700B2724C /* Icon-Small.png */,
@@ -1037,6 +1045,7 @@
 			isa = PBXGroup;
 			children = (
 				0482CC8415BCD9B900A45F75 /* libluajit.a */,
+				04398FD315E9F591004CF6EF /* libFlurry.a */,
 				E92D48D1153CAE6F00CB1E8A /* libCrittercism_v3_1_5.a */,
 				6676D5D315100473004EA27A /* libfacebook_ios_sdk.a */,
 				03CC910B13B3C48400B2724C /* AudioToolbox.framework */,
@@ -1424,7 +1433,6 @@
 				03CC905B13B3C1B700B2724C /* Icon-Small@2x.png in Resources */,
 				03CC905C13B3C1B700B2724C /* Icon.png in Resources */,
 				03CC905D13B3C1B700B2724C /* Icon@2x.png in Resources */,
-				074C469E14240A180066B1EB /* lua in Resources */,
 				074C46A014240A250066B1EB /* moai-target in Resources */,
 				E9AA1FC714D9D2140086E9DE /* CrittercismAboutViewController.xib in Resources */,
 				E9AA1FC814D9D2140086E9DE /* CrittercismAddCommentViewController.xib in Resources */,
@@ -1519,6 +1527,8 @@
 				E92D48CD153CADD700CB1E8A /* crittercism-user-profile.png in Resources */,
 				E92D48CE153CADD700CB1E8A /* crittercism-user-profile@2x.png in Resources */,
 				E92D48CF153CADD700CB1E8A /* crittercism-votesLeftButton.png in Resources */,
+				049670F215F397C5008BA8D4 /* content in Resources */,
+				0402C49215F8A691009386C5 /* icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1942,10 +1952,17 @@
 		1D6058940D05DD3E006BFB54 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = (
+					armv6,
+					"$(ARCHS_STANDARD_32_BIT)",
+				);
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = USE_UNTZ;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../3rdparty/lua-5.1.3/iOS\"",
+					"\"$(SRCROOT)/../../3rdparty/FlurryiOS\"",
 				);
 				PRODUCT_NAME = "Lost Spell";
 			};
@@ -1954,12 +1971,22 @@
 		1D6058950D05DD3E006BFB54 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = (
+					armv6,
+					"$(ARCHS_STANDARD_32_BIT)",
+				);
+				DEPLOYMENT_POSTPROCESSING = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = USE_UNTZ;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../3rdparty/lua-5.1.3/iOS\"",
+					"\"$(SRCROOT)/../../3rdparty/FlurryiOS\"",
 				);
+				LLVM_LTO = NO;
 				PRODUCT_NAME = "Lost Spell";
+				STRIP_INSTALLED_PRODUCT = YES;
 			};
 			name = Release;
 		};
