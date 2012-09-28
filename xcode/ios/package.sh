@@ -92,5 +92,7 @@ rm $target_dir/spell.sublime*
 # mark contents of target folder as read-only
 rm -rf $target_dir/data/sfx-wav
 rm -rf $target_dir/data/music-ogg
+# rm -rf $target_dir/data/music-mp3
+rm -rf $target_dir/data/music-aifc
 compileLJ $target_dir
 chmod -R 555 $target_dir
