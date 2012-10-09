@@ -68,6 +68,8 @@ private:
 
 	u32					mHeuristic;
 	u32					mFlags;
+	bool				mInvertedGraph;
+	USIntRect			mBodyRect;
 
 	float				mGWeight;
 	float				mHWeight;
@@ -82,6 +84,8 @@ private:
 	static int			_setFlags					( lua_State* L );
 	static int			_setGraph					( lua_State* L );
 	static int			_setHeuristic				( lua_State* L );
+	static int			_setInvertedGraph			( lua_State* L );
+	static int			_setBodyRect				( lua_State* L );
 	static int			_setTerrainDeck				( lua_State* L );
 	static int			_setTerrainScale			( lua_State* L );
 	static int			_setWeight					( lua_State* L );
@@ -102,11 +106,13 @@ public:
 	GET ( u32, Mask, mMask );
 	GET ( u32, Heuristic, mHeuristic )
 	GET ( u32, Flags, mFlags )
+	GET ( bool, InvertedGraph, mInvertedGraph )
+	GET ( USIntRect, BodyRect, mBodyRect )
 	GET ( float, GWeight, mGWeight )
 	GET ( float, HWeight, mHWeight )
 	
 	//----------------------------------------------------------------//
-	bool		CheckMask				( u32 terrain );
+	bool		CheckMask				( u32 terrain, bool invert );
 	float		ComputeTerrainCost		( float moveCost, u32 terrain0, u32 terrain1 );
 	bool		FindPath				( int iterations );
 	bool		IsVisited				( int nodeID );

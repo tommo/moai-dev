@@ -20,6 +20,9 @@ public:
 	float mHWeight;
 	
 	u32 mHeuristic;
+
+	USIntRect mBodyRect;
+	bool mInvertedGraph;
 };
 
 //================================================================//
@@ -89,6 +92,42 @@ MOAIGridPathGraph::~MOAIGridPathGraph () {
 	this->SetGrid ( 0 );
 }
 
+bool MOAIGridPathGraph::ShapeOk(MOAIPathFinder& pathFinder, MOAIGridPathGraphParams& params, int xTile, int yTile)
+{
+	bool shapeOk = true;
+	u32 shapeTile;
+
+
+	//MOAIPrint("ShapeOk checking (%d, %d) (%d, %d, %d, %d)\n",\
+	//		xTile, yTile,
+	//		params.mBodyRect.mXMin, params.mBodyRect.mYMin,
+	//		params.mBodyRect.mXMax, params.mBodyRect.mYMax);
+
+	for(int x = params.mBodyRect.mXMin; x <=  params.mBodyRect.mXMax; x++)
+	{
+		for(int y =  params.mBodyRect.mYMin; y <=  params.mBodyRect.mYMax; y++)
+		{
+			int xShapeTile = xTile + x;
+			int yShapeTile = yTile + y;
+
+			MOAICellCoord shapeCoord = this->mGrid->GetCellCoord ( xShapeTile, yShapeTile );
+			if ( !this->mGrid->IsValidCoord ( shapeCoord ))
+				return false;
+
+			shapeTile = this->mGrid->GetTile ( xShapeTile, yShapeTile );
+
+			//MOAIPrint("		(%d, %d)=%d\n", xShapeTile, yShapeTile, shapeTile);
+
+			if ( !pathFinder.CheckMask ( shapeTile, params.mInvertedGraph ))
+				return false;
+		}
+	}
+
+	//MOAIPrint("		(%d, %d) is ok!\n", xTile, yTile);
+
+	return true;
+}
+
 //----------------------------------------------------------------//
 void MOAIGridPathGraph::PushNeighbor ( MOAIPathFinder& pathFinder, MOAIGridPathGraphParams& params, u32 tile0, int xTile, int yTile, float moveCost ) {
 
@@ -97,8 +136,8 @@ void MOAIGridPathGraph::PushNeighbor ( MOAIPathFinder& pathFinder, MOAIGridPathG
 	if ( this->mGrid->IsValidCoord ( coord )) {
 		
 		u32 tile1 = this->mGrid->GetTile ( xTile, yTile );
-		
-		if ( pathFinder.CheckMask ( tile1 )) {
+
+		if ( this->ShapeOk(pathFinder, params, xTile, yTile) ) {
 			
 			int neighborID = this->mGrid->GetCellAddr ( coord );
 			
@@ -129,6 +168,9 @@ void MOAIGridPathGraph::PushNeighbors ( MOAIPathFinder& pathFinder, int nodeID )
 	
 	params.mHeuristic = pathFinder.GetHeuristic ();
 	
+	params.mInvertedGraph = pathFinder.GetInvertedGraph ();
+	params.mBodyRect = pathFinder.GetBodyRect();
+
 	u32 flags = pathFinder.GetFlags ();
 	
 	MOAICellCoord coord = this->mGrid->GetCellCoord ( nodeID );

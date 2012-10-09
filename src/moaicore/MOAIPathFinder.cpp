@@ -194,6 +194,40 @@ int MOAIPathFinder::_setHeuristic ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setInvertedGraph
+	@text	Passing true as an argument will invert the interpretation of
+			grid cells when building the path
+
+	@in		MOAIPathFinder self
+	@opt	bool invert
+	@out	nil
+*/
+int MOAIPathFinder::_setInvertedGraph ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIPathFinder, "U" )
+
+	self->mInvertedGraph = state.GetValue < bool >( 2, false );
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	setBodyRect
+	@text	Sets the rect to use when pathfinding
+
+	@in		MOAIPathFinder self
+	@in		xMin, yMin, xMax, yMax
+	@out	nil
+*/
+int MOAIPathFinder::_setBodyRect ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIPathFinder, "UNNNN" )
+
+	self->mBodyRect = state.GetRect < int >(2);
+	self->mBodyRect.Bless();
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setTerrainDeck
 	@text	Set terrain deck to use with graph.
 
@@ -307,9 +341,13 @@ void MOAIPathFinder::CloseState ( MOAIPathState* stateToClose ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIPathFinder::CheckMask ( u32 terrain ) {
+bool MOAIPathFinder::CheckMask ( u32 terrain, bool invert) {
 
-	if ( !terrain || ( terrain & MOAITileFlags::HIDDEN )) return false;
+	if(!invert || this->mTerrainDeck) {
+		if ( !terrain || ( terrain & MOAITileFlags::HIDDEN )) return false;
+	} else {
+		if(invert && terrain) return false;
+	}
 
 	if ( this->mTerrainDeck ) {
 		return this->mMask & this->mTerrainDeck->GetMask ( terrain & MOAITileFlags::CODE_MASK ) ? true : false;
@@ -392,11 +430,14 @@ MOAIPathFinder::MOAIPathFinder () :
 	mState ( 0 ),
 	mMask ( 0xffffffff ),
 	mHeuristic ( 0 ),
+	mInvertedGraph( false),
 	mFlags ( 0 ),
 	mGWeight ( 1.0f ),
 	mHWeight ( 1.0f ) {
 	
 	RTTI_SINGLE ( MOAILuaObject )
+
+	this->mBodyRect.Init ( 0, 0, 0, 0 );
 }
 
 //----------------------------------------------------------------//
@@ -454,6 +495,8 @@ void MOAIPathFinder::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setFlags",					_setFlags },
 		{ "setGraph",					_setGraph },
 		{ "setHeuristic",				_setHeuristic },
+		{ "setInvertedGraph",			_setInvertedGraph},
+		{ "setBodyRect",				_setBodyRect},
 		{ "setTerrainDeck",				_setTerrainDeck },
 		{ "setTerrainScale",			_setTerrainScale },
 		{ "setWeight",					_setWeight },
