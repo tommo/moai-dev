@@ -35,7 +35,7 @@ private:
 
 	//----------------------------------------------------------------//
 	float			ComputeHeuristic			( MOAIGridPathGraphParams& params, const MOAICellCoord& c0, const MOAICellCoord& c1 );
-	void			PushNeighbor				( MOAIPathFinder& pathFinder, MOAIGridPathGraphParams& params, u32 tile0, int xTile, int yTile, float moveCost );
+	void			PushNeighbor				( MOAIPathFinder& pathFinder, MOAIGridPathGraphParams& params, u32 tile0, int xTile, int yTile, float moveCost, int parentNode, float pathCost );
 	void			PushNeighbors				( MOAIPathFinder& pathFinder, int nodeID );
 	bool			ShapeOk						( MOAIPathFinder& pathFinder, MOAIGridPathGraphParams& params, int xTile, int yTile);
 

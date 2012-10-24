@@ -290,14 +290,15 @@ int MOAIPathFinder::_setWeight ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIPathFinder::BuildPath ( MOAIPathState* state ) {
+void MOAIPathFinder::BuildPath ( int nodeID ) {
+	u32 size = 1;
+	int curNodeID;
 
-	u32 size = 0;
-	for ( MOAIPathState* cursor = state; cursor; cursor = cursor->mParent, ++size );
-	
+	for (  curNodeID = nodeID; curNodeID != this->mStartNodeID; curNodeID = this->mParentMap[curNodeID] , ++size );
+
 	this->mPath.Init ( size );
-	for ( MOAIPathState* cursor = state; cursor; cursor = cursor->mParent ) {
-		this->mPath [ --size ] = cursor->mNodeID;
+	for (  curNodeID = nodeID; size > 0; curNodeID = this->mParentMap[curNodeID] ) {
+		this->mPath [ --size ] = curNodeID;
 	}
 	
 	this->ClearVisitation ();
@@ -305,40 +306,26 @@ void MOAIPathFinder::BuildPath ( MOAIPathState* state ) {
 
 //----------------------------------------------------------------//
 void MOAIPathFinder::ClearVisitation () {
-
-	while ( this->mOpen ) {
-		MOAIPathState* state = this->mOpen;
-		this->mOpen = this->mOpen->mNext;
-		delete state;
-	}
-	
-	while ( this->mClosed ) {
-		MOAIPathState* state = this->mClosed;
-		this->mClosed = this->mClosed->mNext;
-		delete state;
-	}
+	this->mOpen.clear();
+	this->mClosed.clear();
+	this->mGScores.clear();
+	this->mFScores.clear();
+	this->mParentMap.clear();
 }
 
 //----------------------------------------------------------------//
-void MOAIPathFinder::CloseState ( MOAIPathState* stateToClose ) {
-	
-	MOAIPathState* cursor = this->mOpen;
-	this->mOpen = 0;
-	
-	while ( cursor ) {
-		MOAIPathState* state = cursor;
-		cursor = cursor->mNext;
-		
-		if ( state == stateToClose ) {
-			state->mNext = this->mClosed;
-			this->mClosed = state;
-		}
-		else {
-			state->mNext = this->mOpen;
-			this->mOpen = state;
-		}
+void MOAIPathFinder::MoveNodeToClosedSet ( int nodeID ) {
+	NodeSet::iterator openIt;
+
+	openIt = mOpen.find( nodeID );
+
+	if(openIt != mOpen.end()) {
+		mOpen.erase(openIt);
 	}
+
+	mClosed.insert( nodeID );
 }
+
 
 //----------------------------------------------------------------//
 bool MOAIPathFinder::CheckMask ( u32 terrain, bool invert) {
@@ -387,47 +374,63 @@ float MOAIPathFinder::ComputeTerrainCost ( float moveCost, u32 terrain0, u32 ter
 //----------------------------------------------------------------//
 bool MOAIPathFinder::FindPath ( int iterations ) {
 	
-	if ( !this->mState ) {
-		this->PushState ( this->mStartNodeID, 0.0f );
+	if ( !this->mStarted ) {
+		this->SetPathLengthToNode( this->mStartNodeID, 0.0f );
+		this->SetNodeScore( this->mStartNodeID, 0.0f );
+		this->AddNodeToOpenSet( this->mStartNodeID );
+		this->mStarted = true;
 	}
 	
 	bool noIterations = iterations <= 0;
 	
-	for ( ; this->mOpen && (( iterations > 0 ) || noIterations ); iterations-- ) {
+	for ( ; this->mOpen.size() && (( iterations > 0 ) || noIterations ); iterations-- ) {
 		
-		this->mState = this->NextState ();
-		this->CloseState ( this->mState );
+		this->mCurNode = this->GetLowestScoreOpenNode();
+
+		this->MoveNodeToClosedSet ( this->mCurNode );
 		
-		if ( this->mState->mNodeID == this->mTargetNodeID ) {
-			this->BuildPath ( this->mState );
+		if ( this->mCurNode == this->mTargetNodeID ) {
+			this->BuildPath ( this->mCurNode );
 			return false;
 		}
-		this->mGraph->PushNeighbors ( *this, this->mState->mNodeID );
+		this->mGraph->PushNeighbors ( *this, this->mCurNode );
 	}
-	return this->mOpen ? true : false;
+	return this->mOpen.size() ? true : false;
 }
 
 //----------------------------------------------------------------//
 bool MOAIPathFinder::IsVisited ( int nodeID ) {
+	return InOpenSet(nodeID) || InClosedSet(nodeID);
+}
 
-	for ( MOAIPathState* state = this->mOpen; state; state = state->mNext ) {
-		if ( state->mNodeID == nodeID ) return true;
+//----------------------------------------------------------------//
+bool MOAIPathFinder::InOpenSet( int nodeID ) {
+	return mOpen.find(nodeID) != mOpen.end();
+}
+
+//----------------------------------------------------------------//
+bool MOAIPathFinder::InClosedSet( int nodeID ) {
+	return mClosed.find(nodeID) != mClosed.end();
+}
+
+//----------------------------------------------------------------//
+float MOAIPathFinder::GetPathLengthToNode( int nodeID) {
+	if(this->mGScores.find(nodeID) == this->mGScores.end()) {
+		return FLT_MAX;
 	}
-	
-	for ( MOAIPathState* state = this->mClosed; state; state = state->mNext ) {
-		if ( state->mNodeID == nodeID ) return true;
-	}
-	
-	return false;
+	return this->mGScores[nodeID];
+}
+
+//----------------------------------------------------------------//
+void MOAIPathFinder::SetPathLengthToNode( int nodeID, float length ) {
+	this->mGScores[nodeID] = length;
 }
 
 //----------------------------------------------------------------//
 MOAIPathFinder::MOAIPathFinder () :
-	mOpen ( 0 ),
-	mClosed ( 0 ),
 	mStartNodeID ( 0 ),
 	mTargetNodeID ( 0 ),
-	mState ( 0 ),
+	mStarted ( false ),
 	mMask ( 0xffffffff ),
 	mHeuristic ( 0 ),
 	mInvertedGraph( false),
@@ -450,31 +453,37 @@ MOAIPathFinder::~MOAIPathFinder () {
 }
 
 //----------------------------------------------------------------//
-MOAIPathState* MOAIPathFinder::NextState () {
+int MOAIPathFinder::GetLowestScoreOpenNode() {
+	NodeSet::iterator it, best;
 
-	MOAIPathState* state = this->mOpen;
-	MOAIPathState* best = state;
-	state = state->mNext;
-
-	for ( ; state; state = state->mNext ) {
-		if ( state->mScore < best->mScore ) {
-			best = state;
+	for(it = mOpen.begin(), best = it; it != mOpen.end(); it++)
+	{
+		if(this->GetNodeScore(*it) < this->GetNodeScore(*best)) {
+			best = it;
 		}
 	}
-	return best;
+
+	return *best;
 }
 
-//----------------------------------------------------------------//
-void MOAIPathFinder::PushState ( int nodeID, float score ) {
-	
-	MOAIPathState* state = new MOAIPathState ();
-	state->mNodeID = nodeID;
-	state->mParent = this->mState;
+void MOAIPathFinder::AddNodeToOpenSet( int nodeID )
+{
+	this->mOpen.insert( nodeID );
+}
 
-	state->mNext = this->mOpen;
-	this->mOpen = state;
-	
-	state->mScore = score;
+void MOAIPathFinder::SetNodeScore( int nodeID, float score) {
+	this->mFScores[ nodeID ] = score;
+}
+
+float MOAIPathFinder::GetNodeScore( int nodeID ) {
+	if(this->mFScores.find(nodeID) == this->mFScores.end()) {
+			return FLT_MAX;
+		}
+		return this->mFScores[nodeID];
+}
+
+void MOAIPathFinder::SetNodeParent( int childNodeID, int parentNodeID ) {
+	this->mParentMap[childNodeID] = parentNodeID;
 }
 
 //----------------------------------------------------------------//
@@ -509,7 +518,7 @@ void MOAIPathFinder::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIPathFinder::Reset () {
 
-	this->mState = 0;
+	this->mStarted = false;
 	this->mPath.Clear ();
 
 	this->ClearVisitation ();

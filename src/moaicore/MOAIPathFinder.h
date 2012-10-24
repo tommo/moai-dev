@@ -5,6 +5,8 @@
 #define	MOAIPATHFINDER_H
 
 #include <moaicore/MOAILua.h>
+#include <set>
+using namespace std;
 
 class MOAIGrid;
 class MOAIPathGraph;
@@ -20,20 +22,9 @@ public:
 	float			mPenaltyScale;
 };
 
-//================================================================//
-// MOAIPathState
-//================================================================//
-class MOAIPathState {
-private:
-
-	friend class MOAIPathFinder;
-
-	int					mNodeID;
-	MOAIPathState*		mParent;
-	MOAIPathState*		mNext;
-	
-	float				mScore;
-};
+typedef STLMap < int, float > ScoreMap;
+typedef STLMap < int, int > ParentMap;
+typedef set < int > NodeSet;
 
 //================================================================//
 // MOAIPathFinder
@@ -56,13 +47,18 @@ private:
 	// TODO: optimize implementation with memory pool of path states
 	// and binary heap of open paths
 
-	MOAIPathState*		mOpen;
-	MOAIPathState*		mClosed;
+	bool				mStarted;
+	int					mCurNode;
+
+	NodeSet				mOpen;
+	NodeSet				mClosed;
 	
 	int					mStartNodeID;
 	int					mTargetNodeID;
 
-	MOAIPathState*		mState; // used while expanding open set
+	ScoreMap			mGScores;
+	ScoreMap			mFScores;
+	ParentMap			mParentMap;
 
 	u32					mMask;
 
@@ -91,10 +87,8 @@ private:
 	static int			_setWeight					( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void				BuildPath			( MOAIPathState* state );
+	void				BuildPath			( int nodeID );
 	void				ClearVisitation		();
-	void				CloseState			( MOAIPathState* stateToClose );
-	MOAIPathState*		NextState			();
 	void				Reset				();
 
 public:
@@ -116,9 +110,18 @@ public:
 	float		ComputeTerrainCost		( float moveCost, u32 terrain0, u32 terrain1 );
 	bool		FindPath				( int iterations );
 	bool		IsVisited				( int nodeID );
+	bool		InOpenSet				( int nodeID );
+	bool		InClosedSet				( int nodeID );
+	void		MoveNodeToClosedSet		( int nodeID );
+	void		SetPathLengthToNode		( int nodeID, float length );
+	float		GetPathLengthToNode		( int nodeID);
 				MOAIPathFinder			();
 				~MOAIPathFinder			();
-	void		PushState				( int nodeID, float score );
+	int			GetLowestScoreOpenNode	();
+	void		AddNodeToOpenSet		( int nodeID );
+	void		SetNodeScore			( int nodeID, float score);
+	float		GetNodeScore			( int nodeID );
+	void		SetNodeParent			( int childNodeID, int parentNodeID );
 	void		RegisterLuaClass		( MOAILuaState& state );
 	void		RegisterLuaFuncs		( MOAILuaState& state );
 };
