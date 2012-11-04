@@ -5,21 +5,23 @@
 ----------------------------------------------------------------
 
 -- build the font
-charcodes = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 .,:;!?()&/-'
-text = 'The quick brown fox jumps over the lazy dog.'
+-- charcodes = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 .,:;!?()&/-'
+-- charcodes=charcodes..'ビジネスソリューション打倒小猪静'
+charcodes='！度ペ长ルロ !\"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~在大到こ带程为主失模次欢链元锁义素の奇所游单子录よ全教そ学うへー式金ン条典譯潜来治兽チ初最传经イ获戏师エ统种里于合回量起崛分热上线咒完对ス黄球个力有一角徒独连殩语得。ト成的开落迎记首'
+text = 'よ全教そ学うへー'
 
 font = MOAIFont.new ()
-font:load ( 'times.ttf' )
-font:preloadGlyphs ( charcodes, 8 )
-font:preloadGlyphs ( charcodes, 12 )
-font:preloadGlyphs ( charcodes, 16 )
-font:preloadGlyphs ( charcodes, 24 )
+font:load ( 'TakaoPGothic.ttf' )
+-- font:preloadGlyphs ( charcodes, 8 )
+-- font:preloadGlyphs ( charcodes, 12 )
+-- font:preloadGlyphs ( charcodes, 16 )
+-- font:preloadGlyphs ( charcodes, 24 )
 font:preloadGlyphs ( charcodes, 32 )
-font:preloadGlyphs ( charcodes, 42 )
-font:preloadGlyphs ( charcodes, 56 )
-font:preloadGlyphs ( charcodes, 64 )
-font:preloadGlyphs ( charcodes, 72 )
-font:preloadGlyphs ( charcodes, 76 )
+-- font:preloadGlyphs ( charcodes, 42 )
+-- font:preloadGlyphs ( charcodes, 56 )
+-- font:preloadGlyphs ( charcodes, 64 )
+-- font:preloadGlyphs ( charcodes, 72 )
+-- font:preloadGlyphs ( charcodes, 76 )
 
 -- yank out the font image
 image = font:getImage ()
@@ -70,7 +72,7 @@ font:setImage ( image )
 textbox = MOAITextBox.new ()
 textbox:setString ( text )
 textbox:setFont ( font )
-textbox:setTextSize ( 24 )
+textbox:setTextSize ( 32 )
 textbox:setRect ( -150, -230, 150, 230 )
 textbox:setYFlip ( true )
 layer:insertProp ( textbox )

@@ -30,3 +30,8 @@ prop:moveRot ( 360, 3 )
 layer:insertProp ( prop )
 
 prop:setAttrLink ( MOAITransform.ATTR_X_SCL, root, MOAITransform.ATTR_WORLD_X_SCL )
+prop:setAttrLink ( MOAITransform.ATTR_Y_SCL, root, MOAITransform.ATTR_WORLD_Y_SCL )
+prop:setAttrLink ( MOAITransform.ATTR_Z_SCL, root, MOAITransform.ATTR_WORLD_Z_SCL )
+print(prop:getAttrLink(MOAITransform.ATTR_X_SCL))
+print(prop:clearAttrLink(MOAITransform.ATTR_X_SCL))
+print(prop:getAttrLink(MOAITransform.ATTR_X_SCL))

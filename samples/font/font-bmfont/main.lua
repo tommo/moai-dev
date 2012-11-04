@@ -19,10 +19,12 @@ layer:setViewport ( viewport )
 MOAISim.pushRenderPass ( layer )
 
 charcodes = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 .,:;!?()&/-'
-text = 'The quick brown fox jumps over the lazy dog.'
+text = 'ABCDEFG'
 
 font = MOAIFont.new ()
-font:loadFromBMFont ( 'CopperPlateGothic.fnt' )
+print('loading')
+font:loadFromBMFont ( 'ave.fnt' )
+print('font loaded')
 
 function newStyle ( font, size )
 	local style = MOAITextStyle.new ()
@@ -32,7 +34,7 @@ function newStyle ( font, size )
 end
 
 textbox = MOAITextBox.new ()
-textbox:setStyle ( newStyle ( font, 64 ))
+textbox:setStyle ( newStyle ( font, 40 ))
 
 textbox:setString ( text )
 textbox:spool ()

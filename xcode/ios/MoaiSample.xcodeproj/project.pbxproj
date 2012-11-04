@@ -26,9 +26,14 @@
 		03CC912213B3C4A400B2724C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC912113B3C4A400B2724C /* QuartzCore.framework */; };
 		03CC912C13B3C4C000B2724C /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC912B13B3C4C000B2724C /* StoreKit.framework */; };
 		0402C49215F8A691009386C5 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0402C49115F8A691009386C5 /* icon.png */; };
+		041E2E1F1626942D006F310F /* Default-Portrait@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 041E2E1E1626942D006F310F /* Default-Portrait@2x~ipad.png */; };
 		04398FD415E9F591004CF6EF /* libFlurry.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04398FD315E9F591004CF6EF /* libFlurry.a */; };
+		044E3BC6162943C400756E74 /* Icon-144.png in Resources */ = {isa = PBXBuildFile; fileRef = 044E3BC5162943C400756E74 /* Icon-144.png */; };
 		0482CC8515BCD9B900A45F75 /* libluajit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0482CC8415BCD9B900A45F75 /* libluajit.a */; };
 		049670F215F397C5008BA8D4 /* content in Resources */ = {isa = PBXBuildFile; fileRef = 049670F115F397C5008BA8D4 /* content */; };
+		049D461C162DC0F40006549C /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 04ECADFB15DF6A0A0037714D /* Default.png */; };
+		049D461D162DC10A0006549C /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 04D2BB6A1596092100135822 /* Default@2x.png */; };
+		04F865EF16258D9E0055A1F3 /* Default-Portrait~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 04ECADFF15DF6A160037714D /* Default-Portrait~ipad.png */; };
 		0711070513C637F000EE7C53 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0711070413C637F000EE7C53 /* CoreTelephony.framework */; };
 		074C46A014240A250066B1EB /* moai-target in Resources */ = {isa = PBXBuildFile; fileRef = 074C469F14240A250066B1EB /* moai-target */; };
 		078D630113BA9EA30072F273 /* MoaiVC.mm in Sources */ = {isa = PBXBuildFile; fileRef = 078D630013BA9EA30072F273 /* MoaiVC.mm */; };
@@ -499,8 +504,11 @@
 		03CC912113B3C4A400B2724C /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		03CC912B13B3C4C000B2724C /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		0402C49115F8A691009386C5 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
+		041E2E1E1626942D006F310F /* Default-Portrait@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait@2x~ipad.png"; sourceTree = "<group>"; };
 		04234B1815970DA000C00091 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		04398FD315E9F591004CF6EF /* libFlurry.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libFlurry.a; path = ../../3rdparty/FlurryiOS/libFlurry.a; sourceTree = "<group>"; };
+		044E3BC5162943C400756E74 /* Icon-144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-144.png"; sourceTree = "<group>"; };
+		04568D841619D6EB00D2E3B9 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		0482CC8415BCD9B900A45F75 /* libluajit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libluajit.a; path = "../../3rdparty/lua-5.1.3/iOS/libluajit.a"; sourceTree = "<group>"; };
 		049670F115F397C5008BA8D4 /* content */ = {isa = PBXFileReference; lastKnownFileType = folder; path = content; sourceTree = "<group>"; };
 		04D2BB6A1596092100135822 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
@@ -717,14 +725,15 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				044E3BC5162943C400756E74 /* Icon-144.png */,
+				041E2E1E1626942D006F310F /* Default-Portrait@2x~ipad.png */,
+				04568D841619D6EB00D2E3B9 /* Default-568h@2x.png */,
 				0402C49115F8A691009386C5 /* icon.png */,
 				04ECADFF15DF6A160037714D /* Default-Portrait~ipad.png */,
 				04ECADFD15DF6A0F0037714D /* Default@2x.png */,
 				04ECADFB15DF6A0A0037714D /* Default.png */,
 				04234B1815970DA000C00091 /* Default.png */,
 				665383F6160A8466003D5529 /* MessageUI.framework */,
-				665383F4160A7B65003D5529 /* libfacebook_ios_sdk.a */,
-				665383F0160A76E2003D5529 /* libCrittercismCrashOnly_v3_3_3.a */,
 				03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
@@ -768,10 +777,10 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				665383F0160A76E2003D5529 /* libCrittercismCrashOnly_v3_3_3.a */,
+				665383F4160A7B65003D5529 /* libfacebook_ios_sdk.a */,
 				0482CC8415BCD9B900A45F75 /* libluajit.a */,
 				04398FD315E9F591004CF6EF /* libFlurry.a */,
-				E92D48D1153CAE6F00CB1E8A /* libCrittercism_v3_1_5.a */,
-				6676D5D315100473004EA27A /* libfacebook_ios_sdk.a */,
 				03CC910B13B3C48400B2724C /* AudioToolbox.framework */,
 				03CC910313B3C47600B2724C /* CoreAudio.framework */,
 				288765A40DF7441C002DB57D /* CoreGraphics.framework */,
@@ -1111,75 +1120,14 @@
 				E92D4808153CA7D800CB1E8A /* TJCVGPageView.xib in Resources */,
 				E92D4809153CA7D800CB1E8A /* TJCVGTableViewCell.xib in Resources */,
 				E92D480A153CA7D800CB1E8A /* TJCVGView.xib in Resources */,
-				E92D484D153CADBF00CB1E8A /* CrittercismGridViewController.xib in Resources */,
-				E92D488F153CADD700CB1E8A /* crittercism_icon.png in Resources */,
-				E92D4890153CADD700CB1E8A /* crittercism-arrow-l.png in Resources */,
-				E92D4891153CADD700CB1E8A /* crittercism-arrow-l@2x.png in Resources */,
-				E92D4892153CADD700CB1E8A /* crittercism-arrow-left-gray-border.png in Resources */,
-				E92D4893153CADD700CB1E8A /* crittercism-arrow-left-no-border.png in Resources */,
-				E92D4894153CADD700CB1E8A /* crittercism-arrow-left.png in Resources */,
-				E92D4895153CADD700CB1E8A /* crittercism-arrow-let-no-border.png in Resources */,
-				E92D4896153CADD700CB1E8A /* crittercism-arrow-r.png in Resources */,
-				E92D4897153CADD700CB1E8A /* crittercism-arrow-r@2x.png in Resources */,
-				E92D4898153CADD700CB1E8A /* crittercism-arrow-right-green-border.png in Resources */,
-				E92D4899153CADD700CB1E8A /* crittercism-arrow-right-no-border.png in Resources */,
-				E92D489A153CADD700CB1E8A /* crittercism-avatar-default.png in Resources */,
-				E92D489B153CADD700CB1E8A /* crittercism-avatar-us.png in Resources */,
-				E92D489C153CADD700CB1E8A /* crittercism-bg-00.png in Resources */,
-				E92D489D153CADD700CB1E8A /* crittercism-bg-categorize-as.png in Resources */,
-				E92D489E153CADD700CB1E8A /* crittercism-bg-edit-form.png in Resources */,
-				E92D489F153CADD700CB1E8A /* crittercism-bg-edit-form@2x~iphone.png in Resources */,
-				E92D48A0153CADD700CB1E8A /* crittercism-bg-inactive-overlay.png in Resources */,
-				E92D48A1153CADD700CB1E8A /* crittercism-bg-reply-to.png in Resources */,
-				E92D48A2153CADD700CB1E8A /* crittercism-btn-add-comment-sel.png in Resources */,
-				E92D48A3153CADD700CB1E8A /* crittercism-btn-add-comment.png in Resources */,
-				E92D48A4153CADD700CB1E8A /* crittercism-btn-cancel.png in Resources */,
-				E92D48A5153CADD700CB1E8A /* crittercism-btn-close.png in Resources */,
-				E92D48A6153CADD700CB1E8A /* crittercism-btn-submit.png in Resources */,
-				E92D48A7153CADD700CB1E8A /* crittercism-btn-thumbs-dn-default.png in Resources */,
-				E92D48A8153CADD700CB1E8A /* crittercism-btn-thumbs-dn-voted.png in Resources */,
-				E92D48A9153CADD700CB1E8A /* crittercism-btn-thumbs-up-default.png in Resources */,
-				E92D48AA153CADD700CB1E8A /* crittercism-btn-thumbs-up-pressed.png in Resources */,
-				E92D48AB153CADD700CB1E8A /* crittercism-btn-thumbs-up-pressed@2x.png in Resources */,
-				E92D48AC153CADD700CB1E8A /* crittercism-btn-thumbs-up-voted.png in Resources */,
-				E92D48AD153CADD700CB1E8A /* crittercism-btn-thumbs-up.png in Resources */,
-				E92D48AE153CADD700CB1E8A /* crittercism-btn-thumbs-up@2x.png in Resources */,
-				E92D48AF153CADD700CB1E8A /* crittercism-bug.png in Resources */,
-				E92D48B0153CADD700CB1E8A /* crittercism-checkbox-checked.png in Resources */,
-				E92D48B1153CADD700CB1E8A /* crittercism-checkbox-unchecked.png in Resources */,
-				E92D48B2153CADD700CB1E8A /* crittercism-dev-profile-halfsize.png in Resources */,
-				E92D48B3153CADD700CB1E8A /* crittercism-dev-profile-halfsize@2x.png in Resources */,
-				E92D48B4153CADD700CB1E8A /* crittercism-feedback-forum-bg-gradient.png in Resources */,
-				E92D48B5153CADD700CB1E8A /* crittercism-gray.png in Resources */,
-				E92D48B6153CADD700CB1E8A /* crittercism-green.png in Resources */,
-				E92D48B7153CADD700CB1E8A /* crittercism-hamster-ftw.png in Resources */,
-				E92D48B8153CADD700CB1E8A /* crittercism-hamster-twitter.png in Resources */,
-				E92D48B9153CADD700CB1E8A /* crittercism-hamster.png in Resources */,
-				E92D48BA153CADD700CB1E8A /* crittercism-icon-cat-idea.png in Resources */,
-				E92D48BB153CADD700CB1E8A /* crittercism-icon-cat-idea@2x.png in Resources */,
-				E92D48BC153CADD700CB1E8A /* crittercism-icon-cat-love.png in Resources */,
-				E92D48BD153CADD700CB1E8A /* crittercism-icon-cat-love@2x.png in Resources */,
-				E92D48BE153CADD700CB1E8A /* crittercism-icon-cat-problem.png in Resources */,
-				E92D48BF153CADD700CB1E8A /* crittercism-icon-cat-problem@2x.png in Resources */,
-				E92D48C0153CADD700CB1E8A /* crittercism-icon-cat-question.png in Resources */,
-				E92D48C1153CADD700CB1E8A /* crittercism-icon-cat-question@2x.png in Resources */,
-				E92D48C2153CADD700CB1E8A /* crittercism-icon-tab-01.png in Resources */,
-				E92D48C3153CADD700CB1E8A /* crittercism-idea.png in Resources */,
-				E92D48C4153CADD700CB1E8A /* crittercism-love.png in Resources */,
-				E92D48C5153CADD700CB1E8A /* crittercism-other.png in Resources */,
-				E92D48C6153CADD700CB1E8A /* crittercism-question.png in Resources */,
-				E92D48C7153CADD700CB1E8A /* crittercism-tab-icon@1x~iphone.png in Resources */,
-				E92D48C8153CADD700CB1E8A /* crittercism-tab-icon@2x~ipad.png in Resources */,
-				E92D48C9153CADD700CB1E8A /* crittercism-title-bar.png in Resources */,
-				E92D48CA153CADD700CB1E8A /* crittercism-user-arrow-l.png in Resources */,
-				E92D48CB153CADD700CB1E8A /* crittercism-user-arrow-l@2x.png in Resources */,
-				E92D48CC153CADD700CB1E8A /* crittercism-user-profile-halfsize.png in Resources */,
-				E92D48CD153CADD700CB1E8A /* crittercism-user-profile.png in Resources */,
-				E92D48CE153CADD700CB1E8A /* crittercism-user-profile@2x.png in Resources */,
-				E92D48CF153CADD700CB1E8A /* crittercism-votesLeftButton.png in Resources */,
 				049670F215F397C5008BA8D4 /* content in Resources */,
 				0402C49215F8A691009386C5 /* icon.png in Resources */,
 				665383F3160A798F003D5529 /* FacebookSDKResources.bundle in Resources */,
+				04F865EF16258D9E0055A1F3 /* Default-Portrait~ipad.png in Resources */,
+				041E2E1F1626942D006F310F /* Default-Portrait@2x~ipad.png in Resources */,
+				044E3BC6162943C400756E74 /* Icon-144.png in Resources */,
+				049D461C162DC0F40006549C /* Default.png in Resources */,
+				049D461D162DC10A0006549C /* Default@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1456,6 +1404,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=*]" = armv7;
 				CODE_SIGN_IDENTITY = "";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = USE_UNTZ;
@@ -1474,6 +1423,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"ARCHS[sdk=*]" = armv7;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				DEPLOYMENT_POSTPROCESSING = YES;
@@ -1497,10 +1447,7 @@
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
-				);
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CODE_SIGN_IDENTITY = "iPhone Developer: Mingwei Zhou (ZT4A3R95FQ)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
@@ -1525,17 +1472,14 @@
 				PROVISIONING_PROFILE = "7299653F-0617-4509-8495-E0A41F440E1A";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				VALID_ARCHS = "i386 armv6 armv7";
+				VALID_ARCHS = "i386 armv7";
 			};
 			name = Debug;
 		};
 		C01FCF5008A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					armv6,
-					"$(ARCHS_STANDARD_32_BIT)",
-				);
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CODE_SIGN_ENTITLEMENTS = Entitlements.plist;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
@@ -1560,7 +1504,7 @@
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				VALID_ARCHS = "i386 armv6 armv7";
+				VALID_ARCHS = "i386 armv7";
 			};
 			name = Release;
 		};

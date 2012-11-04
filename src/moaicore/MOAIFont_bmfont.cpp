@@ -120,7 +120,6 @@ void MOAIFont::InitWithBMFont ( cc8* filename ) {
 		p = parseKeyVal ( p, &key, &val, &endl );
 
 		if ( strcmp ( key, "info" ) == 0 ) {
-		
 			float size = 0.0f;
 			
 			//info face="Cambria" size=64 bold=0 italic=0 charset="" unicode=0 stretchH=100 smooth=1 aa=1 padding=0,0,0,0 spacing=2,2
@@ -137,7 +136,6 @@ void MOAIFont::InitWithBMFont ( cc8* filename ) {
 			}
 		}
 		else if ( strcmp ( key, "common" ) == 0 ) {
-			
 			float lineSpacing = 0.0f;
 			float base = 0.0f;
 			u32 pages = 0;
@@ -169,6 +167,7 @@ void MOAIFont::InitWithBMFont ( cc8* filename ) {
 			MOAITexture* texture = new MOAITexture();
 			glyphCache->SetTexture ( id, texture );
 			texture->Init ( texturename, MOAITexture::DEFAULT_TRANSFORM );
+			texture->SetFilter ( GL_LINEAR, GL_LINEAR );
 		}
 		else if ( strcmp ( key, "chars" ) == 0 ) {
 			//chars count=95

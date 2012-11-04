@@ -420,7 +420,7 @@ void MOAINode::ClearAttrLink ( int attrID ) {
 		MOAIDepLink* link = cursor;
 		cursor = cursor->mNextInDest;
 		
-		if ( link->mDestAttrID == ( u32 )attrID ) {
+		if ( (link->mDestAttrID & ~MOAIAttrOp::ATTR_FLAGS_MASK) == ( u32 )attrID ) {
 			link->mSourceNode->RemoveDepLink ( *link );
 			delete link;
 			this->ScheduleUpdate ();
@@ -482,7 +482,7 @@ MOAIDepLink* MOAINode::FindAttrLink ( int attrID ) {
 
 	MOAIDepLink* link = this->mPullLinks;
 	for ( ; link; link = link->mNextInDest ) {
-		if ( link->mDestAttrID == ( u32 )attrID ) break;
+		if ( (link->mDestAttrID & ~MOAIAttrOp::ATTR_FLAGS_MASK) == ( u32 )attrID ) break;
 	}
 	return link;
 }
