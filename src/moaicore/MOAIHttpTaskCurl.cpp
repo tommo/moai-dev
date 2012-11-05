@@ -89,10 +89,13 @@ u32 MOAIHttpTaskCurl::_writeHeader ( char* data, u32 n, u32 l, void* s ) {
 
 u32 MOAIHttpTaskCurl::_progressFunction ( void* ptr, double totalDownload, double downloaded, double totalUpload, double uploaded ) {
 	
+	UNUSED ( uploaded );
+	UNUSED ( totalUpload );
+	
 	MOAIHttpTaskCurl *self = ( MOAIHttpTaskCurl * ) ptr;
 	
 	if ( totalDownload ) {
-		self->mProgress = downloaded / totalDownload;
+		self->mProgress = ( float ) ( downloaded / totalDownload );
 	}
 	
 	if ( self->mProgress > 1.0f ) {
@@ -339,6 +342,13 @@ void MOAIHttpTaskCurl::SetCookieDst	( const char *file ) {
 void MOAIHttpTaskCurl::SetCookieSrc	( const char *file ) {
 	CURLcode result = curl_easy_setopt( this->mEasyHandle, CURLOPT_COOKIEJAR, file );
 	PrintError ( result );
+}
+
+void MOAIHttpTaskCurl::SetFailOnError ( bool enable ) {
+	
+	CURLcode result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_FAILONERROR, ( u32 ) enable );
+	PrintError ( result );
+	
 }
 
 //----------------------------------------------------------------//
