@@ -21,6 +21,8 @@ gfxQuad:setUVRect ( 0, 0, 1, 1 )
 
 prop = MOAIProp2D.new ()
 prop:setDeck ( gfxQuad )
+prop:setBlendMode( MOAIProp.GL_SRC_ALPHA,MOAIProp.GL_ONE_MINUS_SRC_ALPHA )
 layer:insertProp ( prop )
 
 prop:moveRot ( 360, 1.5 )
+prop:seekColor(1,1,1,0,1)

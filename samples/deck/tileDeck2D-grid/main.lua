@@ -17,8 +17,8 @@ MOAISim.pushRenderPass ( layer )
 grid = MOAIGrid.new ()
 grid:setSize ( 2, 2, 64, 64 )
 
-grid:setRow ( 1, 	0x00000001, 0x20000002 )
-grid:setRow ( 2,	0x40000003, 0x60000004 )
+grid:setRow ( 2,	0x20000002, 0x80000004 )
+grid:setRow ( 1, 	0x40000001, 0x60000002 )
 
 tileDeck = MOAITileDeck2D.new ()
 tileDeck:setTexture ( "test.png" )

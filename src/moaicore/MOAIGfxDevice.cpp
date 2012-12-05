@@ -1848,7 +1848,7 @@ USRect MOAIGfxDevice::WndRectToDeviceNoRotate ( USRect rect ) const {
 
 	rect.Bless ();
 
-	float height = ( float )this->mHeight;
+	float height = ( float )this->mBufferHeight;
 	
 	float xMin = rect.mXMin;
 	float yMin = height - rect.mYMax;
@@ -1861,7 +1861,7 @@ USRect MOAIGfxDevice::WndRectToDeviceNoRotate ( USRect rect ) const {
 	rect.mYMax = yMax;
 
 
-	rect.Scale ( this->mDeviceScale, this->mDeviceScale );
+	rect.Scale ( this->mBufferScale, this->mBufferScale );
 	return rect;
 }
 

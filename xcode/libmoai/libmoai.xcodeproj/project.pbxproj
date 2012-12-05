@@ -14152,7 +14152,6 @@
 		0324E2AD1356485F000ADC60 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREFIX_HEADER = "../../3rdparty/untz/src/native/ios/Untz-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
@@ -14189,7 +14188,6 @@
 		0324E2AE1356485F000ADC60 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PREFIX_HEADER = "../../3rdparty/untz/src/native/ios/Untz-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -14228,7 +14226,6 @@
 		0324E2B91356485F000ADC60 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -14243,7 +14240,6 @@
 		0324E2BA1356485F000ADC60 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -15359,7 +15355,6 @@
 		CD04AE7D1472557F009C20E5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -15375,7 +15370,6 @@
 		CD04AE7E1472557F009C20E5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -15455,7 +15449,6 @@
 		CD07C4E313A1918600C9386C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -15491,7 +15484,6 @@
 		CD07C4E413A1918600C9386C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -15735,7 +15727,6 @@
 		CDD06D85139882D900AB0420 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -15771,7 +15762,6 @@
 		CDD06D86139882D900AB0420 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -15951,7 +15941,6 @@
 		CDDD30A11574AE0F00C410A0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -15991,7 +15980,6 @@
 		CDDD30A21574AE0F00C410A0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -16031,7 +16019,6 @@
 		CDDD30A31574AE0F00C410A0 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -16071,7 +16058,6 @@
 		CDDD30A41574AE0F00C410A0 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -16111,7 +16097,6 @@
 		CDE8A7FE155E42EF00C2DFF5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -16151,7 +16136,6 @@
 		CDE8A7FF155E42EF00C2DFF5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -16191,7 +16175,6 @@
 		CDE8A800155E42EF00C2DFF5 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -16231,7 +16214,6 @@
 		CDE8A801155E42EF00C2DFF5 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -16646,7 +16628,6 @@
 		E90D02C614D5E12700DD75AA /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -16665,7 +16646,6 @@
 		E90D02C714D5E12700DD75AA /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PREFIX_HEADER = "../../3rdparty/untz/src/native/ios/Untz-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -16704,7 +16684,6 @@
 		E90D02C814D5E12700DD75AA /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -16740,7 +16719,6 @@
 		E90D02C914D5E12700DD75AA /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -16776,7 +16754,6 @@
 		E90D02CA14D5E12700DD75AA /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -17359,7 +17336,6 @@
 		E9C405CE150D999200C7AB04 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -17374,7 +17350,6 @@
 		E9C405CF150D999200C7AB04 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PREFIX_HEADER = "../../3rdparty/untz/src/native/ios/Untz-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -17413,7 +17388,6 @@
 		E9C405D0150D999200C7AB04 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -17449,7 +17423,6 @@
 		E9C405D1150D999200C7AB04 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,
@@ -17485,7 +17458,6 @@
 		E9C405D2150D999200C7AB04 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"${inherited}",
 					MACOSX,

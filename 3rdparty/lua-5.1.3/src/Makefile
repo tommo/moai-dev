@@ -6,13 +6,13 @@
 
 # Your platform. See PLATS for possible values.
 PLAT= none
-
+ARCH= -m64
 CC= gcc
-CFLAGS= -O2 -Wall $(MYCFLAGS)
+CFLAGS= -O2 -Wall  $(ARCH) $(MYCFLAGS) 
 AR= ar rcu
 RANLIB= ranlib
 RM= rm -f
-LIBS= -lm $(MYLIBS)
+LIBS= $(ARCH) -lm $(MYLIBS)
 
 MYCFLAGS=
 MYLDFLAGS=
