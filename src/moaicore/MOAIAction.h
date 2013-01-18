@@ -67,6 +67,9 @@ public:
 	friend class MOAIActionMgr;
 	
 	DECL_LUA_FACTORY ( MOAIAction )
+
+	GET_SET(bool, IsNew, mNew)
+	GET_SET(u32, Pass, mPass)
 	
 	enum {
 		EVENT_STOP,

@@ -28,5 +28,11 @@ prop:setDeck ( gfxQuad )
 layer:insertProp ( prop )
 
 data = MOAIDataBuffer.new ()
-data:loadAsync ( 'moai.png', ioThread, function () texture:load ( data ) data:clear () end )
+
+data:loadAsync ( 'moai.png', ioThread, 
+	function (x) 
+		texture:load (x) 
+		x:clear ()
+	end
+)
 
