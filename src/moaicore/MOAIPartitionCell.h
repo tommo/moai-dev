@@ -28,6 +28,7 @@ private:
 	void			GatherProps				( MOAIPartitionResultBuffer& results, const MOAIProp* ignore, const USVec3D& point, const USVec3D& orientation, u32 mask );
 	void			GatherProps				( MOAIPartitionResultBuffer& results, const MOAIProp* ignore, u32 mask );
 	void			GatherProps				( MOAIPartitionResultBuffer& results, const MOAIProp* ignore, const USVec3D& point, u32 mask );
+	void			GatherProps				( MOAIPartitionResultBuffer& results, const MOAIProp* ignore, const USVec3D& point, u32 planeID, u32 mask );
 	void			GatherProps				( MOAIPartitionResultBuffer& results, const MOAIProp* ignore, const USBox& box, u32 mask );
 	void			GatherProps				( MOAIPartitionResultBuffer& results, const MOAIProp* ignore, const USFrustum& frustum, u32 mask );
 	void			InsertProp				( MOAIProp& prop );

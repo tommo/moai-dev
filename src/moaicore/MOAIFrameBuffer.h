@@ -51,7 +51,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIFrameBuffer )
 	
 	//----------------------------------------------------------------//
-	void				BindAsFrameBuffer		();
+	void				BindAsFrameBuffer		(bool noclear);
 	void				Init					( u32 width, u32 height, GLenum colorFormat, GLenum depthFormat, GLenum stencilFormat );
 	bool				IsValid					();
 						MOAIFrameBuffer			();

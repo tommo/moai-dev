@@ -86,6 +86,41 @@ void MOAIPartitionLevel::GatherProps ( MOAIPartitionResultBuffer& results, MOAIP
 	}
 }
 
+
+void MOAIPartitionLevel::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignore, const USVec2D& cellPoint, u32 planeID, u32 mask ) {
+	USVec3D point ( 0.0f, 0.0f, 0.0f );
+	
+	switch ( planeID ) {
+		case USBox::PLANE_XY:
+			point.Init ( cellPoint.mX, cellPoint.mY, 0.0f );
+			break;
+		case USBox::PLANE_XZ:
+			point.Init ( cellPoint.mX, 0.0f , cellPoint.mY );
+			break;
+		case USBox::PLANE_YZ:
+			point.Init ( 0.0f , cellPoint.mX, cellPoint.mY );
+			break;
+	};
+
+	float halfSize = this->mCellSize * 0.5f;
+	
+	MOAICellCoord coord = this->mGridSpace.GetCellCoord ( cellPoint.mX - halfSize , cellPoint.mY + halfSize );
+	
+	int width = this->mGridSpace.GetWidth ();
+	int height = this->mGridSpace.GetHeight ();
+	
+	int xTotal = ( width < 2 ) ? 1 : 2;
+	int yTotal = ( height < 2 ) ? 1 : 2;
+	
+	for ( int y = 0; y < yTotal; ++y ) {
+		for ( int x = 0; x < xTotal; ++x ) {
+			
+			MOAICellCoord offset = this->mGridSpace.WrapCellCoord ( coord.mX + x, coord.mY - y );
+			int addr = this->mGridSpace.GetCellAddr ( offset );
+			this->mCells [ addr ].GatherProps ( results, ignore, point, planeID, mask );
+		}
+	}
+}
 //----------------------------------------------------------------//
 void MOAIPartitionLevel::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignore, const USBox& box, u32 planeID, u32 mask ) {
 

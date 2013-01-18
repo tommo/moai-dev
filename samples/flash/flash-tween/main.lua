@@ -61,6 +61,7 @@ local function newPlayer ( self )
 	player.removeProps = removeProps
 	
 	player:apply ( 0 )
+	player:setMode(MOAITimer.PING_PONG)
 	
 	return player
 end

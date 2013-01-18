@@ -23,8 +23,10 @@ bool _clipRayToBoxAxis ( float min, float max, float pos, float dir, float& t0, 
 		if ( dir > 0.0f ) {
 			return !( pos > max );
 		}
-		else {
+		else if (dir < 0.0f ) {
 			return !( pos < min );
+		}else {
+			return !(pos < min || pos > max);
 		}
 	}
 	

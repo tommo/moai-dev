@@ -17,7 +17,7 @@ MOAISim.pushRenderPass ( layer )
 
 MOAISim.openWindow ( "cathead", 640, 480 )
 
-particleName = 'deathBlossomCharge.pex'
+particleName = 'fire.pex'
 
 local plugin =  MOAIParticlePexPlugin.load( particleName )
 local maxParticles = plugin:getMaxParticles ()
@@ -27,8 +27,8 @@ local duration = plugin:getDuration ()
 local xMin, yMin, xMax, yMax = plugin:getRect ()
 
 system = MOAIParticleSystem.new ()
-system._duration = duration
-system._lifespan = maxLifespan
+-- system._duration = duration
+-- system._lifespan = maxLifespan
 system:reserveParticles ( maxParticles , plugin:getSize() )
 system:reserveSprites ( maxParticles )
 system:reserveStates ( 1 )
@@ -43,6 +43,7 @@ emitter = MOAIParticleTimedEmitter.new()
 emitter:setSystem ( system )
 emitter:setEmission ( plugin:getEmission () )
 emitter:setFrequency ( plugin:getFrequency () )
+-- emitter:setAngle(0,0)
 emitter:setRect ( xMin, yMin, xMax, yMax )
 
 local deck = MOAIGfxQuad2D.new()

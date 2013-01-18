@@ -52,6 +52,7 @@ private:
 
 	USVec3D		mParallax;
 	bool		mShowDebugLines;
+	bool		mNoClear;
 	u32			mSortMode;
 
 	float		mSortScale [ 4 ];
@@ -79,6 +80,8 @@ private:
 	static int	_showDebugLines		( lua_State* L );
 	static int	_wndToWorld			( lua_State* L );
 	static int	_worldToWnd			( lua_State* L );
+
+	static int _setNoClearFrameBuffer (lua_State* L);
 	
 	//----------------------------------------------------------------//
 	void			AffirmPartition			();

@@ -108,6 +108,7 @@ void MOAIFont::InitWithBMFont ( cc8* filename ) {
 
 	MOAIGlyphSet* glyphSet = 0;
 	MOAIStaticGlyphCache* glyphCache = new MOAIStaticGlyphCache ();
+	int smooth=0;
 
 	this->mCache.Set ( *this, glyphCache );
 	this->mReader.Set ( *this, 0 );
@@ -128,6 +129,7 @@ void MOAIFont::InitWithBMFont ( cc8* filename ) {
 			//info face="Cambria" size=64 bold=0 italic=0 charset="" unicode=0 stretchH=100 smooth=1 aa=1 padding=0,0,0,0 spacing=2,2
 			do {
 				p = parseKeyVal ( p, &key, &val, &endl );
+				if ( strcasecmp ( key, "smooth" ) == 0 ) { smooth = ( int )atof ( val ); }
 				if ( strcasecmp ( key, "size" ) == 0 ) { size = ( float )atof ( val ); }
 			} while ( !endl );
 			
@@ -171,7 +173,7 @@ void MOAIFont::InitWithBMFont ( cc8* filename ) {
 			MOAITexture* texture = new MOAITexture ();
 			glyphCache->SetTexture ( id, texture );
 			texture->Init ( texturename, MOAITexture::DEFAULT_TRANSFORM );
-			texture->SetFilter ( GL_LINEAR, GL_LINEAR );
+			if(smooth==1) texture->SetFilter ( GL_LINEAR, GL_LINEAR );
 		}
 		else if ( strcmp ( key, "chars" ) == 0 ) {
 			//chars count=95

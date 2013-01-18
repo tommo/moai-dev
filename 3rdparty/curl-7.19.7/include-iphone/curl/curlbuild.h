@@ -156,7 +156,7 @@
 /* The size of `long', as computed by sizeof. */
 /*#define CURL_SIZEOF_LONG 4*/
 #ifdef __i386__
-#define CURL_SIZEOF_LONG 4
+#define CURL_SIZEOF_LONG 8
 #else
 #define CURL_SIZEOF_LONG 8
 #endif

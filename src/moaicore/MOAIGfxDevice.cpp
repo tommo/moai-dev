@@ -1135,12 +1135,12 @@ void MOAIGfxDevice::SetDepthMask ( bool depthMask ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::SetFrameBuffer ( MOAIFrameBuffer* frameBuffer ) {
+void MOAIGfxDevice::SetFrameBuffer ( MOAIFrameBuffer* frameBuffer , bool noclear) {
 
 	this->Flush ();
 
 	if ( frameBuffer ) {
-		frameBuffer->BindAsFrameBuffer ();
+		frameBuffer->BindAsFrameBuffer (noclear);
 	}
 	else {
 		if ( this->mIsFramebufferSupported ) {
@@ -1810,21 +1810,27 @@ USRect MOAIGfxDevice::WndRectToDevice ( USRect rect ) const {
 
 	rect.Bless ();
 
-	if ( this->mLandscape ) {
+	// if ( this->mLandscape ) {
 	
-		float width = ( float )this->mBufferWidth;
+	// 	// float width = ( float )this->mBufferWidth;
+	// 	float height = ( float )this->mBufferHeight;
+			
+	// 	float xMin = rect.mXMin;
+	// 	float yMin = height - rect.mYMax;
+	// 	float xMax = rect.mXMax;
+	// 	float yMax = height - rect.mYMin;
 		
-		float xMin = rect.mXMin;
-		float yMin = width - rect.mYMax;
-		float xMax = rect.mXMax;
-		float yMax = width - rect.mYMin;
-		
-		rect.mXMin = xMin;
-		rect.mYMin = yMin;
-		rect.mXMax = xMax;
-		rect.mYMax = yMax;
-	}
-	else {
+	// 	// float xMin = rect.mYMin;
+	// 	// float yMin = width - rect.mXMax;
+	// 	// float xMax = rect.mYMax;
+	// 	// float yMax = width - rect.mXMin;
+
+	// 	rect.mXMin = xMin;
+	// 	rect.mYMin = yMin;
+	// 	rect.mXMax = xMax;
+	// 	rect.mYMax = yMax;
+	// }
+	// else {
 	
 		float height = ( float )this->mBufferHeight;
 		
@@ -1837,7 +1843,7 @@ USRect MOAIGfxDevice::WndRectToDevice ( USRect rect ) const {
 		rect.mYMin = yMin;
 		rect.mXMax = xMax;
 		rect.mYMax = yMax;
-	}
+	// }
 
 	rect.Scale ( this->mBufferScale, this->mBufferScale );
 	return rect;

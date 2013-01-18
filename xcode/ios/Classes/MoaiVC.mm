@@ -50,7 +50,7 @@
 //        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad){
 //            return ( interfaceOrientation == UIInterfaceOrientationLandscapeLeft ) || ( interfaceOrientation == UIInterfaceOrientationLandscapeRight );  	          
 //    	  }else{
-              return ( interfaceOrientation == UIInterfaceOrientationPortrait) || ( interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown );
+//              return ( interfaceOrientation == UIInterfaceOrientationPortrait) || ( interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown );
 //    	  }
 
         
@@ -58,7 +58,7 @@
             The following is used to support all view orientations.
          */
         
-//        return true;
+        return true;
 	}
 	
 	//----------------------------------------------------------------//
@@ -78,7 +78,7 @@
             if ([ view akuInitialized ] != 0 ) {
 				NSLog(@"Turning Landscape");
                 AKUSetOrientation ( AKU_ORIENTATION_LANDSCAPE );
-                AKUSetViewSize (( int )view.width, ( int )view.height);
+                AKUSetViewSize (( int )view.height, ( int )view.width);
             }
 		}
 	}

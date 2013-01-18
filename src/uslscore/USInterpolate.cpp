@@ -77,6 +77,20 @@ float USInterpolate::Curve ( u32 mode, float t ) {
 			t = ( t * 2.0f ) - 2.0f;
 			return ( 2.0f - ( t * t )) * 0.5f;
 
+		case kElastic:
+			return pow(2.0f, (-10.0f* -t * cos(-t*30.0f)) );
+
+		case kBounce:
+			float a=0.0f, b=1.0f;
+			while(1){
+				if(t>=(7.0f-4.0f*a)/11.0f){
+					float x= (11.0f - 6.0f * a - 11.0f*(1.0f-t))/4.0f;
+					return b*b - x*x;
+				}
+				a+=b;
+				b/=2;
+			}
+
 	}
 	return 0.0f;
 }

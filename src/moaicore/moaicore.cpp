@@ -150,6 +150,7 @@ void moaicore::InitGlobals ( MOAIGlobals* globals ) {
 	REGISTER_LUA_CLASS ( MOAIParser )
 	REGISTER_LUA_CLASS ( MOAIParticleCallbackPlugin )
 	REGISTER_LUA_CLASS ( MOAIParticleDistanceEmitter )
+	REGISTER_LUA_CLASS ( MOAIParticleEmitter )
 	REGISTER_LUA_CLASS ( MOAIParticleForce )
 	REGISTER_LUA_CLASS ( MOAIParticlePexPlugin )
 	REGISTER_LUA_CLASS ( MOAIParticleScript )

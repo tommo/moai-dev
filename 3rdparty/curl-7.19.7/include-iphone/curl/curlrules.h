@@ -138,7 +138,7 @@
  * Verify that the size previously defined and expected for long
  * is the same as the one reported by sizeof() at compile time.
  */
-
+#define CURL_SIZEOF_LONG 4
 typedef char
   __curl_rule_01__
     [CurlchkszEQ(long, CURL_SIZEOF_LONG)];

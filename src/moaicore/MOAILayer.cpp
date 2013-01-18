@@ -383,6 +383,23 @@ int	MOAILayer::_showDebugLines ( lua_State* L ) {
 	return 0;
 }
 
+
+//----------------------------------------------------------------//
+/**	@name	setNoClearFrameBuffer
+	@text	Don't clear framebuffer before rendering this layer
+	
+	@in		MOAILayer self
+	@opt	bool noClear		Default value is 'true'.
+	@out	nil
+*/
+int	MOAILayer::_setNoClearFrameBuffer ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAILayer, "U" )
+	
+	self->mNoClear = state.GetValue < bool >( 2, true );
+	
+	return 0;
+}
+
 //----------------------------------------------------------------//
 /**	@name	wndToWorld
 	@text	Project a point from window space into world space and return
@@ -496,7 +513,7 @@ void MOAILayer::Draw ( int subPrimID ) {
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	
 	gfxDevice.ResetState ();
-	gfxDevice.SetFrameBuffer ( this->mFrameBuffer );
+	gfxDevice.SetFrameBuffer ( this->mFrameBuffer, this->mNoClear);
 	
 	USRect viewportRect = viewport;
 
@@ -707,6 +724,7 @@ bool MOAILayer::IsOffscreen () {
 MOAILayer::MOAILayer () :
 	mParallax ( 1.0f, 1.0f, 1.0f ),
 	mShowDebugLines ( true ),
+	mNoClear ( false ),
 	mSortMode ( MOAIPartitionResultBuffer::SORT_PRIORITY_ASCENDING ),
 	mPartitionCull2D ( true ) {
 	
@@ -777,6 +795,7 @@ void MOAILayer::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setSortScale",			_setSortScale },
 		{ "setViewport",			_setViewport },
 		{ "showDebugLines",			_showDebugLines },
+		{ "setNoClearFrameBuffer", _setNoClearFrameBuffer},
 		{ "wndToWorld",				_wndToWorld },
 		{ "worldToWnd",				_worldToWnd },
 		{ NULL, NULL }

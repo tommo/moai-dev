@@ -53,6 +53,9 @@ directionZ = 0
 priority = 5
 
 camera = MOAICamera.new ()
+-- camera:setFarPlane(-10000)
+-- camera:setNearPlane(1)
+-- cameraZ=1000
 cameraZ = camera:getFocalLength ( SCREEN_WIDTH )
 camera:setLoc ( 0, 0, cameraZ )
 layer:setCamera ( camera )
@@ -83,7 +86,7 @@ function clickCallback ( down )
 		
 		--pick = partition:propForRay ( originX, originY, originZ, directionX, directionY, directionZ )
 		pickList = toTable ( partition:propListForRay ( originX, originY, originZ, directionX, directionY, directionZ ))
-		print ( pickList )
+		print (  originX, originY, originZ, directionX, directionY, directionZ  )
 		for k,v in pairs( pickList ) do print(k,v) end
 		
 		pick = pickList[1]

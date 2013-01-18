@@ -23,4 +23,6 @@ void MOAIEaseType::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "SOFT_EASE_IN", ( u32 )USInterpolate::kSoftEaseIn );
 	state.SetField ( -1, "SOFT_EASE_OUT", ( u32 )USInterpolate::kSoftEaseOut );
 	state.SetField ( -1, "SOFT_SMOOTH", ( u32 )USInterpolate::kSoftSmooth );
+	state.SetField ( -1, "ELASTIC", ( u32 )USInterpolate::kElastic );
+	state.SetField ( -1, "BOUNCE", ( u32 )USInterpolate::kBounce );
 }

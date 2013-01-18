@@ -106,7 +106,41 @@ local mesh = makeCube ( 128, 'moai.png' )
 
 prop = MOAIProp.new ()
 prop:setDeck ( mesh )
-prop:moveRot ( 360, 360, 0, 3 )
+-- prop:moveRot ( 360, 360, 0, 3 )
 prop:setShader ( MOAIShaderMgr.getShader ( MOAIShaderMgr.MESH_SHADER ))
 prop:setCullMode ( MOAIProp.CULL_BACK )
 layer:insertProp ( prop )
+
+
+local t1=MOAITransform.new()
+local t2=MOAITransform.new()
+
+t2:setAttrLink(MOAITransform.INHERIT_TRANSFORM, t1, MOAITransform.TRANSFORM_TRAIT)
+prop:setAttrLink(MOAITransform.INHERIT_TRANSFORM, t2, MOAITransform.TRANSFORM_TRAIT)
+-- t1:moveRot(0,0,360,10)
+-- t2:moveRot(360,0,0,10)
+
+
+
+if MOAIInputMgr.device.pointer then
+	
+	-- mouse input
+	MOAIInputMgr.device.pointer:setCallback ( pointerCallback )
+	MOAIInputMgr.device.mouseLeft:setCallback ( clickCallback )
+else
+
+	-- touch input
+	MOAIInputMgr.device.touch:setCallback ( 
+	
+		function ( eventType, idx, x, y, tapCount )
+
+			-- pointerCallback ( x, y )
+		
+			if eventType == MOAITouchSensor.TOUCH_DOWN then
+				-- clickCallback ( true )
+			elseif eventType == MOAITouchSensor.TOUCH_UP then
+				-- clickCallback ( false )
+			end
+		end
+	)
+end

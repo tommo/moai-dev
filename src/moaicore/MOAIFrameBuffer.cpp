@@ -103,13 +103,13 @@ int MOAIFrameBuffer::_setClearDepth ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIFrameBuffer::BindAsFrameBuffer () {
+void MOAIFrameBuffer::BindAsFrameBuffer (bool noclear) {
 
 	if ( this->Affirm ()) {
 		
 		glBindFramebuffer ( GL_FRAMEBUFFER, this->mGLFrameBufferID );
 		
-		if ( this->mClearFlags ) {
+		if ( this->mClearFlags && !noclear) {
 		
 			if ( this->mClearFlags & GL_COLOR_BUFFER_BIT ) {
 				USColorVec colorVec;

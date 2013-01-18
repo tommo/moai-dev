@@ -130,7 +130,7 @@ layer = MOAILayer2D.new ()
 layer:setViewport ( viewport )
 
 MOAISim.pushRenderPass ( layer )
-MOAISim.setClearColor ( 1, 1, 1, 1 )
+-- MOAISim.setClearColor ( 1, 1, 1, 1 )
 MOAISim.openWindow ( "flash", fla.width, fla.height )
 
 flash = parseFlash ( fla )
