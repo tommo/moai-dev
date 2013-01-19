@@ -402,7 +402,6 @@ void MOAIAction::Update ( float step, u32 pass, bool checkPass ) {
 		}
 		return;
 	} 
-	if ( this->IsBlocked ()) return;
 	if (( checkPass ) && ( pass < this->mPass )) return;
 
 	double t0 = 0.0;
