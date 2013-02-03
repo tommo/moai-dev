@@ -322,11 +322,7 @@ int MOAISim::_getTaskSubscriber ( lua_State* L ) {
 
 	MOAISim& device = MOAISim::Get ();
 	MOAILuaState state ( L );
-<<<<<<< HEAD
-	state.Push ( (MOAITaskSubscriber*) device.mTaskSubscriber );
-=======
 	device.mTaskSubscriber->PushLuaUserdata ( state );
->>>>>>> refs/remotes/upstream/master
 
 	return 1;
 }
