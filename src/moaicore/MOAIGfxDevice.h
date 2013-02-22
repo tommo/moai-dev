@@ -278,7 +278,7 @@ public:
 	void					SetDepthFunc			();
 	void					SetDepthFunc			( int depthFunc );
 	void					SetDepthMask			( bool depthMask );
-	void					SetFrameBuffer			( MOAIFrameBuffer* frameBuffer , bool noclear);
+	void					SetFrameBuffer			( MOAIFrameBuffer* frameBuffer );
 	bool					SetGfxState				( MOAIGfxState* gfxState );
 	void					SetPenColor				( u32 color );
 	void					SetPenColor				( const USColorVec& colorVec );

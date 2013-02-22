@@ -15,8 +15,8 @@ local function makeLayer ( x, y, w, h, r, g, b, a )
 	local layer = MOAILayer2D.new ()
 	layer:setViewport ( viewport )
 	layer:setClearColor ( r, g, b, a )
-	MOAISim.pushRenderPass ( layer )
-	
+	-- MOAISim.pushRenderPass ( layer )
+	MOAIRenderMgr.setBufferTable{layer}
 	return layer
 end
 

@@ -1007,7 +1007,7 @@ void MOAIGfxDevice::SetDepthMask ( bool depthMask ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::SetFrameBuffer ( MOAIFrameBuffer* frameBuffer , bool noclear) {
+void MOAIGfxDevice::SetFrameBuffer ( MOAIFrameBuffer* frameBuffer ) {
 
 	this->Flush ();
 

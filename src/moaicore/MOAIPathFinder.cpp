@@ -7,6 +7,7 @@
 #include <moaicore/MOAIPathFinder.h>
 #include <moaicore/MOAIPathGraph.h>
 #include <moaicore/MOAIPathTerrainDeck.h>
+#include <float.h>
 
 //================================================================//
 // local
