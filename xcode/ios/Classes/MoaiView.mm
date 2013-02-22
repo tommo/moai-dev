@@ -234,6 +234,9 @@ namespace MoaiInputDeviceSensorID {
 		[ self openContext ];
 		AKUSetContext ( mAku );
 		AKUUpdate ();
+		#ifdef USE_FMOD_EX
+			AKUFmodExUpdate ();
+		#endif
         mRenderTime += mRenderInterval;
         
         if(mRenderTime>=1){
@@ -244,7 +247,6 @@ namespace MoaiInputDeviceSensorID {
             [ self performSelector: @selector(dummyFunc) withObject:self afterDelay: 0 ];
 
         }
-        
 	}
 	
 	//----------------------------------------------------------------//

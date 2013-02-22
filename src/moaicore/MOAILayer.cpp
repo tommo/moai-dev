@@ -7,7 +7,7 @@
 #include <moaicore/MOAICpSpace.h>
 #include <moaicore/MOAIDebugLines.h>
 #include <moaicore/MOAIDeck.h>
-#include <moaicore/MOAIFrameBuffer.h>
+#include <moaicore/MOAIFrameBufferTexture.h>
 #include <moaicore/MOAIGfxDevice.h>
 #include <moaicore/MOAILayer.h>
 #include <moaicore/MOAILogMessages.h>
@@ -233,23 +233,6 @@ int MOAILayer::_setCpSpace ( lua_State* L ) {
 	#if USE_CHIPMUNK
 		self->mCpSpace.Set ( *self, state.GetLuaObject < MOAICpSpace >( 2, true ));
 	#endif
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@name	setFrameBuffer
-	@text	Attach a frame buffer. Layer will render to frame buffer
-			instead of the main view.
-	
-	@in		MOAILayer self
-	@in		MOAIFrameBuffer frameBuffer
-	@out	nil
-*/
-int MOAILayer::_setFrameBuffer ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAILayer, "UU" )
-
-	self->mFrameBuffer.Set ( *self, state.GetLuaObject < MOAIFrameBuffer >( 2, true ));
-
 	return 0;
 }
 
@@ -513,19 +496,19 @@ void MOAILayer::Draw ( int subPrimID ) {
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	
 	gfxDevice.ResetState ();
-	gfxDevice.SetFrameBuffer ( this->mFrameBuffer, this->mNoClear);
 	
 	USRect viewportRect = viewport;
 
-	// TODO:	
-	if ( !this->IsOffscreen ()) {
-		USMatrix4x4 mtx;
-		mtx.Init ( this->mLocalToWorldMtx );
-		// TODO:
-		//mtx.Append ( gfxDevice.GetWorldToWndMtx ( 1.0f, 1.0f ));
-		mtx.Transform ( viewportRect );
-	}
-	gfxDevice.SetViewport ( viewportRect );
+	// TODO:
+	//USMatrix4x4 mtx;
+	//mtx.Init ( this->mLocalToWorldMtx );
+	//// TODO:
+	////mtx.Append ( gfxDevice.GetWorldToWndMtx ( 1.0f, 1.0f ));
+	//mtx.Transform ( viewportRect );
+
+	gfxDevice.SetViewRect ( viewportRect );
+	gfxDevice.SetScissorRect ( viewportRect );
+	this->ClearSurface ();
 	
 	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
 	
@@ -715,12 +698,6 @@ void MOAILayer::GetWorldToWndMtx ( USMatrix4x4& worldToWnd ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAILayer::IsOffscreen () {
-
-	return ( this->mFrameBuffer == true );
-}
-
-//----------------------------------------------------------------//
 MOAILayer::MOAILayer () :
 	mParallax ( 1.0f, 1.0f, 1.0f ),
 	mShowDebugLines ( true ),
@@ -730,9 +707,11 @@ MOAILayer::MOAILayer () :
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIProp )
+		RTTI_EXTEND ( MOAIClearableView )
 	RTTI_END
 	
 	this->SetMask ( MOAIProp::CAN_DRAW | MOAIProp::CAN_DRAW_DEBUG );
+	this->SetClearFlags ( 0 );
 }
 
 //----------------------------------------------------------------//
@@ -741,7 +720,6 @@ MOAILayer::~MOAILayer () {
 	this->mCamera.Set ( *this, 0 );
 	this->mViewport.Set ( *this, 0 );
 	this->mPartition.Set ( *this, 0 );
-	this->mFrameBuffer.Set ( *this, 0 );
 
 	#if USE_CHIPMUNK
 		this->mCpSpace.Set ( *this, 0 );
@@ -756,6 +734,7 @@ MOAILayer::~MOAILayer () {
 void MOAILayer::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAIProp::RegisterLuaClass ( state );
+	MOAIClearableView::RegisterLuaClass ( state );
 	
 	state.SetField ( -1, "SORT_NONE",					( u32 )MOAIPartitionResultBuffer::SORT_NONE );
 	state.SetField ( -1, "SORT_ISO",					( u32 )MOAIPartitionResultBuffer::SORT_ISO );
@@ -775,6 +754,7 @@ void MOAILayer::RegisterLuaClass ( MOAILuaState& state ) {
 void MOAILayer::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	MOAIProp::RegisterLuaFuncs ( state );
+	MOAIClearableView::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
 		{ "clear",					_clear },
@@ -787,7 +767,6 @@ void MOAILayer::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setBox2DWorld",			_setBox2DWorld },
 		{ "setCamera",				_setCamera },
 		{ "setCpSpace",				_setCpSpace },
-		{ "setFrameBuffer",			_setFrameBuffer },
 		{ "setParallax",			_setParallax },
 		{ "setPartition",			_setPartition },
 		{ "setPartitionCull2D",		_setPartitionCull2D },
@@ -806,25 +785,16 @@ void MOAILayer::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 //----------------------------------------------------------------//
 void MOAILayer::Render () {
-
-	if ( !( this->mFlags & FLAGS_VISIBLE )) return;
-	if ( !this->mViewport ) return;
 	
-	MOAIGfxDevice& device = MOAIGfxDevice::Get ();
-
-	u32 currentWidth = device.GetBufferWidth ();
-	u32 currentHeight = device.GetBufferHeight ();
-	float currentScale = device.GetBufferScale ();
-
-	if ( this->IsOffscreen ()) {
-		MOAIViewport& viewport = *this->mViewport;
-		device.SetBufferSize (( u32 )viewport.Width (), ( u32 )viewport.Height ());
-		device.SetBufferScale ( 1.0f );
-	}
-
-	device.BeginLayer ();
 	this->Draw ( MOAIProp::NO_SUBPRIM_ID );
-	
-	device.SetBufferSize ( currentWidth, currentHeight);
-	device.SetBufferScale ( currentScale );
+}
+
+//----------------------------------------------------------------//
+void MOAILayer::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
+	MOAIProp::SerializeIn ( state, serializer );
+}
+
+//----------------------------------------------------------------//
+void MOAILayer::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
+	MOAIProp::SerializeOut ( state, serializer );
 }
