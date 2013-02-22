@@ -96,6 +96,14 @@ MOAIImageTexture::MOAIImageTexture () :
 MOAIImageTexture::~MOAIImageTexture () {
 }
 
+
+//----------------------------------------------------------------//
+void MOAIImageTexture::OnInvalidate () {
+	if(this->mStatus == INVALID){
+		this->mGLTexID = 0;
+	}	
+}
+
 //----------------------------------------------------------------//
 void MOAIImageTexture::OnClear () {
 
