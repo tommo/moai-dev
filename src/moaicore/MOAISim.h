@@ -18,6 +18,8 @@ class MOAIProp;
 	@text	Sim timing and settings class.
 	
 	@const	EVENT_FINALIZE
+	@const	EVENT_PAUSE
+	@const	EVENT_RESUME
 	
 	@const SIM_LOOP_FORCE_STEP
 	@const SIM_LOOP_ALLOW_BOOST
@@ -52,6 +54,8 @@ private:
 	// events
 	enum {
 		EVENT_FINALIZE,
+		EVENT_PAUSE,
+		EVENT_RESUME,
 	};
 
 	u32				mLoopState;
@@ -74,6 +78,8 @@ private:
 	double			mCpuBudget;
 	u32				mStepMultiplier;
 	double			mTimerError;
+	
+	double			mSimDuration;
 	
 	//----------------------------------------------------------------//
 	static int		_clearLoopFlags				( lua_State* L );
@@ -142,6 +148,9 @@ public:
 	
 	GET ( MOAITaskSubscriber&, TaskSubscriber, *mTaskSubscriber )
 	GET ( double, Step, mStep )
+	GET ( double, SimDuration, mSimDuration )
+	GET ( double, SimTime, mSimTime )
+	GET ( float, FrameRate, mFrameRate )
 	
 	static const u32 LOOP_FLAGS_DEFAULT		= SIM_LOOP_ALLOW_SPIN | SIM_LOOP_LONG_DELAY;
 	static const u32 LOOP_FLAGS_FIXED		= SIM_LOOP_FORCE_STEP | SIM_LOOP_NO_DEFICIT | SIM_LOOP_NO_SURPLUS;
@@ -162,6 +171,8 @@ public:
 	void			RegisterLuaFuncs			( MOAILuaState& state );
 	void			ResumeMOAI					();
 	void			SendFinalizeEvent			();
+	void			SendPauseEvent				();
+	void			SendResumeEvent				();
 	void			SetStep						( double step );
 	void			Update						();
 };

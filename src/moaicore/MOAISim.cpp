@@ -679,7 +679,8 @@ MOAISim::MOAISim () :
 	mLongDelayThreshold ( DEFAULT_LONG_DELAY_THRESHOLD ),
 	mCpuBudget ( DEFAULT_CPU_BUDGET ),
 	mStepMultiplier ( DEFAULT_STEP_MULTIPLIER ),
-	mTimerError ( 0.0 ) {
+	mTimerError ( 0.0 ),
+	mSimDuration ( 1.0 / 60.0 ) {
 	
 	RTTI_SINGLE ( MOAIGlobalEventSource )
 	
@@ -738,6 +739,7 @@ void MOAISim::OnGlobalsRetire () {
 //----------------------------------------------------------------//
 void MOAISim::PauseMOAI () {
 
+	this->SendPauseEvent();
 	this->mLoopState = PAUSED;
 }
 
@@ -746,6 +748,8 @@ void MOAISim::RegisterLuaClass ( MOAILuaState& state ) {
 	MOAIGlobalEventSource::RegisterLuaClass ( state );
 
 	state.SetField ( -1, "EVENT_FINALIZE", ( u32 )EVENT_FINALIZE );
+	state.SetField ( -1, "EVENT_PAUSE", ( u32 )EVENT_PAUSE );
+	state.SetField ( -1, "EVENT_RESUME", ( u32 )EVENT_RESUME );
 
 	state.SetField ( -1, "SIM_LOOP_FORCE_STEP", ( u32 )SIM_LOOP_FORCE_STEP );
 	state.SetField ( -1, "SIM_LOOP_ALLOW_BOOST", ( u32 )SIM_LOOP_ALLOW_BOOST );
@@ -815,6 +819,7 @@ void MOAISim::RegisterLuaFuncs ( MOAILuaState& state ) {
 void MOAISim::ResumeMOAI() {
 
 	if ( this->mLoopState == PAUSED ) {
+		this->SendResumeEvent();
 		this->mLoopState = START;
 	}
 }
@@ -824,6 +829,24 @@ void MOAISim::SendFinalizeEvent () {
 
 	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
 	if ( this->PushListener ( EVENT_FINALIZE, state )) {
+		state.DebugCall ( 0, 0 );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAISim::SendPauseEvent () {
+
+	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	if ( this->PushListener ( EVENT_PAUSE, state )) {
+		state.DebugCall ( 0, 0 );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAISim::SendResumeEvent () {
+
+	MOAILuaStateHandle state = MOAILuaRuntime::Get ().State ();
+	if ( this->PushListener ( EVENT_RESUME, state )) {
 		state.DebugCall ( 0, 0 );
 	}
 }
@@ -859,6 +882,9 @@ double MOAISim::StepSim ( double step, u32 multiplier ) {
 
 //----------------------------------------------------------------//
 void MOAISim::Update () {
+
+	// Measure performance
+	double simStartTime = USDeviceTime::GetTimeInSeconds ();
 
 	double interval = this->MeasureFrameRate ();
 
@@ -993,4 +1019,8 @@ void MOAISim::Update () {
 	if (( this->mLoopFlags & SIM_LOOP_NO_SURPLUS ) && ( this->mRealTime < this->mSimTime )) {
 		this->mRealTime = this->mSimTime;
 	}
+	
+	// Measure performance
+	double simEndTime = USDeviceTime::GetTimeInSeconds ();
+	this->mSimDuration = simEndTime - simStartTime;
 }

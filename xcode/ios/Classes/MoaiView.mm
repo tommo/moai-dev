@@ -200,9 +200,10 @@ namespace MoaiInputDeviceSensorID {
 		CGFloat screenHeight = screenRect.size.height * scale;
 		
 		AKUSetScreenSize ( screenWidth, screenHeight );
+		AKUSetScreenDpi([ self guessScreenDpi ]);
 		AKUSetViewSize ( mWidth, mHeight );
 		
-		AKUSetDefaultFrameBuffer ( mFramebuffer );
+        AKUSetFrameBuffer ( mFramebuffer );
 		AKUDetectGfxContext ();
 		
         float FPS=60;
@@ -229,6 +230,22 @@ namespace MoaiInputDeviceSensorID {
 	}
 	
 	//----------------------------------------------------------------//
+	-( int ) guessScreenDpi {
+		float dpi;
+		float scale = 1;
+		if ([[ UIScreen mainScreen ] respondsToSelector:@selector(scale) ]) {
+			scale = [[ UIScreen mainScreen ] scale];
+		}
+		if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+			//Not working for iPad Mini, but appropriate solution doesn't exist yet
+			dpi = 132 * scale;
+		}else{
+			dpi = 163 * scale;
+		}
+		return dpi;
+	}
+
+    //----------------------------------------------------------------//
 	-( void ) onUpdateAnim {
 		
 		[ self openContext ];
