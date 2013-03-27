@@ -145,16 +145,21 @@ MOAIProfilerReportBase::MOAIProfilerReportBase ( const USHashedString& name, con
 MOAIProfilerReportBase::~MOAIProfilerReportBase () {
 
 	// Return all entries to the pool...
-	_TraverseEntries ( mRootEntry, &MOAIProfilerReportBase::Visitor_RecycleEntries );
+	if ( mRootEntry!=0 ) 
+		_TraverseEntries ( mRootEntry, &MOAIProfilerReportBase::Visitor_RecycleEntries );
 	// ...before deleting them
 	_DeletePool ();
 
 	// Delete the root nodes
-	delete mMetaRootEntry;
-	mMetaRootEntry = 0;
+	if( mMetaRootEntry!=0 ){
+		delete mMetaRootEntry;
+		mMetaRootEntry = 0;
+	}
 
-	delete mRootEntry;
-	mRootEntry = 0;
+	if( mRootEntry!=0 ){
+		delete mRootEntry;
+		mRootEntry = 0;
+	}
 }
 
 //----------------------------------------------------------------//
