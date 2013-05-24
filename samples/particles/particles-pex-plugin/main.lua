@@ -17,7 +17,7 @@ MOAISim.pushRenderPass ( layer )
 
 MOAISim.openWindow ( "cathead", 640, 480 )
 
-particleName = 'fire.pex'
+particleName = '111.pex'
 
 local plugin =  MOAIParticlePexPlugin.load( particleName )
 local maxParticles = plugin:getMaxParticles ()

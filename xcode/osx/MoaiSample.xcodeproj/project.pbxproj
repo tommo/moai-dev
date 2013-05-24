@@ -732,14 +732,14 @@
 		CD6DC25A1574B334008C3996 /* liblibmoai-ios-fmod-designer.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = "liblibmoai-ios-fmod-designer.a";
+			path = "libmoai-ios-fmod-designer.a";
 			remoteRef = CD6DC2591574B334008C3996 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		CD6DC25C1574B334008C3996 /* liblibmoai-osx-fmod-designer.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = "liblibmoai-osx-fmod-designer.a";
+			path = "libmoai-osx-fmod-designer.a";
 			remoteRef = CD6DC25B1574B334008C3996 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};

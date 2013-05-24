@@ -748,6 +748,29 @@ int MOAIBox2DBody::_setAwake ( lua_State* L ) {
 	return 0;
 }
 
+
+//----------------------------------------------------------------//
+/**	@name	setGravityScale
+	@text	See Box2D documentation.
+	
+	@in		MOAIBox2DBody self
+	@opt	number scale		Default value is 1.
+	@out	nil
+*/
+int MOAIBox2DBody::_setGravityScale ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
+	
+	if ( !self->mBody ) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DBody_MissingInstance );
+		return 0;
+	}
+	
+	float scale = state.GetValue < float >( 2, 1.0f );
+	self->mBody->SetGravityScale ( scale );
+	
+	return 0;
+}
+
 //----------------------------------------------------------------//
 /**	@name	setBullet
 	@text	See Box2D documentation.
@@ -1009,6 +1032,7 @@ void MOAIBox2DBody::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setAngularDamping",		_setAngularDamping },
 		{ "setAngularVelocity",		_setAngularVelocity },
 		{ "setAwake",				_setAwake },
+		{ "setGravityScale",				_setGravityScale },
 		{ "setBullet",				_setBullet },
 		{ "setFixedRotation",		_setFixedRotation },
 		{ "setLinearDamping",		_setLinearDamping },

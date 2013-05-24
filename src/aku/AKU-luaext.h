@@ -14,6 +14,7 @@ AKU_API void	AKUExtLoadLuacurl			();
 AKU_API void	AKUExtLoadLuafilesystem		();
 AKU_API void	AKUExtLoadLuasocket			();
 AKU_API void	AKUExtLoadLuasql			();
-AKU_API void	AKUExtLoadLPeg              ();
+AKU_API void	AKUExtLoadLPeg        ();
+AKU_API void	AKUExtLoadStruct      ();
 
 #endif

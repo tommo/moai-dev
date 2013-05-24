@@ -1195,6 +1195,8 @@
 		0483F85216EADCAF00E81101 /* USHexDump.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0483F84F16EADCAF00E81101 /* USHexDump.cpp */; };
 		0483F85316EADCAF00E81101 /* USHexDump.h in Headers */ = {isa = PBXBuildFile; fileRef = 0483F85016EADCAF00E81101 /* USHexDump.h */; };
 		0483F85416EADCAF00E81101 /* USHexDump.h in Headers */ = {isa = PBXBuildFile; fileRef = 0483F85016EADCAF00E81101 /* USHexDump.h */; };
+		04E928441720F656001E3779 /* struct.c in Sources */ = {isa = PBXBuildFile; fileRef = 04E928431720F656001E3779 /* struct.c */; };
+		04E928451720F656001E3779 /* struct.c in Sources */ = {isa = PBXBuildFile; fileRef = 04E928431720F656001E3779 /* struct.c */; };
 		04FC4CA316F85BF70004C312 /* lpeg.c in Sources */ = {isa = PBXBuildFile; fileRef = 04FC4CA116F85BF70004C312 /* lpeg.c */; };
 		04FC4CA416F85BF70004C312 /* lpeg.c in Sources */ = {isa = PBXBuildFile; fileRef = 04FC4CA116F85BF70004C312 /* lpeg.c */; };
 		04FC4CA516F85BF70004C312 /* lpeg.h in Headers */ = {isa = PBXBuildFile; fileRef = 04FC4CA216F85BF70004C312 /* lpeg.h */; };
@@ -4260,6 +4262,7 @@
 		0483F84A16EADC9400E81101 /* USHashedString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USHashedString.h; sourceTree = "<group>"; };
 		0483F84F16EADCAF00E81101 /* USHexDump.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = USHexDump.cpp; sourceTree = "<group>"; };
 		0483F85016EADCAF00E81101 /* USHexDump.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USHexDump.h; sourceTree = "<group>"; };
+		04E928431720F656001E3779 /* struct.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = struct.c; path = "../../3rdparty/struct-0.2/struct.c"; sourceTree = "<group>"; };
 		04FC4CA116F85BF70004C312 /* lpeg.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lpeg.c; path = "../../3rdparty/lpeg-0.10.2/lpeg.c"; sourceTree = "<group>"; };
 		04FC4CA216F85BF70004C312 /* lpeg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = lpeg.h; path = "../../3rdparty/lpeg-0.10.2/lpeg.h"; sourceTree = "<group>"; };
 		0705D8C014F46A6D009537C3 /* libmoai-ios-adcolony.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-adcolony.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -6282,6 +6285,7 @@
 		032409EE13564CAF000ADC60 /* 3rd party */ = {
 			isa = PBXGroup;
 			children = (
+				04E928411720F638001E3779 /* struct */,
 				04FC4C9F16F85BDD0004C312 /* lpeg */,
 				DD80D69816D8027A00C172D2 /* sfmt */,
 				0725E2EB14F45AC700551DB5 /* adcolony */,
@@ -7077,6 +7081,14 @@
 				0483F82416EADC4100E81101 /* MOAIProfilerScope.h */,
 			);
 			name = profiler;
+			sourceTree = "<group>";
+		};
+		04E928411720F638001E3779 /* struct */ = {
+			isa = PBXGroup;
+			children = (
+				04E928431720F656001E3779 /* struct.c */,
+			);
+			name = struct;
 			sourceTree = "<group>";
 		};
 		04FC4C9F16F85BDD0004C312 /* lpeg */ = {
@@ -14557,6 +14569,7 @@
 				CDD06E541398B5A500AB0420 /* AKU-luaext.cpp in Sources */,
 				E9940D6814B7A217006465CC /* lfs.c in Sources */,
 				04FC4CA316F85BF70004C312 /* lpeg.c in Sources */,
+				04E928441720F656001E3779 /* struct.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14582,6 +14595,7 @@
 				CDD06E561398B5A500AB0420 /* AKU-luaext.cpp in Sources */,
 				E9940D6914B7A217006465CC /* lfs.c in Sources */,
 				04FC4CA416F85BF70004C312 /* lpeg.c in Sources */,
+				04E928451720F656001E3779 /* struct.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

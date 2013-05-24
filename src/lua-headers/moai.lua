@@ -465,3 +465,7 @@ MOAICrittercism = MOAICrittercismAndroid or MOAICrittercismIOS
 MOAIFacebook = MOAIFacebookAndroid or MOAIFacebookIOS
 MOAINotifications = MOAINotificationsAndroid or MOAINotificationsIOS
 MOAITapjoy = MOAITapjoyAndroid or MOAITapjoyIOS
+
+math.random=MOAIMath.randSFMT
+math.seedrandom=MOAIMath.seedSFMT
+MOAIMath.seedSFMT(1)
