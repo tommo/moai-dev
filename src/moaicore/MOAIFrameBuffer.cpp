@@ -399,10 +399,10 @@ USRect MOAIFrameBuffer::WndRectToDevice ( USRect rect ) const {
 	
 		float width = ( float )this->mBufferWidth;
 		
-		float xMin = rect.mYMin;
-		float yMin = width - rect.mXMax;
-		float xMax = rect.mYMax;
-		float yMax = width - rect.mXMin;
+		float xMin = width - rect.mXMax;
+		float yMin = rect.mYMin;
+		float xMax = width - rect.mXMin;
+		float yMax = rect.mYMax;
 		
 		rect.mXMin = xMin;
 		rect.mYMin = yMin;

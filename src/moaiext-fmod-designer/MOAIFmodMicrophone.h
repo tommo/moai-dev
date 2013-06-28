@@ -19,6 +19,11 @@
 class MOAIFmodMicrophone :
 	public MOAITransform {
 private:
+  USVec3D mVectorUp;
+  USVec3D mVectorForward;
+
+  static int _setVectorUp       ( lua_State* L );
+  static int _setVectorForward  ( lua_State* L );
 
 	//----------------------------------------------------------------//    
 
@@ -27,6 +32,8 @@ public:
     DECL_LUA_FACTORY ( MOAIFmodMicrophone )
     DECL_ATTR_HELPER ( MOAIFmodMicrophone )
 
+    GET_SET ( USVec3D, VectorUp,      mVectorUp )
+    GET_SET ( USVec3D, VectorForward, mVectorForward )
 	//----------------------------------------------------------------//
                 MOAIFmodMicrophone	();                
 	virtual		~MOAIFmodMicrophone	();

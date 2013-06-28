@@ -379,6 +379,11 @@ void MOAIParticleSystem::Draw ( int subPrimID ) {
 		base = total % maxSprites;
 		total = maxSprites;
 	}
+
+	bool billboard = this->mFlags & FLAGS_BILLBOARD;
+	USAffine3D faceCameraMtx;
+	USVec3D worldLoc;
+	if ( billboard ) faceCameraMtx.Init( gfxDevice.GetBillboardMtx () );
 	
 	for ( u32 i = 0; i < total; ++i ) {
 		
@@ -386,11 +391,23 @@ void MOAIParticleSystem::Draw ( int subPrimID ) {
 		
 		AKUParticleSprite& sprite = this->mSprites [ idx ];
 		gfxDevice.SetPenColor ( sprite.mRed, sprite.mGreen, sprite.mBlue, sprite.mAlpha );
-		
+
 		spriteMtx.ScRoTr ( sprite.mXScl, sprite.mYScl, 1.0f, 0.0f, 0.0f, sprite.mZRot * ( float )D2R, sprite.mXLoc, sprite.mYLoc, 0.0f );
-		
 		drawingMtx = this->GetLocalToWorldMtx ();
 		drawingMtx.Prepend ( spriteMtx );
+
+		if( billboard ) {
+			worldLoc.mX = drawingMtx.m [ USAffine3D::C3_R0 ];
+			worldLoc.mY = drawingMtx.m [ USAffine3D::C3_R1 ];
+			worldLoc.mZ = drawingMtx.m [ USAffine3D::C3_R2 ];
+			drawingMtx.m [ USAffine3D::C3_R0 ] = 0.0f;
+			drawingMtx.m [ USAffine3D::C3_R1 ] = 0.0f;
+			drawingMtx.m [ USAffine3D::C3_R2 ] = 0.0f;
+			drawingMtx.Append ( faceCameraMtx );
+			drawingMtx.m [ USAffine3D::C3_R0 ] = worldLoc.mX;
+			drawingMtx.m [ USAffine3D::C3_R1 ] = worldLoc.mY;
+			drawingMtx.m [ USAffine3D::C3_R2 ] = worldLoc.mZ;
+		} 
 		
 		gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, drawingMtx );
 		

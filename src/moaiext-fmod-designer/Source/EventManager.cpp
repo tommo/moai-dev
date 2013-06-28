@@ -29,6 +29,8 @@ using namespace FMODDesigner;
 	#include <windows.h>
 #endif
 
+#define FMOD_SOUND_ENCRYPTION_KEY 0
+
 // We don't need to update more than every 30th of a second or so
 float FMODDesigner::g_AudioUpdateInterval = (1.f/30.f);
 
@@ -400,9 +402,15 @@ EventHandle EventManager::PlayEvent2D(const Event& soundEvent, bool loopSound, c
                 {
                     Trace(TT_Sound, TL_Warning, "The FMOD Event %s is 3D, but the game is trying to play it as 2D.", soundEvent.GetName().c_str());
                 }
-                pInstance->m_myHandle = m_handleFactory.Alloc(pInstance);
-                m_aEventInstances.push_back( pInstance );                
-                return pInstance->m_myHandle;
+                int result = ((FMOD::Event*)(pInstance->GetInternalData()))->start();
+                if ( result != FMOD_OK ){
+                    delete pInstance;
+                    Trace(TT_Sound, TL_Info, "Failed to play 2D sound: %s", soundEvent.GetName().c_str() );
+                } else {
+                    pInstance->m_myHandle = m_handleFactory.Alloc(pInstance);
+                    m_aEventInstances.push_back( pInstance );                
+                    return pInstance->m_myHandle;
+                }
             }
             else
             {
@@ -426,10 +434,16 @@ EventHandle EventManager::PlayEvent3D(const Event& soundEvent, const USVec3D& vP
             {                        
                 Trace(TT_Sound, TL_Info, "The FMOD Event %s is 2D, but the game is trying to play it as 3D.", soundEvent.GetName().c_str());
             }
-            pNewInstance->SetPosition(vPos, vVelocity);            
-            pNewInstance->m_myHandle = m_handleFactory.Alloc( pNewInstance );            
-            m_aEventInstances.push_back( pNewInstance );            
-            return pNewInstance->m_myHandle;
+            pNewInstance->SetPosition(vPos, vVelocity);
+            int result = ((FMOD::Event*)(pNewInstance->GetInternalData()))->start();
+            if ( result != FMOD_OK ){
+                delete pNewInstance;
+                Trace(TT_Sound, TL_Info, "Failed to play 3D sound: %s", soundEvent.GetName().c_str() );
+            } else {
+                pNewInstance->m_myHandle = m_handleFactory.Alloc( pNewInstance );            
+                m_aEventInstances.push_back( pNewInstance );            
+                return pNewInstance->m_myHandle;
+            }
         }
         else
         {
@@ -887,14 +901,14 @@ const char* // static
 EventManager::GetVoiceEncryptionKey()
 {
     // Voice banks might not be encrypted
-    if (sg_nEncryptedWavbanks) { return "DFm3t4lFTW"; }
+    if (sg_nEncryptedWavbanks) { return FMOD_SOUND_ENCRYPTION_KEY; }
     return NULL;
 }
 
 const char* // static
 EventManager::GetSoundEncryptionKey()
 {
-    return "DFm3t4lFTW";
+    return FMOD_SOUND_ENCRYPTION_KEY;
 }
 
 static const char*
@@ -2230,7 +2244,8 @@ EventInstance* EventManager::_PlayEvent( const Event& soundEvent, bool loops, co
 
                     if( result == FMOD_OK )
                     {                    
-                        result = pEvent->start();
+                        // result = pEvent->start();
+                        // play the event after position setup
                         if( result == FMOD_OK )
                         {
                             if( pInstanceOverride )
@@ -2902,13 +2917,13 @@ bool EventManager::_LoadSoundPropertyData( const Event& soundEvent, EventPropert
         pEvent->getNumProperties( &nFMODProperties );
 
         for( int i = FMOD_EVENTPROPERTY_USER_BASE; i < nFMODProperties; ++i )
-    {
+        {
             char* propertyString = NULL;                    
             pEvent->getPropertyInfo( &i, &propertyString );                    
             STLString propertyName( propertyString );
 
             if( propertyName == "UnloadOnSilence" )
-        {
+            {
                 int unloadOnSilence = 0;
                 pEvent->getPropertyByIndex( i, &unloadOnSilence );
                 pSoundProperty->m_unloadOnSilence = ( unloadOnSilence != 0 );
@@ -2918,36 +2933,49 @@ bool EventManager::_LoadSoundPropertyData( const Event& soundEvent, EventPropert
                 pEvent->getPropertyByIndex( i, &pSoundProperty->m_maxRetriggerInstances );
             }
             else if( propertyName == "MinRetriggerTime" )
-                {
+            {
                 pEvent->getPropertyByIndex( i, &pSoundProperty->m_minRetriggerTime );
             }
             else if( propertyName == "DelayTime" )
-                    {
+            {
                 pEvent->getPropertyByIndex( i, &pSoundProperty->m_soundDelayTime );
             }
             else if( propertyName == "RetriggerRadius" )
-                        {
+            {
                 pEvent->getPropertyByIndex( i, &pSoundProperty->m_retriggerRadius );
-                        }
+            }
             else if( propertyName == "DisableCutoff" )
             {
                 int disableCutoff = 0;
                 pEvent->getPropertyByIndex( i, &disableCutoff );
                 if( disableCutoff == 1 )
-        {
+                {
                     pSoundProperty->m_cutoffRadius = -1.f;
-        }
-    }
+                }
+            }
             else if( strstr( propertyString, "Duck_" ) != 0 )
-    {
+            {
                 STLString categoryName( propertyString + 5 );
                 float duckedVolume = 1.f;
                 pEvent->getPropertyByIndex( i, &duckedVolume );
                 pSoundProperty->m_categoriesToDuck.push_back( categoryName );
                 pSoundProperty->m_duckingVolumes.push_back( duckedVolume );
+            }
         }
-    }
 
+        //load parameters
+        int nFMODParams = 0;        
+        pEvent->getNumParameters( &nFMODParams );
+        FMOD::EventParameter *param;
+        for( int i = 0; i < nFMODParams; ++i )
+        {
+            int paramIndex = 0;
+            char * paramString = NULL;
+            if( ! FMOD_OK == pEvent->getParameterByIndex( i, &param ) ) continue;
+            if( ! FMOD_OK == param->getInfo( &paramIndex, &paramString ) ) continue;
+            STLString paramName( paramString );
+            pSoundProperty->m_aParams.insert( pair<STLString, int>( paramName, paramIndex ) );
+        }
         return true;
     }
 
