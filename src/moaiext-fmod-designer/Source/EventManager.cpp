@@ -112,7 +112,7 @@ void EventManager::Shutdown()
 			delete m_aReverbInstances[i];
 		}
 		m_aReverbInstances.clear();
-
+        m_enabled = false;
     }
 }
 

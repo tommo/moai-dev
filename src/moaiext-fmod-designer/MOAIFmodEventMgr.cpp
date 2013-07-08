@@ -859,6 +859,7 @@ MOAIFmodEventMgr::MOAIFmodEventMgr () : mMic ( 0 ) {
 
 //----------------------------------------------------------------//
 MOAIFmodEventMgr::~MOAIFmodEventMgr () {
+    FMODDesigner::tEventManager.Shutdown ();
 }
 
 //----------------------------------------------------------------//
