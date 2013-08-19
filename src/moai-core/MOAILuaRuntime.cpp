@@ -214,8 +214,8 @@ int MOAILuaRuntime::_dump ( lua_State* L ) {
 
 	#endif
 
-// 	return 0;
-// }
+	return 0;
+}
 
 //----------------------------------------------------------------//
 

@@ -221,9 +221,9 @@ void MOAILogMgr::LogVar ( lua_State *L, u32 messageID, va_list args ) {
 				
 				if ( L ) {
 					MOAILuaState state ( L );
-					if ( MOAILuaRuntime::Get ().GetCustomTraceback ()) {
+					if ( MOAILuaRuntime::Get ().GetTracebackRef ()) {
 	
-						state.Push ( MOAILuaRuntime::Get ().GetCustomTraceback ());
+						state.Push ( MOAILuaRuntime::Get ().GetTracebackRef ());
 						state.DebugCall ( 0, 0 );
 					}
 					state.PrintStackTrace ( this->mFile, 0 );

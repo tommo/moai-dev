@@ -98,38 +98,6 @@ int MOAIPartition::_propForPoint ( lua_State* L ) {
 	return 0;
 }
 
-int MOAIPartition::_propForCellPoint ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIPartition, "UNN" )
-
-	USVec2D cellPoint;
-	cellPoint.mX = state.GetValue < float >( 2, 0.0f );
-	cellPoint.mY = state.GetValue < float >( 3, 0.0f );
-
-	MOAIPartitionResultBuffer& buffer = MOAIPartitionResultMgr::Get ().GetBuffer ();
-
-	
-	u32 total = self->GatherProps ( buffer, 0, cellPoint );
-	if ( total ) {
-		
-		buffer.Sort ( MOAIPartitionResultBuffer::SORT_NONE );
-		
-		u32 sortMode = state.GetValue < u32 >( 4, MOAIPartitionResultBuffer::SORT_PRIORITY_ASCENDING );
-		float xScale = state.GetValue < float >( 5, 0.0f );
-		float yScale = state.GetValue < float >( 6, 0.0f );
-		float zScale = state.GetValue < float >( 7, 0.0f );
-		float priorityScale = state.GetValue < float >( 8, 1.0f );
-		
-		buffer.GenerateKeys ( sortMode, xScale, yScale, zScale, priorityScale );
-		
-		MOAIProp* prop = buffer.FindBest ();
-		if ( prop ) {
-			prop->PushLuaUserdata ( state );
-			return 1;
-		}
-	}
-	return 0;
-}
-
 //----------------------------------------------------------------//
 /**	@name	propForRay
 	@text	Returns the prop closest to the camera that intersects the given ray
@@ -207,32 +175,6 @@ int MOAIPartition::_propListForPoint ( lua_State* L ) {
 		float yScale = state.GetValue < float >( 7, 0.0f );
 		float zScale = state.GetValue < float >( 8, 0.0f );
 		float priorityScale = state.GetValue < float >( 9, 1.0f );
-		
-		buffer.GenerateKeys ( sortMode, xScale, yScale, zScale, priorityScale );
-		buffer.Sort ( sortMode );
-		buffer.PushProps ( L );
-		return total;
-	}
-	return 0;
-}
-
-int MOAIPartition::_propListForCellPoint ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIPartition, "UNN" )
-
-	USVec3D cellPoint;
-	cellPoint.mX = state.GetValue < float >( 2, 0.0f );
-	cellPoint.mY = state.GetValue < float >( 3, 0.0f );
-
-	MOAIPartitionResultBuffer& buffer = MOAIPartitionResultMgr::Get ().GetBuffer ();
-
-	u32 total = self->GatherProps ( buffer, 0, cellPoint );
-	if ( total ) {
-	
-		u32 sortMode = state.GetValue < u32 >( 4, MOAIPartitionResultBuffer::SORT_NONE );
-		float xScale = state.GetValue < float >( 5, 0.0f );
-		float yScale = state.GetValue < float >( 6, 0.0f );
-		float zScale = state.GetValue < float >( 7, 0.0f );
-		float priorityScale = state.GetValue < float >( 8, 1.0f );
 		
 		buffer.GenerateKeys ( sortMode, xScale, yScale, zScale, priorityScale );
 		buffer.Sort ( sortMode );
@@ -507,34 +449,6 @@ u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* i
 	return results.mTotalResults;
 }
 
-u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignore, const USVec2D& cellPoint, u32 mask ) {
-	
-	results.Reset ();
-
-	USVec3D point ( 0.0f, 0.0f, 0.0f );
-	
-	switch ( this->mPlaneID ) {
-		case USBox::PLANE_XY:
-			point.Init ( cellPoint.mX, cellPoint.mY, 0.0f );
-			break;
-		case USBox::PLANE_XZ:
-			point.Init ( cellPoint.mX, 0.0f , cellPoint.mY );
-			break;
-		case USBox::PLANE_YZ:
-			point.Init ( 0.0f , cellPoint.mX, cellPoint.mY );
-			break;
-	};
-	
-	u32 totalLayers = this->mLevels.Size ();
-	for ( u32 i = 0; i < totalLayers; ++i ) {
-		this->mLevels [ i ].GatherProps ( results, ignore, cellPoint, this->mPlaneID, mask );
-	}
-	this->mBiggies.GatherProps ( results, ignore, point, this->mPlaneID, mask );
-	this->mGlobals.GatherProps ( results, ignore, mask );
-	
-	return results.mTotalResults;
-}
-
 //----------------------------------------------------------------//
 u32 MOAIPartition::GatherProps ( MOAIPartitionResultBuffer& results, MOAIProp* ignore, ZLBox box, u32 mask ) {
 	
@@ -648,10 +562,8 @@ void MOAIPartition::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "clear",						_clear },
 		{ "insertProp",					_insertProp },
 		{ "propForPoint",				_propForPoint },
-		{ "propForCellPoint",				_propForCellPoint },
 		{ "propForRay",					_propForRay },
 		{ "propListForPoint",			_propListForPoint },
-		{ "propListForCellPoint",			_propListForCellPoint },
 		{ "propListForRay",				_propListForRay },
 		{ "propListForRect",			_propListForRect },
 		{ "removeProp",					_removeProp },

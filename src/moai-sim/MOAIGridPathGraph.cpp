@@ -21,7 +21,7 @@ public:
 	
 	u32 mHeuristic;
 
-	USIntRect mBodyRect;
+	ZLIntRect mBodyRect;
 	bool mInvertedGraph;
 };
 

@@ -37,7 +37,7 @@ private:
 public:
 	
 	DECL_LUA_FACTORY ( MOAIGrid )
-	GET (USLeanArray <u32> &, TileArray, mTiles)
+	GET (ZLLeanArray <u32> &, TileArray, mTiles)
 	//----------------------------------------------------------------//
 	u32				GetTile				( int xTile, int yTile );
 					MOAIGrid			();

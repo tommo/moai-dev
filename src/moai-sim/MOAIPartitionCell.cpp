@@ -90,24 +90,6 @@ void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, const 
 	}
 }
 
-void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, const MOAIProp* ignore, const USVec3D& point, u32 planeID, u32 mask ) {
-
-	PropIt propIt = this->mProps.Head ();
-	for ( ; propIt; propIt = propIt->Next ()) {
-		MOAIProp* prop = propIt->Data ();
-		
-		if ( prop == ignore ) continue;
-		
-		if (( mask == 0 ) || ( prop->mMask & mask )) {
-			if ( prop->mBounds.Contains ( point, planeID )) {
-				// if ( prop->Inside ( point, 0.0f )) {
-				prop->AddToSortBuffer ( results );
-				// }
-			}
-		}
-	}
-}
-
 //----------------------------------------------------------------//
 void MOAIPartitionCell::GatherProps ( MOAIPartitionResultBuffer& results, const MOAIProp* ignore, const ZLBox& box, u32 mask ) {
 

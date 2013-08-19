@@ -184,7 +184,7 @@ void MOAIFont::InitWithBMFont ( cc8* filename, const u32 numPreloadedTextures, M
 			if ( texture == 0 ) {
 				texture = new MOAITexture ();
 				texture->Init ( texturename, MOAITexture::DEFAULT_TRANSFORM );
-				if(smooth==1) texture->SetFilter ( GL_LINEAR, GL_LINEAR );
+				if(smooth==1) texture->SetFilter ( ZGL_SAMPLE_LINEAR, ZGL_SAMPLE_LINEAR );
 			}
 				
 			glyphCache->SetTexture ( id, texture );

@@ -64,7 +64,7 @@ private:
 	u32					mHeuristic;
 	u32					mFlags;
 	bool				mInvertedGraph;
-	USIntRect			mBodyRect;
+	ZLIntRect			mBodyRect;
 
 	float				mGWeight;
 	float				mHWeight;
@@ -101,7 +101,7 @@ public:
 	GET ( u32, Heuristic, mHeuristic )
 	GET ( u32, Flags, mFlags )
 	GET ( bool, InvertedGraph, mInvertedGraph )
-	GET ( USIntRect, BodyRect, mBodyRect )
+	GET ( ZLIntRect, BodyRect, mBodyRect )
 	GET ( float, GWeight, mGWeight )
 	GET ( float, HWeight, mHWeight )
 	
