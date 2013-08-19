@@ -25,16 +25,8 @@
 		03CC911C13B3C49400B2724C /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC911B13B3C49400B2724C /* SystemConfiguration.framework */; };
 		03CC912213B3C4A400B2724C /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC912113B3C4A400B2724C /* QuartzCore.framework */; };
 		03CC912C13B3C4C000B2724C /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC912B13B3C4C000B2724C /* StoreKit.framework */; };
-		0402C49215F8A691009386C5 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0402C49115F8A691009386C5 /* icon.png */; };
-		041E2E1F1626942D006F310F /* Default-Portrait@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 041E2E1E1626942D006F310F /* Default-Portrait@2x~ipad.png */; };
-		04398FD415E9F591004CF6EF /* libFlurry.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04398FD315E9F591004CF6EF /* libFlurry.a */; };
-		044E3BC6162943C400756E74 /* Icon-144.png in Resources */ = {isa = PBXBuildFile; fileRef = 044E3BC5162943C400756E74 /* Icon-144.png */; };
-		0482CC8515BCD9B900A45F75 /* libluajit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0482CC8415BCD9B900A45F75 /* libluajit.a */; };
-		049670F215F397C5008BA8D4 /* content in Resources */ = {isa = PBXBuildFile; fileRef = 049670F115F397C5008BA8D4 /* content */; };
-		049D461C162DC0F40006549C /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 04ECADFB15DF6A0A0037714D /* Default.png */; };
-		049D461D162DC10A0006549C /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 04D2BB6A1596092100135822 /* Default@2x.png */; };
-		04F865EF16258D9E0055A1F3 /* Default-Portrait~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 04ECADFF15DF6A160037714D /* Default-Portrait~ipad.png */; };
 		0711070513C637F000EE7C53 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0711070413C637F000EE7C53 /* CoreTelephony.framework */; };
+		074C469E14240A180066B1EB /* lua in Resources */ = {isa = PBXBuildFile; fileRef = 074C469A14240A180066B1EB /* lua */; };
 		074C46A014240A250066B1EB /* moai-target in Resources */ = {isa = PBXBuildFile; fileRef = 074C469F14240A250066B1EB /* moai-target */; };
 		078D630113BA9EA30072F273 /* MoaiVC.mm in Sources */ = {isa = PBXBuildFile; fileRef = 078D630013BA9EA30072F273 /* MoaiVC.mm */; };
 		079362FA1611287500A47687 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 665383F6160A8466003D5529 /* MessageUI.framework */; };
@@ -53,11 +45,21 @@
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765A40DF7441C002DB57D /* CoreGraphics.framework */; };
+		43BA2EF117733741007DCDF0 /* liblibmoai-ios-crittercism copy.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 43BA2EEE1773368F007DCDF0 /* liblibmoai-ios-crittercism copy.a */; };
+		43BA2EF317733819007DCDF0 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43BA2EF217733819007DCDF0 /* CFNetwork.framework */; };
+		43BA2EF717733901007DCDF0 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43BA2EF617733901007DCDF0 /* AdSupport.framework */; };
 		6630C511151005BB00F2F031 /* libmoai-ios-facebook.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6676D5D115100458004EA27A /* libmoai-ios-facebook.a */; };
 		665383F1160A76E2003D5529 /* libCrittercismCrashOnly_v3_3_3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 665383F0160A76E2003D5529 /* libCrittercismCrashOnly_v3_3_3.a */; };
 		665383F3160A798F003D5529 /* FacebookSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 665383F2160A798F003D5529 /* FacebookSDKResources.bundle */; };
 		665383F5160A7B65003D5529 /* libfacebook_ios_sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 665383F4160A7B65003D5529 /* libfacebook_ios_sdk.a */; };
 		665383F7160A8466003D5529 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 665383F6160A8466003D5529 /* MessageUI.framework */; };
+		89ADB9E1174302E900E8058B /* libmoai-ios-sim.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8919565A1742C47A00A6BC5B /* libmoai-ios-sim.a */; };
+		89ADB9E21743034600E8058B /* libmoai-ios-box2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8919564C1742C47A00A6BC5B /* libmoai-ios-box2d.a */; };
+		89ADB9E71743039C00E8058B /* libmoai-ios-chipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8919564E1742C47A00A6BC5B /* libmoai-ios-chipmunk.a */; };
+		89ADB9E8174303A000E8058B /* libmoai-ios-crittercism.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 891956501742C47A00A6BC5B /* libmoai-ios-crittercism.a */; };
+		89ADB9EF174303D200E8058B /* libmoai-ios-http-client.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 891956541742C47A00A6BC5B /* libmoai-ios-http-client.a */; };
+		89ADB9F01743042A00E8058B /* libmoai-ios-twitter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8919565C1742C47A00A6BC5B /* libmoai-ios-twitter.a */; };
+		89ADB9F2174304B200E8058B /* ParticlePresets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89ADB9F1174304B200E8058B /* ParticlePresets.cpp */; };
 		CD464CE0147259EA00501E4E /* libmoai-ios-zlcore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD04AF1214725736009C20E5 /* libmoai-ios-zlcore.a */; };
 		CD508A1A155E3AF90002FC3B /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 03CC904F13B3C1B700B2724C /* Icon-72.png */; };
 		CD508A1B155E3AF90002FC3B /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 03CC905013B3C1B700B2724C /* Icon-Small-50.png */; };
@@ -92,7 +94,6 @@
 		CD508A83155E3AF90002FC3B /* OpenGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 03CC90A213B3C37200B2724C /* OpenGLView.mm */; };
 		CD508A84155E3AF90002FC3B /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 03CC90A813B3C37C00B2724C /* main.mm */; };
 		CD508A85155E3AF90002FC3B /* MoaiVC.mm in Sources */ = {isa = PBXBuildFile; fileRef = 078D630013BA9EA30072F273 /* MoaiVC.mm */; };
-		CD508A86155E3AF90002FC3B /* ParticlePresets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7C73AC13B95516006CFA19 /* ParticlePresets.cpp */; };
 		CD508A8A155E3AF90002FC3B /* libmoai-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC90BD13B3C39D00B2724C /* libmoai-ios.a */; };
 		CD508A8B155E3AF90002FC3B /* libmoai-ios-3rdparty.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC90BF13B3C39D00B2724C /* libmoai-ios-3rdparty.a */; };
 		CD508A8C155E3AF90002FC3B /* libmoai-ios-facebook.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6676D5D115100458004EA27A /* libmoai-ios-facebook.a */; };
@@ -113,7 +114,6 @@
 		CD508A9C155E3AF90002FC3B /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07E6C6A0140C5EBD004D1227 /* GameKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		CD508A9D155E3AF90002FC3B /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 079530CD1447A0FF00143A72 /* MediaPlayer.framework */; };
 		CD508A9E155E3AF90002FC3B /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07EF3E43147BAAA5006CFDCE /* Twitter.framework */; };
-		CD7C73AE13B95516006CFA19 /* ParticlePresets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7C73AC13B95516006CFA19 /* ParticlePresets.cpp */; };
 		CDB9F12414593A66007DE94C /* libmoai-ios-tapjoy.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDB9F123145937C1007DE94C /* libmoai-ios-tapjoy.a */; };
 		CDDD2FF61574AC7300C410A0 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 03CC904F13B3C1B700B2724C /* Icon-72.png */; };
 		CDDD2FF71574AC7300C410A0 /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 03CC905013B3C1B700B2724C /* Icon-Small-50.png */; };
@@ -148,7 +148,6 @@
 		CDDD305F1574AC7300C410A0 /* OpenGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 03CC90A213B3C37200B2724C /* OpenGLView.mm */; };
 		CDDD30601574AC7300C410A0 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 03CC90A813B3C37C00B2724C /* main.mm */; };
 		CDDD30611574AC7300C410A0 /* MoaiVC.mm in Sources */ = {isa = PBXBuildFile; fileRef = 078D630013BA9EA30072F273 /* MoaiVC.mm */; };
-		CDDD30621574AC7300C410A0 /* ParticlePresets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7C73AC13B95516006CFA19 /* ParticlePresets.cpp */; };
 		CDDD30661574AC7300C410A0 /* libmoai-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC90BD13B3C39D00B2724C /* libmoai-ios.a */; };
 		CDDD30671574AC7300C410A0 /* libmoai-ios-3rdparty.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CC90BF13B3C39D00B2724C /* libmoai-ios-3rdparty.a */; };
 		CDDD30681574AC7300C410A0 /* libmoai-ios-facebook.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6676D5D115100458004EA27A /* libmoai-ios-facebook.a */; };
@@ -284,6 +283,27 @@
 			remoteGlobalIDString = CD07C3A313A182AA00C9386C;
 			remoteInfo = "libmoai-iphone-untz";
 		};
+		43BA2ED61773368E007DCDF0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 43BA2E4B177330EC007DCDF0;
+			remoteInfo = "libmoai-ios-playhaven";
+		};
+		43BA2EED1773368F007DCDF0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 43BA2E56177330EC007DCDF0;
+			remoteInfo = "libmoai-ios-playhaven";
+		};
+		43BA2EEF1773368F007DCDF0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 89E9D87F174BD4F100033CDD;
+			remoteInfo = "libmoai-osx-test";
+		};
 		6630C50F151005AB00F2F031 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
@@ -304,6 +324,153 @@
 			proxyType = 2;
 			remoteGlobalIDString = 07F4C7B014FC440500FB78BA;
 			remoteInfo = "libmoai-ios-facebook";
+		};
+		8919564B1742C47A00A6BC5B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 89BE74A1173AD2B600DFE837;
+			remoteInfo = "libmoai-ios-box2d";
+		};
+		8919564D1742C47A00A6BC5B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 89BE7547173C116400DFE837;
+			remoteInfo = "libmoai-ios-chipmunk";
+		};
+		8919564F1742C47A00A6BC5B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 89BE76D3173C6C8800DFE837;
+			remoteInfo = "libmoai-ios-crittercism";
+		};
+		891956511742C47A00A6BC5B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 89BE7647173C138100DFE837;
+			remoteInfo = "libmoai-ios-harness";
+		};
+		891956531742C47A00A6BC5B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 89BE75F7173C126100DFE837;
+			remoteInfo = "libmoai-ios-http-client";
+		};
+		891956551742C47A00A6BC5B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 89BE7686173C15F100DFE837;
+			remoteInfo = "libmoai-ios-http-server";
+		};
+		891956571742C47A00A6BC5B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 07175BD41656E03400F3DF6B;
+			remoteInfo = "libmoai-ios-mat";
+		};
+		891956591742C47A00A6BC5B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 89BE6F06173AD06700DFE837;
+			remoteInfo = "libmoai-ios-sim";
+		};
+		8919565B1742C47A00A6BC5B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 89BE771A173C6DB500DFE837;
+			remoteInfo = "libmoai-ios-twitter";
+		};
+		8919565D1742C47A00A6BC5B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 89BE737B173AD29200DFE837;
+			remoteInfo = "libmoai-osx-box2d";
+		};
+		8919565F1742C47A00A6BC5B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 89BE7576173C119600DFE837;
+			remoteInfo = "libmoai-osx-chipmunk";
+		};
+		891956611742C47A00A6BC5B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 89BE7660173C13EB00DFE837;
+			remoteInfo = "libmoai-osx-harness";
+		};
+		891956631742C47A00A6BC5B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 89BE75DA173C121800DFE837;
+			remoteInfo = "libmoai-osx-http-client";
+		};
+		891956651742C47A00A6BC5B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 89BE769F173C160E00DFE837;
+			remoteInfo = "libmoai-osx-http-server";
+		};
+		891956671742C47A00A6BC5B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 89BE6F18173AD07100DFE837;
+			remoteInfo = "libmoai-osx-sim";
+		};
+		89ADB9DF174302E400E8058B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 89BE6EF5173AD06700DFE837;
+			remoteInfo = "libmoai-ios-sim";
+		};
+		89ADB9E31743034900E8058B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 89BE737C173AD2B600DFE837;
+			remoteInfo = "libmoai-ios-box2d";
+		};
+		89ADB9E51743039600E8058B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 89BE7519173C116400DFE837;
+			remoteInfo = "libmoai-ios-chipmunk";
+		};
+		89ADB9E9174303A300E8058B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 89BE76C4173C6C8800DFE837;
+			remoteInfo = "libmoai-ios-crittercism";
+		};
+		89ADB9EB174303AC00E8058B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 89BE76E0173C6DB500DFE837;
+			remoteInfo = "libmoai-ios-twitter";
+		};
+		89ADB9ED174303CE00E8058B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 89BE75DB173C126100DFE837;
+			remoteInfo = "libmoai-ios-http-client";
 		};
 		CD04AF1114725736009C20E5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -503,18 +670,6 @@
 		03CC911B13B3C49400B2724C /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		03CC912113B3C4A400B2724C /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		03CC912B13B3C4C000B2724C /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
-		0402C49115F8A691009386C5 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
-		041E2E1E1626942D006F310F /* Default-Portrait@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait@2x~ipad.png"; sourceTree = "<group>"; };
-		04234B1815970DA000C00091 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
-		04398FD315E9F591004CF6EF /* libFlurry.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libFlurry.a; path = ../../3rdparty/FlurryiOS/libFlurry.a; sourceTree = "<group>"; };
-		044E3BC5162943C400756E74 /* Icon-144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-144.png"; sourceTree = "<group>"; };
-		04568D841619D6EB00D2E3B9 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		0482CC8415BCD9B900A45F75 /* libluajit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libluajit.a; path = "../../3rdparty/lua-5.1.3/iOS/libluajit.a"; sourceTree = "<group>"; };
-		049670F115F397C5008BA8D4 /* content */ = {isa = PBXFileReference; lastKnownFileType = folder; path = content; sourceTree = "<group>"; };
-		04D2BB6A1596092100135822 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
-		04ECADFB15DF6A0A0037714D /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
-		04ECADFD15DF6A0F0037714D /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
-		04ECADFF15DF6A160037714D /* Default-Portrait~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait~ipad.png"; sourceTree = "<group>"; };
 		0711070413C637F000EE7C53 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		074C469A14240A180066B1EB /* lua */ = {isa = PBXFileReference; lastKnownFileType = folder; path = lua; sourceTree = "<group>"; };
 		074C469F14240A250066B1EB /* moai-target */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "moai-target"; sourceTree = "<group>"; };
@@ -524,17 +679,18 @@
 		07E6C6A0140C5EBD004D1227 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		07EF3E43147BAAA5006CFDCE /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		1D6058910D05DD3D006BFB54 /* Lost Spell.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Lost Spell.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D6058910D05DD3D006BFB54 /* moai.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = moai.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765A40DF7441C002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		32CA4F630368D1EE00C91783 /* MoaiSample_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoaiSample_Prefix.pch; sourceTree = "<group>"; };
+		43BA2EF217733819007DCDF0 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		43BA2EF617733901007DCDF0 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		665383F0160A76E2003D5529 /* libCrittercismCrashOnly_v3_3_3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libCrittercismCrashOnly_v3_3_3.a; path = "../../3rdparty/crittercismiOS-3.3.3/CrittercismSDK-crashonly/libCrittercismCrashOnly_v3_3_3.a"; sourceTree = "<group>"; };
 		665383F2160A798F003D5529 /* FacebookSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = FacebookSDKResources.bundle; path = "../../3rdparty/facebookiOS-3.0.6.b/FacebookSDKResources.bundle"; sourceTree = "<group>"; };
 		665383F4160A7B65003D5529 /* libfacebook_ios_sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfacebook_ios_sdk.a; path = "../../3rdparty/facebookiOS-3.0.6.b/libfacebook_ios_sdk.a"; sourceTree = "<group>"; };
 		665383F6160A8466003D5529 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		89ADB9F1174304B200E8058B /* ParticlePresets.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ParticlePresets.cpp; path = "../../src/host-glut/ParticlePresets.cpp"; sourceTree = "<group>"; };
 		CD508AA2155E3AF90002FC3B /* moai-fmod-ex.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "moai-fmod-ex.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		CD7C73AC13B95516006CFA19 /* ParticlePresets.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ParticlePresets.cpp; path = ../../src/hosts/ParticlePresets.cpp; sourceTree = SOURCE_ROOT; };
-		CD7C73AD13B95516006CFA19 /* ParticlePresets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ParticlePresets.h; path = ../../src/hosts/ParticlePresets.h; sourceTree = SOURCE_ROOT; };
 		CDDD307E1574AC7300C410A0 /* moai-fmod-designer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "moai-fmod-designer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E92D47E5153CA75B00CB1E8A /* close_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = close_button.png; path = "../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect/Components/TJCCore/Views/close_button.png"; sourceTree = "<group>"; };
 		E92D47E6153CA75B00CB1E8A /* TJCLoadingView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = TJCLoadingView.xib; path = "../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect/Components/TJCCore/Views/TJCLoadingView.xib"; sourceTree = "<group>"; };
@@ -562,6 +718,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				89ADB9F01743042A00E8058B /* libmoai-ios-twitter.a in Frameworks */,
+				89ADB9EF174303D200E8058B /* libmoai-ios-http-client.a in Frameworks */,
+				89ADB9E8174303A000E8058B /* libmoai-ios-crittercism.a in Frameworks */,
+				89ADB9E71743039C00E8058B /* libmoai-ios-chipmunk.a in Frameworks */,
+				89ADB9E21743034600E8058B /* libmoai-ios-box2d.a in Frameworks */,
+				89ADB9E1174302E900E8058B /* libmoai-ios-sim.a in Frameworks */,
 				665383F5160A7B65003D5529 /* libfacebook_ios_sdk.a in Frameworks */,
 				665383F1160A76E2003D5529 /* libCrittercismCrashOnly_v3_3_3.a in Frameworks */,
 				07E9F73E13B50582006396F3 /* libmoai-ios.a in Frameworks */,
@@ -569,9 +731,12 @@
 				6630C511151005BB00F2F031 /* libmoai-ios-facebook.a in Frameworks */,
 				07E9F74013B50582006396F3 /* libmoai-ios-luaext.a in Frameworks */,
 				CDB9F12414593A66007DE94C /* libmoai-ios-tapjoy.a in Frameworks */,
+				43BA2EF117733741007DCDF0 /* liblibmoai-ios-crittercism copy.a in Frameworks */,
 				07E9F74113B50582006396F3 /* libmoai-ios-untz.a in Frameworks */,
 				CD464CE0147259EA00501E4E /* libmoai-ios-zlcore.a in Frameworks */,
+				43BA2EF717733901007DCDF0 /* AdSupport.framework in Frameworks */,
 				03CC910C13B3C48400B2724C /* AudioToolbox.framework in Frameworks */,
+				43BA2EF317733819007DCDF0 /* CFNetwork.framework in Frameworks */,
 				03CC910413B3C47600B2724C /* CoreAudio.framework in Frameworks */,
 				288765A50DF7441C002DB57D /* CoreGraphics.framework in Frameworks */,
 				03CC90FE13B3C46A00B2724C /* CoreLocation.framework in Frameworks */,
@@ -586,8 +751,6 @@
 				03CC911C13B3C49400B2724C /* SystemConfiguration.framework in Frameworks */,
 				07EF3E44147BAAA5006CFDCE /* Twitter.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
-				0482CC8515BCD9B900A45F75 /* libluajit.a in Frameworks */,
-				04398FD415E9F591004CF6EF /* libFlurry.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -662,22 +825,39 @@
 				03CC90BD13B3C39D00B2724C /* libmoai-ios.a */,
 				03CC90BF13B3C39D00B2724C /* libmoai-ios-3rdparty.a */,
 				6676D5CF15100458004EA27A /* libmoai-ios-adcolony.a */,
+				8919564C1742C47A00A6BC5B /* libmoai-ios-box2d.a */,
 				E92D47E3153CA6FC00CB1E8A /* libmoai-ios-chartboost.a */,
+				8919564E1742C47A00A6BC5B /* libmoai-ios-chipmunk.a */,
+				891956501742C47A00A6BC5B /* libmoai-ios-crittercism.a */,
 				6676D5D115100458004EA27A /* libmoai-ios-facebook.a */,
-				CDDD30A91574AE2100C410A0 /* liblibmoai-ios-fmod-designer.a */,
+				CDDD30A91574AE2100C410A0 /* libmoai-ios-fmod-designer.a */,
 				CD508AA7155E3AF90002FC3B /* libmoai-ios-fmod-ex.a */,
+				891956521742C47A00A6BC5B /* libmoai-ios-harness.a */,
+				891956541742C47A00A6BC5B /* libmoai-ios-http-client.a */,
+				891956561742C47A00A6BC5B /* libmoai-ios-http-server.a */,
 				03CC90C113B3C39D00B2724C /* libmoai-ios-luaext.a */,
+				891956581742C47A00A6BC5B /* libmoai-ios-mat.a */,
+				43BA2EEE1773368F007DCDF0 /* liblibmoai-ios-crittercism copy.a */,
+				8919565A1742C47A00A6BC5B /* libmoai-ios-sim.a */,
 				CDB9F123145937C1007DE94C /* libmoai-ios-tapjoy.a */,
+				8919565C1742C47A00A6BC5B /* libmoai-ios-twitter.a */,
 				03CC90C313B3C39D00B2724C /* libmoai-ios-untz.a */,
 				0730448E15AD00130046422F /* libmoai-ios-vungle.a */,
 				CD04AF1214725736009C20E5 /* libmoai-ios-zlcore.a */,
 				03CC90C513B3C39D00B2724C /* libmoai-osx.a */,
 				03CC90C713B3C39D00B2724C /* libmoai-osx-3rdparty.a */,
-				CDDD30AB1574AE2100C410A0 /* liblibmoai-osx-fmod-designer.a */,
+				8919565E1742C47A00A6BC5B /* libmoai-osx-box2d.a */,
+				891956601742C47A00A6BC5B /* libmoai-osx-chipmunk.a */,
+				CDDD30AB1574AE2100C410A0 /* libmoai-osx-fmod-designer.a */,
 				CD8F4812155E4736001A579F /* libmoai-osx-fmod-ex.a */,
+				891956621742C47A00A6BC5B /* libmoai-osx-harness.a */,
+				891956641742C47A00A6BC5B /* libmoai-osx-http-client.a */,
+				891956661742C47A00A6BC5B /* libmoai-osx-http-server.a */,
 				03CC90C913B3C39D00B2724C /* libmoai-osx-luaext.a */,
+				891956681742C47A00A6BC5B /* libmoai-osx-sim.a */,
 				03CC90CB13B3C39D00B2724C /* libmoai-osx-untz.a */,
 				CD04AF1414725736009C20E5 /* libmoai-osx-zlcore.a */,
+				43BA2EF01773368F007DCDF0 /* libmoai-osx-test.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -705,8 +885,6 @@
 				03CC90A013B3C37200B2724C /* MoaiView.mm */,
 				03CC90A113B3C37200B2724C /* OpenGLView.h */,
 				03CC90A213B3C37200B2724C /* OpenGLView.mm */,
-				CD7C73AC13B95516006CFA19 /* ParticlePresets.cpp */,
-				CD7C73AD13B95516006CFA19 /* ParticlePresets.h */,
 				03CC90A313B3C37200B2724C /* RefPtr.h */,
 			);
 			path = Classes;
@@ -715,7 +893,7 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1D6058910D05DD3D006BFB54 /* Lost Spell.app */,
+				1D6058910D05DD3D006BFB54 /* moai.app */,
 				CD508AA2155E3AF90002FC3B /* moai-fmod-ex.app */,
 				CDDD307E1574AC7300C410A0 /* moai-fmod-designer.app */,
 			);
@@ -725,15 +903,9 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				044E3BC5162943C400756E74 /* Icon-144.png */,
-				041E2E1E1626942D006F310F /* Default-Portrait@2x~ipad.png */,
-				04568D841619D6EB00D2E3B9 /* Default-568h@2x.png */,
-				0402C49115F8A691009386C5 /* icon.png */,
-				04ECADFF15DF6A160037714D /* Default-Portrait~ipad.png */,
-				04ECADFD15DF6A0F0037714D /* Default@2x.png */,
-				04ECADFB15DF6A0A0037714D /* Default.png */,
-				04234B1815970DA000C00091 /* Default.png */,
 				665383F6160A8466003D5529 /* MessageUI.framework */,
+				665383F4160A7B65003D5529 /* libfacebook_ios_sdk.a */,
+				665383F0160A76E2003D5529 /* libCrittercismCrashOnly_v3_3_3.a */,
 				03CC90AE13B3C39D00B2724C /* libmoai.xcodeproj */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
@@ -747,6 +919,7 @@
 		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
+				89ADB9F1174304B200E8058B /* ParticlePresets.cpp */,
 				32CA4F630368D1EE00C91783 /* MoaiSample_Prefix.pch */,
 				03CC90A813B3C37C00B2724C /* main.mm */,
 			);
@@ -756,13 +929,11 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				04D2BB6A1596092100135822 /* Default@2x.png */,
 				03E2806113C7CC4800EE3B0D /* build */,
 				E9AA1CD514D8C6860086E9DE /* Crittercism */,
 				E91A4CCD151921910008F1A5 /* Facebook */,
 				CDB607BA14527D39006EBFB5 /* Tapjoy */,
 				03CC90AA13B3C38800B2724C /* Entitlements.plist */,
-				049670F115F397C5008BA8D4 /* content */,
 				03CC904F13B3C1B700B2724C /* Icon-72.png */,
 				03CC905013B3C1B700B2724C /* Icon-Small-50.png */,
 				03CC905113B3C1B700B2724C /* Icon-Small.png */,
@@ -777,11 +948,9 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				665383F0160A76E2003D5529 /* libCrittercismCrashOnly_v3_3_3.a */,
-				665383F4160A7B65003D5529 /* libfacebook_ios_sdk.a */,
-				0482CC8415BCD9B900A45F75 /* libluajit.a */,
-				04398FD315E9F591004CF6EF /* libFlurry.a */,
+				43BA2EF617733901007DCDF0 /* AdSupport.framework */,
 				03CC910B13B3C48400B2724C /* AudioToolbox.framework */,
+				43BA2EF217733819007DCDF0 /* CFNetwork.framework */,
 				03CC910313B3C47600B2724C /* CoreAudio.framework */,
 				288765A40DF7441C002DB57D /* CoreGraphics.framework */,
 				03CC90FD13B3C46A00B2724C /* CoreLocation.framework */,
@@ -843,9 +1012,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		1D6058900D05DD3D006BFB54 /* lost-spell */ = {
+		1D6058900D05DD3D006BFB54 /* moai */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "lost-spell" */;
+			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "moai" */;
 			buildPhases = (
 				03E27D9413C7C05B00EE3B0D /* ShellScript */,
 				1D60588D0D05DD3D006BFB54 /* Resources */,
@@ -855,17 +1024,24 @@
 			buildRules = (
 			);
 			dependencies = (
+				89ADB9EE174303CE00E8058B /* PBXTargetDependency */,
+				89ADB9EC174303AC00E8058B /* PBXTargetDependency */,
+				89ADB9EA174303A300E8058B /* PBXTargetDependency */,
+				89ADB9E61743039600E8058B /* PBXTargetDependency */,
+				89ADB9E41743034900E8058B /* PBXTargetDependency */,
+				89ADB9E0174302E400E8058B /* PBXTargetDependency */,
 				07E9F73713B50574006396F3 /* PBXTargetDependency */,
 				07E9F73913B50574006396F3 /* PBXTargetDependency */,
 				6630C510151005AB00F2F031 /* PBXTargetDependency */,
 				07E9F73B13B50574006396F3 /* PBXTargetDependency */,
 				E9AA1CC214D8C4750086E9DE /* PBXTargetDependency */,
+				43BA2ED71773368E007DCDF0 /* PBXTargetDependency */,
 				07E9F73D13B50574006396F3 /* PBXTargetDependency */,
 				E9AA1CC414D8C4750086E9DE /* PBXTargetDependency */,
 			);
-			name = "lost-spell";
+			name = moai;
 			productName = MoaiSample;
-			productReference = 1D6058910D05DD3D006BFB54 /* Lost Spell.app */;
+			productReference = 1D6058910D05DD3D006BFB54 /* moai.app */;
 			productType = "com.apple.product-type.application";
 		};
 		CD508A07155E3AF90002FC3B /* moai-fmod-ex */ = {
@@ -946,7 +1122,7 @@
 			);
 			projectRoot = "";
 			targets = (
-				1D6058900D05DD3D006BFB54 /* lost-spell */,
+				1D6058900D05DD3D006BFB54 /* moai */,
 				CDDD2FE51574AC7300C410A0 /* moai-fmod-designer */,
 				CD508A07155E3AF90002FC3B /* moai-fmod-ex */,
 			);
@@ -1017,6 +1193,20 @@
 			remoteRef = 0730448D15AD00130046422F /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		43BA2EEE1773368F007DCDF0 /* liblibmoai-ios-crittercism copy.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "liblibmoai-ios-crittercism copy.a";
+			remoteRef = 43BA2EED1773368F007DCDF0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		43BA2EF01773368F007DCDF0 /* libmoai-osx-test.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libmoai-osx-test.a";
+			remoteRef = 43BA2EEF1773368F007DCDF0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		6676D5CF15100458004EA27A /* libmoai-ios-adcolony.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1029,6 +1219,111 @@
 			fileType = archive.ar;
 			path = "libmoai-ios-facebook.a";
 			remoteRef = 6676D5D015100458004EA27A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8919564C1742C47A00A6BC5B /* libmoai-ios-box2d.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libmoai-ios-box2d.a";
+			remoteRef = 8919564B1742C47A00A6BC5B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8919564E1742C47A00A6BC5B /* libmoai-ios-chipmunk.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libmoai-ios-chipmunk.a";
+			remoteRef = 8919564D1742C47A00A6BC5B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		891956501742C47A00A6BC5B /* libmoai-ios-crittercism.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libmoai-ios-crittercism.a";
+			remoteRef = 8919564F1742C47A00A6BC5B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		891956521742C47A00A6BC5B /* libmoai-ios-harness.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libmoai-ios-harness.a";
+			remoteRef = 891956511742C47A00A6BC5B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		891956541742C47A00A6BC5B /* libmoai-ios-http-client.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libmoai-ios-http-client.a";
+			remoteRef = 891956531742C47A00A6BC5B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		891956561742C47A00A6BC5B /* libmoai-ios-http-server.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libmoai-ios-http-server.a";
+			remoteRef = 891956551742C47A00A6BC5B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		891956581742C47A00A6BC5B /* libmoai-ios-mat.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libmoai-ios-mat.a";
+			remoteRef = 891956571742C47A00A6BC5B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8919565A1742C47A00A6BC5B /* libmoai-ios-sim.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libmoai-ios-sim.a";
+			remoteRef = 891956591742C47A00A6BC5B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8919565C1742C47A00A6BC5B /* libmoai-ios-twitter.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libmoai-ios-twitter.a";
+			remoteRef = 8919565B1742C47A00A6BC5B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8919565E1742C47A00A6BC5B /* libmoai-osx-box2d.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libmoai-osx-box2d.a";
+			remoteRef = 8919565D1742C47A00A6BC5B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		891956601742C47A00A6BC5B /* libmoai-osx-chipmunk.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libmoai-osx-chipmunk.a";
+			remoteRef = 8919565F1742C47A00A6BC5B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		891956621742C47A00A6BC5B /* libmoai-osx-harness.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libmoai-osx-harness.a";
+			remoteRef = 891956611742C47A00A6BC5B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		891956641742C47A00A6BC5B /* libmoai-osx-http-client.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libmoai-osx-http-client.a";
+			remoteRef = 891956631742C47A00A6BC5B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		891956661742C47A00A6BC5B /* libmoai-osx-http-server.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libmoai-osx-http-server.a";
+			remoteRef = 891956651742C47A00A6BC5B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		891956681742C47A00A6BC5B /* libmoai-osx-sim.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libmoai-osx-sim.a";
+			remoteRef = 891956671742C47A00A6BC5B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		CD04AF1214725736009C20E5 /* libmoai-ios-zlcore.a */ = {
@@ -1066,17 +1361,17 @@
 			remoteRef = CDB9F122145937C1007DE94C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		CDDD30A91574AE2100C410A0 /* liblibmoai-ios-fmod-designer.a */ = {
+		CDDD30A91574AE2100C410A0 /* libmoai-ios-fmod-designer.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = "liblibmoai-ios-fmod-designer.a";
+			path = "libmoai-ios-fmod-designer.a";
 			remoteRef = CDDD30A81574AE2100C410A0 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		CDDD30AB1574AE2100C410A0 /* liblibmoai-osx-fmod-designer.a */ = {
+		CDDD30AB1574AE2100C410A0 /* libmoai-osx-fmod-designer.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = "liblibmoai-osx-fmod-designer.a";
+			path = "libmoai-osx-fmod-designer.a";
 			remoteRef = CDDD30AA1574AE2100C410A0 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -1100,6 +1395,7 @@
 				03CC905B13B3C1B700B2724C /* Icon-Small@2x.png in Resources */,
 				03CC905C13B3C1B700B2724C /* Icon.png in Resources */,
 				03CC905D13B3C1B700B2724C /* Icon@2x.png in Resources */,
+				074C469E14240A180066B1EB /* lua in Resources */,
 				074C46A014240A250066B1EB /* moai-target in Resources */,
 				E92D47E7153CA75B00CB1E8A /* close_button.png in Resources */,
 				E92D47E8153CA75B00CB1E8A /* TJCLoadingView.xib in Resources */,
@@ -1120,14 +1416,7 @@
 				E92D4808153CA7D800CB1E8A /* TJCVGPageView.xib in Resources */,
 				E92D4809153CA7D800CB1E8A /* TJCVGTableViewCell.xib in Resources */,
 				E92D480A153CA7D800CB1E8A /* TJCVGView.xib in Resources */,
-				049670F215F397C5008BA8D4 /* content in Resources */,
-				0402C49215F8A691009386C5 /* icon.png in Resources */,
 				665383F3160A798F003D5529 /* FacebookSDKResources.bundle in Resources */,
-				04F865EF16258D9E0055A1F3 /* Default-Portrait~ipad.png in Resources */,
-				041E2E1F1626942D006F310F /* Default-Portrait@2x~ipad.png in Resources */,
-				044E3BC6162943C400756E74 /* Icon-144.png in Resources */,
-				049D461C162DC0F40006549C /* Default.png in Resources */,
-				049D461D162DC10A0006549C /* Default@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1257,7 +1546,7 @@
 				03CC90A713B3C37200B2724C /* OpenGLView.mm in Sources */,
 				03CC90A913B3C37C00B2724C /* main.mm in Sources */,
 				078D630113BA9EA30072F273 /* MoaiVC.mm in Sources */,
-				CD7C73AE13B95516006CFA19 /* ParticlePresets.cpp in Sources */,
+				89ADB9F2174304B200E8058B /* ParticlePresets.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1271,7 +1560,6 @@
 				CD508A83155E3AF90002FC3B /* OpenGLView.mm in Sources */,
 				CD508A84155E3AF90002FC3B /* main.mm in Sources */,
 				CD508A85155E3AF90002FC3B /* MoaiVC.mm in Sources */,
-				CD508A86155E3AF90002FC3B /* ParticlePresets.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1285,7 +1573,6 @@
 				CDDD305F1574AC7300C410A0 /* OpenGLView.mm in Sources */,
 				CDDD30601574AC7300C410A0 /* main.mm in Sources */,
 				CDDD30611574AC7300C410A0 /* MoaiVC.mm in Sources */,
-				CDDD30621574AC7300C410A0 /* ParticlePresets.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1312,10 +1599,45 @@
 			name = "libmoai-iphone-untz";
 			targetProxy = 07E9F73C13B50574006396F3 /* PBXContainerItemProxy */;
 		};
+		43BA2ED71773368E007DCDF0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-ios-playhaven";
+			targetProxy = 43BA2ED61773368E007DCDF0 /* PBXContainerItemProxy */;
+		};
 		6630C510151005AB00F2F031 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "libmoai-ios-facebook";
 			targetProxy = 6630C50F151005AB00F2F031 /* PBXContainerItemProxy */;
+		};
+		89ADB9E0174302E400E8058B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-ios-sim";
+			targetProxy = 89ADB9DF174302E400E8058B /* PBXContainerItemProxy */;
+		};
+		89ADB9E41743034900E8058B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-ios-box2d";
+			targetProxy = 89ADB9E31743034900E8058B /* PBXContainerItemProxy */;
+		};
+		89ADB9E61743039600E8058B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-ios-chipmunk";
+			targetProxy = 89ADB9E51743039600E8058B /* PBXContainerItemProxy */;
+		};
+		89ADB9EA174303A300E8058B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-ios-crittercism";
+			targetProxy = 89ADB9E9174303A300E8058B /* PBXContainerItemProxy */;
+		};
+		89ADB9EC174303AC00E8058B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-ios-twitter";
+			targetProxy = 89ADB9EB174303AC00E8058B /* PBXContainerItemProxy */;
+		};
+		89ADB9EE174303CE00E8058B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libmoai-ios-http-client";
+			targetProxy = 89ADB9ED174303CE00E8058B /* PBXContainerItemProxy */;
 		};
 		CD508A08155E3AF90002FC3B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1403,44 +1725,32 @@
 		1D6058940D05DD3E006BFB54 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"ARCHS[sdk=*]" = armv7;
-				CODE_SIGN_IDENTITY = "";
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = USE_UNTZ;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../3rdparty/lua-5.1.3/iOS\"",
-					"\"$(SRCROOT)/../../3rdparty/FlurryiOS\"",
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = (
+					"-force_load",
+					"\"$(BUILT_PRODUCTS_DIR)/libmoai-ios-tapjoy.a\"",
+					"-force_load",
+					"\"$(BUILT_PRODUCTS_DIR)/libmoai-ios-playhaven.a\"",
 				);
-				PRODUCT_NAME = "Lost Spell";
-				VALID_ARCHS = "i386 armv7";
+				PRODUCT_NAME = moai;
 			};
 			name = Debug;
 		};
 		1D6058950D05DD3E006BFB54 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"ARCHS[sdk=*]" = armv7;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEPLOYMENT_POSTPROCESSING = YES;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = USE_UNTZ;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../../3rdparty/lua-5.1.3/iOS\"",
-					"\"$(SRCROOT)/../../3rdparty/FlurryiOS\"",
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = (
+					"-force_load",
+					"\"$(BUILT_PRODUCTS_DIR)/libmoai-ios-tapjoy.a\"",
+					"-force_load",
+					"\"$(BUILT_PRODUCTS_DIR)/libmoai-ios-playhaven.a\"",
 				);
-				LLVM_LTO = NO;
-				PRODUCT_NAME = "Lost Spell";
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				STRIP_INSTALLED_PRODUCT = YES;
-				VALID_ARCHS = "i386 armv7";
+				PRODUCT_NAME = moai;
 			};
 			name = Release;
 		};
@@ -1448,12 +1758,49 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				CODE_SIGN_IDENTITY = "iPhone Developer: Mingwei Zhou (ZT4A3R95FQ)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
-				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../src\"/**";
+				HEADER_SEARCH_PATHS = (
+					"\"../../src/hosts\"",
+					"\"../../src/config-default\"",
+					"\"../../src\"/**",
+					"\"../../3rdparty\"",
+					"\"../../3rdparty/lua-5.1.3/src\"",
+					"\"../../3rdparty/contrib\"",
+					"\"../../3rdparty/tinyxml\"",
+					"\"../../3rdparty/lpng140\"",
+					"\"../../3rdparty/c-ares-1.7.5\"",
+					"\"../../3rdparty/openssl-1.0.0d/include-iphone\"",
+					"\"../../3rdparty/curl-7.19.7/include-iphone\"",
+					"\"../../3rdparty/curl-7.19.7/lib\"",
+					"\"../../3rdparty/expat-2.0.1/lib\"",
+					"\"../../3rdparty/freetype-2.4.4/include\"",
+					"\"../../3rdparty/box2d-2.2.1\"",
+					"\"../../3rdparty/chipmunk-5.3.4/include\"",
+					"\"../../3rdparty/chipmunk-5.3.4/include/chipmunk\"",
+					"\"../../3rdparty/luacrypto-0.2.0/src\"",
+					"\"../../3rdparty/luacurl-1.2.1/src\"",
+					"\"../../3rdparty/luasocket-2.0.2/src\"",
+					"\"../../3rdparty/luasql-2.2.0/src\"",
+					"\"../../3rdparty/libogg-1.2.2/include\"",
+					"\"../../3rdparty/jansson-2.1/src\"",
+					"\"../../3rdparty/jpeg-8c\"",
+					"\"../../3rdparty/untz/include\"",
+					"\"../../3rdparty/untz/src\"",
+					"\"../../3rdparty/libvorbis-1.3.2/lib\"",
+					"\"../../3rdparty/libvorbis-1.3.2/include\"",
+					"\"../../3rdparty/tlsf-2.0\"",
+					"\"../../3rdparty/zlib-1.2.3\"",
+					"\"../../3rdparty/ooid-0.99\"",
+					"\"../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect\"",
+					"\"../../3rdparty/crittercismiOS-3.3.3/CrittercismSDK-crashonly\"",
+					"\"../../3rdparty/chartboostiOS-3.0.7\"",
+					"\"../../3rdparty/facebookiOS-3.0.6.b/src\"",
+					"\"../../3rdparty/vungle116/lib\"",
+					"\"../../3rdparty/adcolonyiOS-1911/Library\"",
+					"\"../../3rdparty/mongoose\"",
+				);
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				LIBRARY_SEARCH_PATHS = (
@@ -1469,10 +1816,9 @@
 					"-force_load",
 					"\"$(BUILT_PRODUCTS_DIR)/libmoai-ios-tapjoy.a\"",
 				);
-				PROVISIONING_PROFILE = "7299653F-0617-4509-8495-E0A41F440E1A";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				VALID_ARCHS = "i386 armv7";
+				VALID_ARCHS = "i386 armv7 armv7s";
 			};
 			name = Debug;
 		};
@@ -1484,8 +1830,46 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
-				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../src\"/**";
+				HEADER_SEARCH_PATHS = (
+					"\"../../src/hosts\"",
+					"\"../../src/config-default\"",
+					"\"../../src\"/**",
+					"\"../../3rdparty\"",
+					"\"../../3rdparty/lua-5.1.3/src\"",
+					"\"../../3rdparty/contrib\"",
+					"\"../../3rdparty/tinyxml\"",
+					"\"../../3rdparty/lpng140\"",
+					"\"../../3rdparty/c-ares-1.7.5\"",
+					"\"../../3rdparty/openssl-1.0.0d/include-iphone\"",
+					"\"../../3rdparty/curl-7.19.7/include-iphone\"",
+					"\"../../3rdparty/curl-7.19.7/lib\"",
+					"\"../../3rdparty/expat-2.0.1/lib\"",
+					"\"../../3rdparty/freetype-2.4.4/include\"",
+					"\"../../3rdparty/box2d-2.2.1\"",
+					"\"../../3rdparty/chipmunk-5.3.4/include\"",
+					"\"../../3rdparty/chipmunk-5.3.4/include/chipmunk\"",
+					"\"../../3rdparty/luacrypto-0.2.0/src\"",
+					"\"../../3rdparty/luacurl-1.2.1/src\"",
+					"\"../../3rdparty/luasocket-2.0.2/src\"",
+					"\"../../3rdparty/luasql-2.2.0/src\"",
+					"\"../../3rdparty/libogg-1.2.2/include\"",
+					"\"../../3rdparty/jansson-2.1/src\"",
+					"\"../../3rdparty/jpeg-8c\"",
+					"\"../../3rdparty/untz/include\"",
+					"\"../../3rdparty/untz/src\"",
+					"\"../../3rdparty/libvorbis-1.3.2/lib\"",
+					"\"../../3rdparty/libvorbis-1.3.2/include\"",
+					"\"../../3rdparty/tlsf-2.0\"",
+					"\"../../3rdparty/zlib-1.2.3\"",
+					"\"../../3rdparty/ooid-0.99\"",
+					"\"../../3rdparty/tapjoyiOS-8.1.9/TapjoyConnect\"",
+					"\"../../3rdparty/crittercismiOS-3.3.3/CrittercismSDK-crashonly\"",
+					"\"../../3rdparty/chartboostiOS-3.0.7\"",
+					"\"../../3rdparty/facebookiOS-3.0.6.b/src\"",
+					"\"../../3rdparty/vungle116/lib\"",
+					"\"../../3rdparty/adcolonyiOS-1911/Library\"",
+					"\"../../3rdparty/mongoose\"",
+				);
 				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				LIBRARY_SEARCH_PATHS = (
@@ -1504,7 +1888,7 @@
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				VALID_ARCHS = "i386 armv7";
+				VALID_ARCHS = "i386 armv7 armv7s";
 			};
 			name = Release;
 		};
@@ -1548,7 +1932,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PREPROCESSOR_DEFINITIONS = USE_FMOD_DESIGNER;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(FMOD_IOS_SDK_ROOT)/fmoddesignerapi/api/lib\"",
@@ -1567,7 +1950,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PREPROCESSOR_DEFINITIONS = USE_FMOD_DESIGNER;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(FMOD_IOS_SDK_ROOT)/fmoddesignerapi/api/lib\"",
@@ -1585,7 +1967,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "lost-spell" */ = {
+		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "moai" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1D6058940D05DD3E006BFB54 /* Debug */,

@@ -1,0 +1,123 @@
+// Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
+// http://getmoai.com
+
+#include "pch.h"
+#include <math.h>
+#include <zl-util/ZLTrig.h>
+#include <zl-util/ZLInterpolate.h>
+
+//================================================================//
+// ZLInterpolate
+//================================================================//
+
+//----------------------------------------------------------------//
+float ZLInterpolate::Curve ( u32 mode, float t ) {
+
+	switch ( mode ) {
+		
+		case kEaseIn:
+		
+			t = t - 1.0f;
+			return 1.0f - ( t * t * t * t );
+		
+		case kEaseOut:
+		
+			return t * t * t * t;
+			
+		case kFlat:
+		
+			return ( t < 1.0f ) ? 0.0f : 1.0f;
+		
+		case kLinear:
+		
+			return t;
+		
+		case kSharpEaseIn:
+		
+			t = t - 1.0f;
+			return 1.0f - ( t * t * t * t * t * t * t * t );
+			
+		case kSharpEaseOut:
+		
+			return t * t * t * t * t * t;
+		
+		case kSharpSmooth:
+		
+			if ( t < 0.5f ) {
+				t = t * 2.0f;
+				return ( t * t * t * t * t * t ) * 0.5f;
+			}
+			t = ( t * 2.0f ) - 2.0f;
+			return ( 2.0f - ( t * t * t * t * t * t )) * 0.5f;
+		
+		case kSmooth:
+		
+			if ( t < 0.5f ) {
+				t = t * 2.0f;
+				return ( t * t * t * t ) * 0.5f;
+			}
+			t = ( t * 2.0f ) - 2.0f;
+			return ( 2.0f - ( t * t * t * t )) * 0.5f;
+		
+		case kSoftEaseIn:
+		
+			t = t - 1.0f;
+			return 1.0f - ( t * t );
+			
+		case kSoftEaseOut:
+		
+			return t * t;
+		
+		case kSoftSmooth:
+		
+			if ( t < 0.5f ) {
+				t = t * 2.0f;
+				return ( t * t ) * 0.5f;
+			}
+			t = ( t * 2.0f ) - 2.0f;
+			return ( 2.0f - ( t * t )) * 0.5f;
+
+		case kElastic:
+			return pow(2.0f, (-10.0f* -t * cos(-t*30.0f)) );
+
+		case kBounce:
+			float a=0.0f, b=1.0f;
+			while(1){
+				if(t>=(7.0f-4.0f*a)/11.0f){
+					float x= (11.0f - 6.0f * a - 11.0f*(1.0f-t))/4.0f;
+					return b*b - x*x;
+				}
+				a+=b;
+				b/=2;
+			}
+
+	}
+	return 0.0f;
+}
+
+//----------------------------------------------------------------//
+float ZLInterpolate::Curve ( u32 mode, float t, float w ) {
+
+	float v0 = Curve ( kLinear, t );
+	float v1 = Curve ( mode, t );
+	
+	return Interpolate ( kLinear, v0, v1, w );
+}
+
+//----------------------------------------------------------------//
+float ZLInterpolate::Interpolate ( u32 mode, float x0, float x1, float t ) {
+
+	if ( mode == kFlat ) {
+		return ( t < 1.0f ) ? x0 : x1;
+	}
+	float s = Curve ( mode, t );
+	return x0 + (( x1 - x0 ) * s );
+}
+
+
+//----------------------------------------------------------------//
+float ZLInterpolate::Interpolate ( u32 mode, float x0, float x1, float t, float w ) {
+	
+	float s = Curve ( mode, t, w );
+	return x0 + (( x1 - x0 ) * s );
+}
