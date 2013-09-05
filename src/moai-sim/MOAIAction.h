@@ -5,6 +5,7 @@
 #define	MOAIACTION_H
 
 #include <moai-sim/MOAIBlocker.h>
+#include <moai-sim/MOAINode.h>
 
 //================================================================//
 // MOAIAction
@@ -70,7 +71,7 @@ public:
 	GET_SET(u32, Pass, mPass)
 	
 	enum {
-		EVENT_STOP,
+		EVENT_STOP = MOAINode::TOTAL_EVENTS,
 		TOTAL_EVENTS,
 	};
 	

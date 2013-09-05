@@ -453,7 +453,26 @@ MOAITransform.extend (
 	end
 )
 
+--============================================================--
+-- MOAIGfxDevice
+--============================================================--
+MOAIGfxDevice.extend (
+
+	'MOAIGfxDevice',
+	
+	----------------------------------------------------------------
+	function ( class, superClass )
+		-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
+		-- extend the class
+		function class.setClearColor ( r, g, b, a )
+			MOAIGfxDevice.getFrameBuffer():setClearColor ( r, g, b, a )
+		end
+	end
+)
+
 MOAIApp = MOAIAppAndroid or MOAIAppIOS
+MOAIBrowser = MOAIBrowserAndroid or MOAIBrowserIOS
+MOAISafariIOS = MOAIBrowserIOS
 MOAIDialog = MOAIDialogAndroid or MOAIDialogIOS
 MOAIMoviePlayer = MOAIMoviePlayerAndroid or MOAIMoviePlayerIOS
 
@@ -471,6 +490,11 @@ math.seedrandom=MOAIMath.seedSFMT
 MOAIMath.seedSFMT(1)
 
 MOAITwitter = MOAITwitterAndroid or MOAITwitterIOS
+
+-- Compatibility
+if MOAIAppAndroid then
+    MOAIAppAndroid.openURL = MOAIBrowserAndroid.openURL
+end
 
 if MOAITwitterIOS then
     MOAITwitter.sendTweet = function(text, url) MOAITwitterIOS.composeTweet(text, url) end
