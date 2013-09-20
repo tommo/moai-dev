@@ -22,6 +22,14 @@
 #import <moai-audiosampler/AKU-audiosampler.h>
 #import <lua-headers/moai_lua.h>
 
+#if MOAI_WITH_BOX2D
+	#include <moai-box2d/host.h>
+#endif
+
+#if MOAI_WITH_CHIPMUNK
+	#include <moai-chipmunk/host.h>
+#endif
+
 #ifdef USE_UNTZ
 #import <moai-untz/host.h>
 #endif
@@ -64,7 +72,7 @@ namespace MoaiInputDeviceSensorID {
 	-( void )	onUpdateLocation	:( LocationObserver* )observer;
 	-( void )	startAnimation;
 	-( void )	stopAnimation;
-    -( void )   dummyFunc;
+		-( void )   dummyFunc;
 
 @end
 
@@ -72,8 +80,8 @@ namespace MoaiInputDeviceSensorID {
 // MoaiView
 //================================================================//
 @implementation MoaiView
-    SYNTHESIZE	( GLint, width, Width );
-    SYNTHESIZE	( GLint, height, Height );
+		SYNTHESIZE	( GLint, width, Width );
+		SYNTHESIZE	( GLint, height, Height );
 
 	//----------------------------------------------------------------//
 	-( void ) accelerometer:( UIAccelerometer* )acel didAccelerate:( UIAcceleration* )acceleration {
@@ -88,11 +96,11 @@ namespace MoaiInputDeviceSensorID {
 		);
 	}
 
-    //----------------------------------------------------------------//
-    -( AKUContextID ) akuInitialized {
+		//----------------------------------------------------------------//
+		-( AKUContextID ) akuInitialized {
 
-        return mAku;
-    }
+				return mAku;
+		}
 
 	//----------------------------------------------------------------//
 	-( void ) dealloc {
@@ -113,10 +121,10 @@ namespace MoaiInputDeviceSensorID {
 		[ self endDrawing ];
 	}
 	
-    //----------------------------------------------------------------//
-    -( void ) dummyFunc {
-        //dummy to fix weird input bug
-    }
+		//----------------------------------------------------------------//
+		-( void ) dummyFunc {
+				//dummy to fix weird input bug
+		}
 
 	//----------------------------------------------------------------//
 	-( void ) handleTouches :( NSSet* )touches :( BOOL )down {
@@ -139,7 +147,7 @@ namespace MoaiInputDeviceSensorID {
 	//----------------------------------------------------------------//
 	-( id )init {
 		
-        mAku = 0;
+				mAku = 0;
 		self = [ super init ];
 		if ( self ) {
 		}
@@ -149,7 +157,7 @@ namespace MoaiInputDeviceSensorID {
 	//----------------------------------------------------------------//
 	-( id ) initWithCoder:( NSCoder* )encoder {
 
-        mAku = 0;
+				mAku = 0;
 		self = [ super initWithCoder:encoder ];
 		if ( self ) {
 		}
@@ -159,7 +167,7 @@ namespace MoaiInputDeviceSensorID {
 	//----------------------------------------------------------------//
 	-( id ) initWithFrame :( CGRect )frame {
 
-        mAku = 0;
+				mAku = 0;
 		self = [ super initWithFrame:frame ];
 		if ( self ) {
 		}
@@ -172,25 +180,34 @@ namespace MoaiInputDeviceSensorID {
 		mAku = AKUCreateContext ();
 		AKUSetUserdata ( self );
 		
-        AKUInitializeUtil ();
-        AKUInitializeSim ();
-        AKUInitializeHttpClient ();
-        
+		AKUInitializeUtil ();
+		AKUInitializeSim ();
+		AKUInitializeHttpClient ();
+				
 		AKUExtLoadLuasql ();
 		AKUExtLoadLuacurl ();
 		AKUExtLoadLuacrypto ();
-//		AKUExtLoadLuasocket ();
-        AKUExtLoadLPeg ();
+		AKUExtLoadLPeg ();
+		AKUExtLoadLuasocket ();
+		
+		#if MOAI_WITH_BOX2D
+			AKUInitializeBox2D ();
+		#endif
+
+		#if MOAI_WITH_CHIPMUNK
+			AKUInitializeChipmunk ();
+		#endif
+
 		#ifdef USE_UNTZ
 			AKUInitializeUntz ();
 		#endif
-        
+				
 		#ifdef USE_FMOD_EX
 			AKUFmodExInit ();
 		#endif
-        
+				
 		AKUAudioSamplerInit ();
-        
+				
 		AKUSetInputConfigurationName ( "iPhone" );
 
 		AKUReserveInputDevices			( MoaiInputDeviceID::TOTAL );
@@ -211,15 +228,15 @@ namespace MoaiInputDeviceSensorID {
 		AKUSetScreenDpi([ self guessScreenDpi ]);
 		AKUSetViewSize ( mWidth, mHeight );
 		
-        AKUSetFrameBuffer ( mFramebuffer );
+				AKUSetFrameBuffer ( mFramebuffer );
 		AKUDetectGfxContext ();
 		
-        float FPS=60;
-        mRenderTime=0;
+				float FPS=60;
+				mRenderTime=0;
 		mAnimInterval = 1; // 1 for 60fps, 2 for 30fps
 		
-        mRenderInterval=1;//FPS/60*mAnimInterval;
-        
+				mRenderInterval=1;//FPS/60*mAnimInterval;
+				
 //		mLocationObserver = [[[ LocationObserver alloc ] init ] autorelease ];
 		
 //		[ mLocationObserver setHeadingDelegate:self :@selector ( onUpdateHeading: )];
@@ -253,7 +270,7 @@ namespace MoaiInputDeviceSensorID {
 		return dpi;
 	}
 
-    //----------------------------------------------------------------//
+		//----------------------------------------------------------------//
 	-( void ) onUpdateAnim {
 		
 		[ self openContext ];
@@ -262,16 +279,16 @@ namespace MoaiInputDeviceSensorID {
 		#ifdef USE_FMOD_EX
 			AKUFmodExUpdate ();
 		#endif
-        mRenderTime += mRenderInterval;
-        
-        if(mRenderTime>=1){
-            mRenderTime -= 1;
-            [ self drawView ];
-            
-            //sometimes the input handler will get 'locked out' by the render, this will allow it to run
-            [ self performSelector: @selector(dummyFunc) withObject:self afterDelay: 0 ];
+				mRenderTime += mRenderInterval;
+				
+				if(mRenderTime>=1){
+						mRenderTime -= 1;
+						[ self drawView ];
+						
+						//sometimes the input handler will get 'locked out' by the render, this will allow it to run
+						[ self performSelector: @selector(dummyFunc) withObject:self afterDelay: 0 ];
 
-        }
+				}
 	}
 	
 	//----------------------------------------------------------------//
@@ -333,8 +350,8 @@ namespace MoaiInputDeviceSensorID {
 	//----------------------------------------------------------------//
 	-( void ) stopAnimation {
 		
-        [ mDisplayLink invalidate ];
-        mDisplayLink = nil;
+				[ mDisplayLink invalidate ];
+				mDisplayLink = nil;
 	}
 	
 	//----------------------------------------------------------------//

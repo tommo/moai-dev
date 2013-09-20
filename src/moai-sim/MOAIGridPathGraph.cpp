@@ -20,9 +20,6 @@ public:
 	float mHWeight;
 	
 	u32 mHeuristic;
-
-	ZLIntRect mBodyRect;
-	bool mInvertedGraph;
 };
 
 //================================================================//
@@ -93,65 +90,28 @@ MOAIGridPathGraph::~MOAIGridPathGraph () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIGridPathGraph::ShapeOk(MOAIPathFinder& pathFinder, MOAIGridPathGraphParams& params, int xTile, int yTile)
-{
-	bool shapeOk = true;
-	u32 shapeTile;
-
-	for(int x = params.mBodyRect.mXMin; x <=  params.mBodyRect.mXMax; x++)
-	{
-		for(int y =  params.mBodyRect.mYMin; y <=  params.mBodyRect.mYMax; y++)
-		{
-			int xShapeTile = xTile + x;
-			int yShapeTile = yTile + y;
-
-			MOAICellCoord shapeCoord = this->mGrid->GetCellCoord ( xShapeTile, yShapeTile );
-			if ( !this->mGrid->IsValidCoord ( shapeCoord ))
-				return false;
-
-			shapeTile = this->mGrid->GetTile ( xShapeTile, yShapeTile );
-
-			if ( !pathFinder.CheckMask ( shapeTile, params.mInvertedGraph ))
-				return false;
-		}
-	}
-
-	return true;
-}
-
-//----------------------------------------------------------------//
-void MOAIGridPathGraph::PushNeighbor ( MOAIPathFinder& pathFinder, MOAIGridPathGraphParams& params, u32 tile0, int xTile, int yTile, float moveCost, int parentNode, float pathCost ) {
+void MOAIGridPathGraph::PushNeighbor ( MOAIPathFinder& pathFinder, MOAIGridPathGraphParams& params, u32 tile0, int xTile, int yTile, float moveCost ) {
 
 	MOAICellCoord coord = this->mGrid->GetCellCoord ( xTile, yTile );
 
 	if ( this->mGrid->IsValidCoord ( coord )) {
 		
-		int neighborID = this->mGrid->GetCellAddr ( coord );
-
-		if ( pathFinder.InClosedSet ( neighborID ) )
-			return;
-
 		u32 tile1 = this->mGrid->GetTile ( xTile, yTile );
-
-		if ( this->ShapeOk(pathFinder, params, xTile, yTile) ) {
-
-			float terrainCost = pathFinder.ComputeTerrainCost ( moveCost, tile0, tile1 );
-			float g = ( moveCost + terrainCost + pathCost) * params.mGWeight;
-
-			if ( !pathFinder.InOpenSet ( neighborID ) || g < pathFinder.GetPathLengthToNode( neighborID )) {
-
+		
+		if ( pathFinder.CheckMask ( tile1 )) {
+			
+			int neighborID = this->mGrid->GetCellAddr ( coord );
+			
+			if ( !pathFinder.IsVisited ( neighborID )) {
+				
+				float g = ( moveCost + pathFinder.ComputeTerrainCost ( moveCost, tile0, tile1 )) * params.mGWeight;
+				
 				int targetID = pathFinder.GetTargetNodeID ();
 				MOAICellCoord targetCoord = this->mGrid->GetCellCoord ( targetID );
-
+				
 				float h = this->ComputeHeuristic ( params, coord, targetCoord ) * params.mHWeight;
-
-				pathFinder.SetPathLengthToNode( neighborID , g);
-				pathFinder.SetNodeScore( neighborID, g + h);
-				pathFinder.SetNodeParent( neighborID, parentNode);
-
-				if ( !pathFinder.InOpenSet ( neighborID ) ) {
-					pathFinder.AddNodeToOpenSet ( neighborID );
-				}
+				
+				pathFinder.PushState ( neighborID, g, h );
 			}
 		}
 	}
@@ -169,9 +129,6 @@ void MOAIGridPathGraph::PushNeighbors ( MOAIPathFinder& pathFinder, int nodeID )
 	
 	params.mHeuristic = pathFinder.GetHeuristic ();
 	
-	params.mInvertedGraph = pathFinder.GetInvertedGraph ();
-	params.mBodyRect = pathFinder.GetBodyRect();
-
 	u32 flags = pathFinder.GetFlags ();
 	
 	MOAICellCoord coord = this->mGrid->GetCellCoord ( nodeID );
@@ -181,27 +138,26 @@ void MOAIGridPathGraph::PushNeighbors ( MOAIPathFinder& pathFinder, int nodeID )
 	
 	u32 tile0 = this->mGrid->GetTile ( xTile, yTile );
 	
-	float currentPathLength = pathFinder.GetPathLengthToNode( nodeID );
-
 	switch ( this->mGrid->GetShape ()) {
 	
 		case MOAIGridSpace::RECT_SHAPE: {
 			
 			params.mHCost = this->mGrid->GetCellWidth ();
 			params.mVCost = this->mGrid->GetCellHeight ();
+			params.mDCost = sqrtf (( params.mHCost * params.mHCost ) + ( params.mVCost * params.mVCost ));
 			params.mZCost = 0.0f;
 			
-			this->PushNeighbor ( pathFinder, params, tile0, xTile - 1, yTile, params.mHCost, nodeID, currentPathLength );
-			this->PushNeighbor ( pathFinder, params, tile0, xTile + 1, yTile, params.mHCost, nodeID, currentPathLength );
-			this->PushNeighbor ( pathFinder, params, tile0, xTile, yTile + 1, params.mVCost, nodeID, currentPathLength );
-			this->PushNeighbor ( pathFinder, params, tile0, xTile, yTile - 1, params.mVCost, nodeID, currentPathLength );
+			this->PushNeighbor ( pathFinder, params, tile0, xTile - 1, yTile, params.mHCost );
+			this->PushNeighbor ( pathFinder, params, tile0, xTile + 1, yTile, params.mHCost );
+			this->PushNeighbor ( pathFinder, params, tile0, xTile, yTile + 1, params.mVCost );
+			this->PushNeighbor ( pathFinder, params, tile0, xTile, yTile - 1, params.mVCost );
 			
 			if (( flags & NO_DIAGONALS ) == 0 ) {
-				params.mDCost = sqrtf (( params.mHCost * params.mHCost ) + ( params.mVCost * params.mVCost ));
-				this->PushNeighbor ( pathFinder, params, tile0, xTile - 1, yTile - 1, params.mDCost, nodeID, currentPathLength );
-				this->PushNeighbor ( pathFinder, params, tile0, xTile - 1, yTile + 1, params.mDCost, nodeID, currentPathLength );
-				this->PushNeighbor ( pathFinder, params, tile0, xTile + 1, yTile - 1, params.mDCost, nodeID, currentPathLength );
-				this->PushNeighbor ( pathFinder, params, tile0, xTile + 1, yTile + 1, params.mDCost, nodeID, currentPathLength );
+				
+				this->PushNeighbor ( pathFinder, params, tile0, xTile - 1, yTile - 1, params.mDCost );
+				this->PushNeighbor ( pathFinder, params, tile0, xTile - 1, yTile + 1, params.mDCost );
+				this->PushNeighbor ( pathFinder, params, tile0, xTile + 1, yTile - 1, params.mDCost );
+				this->PushNeighbor ( pathFinder, params, tile0, xTile + 1, yTile + 1, params.mDCost );
 			}
 			break;
 		}
@@ -221,17 +177,17 @@ void MOAIGridPathGraph::PushNeighbors ( MOAIPathFinder& pathFinder, int nodeID )
 				stepLeft = 0;
 			}
 			
-			this->PushNeighbor ( pathFinder, params, tile0, xTile + stepLeft,	yTile - 1, params.mDCost, nodeID, currentPathLength );
-			this->PushNeighbor ( pathFinder, params, tile0, xTile + stepRight,	yTile - 1, params.mDCost, nodeID, currentPathLength );
-			this->PushNeighbor ( pathFinder, params, tile0, xTile + stepLeft,	yTile + 1, params.mDCost, nodeID, currentPathLength );
-			this->PushNeighbor ( pathFinder, params, tile0, xTile + stepRight,	yTile + 1, params.mDCost, nodeID, currentPathLength );
+			this->PushNeighbor ( pathFinder, params, tile0, xTile + stepLeft,	yTile - 1, params.mDCost );
+			this->PushNeighbor ( pathFinder, params, tile0, xTile + stepRight,	yTile - 1, params.mDCost );
+			this->PushNeighbor ( pathFinder, params, tile0, xTile + stepLeft,	yTile + 1, params.mDCost );
+			this->PushNeighbor ( pathFinder, params, tile0, xTile + stepRight,	yTile + 1, params.mDCost );
 			
 			if (( flags & NO_DIAGONALS ) == 0 ) {
 			
-				this->PushNeighbor ( pathFinder, params, tile0, xTile - 1, yTile, params.mHCost, nodeID, currentPathLength );
-				this->PushNeighbor ( pathFinder, params, tile0, xTile + 1, yTile, params.mHCost, nodeID, currentPathLength );
-				this->PushNeighbor ( pathFinder, params, tile0, xTile, yTile - 2, params.mVCost, nodeID, currentPathLength );
-				this->PushNeighbor ( pathFinder, params, tile0, xTile, yTile + 2, params.mVCost, nodeID, currentPathLength );
+				this->PushNeighbor ( pathFinder, params, tile0, xTile - 1, yTile, params.mHCost );
+				this->PushNeighbor ( pathFinder, params, tile0, xTile + 1, yTile, params.mHCost );
+				this->PushNeighbor ( pathFinder, params, tile0, xTile, yTile - 2, params.mVCost );
+				this->PushNeighbor ( pathFinder, params, tile0, xTile, yTile + 2, params.mVCost );
 			}
 			break;
 		}
@@ -242,17 +198,17 @@ void MOAIGridPathGraph::PushNeighbors ( MOAIPathFinder& pathFinder, int nodeID )
 			params.mDCost = sqrtf (( params.mHCost * params.mHCost ) + ( params.mVCost * params.mVCost ));
 			params.mZCost = sqrtf (( params.mHCost * params.mHCost * 0.4f ) + ( params.mVCost * params.mVCost ));
 			
-			this->PushNeighbor ( pathFinder, params, tile0, xTile - 1, yTile, params.mHCost, nodeID, currentPathLength );
-			this->PushNeighbor ( pathFinder, params, tile0, xTile + 1, yTile, params.mHCost, nodeID, currentPathLength );
-			this->PushNeighbor ( pathFinder, params, tile0, xTile - 1, yTile - 1, params.mDCost, nodeID, currentPathLength );
-			this->PushNeighbor ( pathFinder, params, tile0, xTile + 1, yTile + 1, params.mDCost, nodeID, currentPathLength );
+			this->PushNeighbor ( pathFinder, params, tile0, xTile - 1, yTile, params.mHCost );
+			this->PushNeighbor ( pathFinder, params, tile0, xTile + 1, yTile, params.mHCost );
+			this->PushNeighbor ( pathFinder, params, tile0, xTile - 1, yTile - 1, params.mDCost );
+			this->PushNeighbor ( pathFinder, params, tile0, xTile + 1, yTile + 1, params.mDCost );
 			
 			if (( flags & NO_DIAGONALS ) == 0 ) {
 				
-				this->PushNeighbor ( pathFinder, params, tile0, xTile, yTile - 1, params.mVCost, nodeID, currentPathLength );
-				this->PushNeighbor ( pathFinder, params, tile0, xTile, yTile + 1, params.mVCost, nodeID, currentPathLength );
-				this->PushNeighbor ( pathFinder, params, tile0, xTile - 2, yTile - 1, params.mZCost, nodeID, currentPathLength );
-				this->PushNeighbor ( pathFinder, params, tile0, xTile + 2, yTile + 1, params.mZCost, nodeID, currentPathLength );
+				this->PushNeighbor ( pathFinder, params, tile0, xTile, yTile - 1, params.mVCost );
+				this->PushNeighbor ( pathFinder, params, tile0, xTile, yTile + 1, params.mVCost );
+				this->PushNeighbor ( pathFinder, params, tile0, xTile - 2, yTile - 1, params.mZCost );
+				this->PushNeighbor ( pathFinder, params, tile0, xTile + 2, yTile + 1, params.mZCost );
 			}
 			break;
 		}
@@ -272,13 +228,13 @@ void MOAIGridPathGraph::PushNeighbors ( MOAIPathFinder& pathFinder, int nodeID )
 				stepLeft = 0;
 			}
 			
-			this->PushNeighbor ( pathFinder, params, tile0, xTile, yTile - 2, params.mVCost, nodeID, currentPathLength );
-			this->PushNeighbor ( pathFinder, params, tile0, xTile, yTile + 2, params.mVCost, nodeID, currentPathLength );
+			this->PushNeighbor ( pathFinder, params, tile0, xTile, yTile - 2, params.mVCost );
+			this->PushNeighbor ( pathFinder, params, tile0, xTile, yTile + 2, params.mVCost );
 			
-			this->PushNeighbor ( pathFinder, params, tile0, xTile + stepLeft,	yTile - 1, params.mDCost, nodeID, currentPathLength );
-			this->PushNeighbor ( pathFinder, params, tile0, xTile + stepRight,	yTile - 1, params.mDCost, nodeID, currentPathLength );
-			this->PushNeighbor ( pathFinder, params, tile0, xTile + stepLeft,	yTile + 1, params.mDCost, nodeID, currentPathLength );
-			this->PushNeighbor ( pathFinder, params, tile0, xTile + stepRight,	yTile + 1, params.mDCost, nodeID, currentPathLength );
+			this->PushNeighbor ( pathFinder, params, tile0, xTile + stepLeft,	yTile - 1, params.mDCost );
+			this->PushNeighbor ( pathFinder, params, tile0, xTile + stepRight,	yTile - 1, params.mDCost );
+			this->PushNeighbor ( pathFinder, params, tile0, xTile + stepLeft,	yTile + 1, params.mDCost );
+			this->PushNeighbor ( pathFinder, params, tile0, xTile + stepRight,	yTile + 1, params.mDCost );
 			
 			break;
 		}
