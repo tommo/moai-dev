@@ -211,7 +211,7 @@ public:
 
 	GET_SET ( u32, Index, mIndex )
 	GET_SET ( u32, Mask, mMask )
-	GET ( s32, Priority, mPriority )
+	GET_SET ( s32, Priority, mPriority )
 	GET ( MOAIPartition*, Partition, mPartition )
 	
 	GET ( MOAIDeck*, Deck, mDeck )

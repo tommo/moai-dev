@@ -7,12 +7,12 @@
 #----------------------------------------------------------------#
 
 # osx_schemes="libmoai-osx libmoai-osx-3rdparty libmoai-osx-fmod-ex libmoai-osx-luaext libmoai-osx-untz libmoai-osx-zlcore"
-osx_schemes="libmoai-osx libmoai-osx-3rdparty libmoai-osx-luaext libmoai-osx-untz libmoai-osx-zlcore"
+osx_schemes="libmoai-osx libmoai-osx-sim libmoai-osx-3rdparty libmoai-osx-luaext libmoai-osx-zlcore  libmoai-osx-fmod-ex libmoai-osx-fmod-designer libmoai-osx-box2d libmoai-osx-http-client"
 osx_sdks=( "macosx" )
 osx_architectures_macosx=( "i386" )
 
 # ios_schemes="libmoai-ios libmoai-ios-3rdparty libmoai-ios-facebook libmoai-ios-fmod-ex libmoai-ios-luaext libmoai-ios-tapjoy libmoai-ios-untz libmoai-ios-zlcore"
-ios_schemes="libmoai-ios libmoai-ios-3rdparty libmoai-ios-facebook libmoai-ios-luaext libmoai-ios-tapjoy libmoai-ios-untz libmoai-ios-zlcore"
+ios_schemes="libmoai-ios libmoai-ios-sim libmoai-ios-3rdparty libmoai-ios-luaext libmoai-ios-tapjoy  libmoai-ios-fmod-ex libmoai-ios-fmod-designer libmoai-ios-zlcore  libmoai-ios-box2d libmoai-ios-http-client" 
 ios_sdks="iphoneos iphonesimulator"
 ios_architectures_iphonesimulator="i386"
 ios_architectures_iphoneos="armv7 armv7s"
@@ -24,7 +24,7 @@ usage() {
 job="moai"
 configurations="all"
 platforms="all"
-verbose=false
+verbose=true
 
 while getopts c:j:p: o; do
 	case $o in
@@ -62,7 +62,7 @@ elif [ x"$platforms" = xall ]; then
 	platforms="osx ios"
 fi
 
-basedir="/tmp/$job"
+basedir="../_build/$job"
 
 build() {
 	dir=${basedir}/${platform}/${scheme}/${sdk}/${config}

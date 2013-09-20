@@ -669,6 +669,28 @@
 		03240EF413564CB0000ADC60 /* tinyxml.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240BA813564CB0000ADC60 /* tinyxml.h */; };
 		03240EF513564CB0000ADC60 /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03240BA913564CB0000ADC60 /* tinyxmlerror.cpp */; };
 		03240EF613564CB0000ADC60 /* tinyxmlparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03240BAA13564CB0000ADC60 /* tinyxmlparser.cpp */; };
+		049FC8E517D8248D00ACC481 /* lpeg.c in Sources */ = {isa = PBXBuildFile; fileRef = 049FC8DF17D8248D00ACC481 /* lpeg.c */; };
+		049FC8E617D8248D00ACC481 /* lpeg.c in Sources */ = {isa = PBXBuildFile; fileRef = 049FC8DF17D8248D00ACC481 /* lpeg.c */; };
+		049FC8E717D8248D00ACC481 /* lpeg.h in Headers */ = {isa = PBXBuildFile; fileRef = 049FC8E017D8248D00ACC481 /* lpeg.h */; };
+		049FC8E817D8248D00ACC481 /* lpeg.h in Headers */ = {isa = PBXBuildFile; fileRef = 049FC8E017D8248D00ACC481 /* lpeg.h */; };
+		049FC8E917D8354D00ACC481 /* host.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6B791739A02200DFE837 /* host.cpp */; };
+		049FC8EA17D8354D00ACC481 /* host.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6B7A1739A02200DFE837 /* host.h */; };
+		049FC8EB17D8354D00ACC481 /* MOAIFmodEx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6B7B1739A02200DFE837 /* MOAIFmodEx.cpp */; };
+		049FC8EC17D8354D00ACC481 /* MOAIFmodEx.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6B7C1739A02200DFE837 /* MOAIFmodEx.h */; };
+		049FC8ED17D8354D00ACC481 /* MOAIFmodExChannel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6B7D1739A02200DFE837 /* MOAIFmodExChannel.cpp */; };
+		049FC8EE17D8354D00ACC481 /* MOAIFmodExChannel.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6B7E1739A02200DFE837 /* MOAIFmodExChannel.h */; };
+		049FC8EF17D8354D00ACC481 /* MOAIFmodExSound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6B7F1739A02200DFE837 /* MOAIFmodExSound.cpp */; };
+		049FC8F017D8354D00ACC481 /* MOAIFmodExSound.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6B801739A02200DFE837 /* MOAIFmodExSound.h */; };
+		049FC8F117D8358000ACC481 /* host.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6B791739A02200DFE837 /* host.cpp */; };
+		049FC8F217D8358000ACC481 /* host.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6B7A1739A02200DFE837 /* host.h */; };
+		049FC8F317D8358000ACC481 /* MOAIFmodEx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6B7B1739A02200DFE837 /* MOAIFmodEx.cpp */; };
+		049FC8F417D8358000ACC481 /* MOAIFmodEx.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6B7C1739A02200DFE837 /* MOAIFmodEx.h */; };
+		049FC8F517D8358000ACC481 /* MOAIFmodExChannel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6B7D1739A02200DFE837 /* MOAIFmodExChannel.cpp */; };
+		049FC8F617D8358000ACC481 /* MOAIFmodExChannel.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6B7E1739A02200DFE837 /* MOAIFmodExChannel.h */; };
+		049FC8F717D8358000ACC481 /* MOAIFmodExSound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6B7F1739A02200DFE837 /* MOAIFmodExSound.cpp */; };
+		049FC8F817D8358000ACC481 /* MOAIFmodExSound.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6B801739A02200DFE837 /* MOAIFmodExSound.h */; };
+		049FC8FB17D8375700ACC481 /* struct.c in Sources */ = {isa = PBXBuildFile; fileRef = 049FC8FA17D8375700ACC481 /* struct.c */; };
+		049FC8FC17D8375700ACC481 /* struct.c in Sources */ = {isa = PBXBuildFile; fileRef = 049FC8FA17D8375700ACC481 /* struct.c */; };
 		07175BD61656E08D00F3DF6B /* MobileAppTracker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07175BD51656E08D00F3DF6B /* MobileAppTracker.framework */; };
 		0765874E145CD06900723A7D /* tlsf.c in Sources */ = {isa = PBXBuildFile; fileRef = 0765874B145CD06900723A7D /* tlsf.c */; };
 		0765874F145CD06900723A7D /* tlsf.c in Sources */ = {isa = PBXBuildFile; fileRef = 0765874B145CD06900723A7D /* tlsf.c */; };
@@ -4205,6 +4227,15 @@
 		0324E2BB1356485F000ADC60 /* libmoai-osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0379C5961333ECD800E89DDC /* libmoai-ios-3rdparty.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-3rdparty.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		03C2F6F4104DE130009A2D5D /* libmoai-ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		049FC8DD17D8248D00ACC481 /* HISTORY */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = HISTORY; sourceTree = "<group>"; };
+		049FC8DE17D8248D00ACC481 /* lpeg-128.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "lpeg-128.gif"; sourceTree = "<group>"; };
+		049FC8DF17D8248D00ACC481 /* lpeg.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lpeg.c; sourceTree = "<group>"; };
+		049FC8E017D8248D00ACC481 /* lpeg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lpeg.h; sourceTree = "<group>"; };
+		049FC8E117D8248D00ACC481 /* lpeg.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = lpeg.html; sourceTree = "<group>"; };
+		049FC8E217D8248D00ACC481 /* re.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = re.html; sourceTree = "<group>"; };
+		049FC8E317D8248D00ACC481 /* re.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = re.lua; sourceTree = "<group>"; };
+		049FC8E417D8248D00ACC481 /* test.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = test.lua; sourceTree = "<group>"; };
+		049FC8FA17D8375700ACC481 /* struct.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = struct.c; path = "../../3rdparty/struct-0.2/struct.c"; sourceTree = "<group>"; };
 		0705D8C014F46A6D009537C3 /* libmoai-ios-adcolony.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-adcolony.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		071106EE13C6353400EE7C53 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		071398D414F46E9E00745A12 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.0.sdk/System/Library/Frameworks/CoreTelephony.framework; sourceTree = DEVELOPER_DIR; };
@@ -6763,6 +6794,8 @@
 		032409EE13564CAF000ADC60 /* 3rd party */ = {
 			isa = PBXGroup;
 			children = (
+				049FC8F917D8374800ACC481 /* struct */,
+				049FC8DC17D8248D00ACC481 /* lpeg-0.10.2 */,
 				B0FC2A0616F4004900796249 /* sfmt */,
 				0725E2EB14F45AC700551DB5 /* adcolony */,
 				032409EF13564CAF000ADC60 /* box2d */,
@@ -7420,6 +7453,30 @@
 				43BA2E56177330EC007DCDF0 /* libmoai-ios-playhaven.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		049FC8DC17D8248D00ACC481 /* lpeg-0.10.2 */ = {
+			isa = PBXGroup;
+			children = (
+				049FC8DD17D8248D00ACC481 /* HISTORY */,
+				049FC8DE17D8248D00ACC481 /* lpeg-128.gif */,
+				049FC8DF17D8248D00ACC481 /* lpeg.c */,
+				049FC8E017D8248D00ACC481 /* lpeg.h */,
+				049FC8E117D8248D00ACC481 /* lpeg.html */,
+				049FC8E217D8248D00ACC481 /* re.html */,
+				049FC8E317D8248D00ACC481 /* re.lua */,
+				049FC8E417D8248D00ACC481 /* test.lua */,
+			);
+			name = "lpeg-0.10.2";
+			path = "../../3rdparty/lpeg-0.10.2";
+			sourceTree = "<group>";
+		};
+		049FC8F917D8374800ACC481 /* struct */ = {
+			isa = PBXGroup;
+			children = (
+				049FC8FA17D8375700ACC481 /* struct.c */,
+			);
+			name = struct;
 			sourceTree = "<group>";
 		};
 		0725E2EB14F45AC700551DB5 /* adcolony */ = {
@@ -10890,6 +10947,7 @@
 				CD04AF0814725714009C20E5 /* zlib.h in Headers */,
 				CD04AF0E14725714009C20E5 /* zutil.h in Headers */,
 				663704171612813D002D0D27 /* whirlpool.h in Headers */,
+				049FC8E817D8248D00ACC481 /* lpeg.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11409,6 +11467,7 @@
 				660EBB57160D1859000B1203 /* PLCrashSignalHandler.h in Headers */,
 				660EBB59160D1859000B1203 /* PLCrashSysctl.h in Headers */,
 				663704191612813E002D0D27 /* whirlpool.h in Headers */,
+				049FC8E717D8248D00ACC481 /* lpeg.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12508,6 +12567,10 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				049FC8F217D8358000ACC481 /* host.h in Headers */,
+				049FC8F417D8358000ACC481 /* MOAIFmodEx.h in Headers */,
+				049FC8F617D8358000ACC481 /* MOAIFmodExChannel.h in Headers */,
+				049FC8F817D8358000ACC481 /* MOAIFmodExSound.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12621,6 +12684,10 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				049FC8EA17D8354D00ACC481 /* host.h in Headers */,
+				049FC8EC17D8354D00ACC481 /* MOAIFmodEx.h in Headers */,
+				049FC8EE17D8354D00ACC481 /* MOAIFmodExChannel.h in Headers */,
+				049FC8F017D8354D00ACC481 /* MOAIFmodExSound.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13642,6 +13709,8 @@
 				6671AEA215915C1500B36122 /* WaveFile.cpp in Sources */,
 				6671AEA415915C1500B36122 /* WaveFileAudioSource.cpp in Sources */,
 				66E345471614CA710021FC4B /* whirlpool.c in Sources */,
+				049FC8E617D8248D00ACC481 /* lpeg.c in Sources */,
+				049FC8FC17D8375700ACC481 /* struct.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14667,6 +14736,8 @@
 				6671AEA115915C1500B36122 /* WaveFile.cpp in Sources */,
 				6671AEA315915C1500B36122 /* WaveFileAudioSource.cpp in Sources */,
 				66E345461614CA710021FC4B /* whirlpool.c in Sources */,
+				049FC8E517D8248D00ACC481 /* lpeg.c in Sources */,
+				049FC8FB17D8375700ACC481 /* struct.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -15617,6 +15688,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				049FC8F117D8358000ACC481 /* host.cpp in Sources */,
+				049FC8F317D8358000ACC481 /* MOAIFmodEx.cpp in Sources */,
+				049FC8F517D8358000ACC481 /* MOAIFmodExChannel.cpp in Sources */,
+				049FC8F717D8358000ACC481 /* MOAIFmodExSound.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -15714,6 +15789,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				049FC8E917D8354D00ACC481 /* host.cpp in Sources */,
+				049FC8EB17D8354D00ACC481 /* MOAIFmodEx.cpp in Sources */,
+				049FC8ED17D8354D00ACC481 /* MOAIFmodExChannel.cpp in Sources */,
+				049FC8EF17D8354D00ACC481 /* MOAIFmodExSound.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -15965,6 +16044,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				DEAD_CODE_STRIPPING = YES;
+				FMOD_OSX_SDK_ROOT = /Users/tommo/dev/fmod/osx;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
 				GCC_ENABLE_CPP_RTTI = NO;
@@ -18911,6 +18991,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
+				FMOD_OSX_SDK_ROOT = /Users/tommo/dev/fmod/osx;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
 				GCC_ENABLE_CPP_RTTI = NO;
@@ -19689,6 +19770,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(FMOD_OSX_SDK_ROOT)/fmoddesignerapi/api/inc",
+					"$(FMOD_OSX_SDK_ROOT)/api/inc",
 				);
 				PRODUCT_NAME = "moai-osx-fmod-designer";
 				SDKROOT = macosx;
@@ -19730,6 +19812,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(FMOD_OSX_SDK_ROOT)/fmoddesignerapi/api/inc",
+					"$(FMOD_OSX_SDK_ROOT)/api/inc",
 				);
 				PRODUCT_NAME = "moai-osx-fmod-designer";
 				SDKROOT = macosx;
@@ -19771,6 +19854,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(FMOD_OSX_SDK_ROOT)/fmoddesignerapi/api/inc",
+					"$(FMOD_OSX_SDK_ROOT)/api/inc",
 				);
 				PRODUCT_NAME = "moai-osx-fmod-designer";
 				SDKROOT = macosx;
@@ -19812,6 +19896,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(FMOD_OSX_SDK_ROOT)/fmoddesignerapi/api/inc",
+					"$(FMOD_OSX_SDK_ROOT)/api/inc",
 				);
 				PRODUCT_NAME = "moai-osx-fmod-designer";
 				SDKROOT = macosx;
@@ -19991,6 +20076,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				DEAD_CODE_STRIPPING = YES;
+				FMOD_OSX_SDK_ROOT = /Users/tommo/dev/fmod/osx;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
 				GCC_ENABLE_CPP_RTTI = NO;
@@ -20590,6 +20676,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				DEAD_CODE_STRIPPING = YES;
+				FMOD_OSX_SDK_ROOT = /Users/tommo/dev/fmod/osx;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
 				GCC_ENABLE_CPP_RTTI = NO;

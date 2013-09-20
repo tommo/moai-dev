@@ -13,7 +13,7 @@
 	#endif
 
 	#ifndef MOAI_WITH_CHIPMUNK
-		#define MOAI_WITH_CHIPMUNK 1
+		#define MOAI_WITH_CHIPMUNK 0
 	#endif
 	
 	#ifndef MOAI_WITH_EXPAT

@@ -89,7 +89,7 @@ bool MOAIFmodMicrophone::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) 
 void MOAIFmodMicrophone::OnDepNodeUpdate () {
 
     MOAITransform::OnDepNodeUpdate ();
-    USAffine3D mtx = GetLocalToWorldMtx();
+    ZLAffine3D mtx = GetLocalToWorldMtx();
     ZLVec3D vPos = mtx.GetTranslation();
     ZLVec3D vUp       = mVectorUp;
     ZLVec3D vForward  = mVectorForward;

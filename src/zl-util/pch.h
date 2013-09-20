@@ -1,7 +1,7 @@
 #ifndef ZL_UTIL_PCH_H
 #define	ZL_UTIL_PCH_H
 
-#include <moai_config.h>
+#include <config-default/moai_config.h>
 
 #include <zl-common/zl_platform.h>
 #include <zl-common/zl_types.h>
