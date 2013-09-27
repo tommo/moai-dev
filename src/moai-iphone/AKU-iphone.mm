@@ -109,9 +109,9 @@ void AKUIphoneInit ( UIApplication* application ) {
 		REGISTER_LUA_CLASS ( MOAIFacebookIOS )
 	#endif
 
-  #ifndef DISABLE_FLURRY
-    REGISTER_LUA_CLASS( MOAIFlurryIOS )
-  #endif
+//  #ifndef DISABLE_FLURRY
+//    REGISTER_LUA_CLASS( MOAIFlurryIOS )
+//  #endif
 	
 	#ifndef DISABLE_PLAYHAVEN
 		REGISTER_LUA_CLASS ( MOAIPlayhavenIOS )

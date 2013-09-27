@@ -669,6 +669,7 @@
 		03240EF413564CB0000ADC60 /* tinyxml.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240BA813564CB0000ADC60 /* tinyxml.h */; };
 		03240EF513564CB0000ADC60 /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03240BA913564CB0000ADC60 /* tinyxmlerror.cpp */; };
 		03240EF613564CB0000ADC60 /* tinyxmlparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03240BAA13564CB0000ADC60 /* tinyxmlparser.cpp */; };
+		044EDF3017EF4381002C9830 /* MOAIPlayhavenIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 43BA2ED31773355A007DCDF0 /* MOAIPlayhavenIOS.mm */; };
 		049FC8E517D8248D00ACC481 /* lpeg.c in Sources */ = {isa = PBXBuildFile; fileRef = 049FC8DF17D8248D00ACC481 /* lpeg.c */; };
 		049FC8E617D8248D00ACC481 /* lpeg.c in Sources */ = {isa = PBXBuildFile; fileRef = 049FC8DF17D8248D00ACC481 /* lpeg.c */; };
 		049FC8E717D8248D00ACC481 /* lpeg.h in Headers */ = {isa = PBXBuildFile; fileRef = 049FC8E017D8248D00ACC481 /* lpeg.h */; };
@@ -14857,6 +14858,7 @@
 				89BE6B571739760900DFE837 /* AKU-audiosampler.cpp in Sources */,
 				89BE6B5B1739760900DFE837 /* MOAIAudioSampler.cpp in Sources */,
 				89BE6BE01739A05600DFE837 /* AKU-iphone.mm in Sources */,
+				044EDF3017EF4381002C9830 /* MOAIPlayhavenIOS.mm in Sources */,
 				89BE6BE61739A05600DFE837 /* MOAIAppIOS.mm in Sources */,
 				89BE6BE81739A05600DFE837 /* MOAIBillingIOS.mm in Sources */,
 				89BE6BEE1739A05600DFE837 /* MOAIDialogIOS.mm in Sources */,
@@ -16207,6 +16209,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				DEAD_CODE_STRIPPING = YES;
+				FMOD_IOS_SDK_ROOT = /Users/tommo/dev/fmod/ios;
 				FMOD_OSX_SDK_ROOT = /Users/tommo/dev/fmod/osx;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
@@ -16379,6 +16382,10 @@
 					OPENSSL_NO_RC5,
 					OPENSSL_NO_RFC3779,
 					OPENSSL_NO_STORE,
+					DISABLE_FACEBOOK,
+					DISABLE_CHARTBOOST,
+					DISABLE_PLAYHAVEN,
+					DISABLE_TAPJOY,
 				);
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-ios";
@@ -19936,6 +19943,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
+				FMOD_IOS_SDK_ROOT = /Users/tommo/dev/fmod/ios;
 				FMOD_OSX_SDK_ROOT = /Users/tommo/dev/fmod/osx;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
@@ -20563,6 +20571,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(FMOD_IOS_SDK_ROOT)/fmoddesignerapi/api/inc",
+					"$(FMOD_IOS_SDK_ROOT)/api/inc",
 				);
 				PRODUCT_NAME = "moai-ios-fmod-designer";
 				SDKROOT = iphoneos;
@@ -20600,6 +20609,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(FMOD_IOS_SDK_ROOT)/fmoddesignerapi/api/inc",
+					"$(FMOD_IOS_SDK_ROOT)/api/inc",
 				);
 				PRODUCT_NAME = "moai-ios-fmod-designer";
 				SDKROOT = iphoneos;
@@ -20637,6 +20647,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(FMOD_IOS_SDK_ROOT)/fmoddesignerapi/api/inc",
+					"$(FMOD_IOS_SDK_ROOT)/api/inc",
 				);
 				PRODUCT_NAME = "moai-ios-fmod-designer";
 				SDKROOT = iphoneos;
@@ -20674,6 +20685,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(FMOD_IOS_SDK_ROOT)/fmoddesignerapi/api/inc",
+					"$(FMOD_IOS_SDK_ROOT)/api/inc",
 				);
 				PRODUCT_NAME = "moai-ios-fmod-designer";
 				SDKROOT = iphoneos;
@@ -21021,6 +21033,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				DEAD_CODE_STRIPPING = YES;
+				FMOD_IOS_SDK_ROOT = /Users/tommo/dev/fmod/ios;
 				FMOD_OSX_SDK_ROOT = /Users/tommo/dev/fmod/osx;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
@@ -21621,6 +21634,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				DEAD_CODE_STRIPPING = YES;
+				FMOD_IOS_SDK_ROOT = /Users/tommo/dev/fmod/ios;
 				FMOD_OSX_SDK_ROOT = /Users/tommo/dev/fmod/osx;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;

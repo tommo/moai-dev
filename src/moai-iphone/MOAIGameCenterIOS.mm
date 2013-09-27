@@ -432,7 +432,7 @@ void MOAIGameCenterIOS::CallReportScoreCompletionCallback ( NSError* error ) {
 
 	if ( mReportCompletionCallback ) {
 	
-		MOAILuaStateHandle state = mReportCompletionCallback.GetSelf ();
+		MOAIScopedLuaState state = mReportCompletionCallback.GetSelf ();
 
 		lua_pushstring(state,"leaderboard");
 
@@ -453,7 +453,7 @@ void MOAIGameCenterIOS::CallReportAchievementCompletionCallback ( NSError* error
 
 	if ( mReportCompletionCallback ) {
 	
-		MOAILuaStateHandle state = mReportCompletionCallback.GetSelf ();
+		MOAIScopedLuaState state = mReportCompletionCallback.GetSelf ();
 		
 		lua_pushstring(state,"achievement");
 
@@ -472,7 +472,7 @@ void MOAIGameCenterIOS::CallAchievementReadyCallback ( NSError* error ) {
 
 	if ( mAchievementReadyCallback ) {
 	
-		MOAILuaStateHandle state = mAchievementReadyCallback.GetSelf ();
+		MOAIScopedLuaState state = mAchievementReadyCallback.GetSelf ();
 
 		if(error != nil){
 			lua_pushnumber(state, [error code]);
@@ -487,7 +487,7 @@ void MOAIGameCenterIOS::CallAchievementReadyCallback ( NSError* error ) {
 
 void MOAIGameCenterIOS::CallAuthenticationCallback(NSError* error){
 	if( mAuthenticationCallback ){
-		MOAILuaStateHandle state = mAuthenticationCallback.GetSelf ();
+		MOAIScopedLuaState state = mAuthenticationCallback.GetSelf ();
 
 		if(error != nil){
 			lua_pushnumber(state, [error code]);
