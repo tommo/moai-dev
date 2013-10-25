@@ -11,7 +11,7 @@ class MOAITextureBase;
 // MOAIKernVec
 //================================================================//
 class MOAIKernVec :
-	public USVec2D {
+	public ZLVec2D {
 public:
 
 	u32			mName;
@@ -53,8 +53,9 @@ public:
 	friend class MOAIGlyphCacheBase;
 	friend class MOAIGlyphCachePage;
 	friend class MOAITextBox;
-	friend class MOAITextDesigner;
-	friend class MOAITextStyler;
+	friend class MOAITextDesignParser;
+	friend class MOAITextLayout;
+	friend class MOAITextStyleParser;
 	
 	GET_SET ( u32, Code, mCode );
 	GET_SET ( u32, PageID, mPageID );

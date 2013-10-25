@@ -4,15 +4,15 @@
 // http://getmoai.com
 //----------------------------------------------------------------//
 
-#ifndef AKU_FMOD_EX_H
-#define AKU_FMOD_EX_H
+#ifndef MOAI_FMOD_EX_HOST_H
+#define MOAI_FMOD_EX_HOST_H
 
 #include <moai-core/host.h>
 
-AKU_API void	AKUFmodExInit				();
-AKU_API void	AKUFmodExMuteSystem			( bool mute );
-AKU_API void	AKUFmodExRelease			();
-AKU_API void	AKUFmodExRestoreSession		();
-AKU_API void	AKUFmodExUpdate				();
+AKU_API void	AKUFmodExAppFinalize				();
+AKU_API void	AKUFmodExAppInitialize				();
+AKU_API void	AKUFmodExContextInitialize			();
+
+AKU_API void	AKUFmodExUpdate						();
 
 #endif

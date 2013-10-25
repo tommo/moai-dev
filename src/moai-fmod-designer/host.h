@@ -4,15 +4,15 @@
 // http://getmoai.com
 //----------------------------------------------------------------//
 
-#ifndef AKU_FMOD_DESIGNER_H
-#define AKU_FMOD_DESIGNER_H
+#ifndef MOAI_FMOD_DESIGNER_HOST_H
+#define MOAI_FMOD_DESIGNER_HOST_H
 
 #include <moai-core/host.h>
 
-AKU_API void	AKUFmodDesignerInit			        ();
-AKU_API void	AKUFmodDesignerMuteSystem			( bool mute );
-AKU_API void	AKUFmodDesignerRelease			    ();
-AKU_API void	AKUFmodDesignerRestoreSession		();
-AKU_API void	AKUFmodDesignerUpdate				( float fDeltaTime );
+AKU_API void	AKUFmodDesignerAppFinalize			();
+AKU_API void	AKUFmodDesignerAppInitialize		();
+AKU_API void	AKUFmodDesignerContextInitialize	();
+
+AKU_API void	AKUFmodDesignerUpdate				();
 
 #endif

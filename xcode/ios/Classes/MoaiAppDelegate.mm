@@ -4,25 +4,12 @@
 // http://getmoai.com
 //----------------------------------------------------------------//
 
-#import <moai-core/host.h>
-#import <moai-iphone/AKU-iphone.h>
-
-#include <moai-sim/headers.h>
-#include <moai-sim/host.h>
-#include <moai-util/host.h>
+#import <host-modules/aku_modules_ios.h>
 
 #import "MoaiAppDelegate.h"
 #import "LocationObserver.h"
 #import "MoaiVC.h"
 #import "MoaiView.h"
-
-#if MOAI_WITH_BOX2D
-	#include <moai-box2d/host.h>
-#endif
-
-#if MOAI_WITH_CHIPMUNK
-	#include <moai-chipmunk/host.h>
-#endif
 
 //================================================================//
 // AppDelegate
@@ -49,13 +36,15 @@
 	//----------------------------------------------------------------//
 	-( void ) application:( UIApplication* )application didFailToRegisterForRemoteNotificationsWithError:( NSError* )error {
 	
-		AKUNotifyRemoteNotificationRegistrationComplete ( nil );
+		AKUIosNotifyRemoteNotificationRegistrationComplete ( nil );
 	}
 
 	//----------------------------------------------------------------//
 	-( BOOL ) application:( UIApplication* )application didFinishLaunchingWithOptions:( NSDictionary* )launchOptions {
 		
 		[ application setStatusBarHidden:true ];
+		
+		AKUModulesIosAppInitialize ();
 		
 		mMoaiView = [[ MoaiView alloc ] initWithFrame:[ UIScreen mainScreen ].bounds ];
         
@@ -100,7 +89,7 @@
         NSDictionary* pushBundle = [ launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey ];
         if ( pushBundle != NULL ) {
             
-            AKUNotifyRemoteNotificationReceived ( pushBundle );
+            AKUIosNotifyRemoteNotificationReceived ( pushBundle );
         }
 		
 		// return
@@ -111,19 +100,20 @@
 	//----------------------------------------------------------------//
 	-( void ) application:( UIApplication* )application didReceiveRemoteNotification:( NSDictionary* )pushBundle {
 		
-		AKUNotifyRemoteNotificationReceived ( pushBundle );
+		AKUIosNotifyRemoteNotificationReceived ( pushBundle );
 	}
 	
 	//----------------------------------------------------------------//
 	-( void ) application:( UIApplication* )application didRegisterForRemoteNotificationsWithDeviceToken:( NSData* )deviceToken {
 	
-		AKUNotifyRemoteNotificationRegistrationComplete ( deviceToken );
+		AKUIosNotifyRemoteNotificationRegistrationComplete ( deviceToken );
 	}
 	
 	//----------------------------------------------------------------//
 	-( void ) applicationDidBecomeActive:( UIApplication* )application {
 	
 		// restart moai view
+		AKUIosDidStartSession ( true );
 		[ mMoaiView pause:NO ];
 	}
 	
@@ -141,22 +131,16 @@
 	-( void ) applicationWillResignActive:( UIApplication* )application {
         
 		// pause moai view
+		AKUIosWillEndSession ();
 		[ mMoaiView pause:YES ];
 	}
 	
 	//----------------------------------------------------------------//
 	-( void ) applicationWillTerminate :( UIApplication* )application {
-        #if MOAI_WITH_BOX2D
-            AKUFinalizeBox2D ();
-        #endif
-
-        #if MOAI_WITH_CHIPMUNK
-            AKUFinalizeChipmunk ();
-        #endif
-
-        AKUFinalizeUtil ();
-        AKUFinalizeSim ();
-		AKUFinalize ();
+        
+		AKUIosWillEndSession ();
+		
+		AKUModulesIosAppFinalize ();
 	}
 
 	//----------------------------------------------------------------//
@@ -175,7 +159,7 @@
 		//----------------------------------------------------------------//
 		-( BOOL )application :( UIApplication* )application handleOpenURL :( NSURL* )url {
 
-			AKUAppOpenFromURL(url);
+			AKUIosOpenedFromURL ( url );
 			return YES;
 		}
 

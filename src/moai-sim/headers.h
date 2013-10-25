@@ -1,8 +1,8 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAI_ENGINE_H
-#define	MOAI_ENGINE_H
+#ifndef	MOAI_SIM_HEADERS_H
+#define	MOAI_SIM_HEADERS_H
 
 #include <moai-sim/pch.h>
 
@@ -49,7 +49,7 @@
 #include <moai-sim/MOAIJoystickSensor.h>
 #include <moai-sim/MOAIKeyboardSensor.h>
 #include <moai-sim/MOAILayer.h>
-#include <moai-sim/MOAILayerBridge.h>
+#include <moai-sim/MOAIPinTransform.h>
 #include <moai-sim/MOAILayoutFrame.h>
 #include <moai-sim/MOAILocationSensor.h>
 #include <moai-sim/MOAIMesh.h>
@@ -107,6 +107,13 @@
 #include <moai-sim/MOAITransform.h>
 #include <moai-sim/MOAITransformBase.h>
 #include <moai-sim/MOAIVecPathGraph.h>
+#include <moai-sim/MOAIVectorCombo.h>
+#include <moai-sim/MOAIVectorDrawing.h>
+#include <moai-sim/MOAIVectorDrawingDeck.h>
+#include <moai-sim/MOAIVectorPath.h>
+#include <moai-sim/MOAIVectorPolygon.h>
+#include <moai-sim/MOAIVectorShape.h>
+#include <moai-sim/MOAIVectorStyle.h>
 #include <moai-sim/MOAIVertexBuffer.h>
 #include <moai-sim/MOAIVertexFormat.h>
 #include <moai-sim/MOAIVertexFormatMgr.h>
@@ -127,7 +134,9 @@
 #include <moai-sim/MOAITextBox.h>
 #include <moai-sim/MOAITextBundle.h>
 #include <moai-sim/MOAITextDesigner.h>
+#include <moai-sim/MOAITextDesignParser.h>
 #include <moai-sim/MOAITextStyle.h>
 #include <moai-sim/MOAITextStyler.h>
+#include <moai-sim/MOAITextStyleParser.h>
 
 #endif

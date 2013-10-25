@@ -9,19 +9,135 @@
 // aku
 //================================================================//
 
-static bool sIsInitialized = false;
+//----------------------------------------------------------------//
+void AKUSimAppFinalize () {
+}
+
+//----------------------------------------------------------------//
+void AKUSimAppInitialize () {
+}
+
+//----------------------------------------------------------------//
+void AKUSimContextInitialize () {
+
+	//MOAIProfiler::Affirm ();
+	MOAIGfxDevice::Affirm ();
+	
+	MOAIActionMgr::Affirm ();
+	MOAIInputMgr::Affirm ();
+	MOAINodeMgr::Affirm ();
+	MOAIVertexFormatMgr::Affirm ();
+	MOAIShaderMgr::Affirm ();
+	MOAIDraw::Affirm ();
+	MOAIDebugLines::Affirm ();
+	MOAIPartitionResultMgr::Affirm ();
+	MOAISim::Affirm ();
+	MOAIRenderMgr::Affirm ();
+	
+	// MOAI
+	REGISTER_LUA_CLASS ( MOAIAction )
+	REGISTER_LUA_CLASS ( MOAIActionMgr )
+	REGISTER_LUA_CLASS ( MOAIAnim )
+	REGISTER_LUA_CLASS ( MOAIAnimCurve )
+	REGISTER_LUA_CLASS ( MOAIAnimCurveQuat )
+	REGISTER_LUA_CLASS ( MOAIAnimCurveVec )
+	REGISTER_LUA_CLASS ( MOAIBoundsDeck )
+	REGISTER_LUA_CLASS ( MOAIButtonSensor )
+	REGISTER_LUA_CLASS ( MOAICamera )
+	REGISTER_LUA_CLASS ( MOAICameraAnchor2D )
+	REGISTER_LUA_CLASS ( MOAICameraFitter2D )
+	REGISTER_LUA_CLASS ( MOAIColor )
+	REGISTER_LUA_CLASS ( MOAICompassSensor )
+	REGISTER_LUA_CLASS ( MOAICoroutine )
+	REGISTER_LUA_CLASS ( MOAIDebugLines )
+	REGISTER_LUA_CLASS ( MOAIDeckRemapper )
+	REGISTER_LUA_CLASS ( MOAIDraw )
+	REGISTER_LUA_CLASS ( MOAIEnvironment )
+	REGISTER_LUA_CLASS ( MOAIEaseDriver )
+	REGISTER_LUA_CLASS ( MOAIEaseType )
+	REGISTER_LUA_CLASS ( MOAIFrameBuffer )
+	REGISTER_LUA_CLASS ( MOAIFrameBufferTexture )
+	REGISTER_LUA_CLASS ( MOAIGfxDevice )
+	REGISTER_LUA_CLASS ( MOAIGfxQuad2D )
+	REGISTER_LUA_CLASS ( MOAIGfxQuadDeck2D )
+	REGISTER_LUA_CLASS ( MOAIGfxQuadListDeck2D )
+	REGISTER_LUA_CLASS ( MOAIGrid )
+	REGISTER_LUA_CLASS ( MOAIGridDeck2D )
+	REGISTER_LUA_CLASS ( MOAIGridSpace )
+	REGISTER_LUA_CLASS ( MOAIGridPathGraph )
+	REGISTER_LUA_CLASS ( MOAIImage )
+	REGISTER_LUA_CLASS ( MOAIImageTexture )
+	REGISTER_LUA_CLASS ( MOAIIndexBuffer )
+	REGISTER_LUA_CLASS ( MOAIInputDevice )
+	REGISTER_LUA_CLASS ( MOAIInputMgr )
+	REGISTER_LUA_CLASS ( MOAIJoystickSensor )
+	REGISTER_LUA_CLASS ( MOAIKeyboardSensor )
+	REGISTER_LUA_CLASS ( MOAILayer )
+	REGISTER_LUA_CLASS ( MOAIPinTransform )
+	//REGISTER_LUA_CLASS ( MOAILayoutFrame )
+	REGISTER_LUA_CLASS ( MOAILocationSensor )
+	REGISTER_LUA_CLASS ( MOAIMesh )
+	REGISTER_LUA_CLASS ( MOAIMotionSensor )
+	REGISTER_LUA_CLASS ( MOAIMultiTexture )
+	REGISTER_LUA_CLASS ( MOAIParticleCallbackPlugin )
+	REGISTER_LUA_CLASS ( MOAIParticleDistanceEmitter )
+	REGISTER_LUA_CLASS ( MOAIParticleForce )
+	REGISTER_LUA_CLASS ( MOAIParticleScript )
+	REGISTER_LUA_CLASS ( MOAIParticleState )
+	REGISTER_LUA_CLASS ( MOAIParticleSystem )
+	REGISTER_LUA_CLASS ( MOAIParticleTimedEmitter )
+	REGISTER_LUA_CLASS ( MOAIPartition )
+	REGISTER_LUA_CLASS ( MOAIPathFinder )
+	REGISTER_LUA_CLASS ( MOAIPathTerrainDeck )
+	REGISTER_LUA_CLASS ( MOAIPointerSensor )
+	//REGISTER_LUA_CLASS ( MOAIProfilerReportBox )
+	REGISTER_LUA_CLASS ( MOAIProp )
+	REGISTER_LUA_CLASS ( MOAIRenderMgr )
+	REGISTER_LUA_CLASS ( MOAIScissorRect )
+	REGISTER_LUA_CLASS ( MOAIScriptDeck )
+	REGISTER_LUA_CLASS ( MOAIScriptNode )
+	REGISTER_LUA_CLASS ( MOAIShader )
+	REGISTER_LUA_CLASS ( MOAIShaderMgr )
+	REGISTER_LUA_CLASS ( MOAISim )
+	REGISTER_LUA_CLASS ( MOAIStretchPatch2D )
+	REGISTER_LUA_CLASS ( MOAISurfaceDeck2D )
+	REGISTER_LUA_CLASS ( MOAITexture )
+	REGISTER_LUA_CLASS ( MOAITileDeck2D )
+	REGISTER_LUA_CLASS ( MOAITimer )
+	REGISTER_LUA_CLASS ( MOAITouchSensor )
+	REGISTER_LUA_CLASS ( MOAITransform )
+	REGISTER_LUA_CLASS ( MOAIVecPathGraph )
+	REGISTER_LUA_CLASS ( MOAIVectorDrawing )
+	REGISTER_LUA_CLASS ( MOAIVectorDrawingDeck )
+	REGISTER_LUA_CLASS ( MOAIVertexBuffer )
+	REGISTER_LUA_CLASS ( MOAIVertexFormat )
+	REGISTER_LUA_CLASS ( MOAIViewport )
+	REGISTER_LUA_CLASS ( MOAIWheelSensor )
+	
+	// text stuff here for now
+	REGISTER_LUA_CLASS ( MOAIBitmapFontReader )
+	REGISTER_LUA_CLASS ( MOAIGlyphCache )
+	REGISTER_LUA_CLASS ( MOAIFont )
+	REGISTER_LUA_CLASS ( MOAIStaticGlyphCache )
+	REGISTER_LUA_CLASS ( MOAITextBundle )
+	REGISTER_LUA_CLASS ( MOAITextBox )
+	REGISTER_LUA_CLASS ( MOAITextStyle )
+	
+	#if MOAI_WITH_TINYXML
+		REGISTER_LUA_CLASS ( MOAIParticlePexPlugin )
+	#endif
+	
+	#if MOAI_WITH_FREETYPE
+		REGISTER_LUA_CLASS ( MOAIFreeTypeFontReader )
+	#endif
+	
+	MOAIEnvironment::Get ().DetectEnvironment ();
+}
 
 //----------------------------------------------------------------//
 void AKUDetectGfxContext () {
 
 	MOAIGfxDevice::Get ().DetectContext ();
-}
-
-//----------------------------------------------------------------//
-void AKUFinalizeSim () {
-	
-	if ( !sIsInitialized ) return;
-	sIsInitialized = false;
 }
 
 //----------------------------------------------------------------//
@@ -100,125 +216,6 @@ void AKUEnqueueWheelEvent ( int deviceID, int sensorID, float value ) {
 double AKUGetSimStep () {
 
 	return MOAISim::Get ().GetStep ();
-}
-
-//----------------------------------------------------------------//
-void AKUInitializeSim () {
-
-	if ( !sIsInitialized ) {
-		sIsInitialized = true;
-	}
-
-   //MOAIProfiler::Affirm ();
-	MOAIGfxDevice::Affirm ();
-	
-	MOAIActionMgr::Affirm ();
-	MOAIInputMgr::Affirm ();
-	MOAINodeMgr::Affirm ();
-	MOAIVertexFormatMgr::Affirm ();
-	MOAIShaderMgr::Affirm ();
-	MOAIDraw::Affirm ();
-	MOAIDebugLines::Affirm ();
-	MOAIPartitionResultMgr::Affirm ();
-	MOAISim::Affirm ();
-	MOAIRenderMgr::Affirm ();
-	
-	// MOAI
-	REGISTER_LUA_CLASS ( MOAIAction )
-	REGISTER_LUA_CLASS ( MOAIActionMgr )
-	REGISTER_LUA_CLASS ( MOAIAnim )
-	REGISTER_LUA_CLASS ( MOAIAnimCurve )
-	REGISTER_LUA_CLASS ( MOAIAnimCurveQuat )
-	REGISTER_LUA_CLASS ( MOAIAnimCurveVec )
-	REGISTER_LUA_CLASS ( MOAIBoundsDeck )
-	REGISTER_LUA_CLASS ( MOAIButtonSensor )
-	REGISTER_LUA_CLASS ( MOAICamera )
-	REGISTER_LUA_CLASS ( MOAICameraAnchor2D )
-	REGISTER_LUA_CLASS ( MOAICameraFitter2D )
-	REGISTER_LUA_CLASS ( MOAIColor )
-	REGISTER_LUA_CLASS ( MOAICompassSensor )
-	REGISTER_LUA_CLASS ( MOAICoroutine )
-	REGISTER_LUA_CLASS ( MOAIDebugLines )
-	REGISTER_LUA_CLASS ( MOAIDeckRemapper )
-	REGISTER_LUA_CLASS ( MOAIDraw )
-	REGISTER_LUA_CLASS ( MOAIEnvironment )
-	REGISTER_LUA_CLASS ( MOAIEaseDriver )
-	REGISTER_LUA_CLASS ( MOAIEaseType )
-	REGISTER_LUA_CLASS ( MOAIFrameBuffer )
-	REGISTER_LUA_CLASS ( MOAIFrameBufferTexture )
-	REGISTER_LUA_CLASS ( MOAIGfxDevice )
-	REGISTER_LUA_CLASS ( MOAIGfxQuad2D )
-	REGISTER_LUA_CLASS ( MOAIGfxQuadDeck2D )
-	REGISTER_LUA_CLASS ( MOAIGfxQuadListDeck2D )
-	REGISTER_LUA_CLASS ( MOAIGrid )
-	REGISTER_LUA_CLASS ( MOAIGridDeck2D )
-	REGISTER_LUA_CLASS ( MOAIGridSpace )
-	REGISTER_LUA_CLASS ( MOAIGridPathGraph )
-	REGISTER_LUA_CLASS ( MOAIImage )
-	REGISTER_LUA_CLASS ( MOAIImageTexture )
-	REGISTER_LUA_CLASS ( MOAIIndexBuffer )
-	REGISTER_LUA_CLASS ( MOAIInputDevice )
-	REGISTER_LUA_CLASS ( MOAIInputMgr )
-	REGISTER_LUA_CLASS ( MOAIJoystickSensor )
-	REGISTER_LUA_CLASS ( MOAIKeyboardSensor )
-	REGISTER_LUA_CLASS ( MOAILayer )
-	REGISTER_LUA_CLASS ( MOAILayerBridge )
-	//REGISTER_LUA_CLASS ( MOAILayoutFrame )
-	REGISTER_LUA_CLASS ( MOAILocationSensor )
-	REGISTER_LUA_CLASS ( MOAIMesh )
-	REGISTER_LUA_CLASS ( MOAIMotionSensor )
-	REGISTER_LUA_CLASS ( MOAIMultiTexture )
-	REGISTER_LUA_CLASS ( MOAIParticleCallbackPlugin )
-	REGISTER_LUA_CLASS ( MOAIParticleDistanceEmitter )
-	REGISTER_LUA_CLASS ( MOAIParticleForce )
-	REGISTER_LUA_CLASS ( MOAIParticleScript )
-	REGISTER_LUA_CLASS ( MOAIParticleState )
-	REGISTER_LUA_CLASS ( MOAIParticleSystem )
-	REGISTER_LUA_CLASS ( MOAIParticleTimedEmitter )
-	REGISTER_LUA_CLASS ( MOAIPartition )
-	REGISTER_LUA_CLASS ( MOAIPathFinder )
-	REGISTER_LUA_CLASS ( MOAIPathTerrainDeck )
-	REGISTER_LUA_CLASS ( MOAIPointerSensor )
-	//REGISTER_LUA_CLASS ( MOAIProfilerReportBox )
-	REGISTER_LUA_CLASS ( MOAIProp )
-	REGISTER_LUA_CLASS ( MOAIRenderMgr )
-	REGISTER_LUA_CLASS ( MOAIScissorRect )
-	REGISTER_LUA_CLASS ( MOAIScriptDeck )
-	REGISTER_LUA_CLASS ( MOAIScriptNode )
-	REGISTER_LUA_CLASS ( MOAIShader )
-	REGISTER_LUA_CLASS ( MOAIShaderMgr )
-	REGISTER_LUA_CLASS ( MOAISim )
-	REGISTER_LUA_CLASS ( MOAIStretchPatch2D )
-	REGISTER_LUA_CLASS ( MOAISurfaceDeck2D )
-	REGISTER_LUA_CLASS ( MOAITexture )
-	REGISTER_LUA_CLASS ( MOAITileDeck2D )
-	REGISTER_LUA_CLASS ( MOAITimer )
-	REGISTER_LUA_CLASS ( MOAITouchSensor )
-	REGISTER_LUA_CLASS ( MOAITransform )
-	REGISTER_LUA_CLASS ( MOAIVecPathGraph )
-	REGISTER_LUA_CLASS ( MOAIVertexBuffer )
-	REGISTER_LUA_CLASS ( MOAIVertexFormat )
-	REGISTER_LUA_CLASS ( MOAIViewport )
-	REGISTER_LUA_CLASS ( MOAIWheelSensor )
-	
-	// text stuff here for now
-	REGISTER_LUA_CLASS ( MOAIBitmapFontReader )
-	REGISTER_LUA_CLASS ( MOAIGlyphCache )
-	REGISTER_LUA_CLASS ( MOAIFont )
-	REGISTER_LUA_CLASS ( MOAIStaticGlyphCache )
-	REGISTER_LUA_CLASS ( MOAITextBundle )
-	REGISTER_LUA_CLASS ( MOAITextBox )
-	REGISTER_LUA_CLASS ( MOAITextStyle )
-	
-	#if MOAI_WITH_TINYXML
-		REGISTER_LUA_CLASS ( MOAIParticlePexPlugin )
-	#endif
-	
-	#if MOAI_WITH_FREETYPE
-		REGISTER_LUA_CLASS ( MOAIFreeTypeFontReader )
-	#endif
-	
-	MOAIEnvironment::Get ().DetectEnvironment ();
 }
 
 //----------------------------------------------------------------//

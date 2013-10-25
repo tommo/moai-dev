@@ -3,12 +3,7 @@
 
 #include "pch.h"
 #include <moai-core/MOAISerializer.h>
-#include <moai-core/MOAILuaState.h>
-#include <moai-core/MOAIScopedLuaState.h>
-#include <moai-core/MOAILuaObject.h>
-#include <moai-core/MOAILuaRuntime.h>
-#include <moai-core/MOAILuaRef.h>
-#include <moai-core/MOAILuaState-impl.h>
+#include <moai-core/MOAILua.h>
 
 //================================================================//
 // MOAISerializer
@@ -208,12 +203,13 @@ uintptr MOAISerializer::AffirmMemberID ( MOAILuaState& state, int idx ) {
 		
 		MOAISerializerObjectEntry& entry = this->mObjectMap [ memberID ];
 		
-		entry.mLuaRef.SetStrongRef ( state, idx );
+		entry.mLuaRef.SetRef ( state, idx );
 		entry.mObject = object;
 		entry.mClassName = classname;
 		
 		this->mPending.push_back ( memberID );
 		
+		// TODO
 		if ( !object->IsSingleton ()) {
 			object->PushMemberTable ( state );
 			this->AffirmMemberID ( state, -1 );
@@ -222,7 +218,7 @@ uintptr MOAISerializer::AffirmMemberID ( MOAILuaState& state, int idx ) {
 	}
 	else if ( state.IsType ( idx, LUA_TTABLE )) {
 		
-		this->mTableMap [ memberID ].SetStrongRef ( state, idx );
+		this->mTableMap [ memberID ].SetRef ( state, idx );
 		
 		u32 itr = state.PushTableItr ( idx );
 		while ( state.TableItrNext ( itr )) {
@@ -295,7 +291,7 @@ void MOAISerializer::SerializeToFile ( cc8* filename ) {
 void MOAISerializer::SerializeToStream ( ZLStream& stream ) {
 	
 	stream.Print ( "%s\n", this->GetFileMagic ());
-	stream.Print ( "serializer = ... or %s.new ()\n", this->GetDeserializerTypeName ());
+	stream.Print ( "local serializer = ... or %s.new ()\n", this->GetDeserializerTypeName ());
 	
 	stream.Print ( "\n" );
 	
@@ -647,7 +643,7 @@ void MOAISerializer::WriteTableInits ( ZLStream& stream ) {
 		uintptr tableID = tableIt->first;
 		stream.Print ( "\ttable = objects [ 0x%08X ]\n", tableID );
 		
-		MOAILuaRef& tableRef = tableIt->second;
+		MOAILuaStrongRef& tableRef = tableIt->second;
 		state.Push ( tableRef );
 		this->WriteTableInitializer ( stream, state, -1, "table" );
 		state.Pop ( 1 );

@@ -143,6 +143,14 @@ int MOAIAction::_pause ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIAction::_setAutoStop ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAction, "U" );
+	self->mAutoStop = state.GetValue < bool >( 2, false );
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	start
 	@text	Adds the action to a parent action or the root of the action tree.
 
@@ -247,8 +255,7 @@ void MOAIAction::Attach ( MOAIAction* parent ) {
 	if ( parent ) {
 		// TODO: there are some edge cases that may lead to the action
 		// getting two updates in a frame or missing an update. additional
-		// state may need to be introduced to handle this. the TODO is
-		// to investigate the edge cases and (possibly) provide a fix.
+		// state may need to be introduced to handle this.
 		parent->mChildren.PushBack ( this->mLink );
 		this->mParent = parent;
 	}
@@ -296,7 +303,7 @@ bool MOAIAction::IsCurrent () {
 //----------------------------------------------------------------//
 bool MOAIAction::IsDone () {
 
-	return ( this->mChildren.Count () == 0 );
+	return ( this->mAutoStop && ( this->mChildren.Count () == 0 ));
 }
 
 //----------------------------------------------------------------//
@@ -311,7 +318,8 @@ MOAIAction::MOAIAction () :
 	mParent ( 0 ),
 	mChildIt ( 0 ),
 	mThrottle ( 1.0f ),
-	mIsPaused ( false ) {
+	mIsPaused ( false ),
+	mAutoStop ( true ) {
 
 	this->mLink.Data ( this );
 
@@ -378,6 +386,7 @@ void MOAIAction::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "isBusy",				_isBusy },
 		{ "isDone",				_isDone },
 		{ "pause",				_pause },
+		{ "setAutoStop",		_setAutoStop },
 		{ "start",				_start },
 		{ "stop",				_stop },
 		{ "throttle",			_throttle },

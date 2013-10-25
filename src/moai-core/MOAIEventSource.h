@@ -4,7 +4,8 @@
 #ifndef	MOAIEVENTSOURCE_H
 #define	MOAIEVENTSOURCE_H
 
-#include <moai-core/MOAILua.h>
+#include <moai-core/MOAILuaObject.h>
+#include <moai-core/MOAILuaState.h>
 
 //================================================================//
 // MOAIEventSource
@@ -41,7 +42,7 @@ class MOAIInstanceEventSource :
 	public virtual MOAIEventSource {
 private:
 
-	MOAILuaLocal	mListenerTable;
+	MOAILuaMemberRef	mListenerTable;
 
 	//----------------------------------------------------------------//
 	static int		_getListener				( lua_State* L );
@@ -71,7 +72,7 @@ class MOAIGlobalEventSource :
 	public virtual MOAIEventSource {
 private:
 
-	MOAILuaRef		mListenerTable;
+	MOAILuaStrongRef	mListenerTable;
 
 	//----------------------------------------------------------------//
 	static int		_getListener				( lua_State* L );

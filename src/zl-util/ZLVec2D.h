@@ -4,6 +4,8 @@
 #ifndef ZLVEC2D_H
 #define	ZLVEC2D_H
 
+#include <zl-util/ZLMathConsts.h>
+#include <zl-util/ZLTrig.h>
 #include <zl-util/ZLVec3D.h>
 
 template < typename TYPE > class tVec3;
@@ -65,7 +67,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	// V = V x vec
-	TYPE Cross ( const ZLMetaVec2D < TYPE >& vec ) {
+	TYPE Cross ( const ZLMetaVec2D < TYPE >& vec ) const {
 	
 		return ( mX * vec.mY ) - ( mY * vec.mX );
 	}
@@ -274,6 +276,25 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
+	// angle between vector and (1.0f,0.0f) in radians
+	float Radians () const {
+		
+		float r = ASin ( ABS ( this->mY ));
+
+		if ( this->mX < 0.0f ) {
+			r = ( float )PI - r;
+		}
+		return this->mY < 0.0f ? r + ( float )PI : r;
+	}
+	
+	//----------------------------------------------------------------//
+	// angle between vectors in radians
+	float Radians ( const ZLMetaVec2D& v ) const {
+		
+		return ACos ( this->Dot ( v ));
+	}
+	
+	//----------------------------------------------------------------//
 	// Reflect V off of plane of norm
 	void Reflect ( const ZLMetaVec2D& norm ) {
 
@@ -372,8 +393,8 @@ public:
 	}
 };
 
-typedef ZLMetaVec2D < int > USIntVec2D;
-typedef ZLMetaVec2D < float > USVec2D;
-typedef ZLMetaVec2D < double > USVec2D64;
+typedef ZLMetaVec2D < int > ZLIntVec2D;
+typedef ZLMetaVec2D < float > ZLVec2D;
+typedef ZLMetaVec2D < double > ZLVec2D64;
 
 #endif

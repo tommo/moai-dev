@@ -4,13 +4,13 @@
 // http://getmoai.com
 //----------------------------------------------------------------//
 
-#ifndef AKU_MOAIEXT_UNTZ_H
-#define AKU_MOAIEXT_UNTZ_H
+#ifndef MOAI_UNTZ_HOST_H
+#define MOAI_UNTZ_HOST_H
 
 #include <moai-core/host.h>
 
-AKU_API void	AKUInitializeUntz		();
-AKU_API void	AKUUntzResume			();
-AKU_API void	AKUUntzSuspend			();
+AKU_API void	AKUUntzAppFinalize					();
+AKU_API void	AKUUntzAppInitialize				();
+AKU_API void	AKUUntzContextInitialize			();
 
 #endif

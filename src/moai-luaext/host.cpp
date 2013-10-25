@@ -9,9 +9,6 @@ extern "C" {
 	extern int luaopen_luacurl			( lua_State *L );
 	extern int luaopen_luasql_sqlite3	( lua_State *L );
 	extern int luapreload_fullluasocket ( lua_State *L );
-	extern int luaopen_lpeg ( lua_State *L );
-	extern int luaopen_struct ( lua_State *L );
-
 }
 
 //================================================================//
@@ -19,50 +16,20 @@ extern "C" {
 //================================================================//
 
 //----------------------------------------------------------------//
-void AKUExtLoadStruct () {
-    
-	lua_State* state = AKUGetLuaState ();
-	luaopen_struct ( state );
+void AKULuaExtAppFinalize () {
 }
 
 //----------------------------------------------------------------//
-void AKUExtLoadLPeg () {
-    
-	lua_State* state = AKUGetLuaState ();
-	luaopen_lpeg ( state );
+void AKULuaExtAppInitialize () {
 }
 
 //----------------------------------------------------------------//
-void AKUExtLoadLuacrypto () {
+void AKULuaExtContextInitialize () {
 
 	lua_State* state = AKUGetLuaState ();
 	luaopen_crypto ( state );
-}
-
-//----------------------------------------------------------------//
-void AKUExtLoadLuacurl () {
-
-	lua_State* state = AKUGetLuaState ();
 	luaopen_luacurl ( state );
-}
-
-//----------------------------------------------------------------//
-void AKUExtLoadLuafilesystem () {
-
-	lua_State* state = AKUGetLuaState ();
 	luaopen_lfs ( state );
-}
-
-//----------------------------------------------------------------//
-void AKUExtLoadLuasocket () {
-
-	lua_State* state = AKUGetLuaState ();
 	luapreload_fullluasocket ( state );
-}
-
-//----------------------------------------------------------------//
-void AKUExtLoadLuasql () {
-
-	lua_State* state = AKUGetLuaState ();
 	luaopen_luasql_sqlite3 ( state );
 }

@@ -147,11 +147,6 @@ end
 MOAIThread = MOAICoroutine
 
 --============================================================--
--- MOAILayerBridge2D
---============================================================--
-MOAILayerBridge2D = MOAILayerBridge
-
---============================================================--
 -- MOAICamera
 --============================================================--
 MOAICamera.extend (
@@ -470,6 +465,16 @@ MOAIGfxDevice.extend (
 	end
 )
 
+--============================================================--
+-- MOAIHashWriter
+--============================================================--
+
+MOAIHashWriter = MOAIHashWriterCrypto or MOAIHashWriter
+
+--============================================================--
+-- Cross Platform
+--============================================================--
+
 MOAIApp = MOAIAppAndroid or MOAIAppIOS
 MOAIBrowser = MOAIBrowserAndroid or MOAIBrowserIOS
 MOAISafariIOS = MOAIBrowserIOS
@@ -527,3 +532,4 @@ if MOAITwitterIOS then
         end
     end
 end
+

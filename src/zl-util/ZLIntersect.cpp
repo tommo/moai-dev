@@ -193,7 +193,7 @@ s32 ZLSect::RhombusToPlane ( const ZLRhombus& rhombus, const USPlane3D& p ) {
 }
 
 //----------------------------------------------------------------//
-u32 ZLSect::VecToCircle ( float& t0, float& t1, USVec2D& loc, USVec2D& vec, USVec2D& circleLoc, float radius ) {
+u32 ZLSect::VecToCircle ( float& t0, float& t1, ZLVec2D& loc, ZLVec2D& vec, ZLVec2D& circleLoc, float radius ) {
 
 	float a, b, c, d;
 
@@ -231,7 +231,7 @@ u32 ZLSect::VecToCircle ( float& t0, float& t1, USVec2D& loc, USVec2D& vec, USVe
 }
 
 //----------------------------------------------------------------//
-u32 ZLSect::VecToPlane ( const USVec2D& loc, const USVec2D& vec, const ZLPlane2D& p, float& t ) {
+u32 ZLSect::VecToPlane ( const ZLVec2D& loc, const ZLVec2D& vec, const ZLPlane2D& p, float& t ) {
 
 	float d;
 	d = vec.Dot ( p.mNorm );
@@ -308,7 +308,7 @@ u32 ZLSect::VecToSphere ( float& t0, float& t1, const ZLVec3D& loc, const ZLVec3
 }
 
 //----------------------------------------------------------------//
-u32 ZLSect::VecToUnitCircle ( float& t0, float& t1, const USVec2D& loc, const USVec2D& vec ) {
+u32 ZLSect::VecToUnitCircle ( float& t0, float& t1, const ZLVec2D& loc, const ZLVec2D& vec ) {
 
 	float a, b, c, d;
 

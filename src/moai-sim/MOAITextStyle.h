@@ -4,6 +4,8 @@
 #ifndef	MOAITEXTSTYLE_H
 #define	MOAITEXTSTYLE_H
 
+#include <moai-sim/MOAINode.h>
+
 class MOAIFont;
 
 //================================================================//
@@ -39,7 +41,9 @@ class MOAITextStyle :
 private:
 
 	friend class MOAITextBox;
-	friend class MOAITextDesigner;
+	friend class MOAITextDesignParser;
+	friend class MOAITextLayout;
+	friend class MOAITextStyleParser;
 	friend class MOAITextStyler;
 
 	//----------------------------------------------------------------//

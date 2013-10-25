@@ -4,17 +4,13 @@
 // http://getmoai.com
 //----------------------------------------------------------------//
 
-#ifndef AKU_LUAEXT_H
-#define AKU_LUAEXT_H
+#ifndef MOAI_LUAEXT_HOST_H
+#define MOAI_LUAEXT_HOST_H
 
 #include <moai-core/host.h>
 
-AKU_API void	AKUExtLoadLuacrypto			();
-AKU_API void	AKUExtLoadLuacurl			();
-AKU_API void	AKUExtLoadLuafilesystem		();
-AKU_API void	AKUExtLoadLuasocket			();
-AKU_API void	AKUExtLoadLuasql			();
-AKU_API void	AKUExtLoadLPeg        ();
-AKU_API void	AKUExtLoadStruct      ();
+AKU_API void	AKULuaExtAppFinalize				();
+AKU_API void	AKULuaExtAppInitialize				();
+AKU_API void	AKULuaExtContextInitialize			();
 
 #endif

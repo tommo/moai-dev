@@ -4,12 +4,13 @@
 // http://getmoai.com
 //----------------------------------------------------------------//
 
-#ifndef AKU_CHIPMUNK_H
-#define AKU_CHIPMUNK_H
+#ifndef MOAI_CHIPMUNK_HOST_H
+#define MOAI_CHIPMUNK_HOST_H
 
 #include <moai-core/host.h>
 
-AKU_API void	AKUFinalizeChipmunk			();
-AKU_API void	AKUInitializeChipmunk		();
+AKU_API void	AKUChipmunkAppFinalize				();
+AKU_API void	AKUChipmunkAppInitialize			();
+AKU_API void	AKUChipmunkContextInitialize		();
 
 #endif

@@ -408,13 +408,13 @@ int	MOAILayer::_setNoClearFrameBuffer ( lua_State* L ) {
 int MOAILayer::_wndToWorld ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILayer, "UNN" )
 
-	USVec4D loc;
+	ZLVec4D loc;
 	loc.mX = state.GetValue < float >( 2, 0.0f );
 	loc.mY = state.GetValue < float >( 3, 0.0f );
 	loc.mZ = state.GetValue < float >( 4, 0.0f );
 	loc.mW = 1.0f;
 
-	USVec4D vec = loc;
+	ZLVec4D vec = loc;
 	vec.mZ += 0.1f;
 
 	ZLMatrix4x4 wndToWorld;
@@ -457,7 +457,7 @@ int MOAILayer::_wndToWorld ( lua_State* L ) {
 int MOAILayer::_worldToWnd ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILayer, "UNN" )
 
-	USVec4D loc;
+	ZLVec4D loc;
 	loc.mX = state.GetValue < float >( 2, 0.0f );
 	loc.mY = state.GetValue < float >( 3, 0.0f );
 	loc.mZ = state.GetValue < float >( 4, 0.0f );
@@ -483,10 +483,6 @@ void MOAILayer::AffirmPartition () {
 
 	if ( !this->mPartition ) {
 		this->mPartition.Set ( *this, new MOAIPartition ());
-		
-		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-		this->mPartition->PushLuaUserdata ( state );
-		state.Pop ( 1 );
 	}
 }
 
@@ -534,19 +530,21 @@ void MOAILayer::Draw ( int subPrimID ) {
 	
 	if ( this->mShowDebugLines ) {
 		
-		#if MOAI_WITH_CHIPMUNK
-			if ( this->mCpSpace ) {
-				this->mCpSpace->DrawDebug ();
-				gfxDevice.Flush ();
-			}
-		#endif
+		// TODO: fix this - these should just be special layers
 		
-		#if MOAI_WITH_BOX2D
-			if ( this->mBox2DWorld ) {
-				this->mBox2DWorld->DrawDebug ();
-				gfxDevice.Flush ();
-			}
-		#endif
+//		#if MOAI_WITH_CHIPMUNK
+//			if ( this->mCpSpace ) {
+//				this->mCpSpace->DrawDebug ();
+//				gfxDevice.Flush ();
+//			}
+//		#endif
+//		
+//		#if MOAI_WITH_BOX2D
+//			if ( this->mBox2DWorld ) {
+//				this->mBox2DWorld->DrawDebug ();
+//				gfxDevice.Flush ();
+//			}
+//		#endif
 	}
 	
 	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
