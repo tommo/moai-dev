@@ -218,6 +218,36 @@ int MOAITransform::_modelToWorld ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	modelToWorldVec
+	@text	Transform a vector in model space to world space.
+	
+	@in		MOAITransform self
+	@opt	number x			Default value is 0.
+	@opt	number y			Default value is 0.
+	@opt	number z			Default value is 0.
+	@out	number x
+	@out	number y
+	@out	number z
+*/
+int MOAITransform::_modelToWorldVec ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITransform, "U" )
+
+	ZLVec3D vec;
+	vec.mX = state.GetValue < float >( 2, 0.0f );
+	vec.mY = state.GetValue < float >( 3, 0.0f );
+	vec.mZ = state.GetValue < float >( 4, 0.0f );
+
+	ZLAffine3D modelToWorld = self->GetLocalToWorldMtx ();
+	modelToWorld.TransformVec ( vec );
+
+	lua_pushnumber ( state, vec.mX );
+	lua_pushnumber ( state, vec.mY );
+	lua_pushnumber ( state, vec.mZ );
+
+	return 3;
+}
+
+//----------------------------------------------------------------//
 /**	@name	move
 	@text	Animate the transform by applying a delta. Creates and returns
 			a MOAIEaseDriver initialized to apply the delta.
@@ -935,6 +965,38 @@ int MOAITransform::_worldToModel ( lua_State* L ) {
 	return 3;
 }
 
+
+
+//----------------------------------------------------------------//
+/**	@name	worldToModelVec
+	@text	Transform a vector in world space to model space.
+	
+	@in		MOAITransform self
+	@opt	number x			Default value is 0.
+	@opt	number y			Default value is 0.
+	@opt	number z			Default value is 0.
+	@out	number x
+	@out	number y
+	@out	number z
+*/
+int MOAITransform::_worldToModelVec ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITransform, "U" )
+
+	ZLVec3D vec;
+	vec.mX = state.GetValue < float >( 2, 0.0f );
+	vec.mY = state.GetValue < float >( 3, 0.0f );
+	vec.mZ = state.GetValue < float >( 4, 0.0f );
+
+	ZLAffine3D worldToModel = self->GetWorldToLocalMtx ();
+	worldToModel.TransformVec ( vec );
+
+	lua_pushnumber ( state, vec.mX );
+	lua_pushnumber ( state, vec.mY );
+	lua_pushnumber ( state, vec.mZ );
+
+	return 3;
+}
+
 //================================================================//
 // MOAITransform
 //================================================================//
@@ -1179,6 +1241,7 @@ void MOAITransform::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "getRot",				_getRot },
 		{ "getScl",				_getScl },
 		{ "modelToWorld",		_modelToWorld },
+		{ "modelToWorldVec",		_modelToWorldVec },
 		{ "move",				_move },
 		{ "moveLoc",			_moveLoc },
 		{ "movePiv",			_movePiv },
@@ -1198,6 +1261,7 @@ void MOAITransform::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setShearByY",		_setShearByY },
 		{ "setShearByZ",		_setShearByZ },
 		{ "worldToModel",		_worldToModel },
+		{ "worldToModelVec",		_worldToModelVec },
 		{ NULL, NULL }
 	};
 	

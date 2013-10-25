@@ -29,8 +29,9 @@ namespace FMODDesigner
             m_enableProfiling(false),
             m_enableFsCallbacks(false),
             m_disableSound(false),
-            m_dopplerScale(0.f)        
-        {
+            m_dopplerScale(0.f),
+            m_DSPBufferSize(1024),
+            m_DSPBufferCount(4){
         }
 
         PlatformData* m_pPlatformData;
@@ -44,6 +45,8 @@ namespace FMODDesigner
         u32 m_nADPCMCodecs;
         u32 m_nCompressedCodecs;
         u32 m_nMaxInputChannels;
+        u32 m_DSPBufferSize;
+        u32 m_DSPBufferCount;
         bool m_enableSoundSystem;
         bool m_enableDistantLowpass;
         bool m_enableEnvironmentalReverb; 

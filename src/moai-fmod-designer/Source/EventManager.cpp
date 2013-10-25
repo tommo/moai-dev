@@ -1936,13 +1936,15 @@ void EventManager::_InitInternals()
     {
         goto fail_with_result;
     }    
-    s_pFMODEventSystem->setDSPBufferSize( 1024, 4 );    
+    pSystem->setDSPBufferSize( 1024, 4 );    
 #else
-    result = s_pFMODEventSystem->init(m_initParams.m_nVirtualChannels, systemInitFlags, pExtraDriverData, eventInitFlags);	// Initialize FMOD.
+    // result = s_pFMODEventSystem->init(m_initParams.m_nVirtualChannels, systemInitFlags, pExtraDriverData, eventInitFlags);	// Initialize FMOD.
+    pSystem->setDSPBufferSize( 256, 4 );
+    result = s_pFMODEventSystem->init( 100, FMOD_INIT_NORMAL, 0 );
     if (result != FMOD_OK)
     {
         goto fail_with_result;
-    }    
+    }
 #endif
 
     // set the media path

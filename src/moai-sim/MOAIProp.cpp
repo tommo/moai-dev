@@ -458,7 +458,7 @@ int MOAIProp::_setGrid ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIProp, "U" )
 	
 	MOAIGrid* grid = state.GetLuaObject < MOAIGrid >( 2, true );
-	if ( !grid ) return 0;
+	// if ( !grid ) return 0;
 	
 	self->mGrid.Set ( *self, grid );
 	

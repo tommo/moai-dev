@@ -13,7 +13,7 @@ osx_architectures_macosx=( "i386" )
 
 # ios_schemes="libmoai-ios libmoai-ios-3rdparty libmoai-ios-facebook libmoai-ios-fmod-ex libmoai-ios-luaext libmoai-ios-tapjoy libmoai-ios-untz libmoai-ios-zlcore"
 ios_schemes="libmoai-ios libmoai-ios-sim libmoai-ios-3rdparty libmoai-ios-luaext libmoai-ios-fmod-ex libmoai-ios-fmod-designer libmoai-ios-zlcore  libmoai-ios-box2d libmoai-ios-http-client libmoai-ios-lua libmoai-ios-crittercism libmoai-ios-twitter" # libmoai-ios-tapjoy
-ios_sdks="iphoneos iphonesimulator"
+ios_sdks="iphoneos"  #iphonesimulator
 ios_architectures_iphonesimulator="i386"
 ios_architectures_iphoneos="armv7"
 

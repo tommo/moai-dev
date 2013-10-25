@@ -209,6 +209,8 @@ GLenum _remapEnum ( u32 zglEnum ) {
 		case ZGL_PIXEL_FORMAT_ALPHA:						return GL_ALPHA;
 		case ZGL_PIXEL_FORMAT_LUMINANCE:					return GL_LUMINANCE;
 		case ZGL_PIXEL_FORMAT_LUMINANCE_ALPHA:				return GL_LUMINANCE_ALPHA;
+		case ZGL_PIXEL_FORMAT_DEPTH_COMPONENT16:			return GL_DEPTH_COMPONENT16;
+
 
 		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY ) && !defined ( MOAI_OS_ANDROID )
 		  case ZGL_PIXEL_FORMAT_RED:							return GL_RED;
@@ -386,6 +388,8 @@ GLenum _remapEnum ( u32 zglEnum ) {
 
 		case ZGL_WRAP_MODE_CLAMP:						return GL_CLAMP_TO_EDGE;
 		case ZGL_WRAP_MODE_REPEAT:						return GL_REPEAT;
+
+
 	}
   	
 	assert ( false );

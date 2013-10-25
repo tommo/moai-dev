@@ -63,6 +63,7 @@ protected:
 	static int	_getRot			( lua_State* L );
 	static int	_getScl			( lua_State* L );
 	static int	_modelToWorld	( lua_State* L );
+	static int	_modelToWorldVec	( lua_State* L );
 	static int	_move			( lua_State* L );
 	static int	_moveLoc		( lua_State* L );
 	static int	_movePiv		( lua_State* L );
@@ -82,6 +83,7 @@ protected:
 	static int	_setShearByY	( lua_State* L );
 	static int	_setShearByZ	( lua_State* L );
 	static int	_worldToModel	( lua_State* L );
+	static int	_worldToModelVec	( lua_State* L );
 
 	//----------------------------------------------------------------//
 	void	BuildTransforms			();

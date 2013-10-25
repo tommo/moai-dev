@@ -5,7 +5,7 @@
 ----------------------------------------------------------------
 
 MOAISim.openWindow ( "test", 320, 480 )
-MOAIGfxDevice.setClearDepth ( true )
+MOAIGfxDevice.getFrameBuffer():setClearDepth ( true )
 
 viewport = MOAIViewport.new ()
 viewport:setSize ( 320, 480 )
@@ -14,7 +14,7 @@ viewport:setScale ( 320, 480 )
 layer = MOAILayer.new ()
 layer:setViewport ( viewport )
 layer:setSortMode ( MOAILayer.SORT_NONE ) -- don't need layer sort
-MOAISim.pushRenderPass ( layer )
+MOAIGfxDevice.getFrameBuffer():setRenderTable( {layer} )
 
 vertexFormat = MOAIVertexFormat.new ()
 
