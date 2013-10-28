@@ -14,7 +14,7 @@
 	#endif
 
 	#ifndef AKU_WITH_FMOD_DESIGNER
-		#define AKU_WITH_FMOD_DESIGNER 0
+		#define AKU_WITH_FMOD_DESIGNER 1
 	#endif
 
 	#ifndef AKU_WITH_FMOD_EX
@@ -46,7 +46,7 @@
 	#endif
 
 	#ifndef AKU_WITH_UNTZ
-		#define AKU_WITH_UNTZ 1
+		#define AKU_WITH_UNTZ 0
 	#endif
 
 	#ifndef AKU_WITH_UTIL

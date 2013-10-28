@@ -265,18 +265,16 @@ void MOAITextDesignParser::BuildLayout () {
 //----------------------------------------------------------------//
 void MOAITextDesignParser::Init ( MOAITextLayout& layout, MOAITextStyler& styler, MOAITextDesigner& designer, cc8* str, u32 idx ) {
 	
-	if ( styler.CountSpans () == 0 ) return;
-	
-	this->mLayout = &layout;
-	this->mStyler = &styler;
-	this->mDesigner = &designer;
-	
 	this->mStr = str;
 	this->mIdx = idx;
 	this->mPrevIdx = idx;
-	
+
 	this->mStyleSpan = 0;
 	this->mStyle = 0;
+
+	this->mLayout = &layout;
+	this->mStyler = &styler;
+	this->mDesigner = &designer;
 	
 	this->mLineIdx = this->mIdx;
 	this->mLineSpriteID = 0;
@@ -296,6 +294,9 @@ void MOAITextDesignParser::Init ( MOAITextLayout& layout, MOAITextStyler& styler
 	this->mPrevGlyph = 0;
 	
 	this->mMore = true;
+
+	if ( styler.CountSpans () == 0 ) return;
+
 }
 
 //----------------------------------------------------------------//
@@ -321,6 +322,7 @@ u32 MOAITextDesignParser::NextChar () {
 		this->mStyleSpan = &this->mStyler->mStyleMap.Elem ( 0 );
 		this->mSpanIdx = 0;
 		newSpan = true;
+		if( !this->mStyleSpan ) return 0;
 	}
 
 	if ( this->mIdx >= this->mStyleSpan->mTop ) {

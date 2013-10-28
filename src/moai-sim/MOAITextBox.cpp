@@ -673,7 +673,7 @@ bool MOAITextBox::IsDone () {
 //----------------------------------------------------------------//
 void MOAITextBox::Layout () {
 
-	if ( !this->mText ) {
+	if ( this->mText.length() == 0 ) {
 		this->mStyler.ResetStyleMap ();
 		this->ResetLayout ();
 	}
