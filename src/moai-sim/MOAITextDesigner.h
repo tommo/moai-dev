@@ -13,22 +13,20 @@ class MOAITextStyleSpan;
 // MOAITextDesigner
 //================================================================//
 class MOAITextDesigner {
-private:
+protected:
 
 	friend class MOAITextDesignParser;
 
 	MOAINode*	mOwner;
 
-	ZLVec2D		mLoc;
-
-	float		mWidth;
-	float		mHeight;
+	ZLRect		mFrame;
 	
 	bool		mLimitWidth;
 	bool		mLimitHeight;
 	
 	u32			mHAlign;
 	u32			mVAlign;
+	bool		mYFlip;
 	
 	u32			mWordBreak; // rule for breaking words across lines
 	
@@ -44,9 +42,12 @@ private:
 public:
 
 	enum {
+		BASELINE_JUSTIFY,
+		BOTTOM_JUSTIFY,
 		LEFT_JUSTIFY,
 		CENTER_JUSTIFY,
 		RIGHT_JUSTIFY,
+		TOP_JUSTIFY,
 	};
 
 	enum {
@@ -56,16 +57,14 @@ public:
 
 	GET_SET ( MOAINode*, Owner, mOwner )
 	
-	GET_SET ( ZLVec2D&, Loc, mLoc )
-	
-	GET_SET ( float, Width, mWidth )
-	GET_SET ( float, Height, mHeight )
+	GET_SET ( ZLRect&, Frame, mFrame )
 	
 	GET_SET ( bool, LimitWidth, mLimitWidth )
 	GET_SET ( bool, LimitHeight, mLimitHeight )
 	
 	GET_SET ( u32, HAlign, mHAlign )
 	GET_SET ( u32, VAlign, mVAlign )
+	GET_SET ( bool, YFlip, mYFlip )
 	
 	GET_SET ( u32, WordBreak, mWordBreak )
 	GET_SET ( float, GlyphScale, mGlyphScale )
@@ -78,7 +77,6 @@ public:
 				~MOAITextDesigner			();
 	void		ReserveCurves				( u32 total );
 	void		SetCurve					( u32 idx, MOAIAnimCurve* curve );
-	void		SetLoc						( float x, float y );
 };
 
 #endif
