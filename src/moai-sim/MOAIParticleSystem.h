@@ -31,7 +31,8 @@ private:
 	
 	bool								mCapParticles;
 	bool								mCapSprites;
-	
+	bool								mReversedDrawOrder;
+
 	MOAIParticle*						mHead;
 	MOAIParticle*						mTail;
 	MOAIParticle*						mFree;
@@ -59,6 +60,7 @@ private:
 	static int		_setSpriteDeckIdx		( lua_State* L );
 	static int		_setState				( lua_State* L );
 	static int		_surge					( lua_State* L );
+	static int		_setReversedDrawOrder ( lua_State* L );
 	
 	//----------------------------------------------------------------//
 	void					ClearStates				();

@@ -232,6 +232,21 @@ int MOAIParticleSystem::_setComputeBounds ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setReversedDrawOrder
+	@text	Set the a flag controlling whether draw earlier sprites first
+	
+	@in		MOAIParticleSystem self
+	@opt	boolean reversedDrawOrder		Default value is false.
+	@out	nil
+*/
+int MOAIParticleSystem::_setReversedDrawOrder ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIParticleSystem, "U" )
+
+	self->mReversedDrawOrder = state.GetValue < bool >( 2, false );
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setSpriteColor
 	@text	Set the color of the most recently added sprite.
 	
@@ -385,10 +400,20 @@ void MOAIParticleSystem::Draw ( int subPrimID ) {
 	ZLVec3D worldLoc;
 	if ( billboard ) faceCameraMtx.Init( gfxDevice.GetBillboardMtx () );
 	
+	int k, step;
+	if ( this->mReversedDrawOrder ) {
+		k = total - 1;
+		step = -1;
+	} else {
+		k = 0;
+		step = 1;
+	}
+
 	for ( u32 i = 0; i < total; ++i ) {
 		
-		u32 idx = ( base + i ) % maxSprites;
-		
+		u32 idx = ( base + k ) % maxSprites;
+		k += step;
+
 		AKUParticleSprite& sprite = this->mSprites [ idx ];
 		gfxDevice.SetPenColor ( sprite.mRed, sprite.mGreen, sprite.mBlue, sprite.mAlpha );
 
@@ -469,6 +494,7 @@ MOAIParticleSystem::MOAIParticleSystem () :
 	mParticleSize ( 0 ),
 	mCapParticles ( false ),
 	mCapSprites ( false ),
+	mReversedDrawOrder ( false ),
 	mHead ( 0 ),
 	mTail ( 0 ),
 	mFree ( 0 ),
@@ -644,6 +670,7 @@ void MOAIParticleSystem::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "reserveSprites",		_reserveSprites },
 		{ "reserveStates",		_reserveStates },
 		{ "setComputeBounds",	_setComputeBounds },
+		{ "setReversedDrawOrder",	_setReversedDrawOrder },
 		{ "setSpriteColor",		_setSpriteColor },
 		{ "setSpriteDeckIdx",	_setSpriteDeckIdx },
 		{ "setState",			_setState },
