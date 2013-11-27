@@ -13,9 +13,9 @@
 
 using namespace FMODDesigner;
 
-#ifdef _DEBUG
+// #ifdef _DEBUG
     #include <fmod_event_net.hpp>
-#endif
+// #endif
 
 #ifdef MOAI_OS_IPHONE
     #include <fmodiphone.h>
@@ -44,6 +44,37 @@ FMODDesigner::EventManager FMODDesigner::tEventManager;
 u32 FMODDesigner::GetTimeMs()
 {
     return (u32)(ZLDeviceTime::GetTimeInSeconds() * 1000.0);
+}
+
+//----------------------------------------------------------------//
+// DSP Time Offset ( for accurate play position aquiring )
+//----------------------------------------------------------------//
+u32 lastDSPUpdateTime = -1;
+
+FMOD_RESULT F_CALLBACK timeOffsetDSPCallback(
+  FMOD_DSP_STATE *  dsp_state,
+  float *  inbuffer,
+  float *  outbuffer,
+  unsigned int  length,
+  int  inchannels,
+  int  outchannels
+) {      
+    lastDSPUpdateTime = FMODDesigner::GetTimeMs();
+    for ( int count = 0; count < length; count++)
+    { 
+       for (int count2 = 0; count2 < outchannels; count2++)
+       {
+           outbuffer[(count * outchannels) + count2] = inbuffer[(count * inchannels) + count2] ;
+       }
+    } 
+    return FMOD_OK;
+}
+
+u32 FMODDesigner::GetDSPTimeOffsetMs() {
+    if( lastDSPUpdateTime<0 ) return 0;
+    u32 ctime = FMODDesigner::GetTimeMs();
+    u32 offset = ctime - lastDSPUpdateTime;
+    return offset;
 }
 
 //----------------------------------------------------------------------------------------
@@ -1748,12 +1779,12 @@ void EventManager::_InitInternals()
     void* pExtraDriverData = NULL;
     FMOD_INITFLAGS systemInitFlags = FMOD_INIT_NORMAL | FMOD_INIT_3D_RIGHTHANDED;
 
-#ifdef _DEBUG
+// #ifdef _DEBUG
     if( m_initParams.m_enableAuditioning )
     {
         systemInitFlags |= FMOD_INIT_ENABLE_PROFILE;
     }    
-#endif
+// #endif
     FMOD_EVENT_INITFLAGS eventInitFlags = FMOD_EVENT_INIT_NORMAL | FMOD_EVENT_INIT_FAIL_ON_MAXSTREAMS;    
 
     if( m_initParams.m_enableDistantLowpass )
@@ -1931,16 +1962,17 @@ void EventManager::_InitInternals()
     extraDriverData.instance = g_instance->pp_instance();
     pExtraDriverData = &extraDriverData;
 
+    pSystem->setDSPBufferSize( 1024, 4 );    
     result = s_pFMODEventSystem->init(m_initParams.m_nVirtualChannels, systemInitFlags, pExtraDriverData, eventInitFlags);	// Initialize FMOD.
     if (result != FMOD_OK)
     {
         goto fail_with_result;
     }    
-    pSystem->setDSPBufferSize( 1024, 4 );    
 #else
     // result = s_pFMODEventSystem->init(m_initParams.m_nVirtualChannels, systemInitFlags, pExtraDriverData, eventInitFlags);	// Initialize FMOD.
     pSystem->setDSPBufferSize( 256, 4 );
-    result = s_pFMODEventSystem->init( 100, FMOD_INIT_NORMAL, 0 );
+    result = s_pFMODEventSystem->init( m_initParams.m_nVirtualChannels, systemInitFlags, pExtraDriverData, eventInitFlags );
+    // result = s_pFMODEventSystem->init( m_initParams.m_nVirtualChannels, FMOD_INIT_NORMAL, 0 );
     if (result != FMOD_OK)
     {
         goto fail_with_result;
@@ -1982,12 +2014,12 @@ void EventManager::_InitInternals()
 
     m_voiceLRU.Init(m_initParams.m_voiceLRUMaxMB - m_initParams.m_voiceLRUBufferMB, m_initParams.m_voiceLRUMaxMB);
 
-#ifdef _DEBUG
+// #ifdef _DEBUG
     if( m_initParams.m_enableAuditioning )
     {
         FMOD::NetEventSystem_Init( s_pFMODEventSystem );
     } 
-#endif    
+// #endif    
     
     m_enabled = true;
 
@@ -2003,6 +2035,23 @@ void EventManager::_InitInternals()
 		m_aReverbInstances.push_back(pNewInstance);
 	}
     
+    //setup time offset dsp callback 
+    { 
+        FMOD_DSP_DESCRIPTION  offsetDspDesc; 
+        memset(&offsetDspDesc, 0, sizeof(FMOD_DSP_DESCRIPTION)); 
+        strcpy(offsetDspDesc.name, "Time Offset Helper"); 
+        offsetDspDesc.channels     = 0;                   // 0 = whatever comes in, else specify. 
+        offsetDspDesc.read         = timeOffsetDSPCallback;                 
+        result = pSystem->createDSP( &offsetDspDesc, &m_timeOffsetDsp ); 
+    }
+
+    // FMOD::DSP           *dsphead;
+    // FMOD::DSPConnection *dspConnection;
+
+    result = pSystem->addDSP( m_timeOffsetDsp, 0 );
+    // result = dsphead->addD( m_timeOffsetDsp, &dspConnection );
+    // m_timeOffsetDsp->setActive( true );
+
     return;
 
  fail_with_result:
@@ -2014,12 +2063,15 @@ void EventManager::_InitInternals()
 void
 EventManager::_ShutdownInternals()
 {
-#ifdef _DEBUG
+// #ifdef _DEBUG
     if( m_initParams.m_enableAuditioning )
     {
         FMOD::NetEventSystem_Shutdown();
     }   
-#endif
+// #endif
+
+    //shutdown time offset dsp
+    m_timeOffsetDsp->release();
 
     // release our highpass dsps
     for (u32 i = 0; i < s_aHighPassFilters.size(); ++i)
@@ -3085,12 +3137,12 @@ void EventManager::_InternalUpdate(float fDeltaTime)
         }
 
 
-#ifdef _DEBUG
+// #ifdef _DEBUG
         if( m_initParams.m_enableAuditioning )
         {
             FMOD::NetEventSystem_Update();
         }
-#endif
+// #endif
 
 
     }
@@ -3110,7 +3162,7 @@ void EventManager::GetEventList(EventAndInstanceArray& aOutput,int nMinActiveIns
 
 void EventManager::_GetEventListInternal(EventAndInstanceArray& aOutput,int nMinActiveInstances, const vector<bool>& desiredProjects) const
 {
-#ifdef _DEBUG
+// #ifdef _DEBUG
     int nProjects = 0;
     if( s_pFMODEventSystem->getNumProjects( &nProjects ) == FMOD_OK )
     {
@@ -3148,5 +3200,5 @@ void EventManager::_GetEventListInternal(EventAndInstanceArray& aOutput,int nMin
             }
         }
     }
-#endif //_DEBUG
+// #endif //_DEBUG
 }

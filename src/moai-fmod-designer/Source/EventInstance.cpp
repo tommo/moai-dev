@@ -760,7 +760,7 @@ u32 EventInstance::GetTimeMs(bool subsoundTime) const
                         result = apChannels[0]->getPosition( &position, FMOD_TIMEUNIT_MS );
                         if( result == FMOD_OK )
                         {
-                            return position;
+                            return position + FMODDesigner::GetDSPTimeOffsetMs() ;
                         }
                     }
                 }
@@ -773,7 +773,7 @@ u32 EventInstance::GetTimeMs(bool subsoundTime) const
             result = ((FMOD::Event*)m_pInternalData)->getInfo(NULL, NULL, &info);
             if( result == FMOD_OK )
             {
-                return info.positionms;
+                return info.positionms + FMODDesigner::GetDSPTimeOffsetMs();
             }
         }
         else
@@ -783,7 +783,7 @@ u32 EventInstance::GetTimeMs(bool subsoundTime) const
             result = pChannel->getPosition( &position, FMOD_TIMEUNIT_MS );
             if( result == FMOD_OK )
             {
-                return position;
+                return position + FMODDesigner::GetDSPTimeOffsetMs();
             }
         }
 

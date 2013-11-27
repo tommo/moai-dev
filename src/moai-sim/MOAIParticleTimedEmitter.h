@@ -18,12 +18,14 @@ private:
 	
 	float	mTime;
 	float	mEmitTime;
+	float mDuration;
 	
 	float	mMinFrequency;
 	float	mMaxFrequency;
 
 	//----------------------------------------------------------------//
 	static int		_setFrequency			( lua_State* L );
+	static int		_setDuration			( lua_State* L );
 	
 	//----------------------------------------------------------------//
 	float			GetRandomFrequency		();
@@ -39,6 +41,7 @@ public:
 					~MOAIParticleTimedEmitter	();
 	void			RegisterLuaClass			( MOAILuaState& state );
 	void			RegisterLuaFuncs			( MOAILuaState& state );
+	void			SetDuraion						( float duration );
 	void			SetFrequencyRange			( float min, float max );
 };
 

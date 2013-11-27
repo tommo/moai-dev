@@ -78,18 +78,14 @@ float ZLInterpolate::Curve ( u32 mode, float t ) {
 			return ( 2.0f - ( t * t )) * 0.5f;
 
 		case kElastic:
-			return pow(2.0f, (-10.0f* -t * cos(-t*30.0f)) );
+			return -pow( 2.0f, 10.0f*( t-1 ) ) * sin( ((t-1) - 0.3/4.0) * 2 * 3.14159265/4.0 );
 
 		case kBounce:
-			float a=0.0f, b=1.0f;
-			while(1){
-				if(t>=(7.0f-4.0f*a)/11.0f){
-					float x= (11.0f - 6.0f * a - 11.0f*(1.0f-t))/4.0f;
-					return b*b - x*x;
-				}
-				a+=b;
-				b/=2;
-			}
+			if( 1.0-t < 1.0/2.75 ) return 1.0 - pow( 7.5625 * ( 1.0 - t ), 2.0 );
+			if( 1.0-t < 2.0/2.75 ) return 1.0 - ( 7.5625 * pow( 1.0 - t - 1.5/2.75, 2.0 ) + 0.75 );
+			if( 1.0-t < 2.5/2.75 ) return 1.0 - ( 7.5625 * pow( 1.0 - t - 2.25/2.75, 2.0 ) + 0.9375 );
+			return 1.0 - ( 7.5625 * pow( 1.0 - t - 2.625/2.75, 2 ) +0.984375 );
+			
 
 	}
 	return 0.0f;

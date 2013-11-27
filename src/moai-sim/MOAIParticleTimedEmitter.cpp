@@ -28,6 +28,22 @@ int MOAIParticleTimedEmitter::_setFrequency ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+/**	@name	setDuration
+	@text	Set timer duration.
+	
+	@in		MOAIParticleTimedEmitter self
+	@in		number duration ( nil or <0 for infinite duration )
+	@out	nil
+*/
+int MOAIParticleTimedEmitter::_setDuration ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIParticleTimedEmitter, "U" )
+	float duration = state.GetValue < float >( 2, -1.0f );
+	self->SetDuraion ( duration );
+	return 0;
+}
+
+
 //================================================================//
 // MOAIParticleTimedEmitter
 //================================================================//
@@ -42,6 +58,7 @@ float MOAIParticleTimedEmitter::GetRandomFrequency () {
 MOAIParticleTimedEmitter::MOAIParticleTimedEmitter () :
 	mTime ( 0.0f ),
 	mEmitTime ( 0.0f ),
+	mDuration ( -1.0f ),
 	mMinFrequency ( 1.0f ),
 	mMaxFrequency ( 1.0f ) {
 	
@@ -58,6 +75,10 @@ MOAIParticleTimedEmitter::~MOAIParticleTimedEmitter () {
 void MOAIParticleTimedEmitter::OnUpdate ( float step ) {
 
 	this->mTime += step;
+	if ( this->mDuration > 0.0f and this->mTime > this->mDuration ) {
+		this->Stop();
+		return;
+	}
 	if ( !this->mSystem ) return;
 	if ( this->mTime < this->mEmitTime ) return;
 	
@@ -80,6 +101,7 @@ void MOAIParticleTimedEmitter::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		{ "setFrequency",		_setFrequency },
+		{ "setDuration",		_setDuration },
 		{ NULL, NULL }
 	};
 	
@@ -91,4 +113,10 @@ void MOAIParticleTimedEmitter::SetFrequencyRange ( float min, float max ) {
 
 	this->mMinFrequency = min;
 	this->mMaxFrequency = max;
+}
+
+//----------------------------------------------------------------//
+void MOAIParticleTimedEmitter::SetDuraion ( float duration ) {
+
+	this->mDuration = duration;
 }

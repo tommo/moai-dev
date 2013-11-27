@@ -175,7 +175,7 @@ void MOAIRenderMgr::Render () {
 		state.Pop ( 1 );
 	}	
 	
-	device.GetDefaultBuffer ()->Render ();
+	// device.GetDefaultBuffer ()->Render ();
 	this->mLastDrawCount = MOAIGfxDevice::Get ().GetDrawCount ();
 	this->mRenderCounter++;
 	

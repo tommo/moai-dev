@@ -103,19 +103,19 @@ bool MOAITransformBase::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 		switch ( UNPACK_ATTR ( attrID )) {
 			
 			case ATTR_WORLD_X_LOC:
-				attrOp.Apply ( this->mLocalToWorldMtx.m [ ZLAffine3D::C2_R0 ], op, MOAIAttrOp::ATTR_READ );
+				attrOp.Apply ( this->mLocalToWorldMtx.m [ ZLAffine3D::C3_R0 ], op, MOAIAttrOp::ATTR_READ );
 				return true;
 			
 			case ATTR_WORLD_Y_LOC:
-				attrOp.Apply ( this->mLocalToWorldMtx.m [ ZLAffine3D::C2_R1 ], op, MOAIAttrOp::ATTR_READ );
+				attrOp.Apply ( this->mLocalToWorldMtx.m [ ZLAffine3D::C3_R1 ], op, MOAIAttrOp::ATTR_READ );
 				return true;
 			
 			case ATTR_WORLD_Z_LOC:
-				attrOp.Apply ( this->mLocalToWorldMtx.m [ ZLAffine3D::C2_R2 ], op, MOAIAttrOp::ATTR_READ );
+				attrOp.Apply ( this->mLocalToWorldMtx.m [ ZLAffine3D::C3_R2 ], op, MOAIAttrOp::ATTR_READ );
 				return true;
 			
 			case ATTR_WORLD_Z_ROT: {
-				float rot = ( float )( atan2 ( this->mLocalToWorldMtx.m [ ZLAffine3D::C0_R0 ], this->mLocalToWorldMtx.m [ ZLAffine3D::C0_R1 ]) * R2D );
+				float rot = ( float )( atan2 ( this->mLocalToWorldMtx.m [ ZLAffine3D::C0_R1 ], this->mLocalToWorldMtx.m [ ZLAffine3D::C0_R0 ]) * R2D );
 				attrOp.Apply ( rot, op, MOAIAttrOp::ATTR_READ );
 				return true;
 			}

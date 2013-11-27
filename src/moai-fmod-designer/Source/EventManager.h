@@ -79,6 +79,7 @@ namespace FMODDesigner
     bool IsSoundLoading( FMOD::Sound* pSound );
     void GetAudioPath( STLString& outPath, bool getFullPath );
     u32 GetTimeMs();
+    u32 GetDSPTimeOffsetMs();
 
     inline float DecibelsToNormalizedVolume(float volumeDb)         
     { 
@@ -497,6 +498,8 @@ namespace FMODDesigner
             float                   m_remainingTime;        
             int                     m_handleIndex;
         };        
+
+        FMOD::DSP          *m_timeOffsetDsp;
 
     private:    
         HandleFactory<EventInstance>	m_handleFactory;

@@ -16209,7 +16209,7 @@
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_VERSION = "";
 				PRODUCT_NAME = "moai-osx";
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
@@ -16225,7 +16225,7 @@
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_VERSION = "";
 				PRODUCT_NAME = "moai-osx";
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
@@ -16309,6 +16309,8 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				DEAD_CODE_STRIPPING = YES;
+				FMOD_IOS_SDK_ROOT = /Users/tommo/dev/fmod/ios;
+				FMOD_OSX_SDK_ROOT = /Users/tommo/dev/fmod/osx;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(MOAI_SDK_SRC)3rdparty/TapjoySDK_iOS_v9.1.1/Libraries/Tapjoy.embeddedframework\"",
@@ -18273,6 +18275,8 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
+				FMOD_IOS_SDK_ROOT = /Users/tommo/dev/fmod/ios;
+				FMOD_OSX_SDK_ROOT = /Users/tommo/dev/fmod/osx;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(MOAI_SDK_SRC)3rdparty/TapjoySDK_iOS_v9.1.1/Libraries/Tapjoy.embeddedframework\"",
@@ -20699,6 +20703,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(FMOD_IOS_SDK_ROOT)/fmoddesignerapi/api/inc",
+					"$(FMOD_IOS_SDK_ROOT)/api/inc",
 				);
 				PRODUCT_NAME = "moai-ios-fmod-designer";
 				SDKROOT = iphoneos;
@@ -20736,6 +20741,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(FMOD_IOS_SDK_ROOT)/fmoddesignerapi/api/inc",
+					"$(FMOD_IOS_SDK_ROOT)/api/inc",
 				);
 				PRODUCT_NAME = "moai-ios-fmod-designer";
 				SDKROOT = iphoneos;
@@ -20773,6 +20779,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(FMOD_IOS_SDK_ROOT)/fmoddesignerapi/api/inc",
+					"$(FMOD_IOS_SDK_ROOT)/api/inc",
 				);
 				PRODUCT_NAME = "moai-ios-fmod-designer";
 				SDKROOT = iphoneos;
@@ -20810,6 +20817,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(FMOD_IOS_SDK_ROOT)/fmoddesignerapi/api/inc",
+					"$(FMOD_IOS_SDK_ROOT)/api/inc",
 				);
 				PRODUCT_NAME = "moai-ios-fmod-designer";
 				SDKROOT = iphoneos;
@@ -20851,6 +20859,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(FMOD_OSX_SDK_ROOT)/fmoddesignerapi/api/inc",
+					"$(FMOD_OSX_SDK_ROOT)/api/inc",
 				);
 				PRODUCT_NAME = "moai-osx-fmod-designer";
 				SDKROOT = macosx;
@@ -20892,6 +20901,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(FMOD_OSX_SDK_ROOT)/fmoddesignerapi/api/inc",
+					"$(FMOD_OSX_SDK_ROOT)/api/inc",
 				);
 				PRODUCT_NAME = "moai-osx-fmod-designer";
 				SDKROOT = macosx;
@@ -20933,6 +20943,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(FMOD_OSX_SDK_ROOT)/fmoddesignerapi/api/inc",
+					"$(FMOD_OSX_SDK_ROOT)/api/inc",
 				);
 				PRODUCT_NAME = "moai-osx-fmod-designer";
 				SDKROOT = macosx;
@@ -20974,6 +20985,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(FMOD_OSX_SDK_ROOT)/fmoddesignerapi/api/inc",
+					"$(FMOD_OSX_SDK_ROOT)/api/inc",
 				);
 				PRODUCT_NAME = "moai-osx-fmod-designer";
 				SDKROOT = macosx;
@@ -21205,6 +21217,8 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				DEAD_CODE_STRIPPING = YES;
+				FMOD_IOS_SDK_ROOT = /Users/tommo/dev/fmod/ios;
+				FMOD_OSX_SDK_ROOT = /Users/tommo/dev/fmod/osx;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(MOAI_SDK_SRC)3rdparty/TapjoySDK_iOS_v9.1.1/Libraries/Tapjoy.embeddedframework\"",
@@ -21478,7 +21492,7 @@
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_VERSION = "";
 				PRODUCT_NAME = "moai-osx";
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
@@ -21628,6 +21642,8 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				DEAD_CODE_STRIPPING = YES;
+				FMOD_IOS_SDK_ROOT = /Users/tommo/dev/fmod/ios;
+				FMOD_OSX_SDK_ROOT = /Users/tommo/dev/fmod/osx;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(MOAI_SDK_SRC)3rdparty/TapjoySDK_iOS_v9.1.1/Libraries/Tapjoy.embeddedframework\"",
@@ -21901,7 +21917,7 @@
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
-				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				GCC_VERSION = "";
 				PRODUCT_NAME = "moai-osx";
 				SDKROOT = macosx;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";

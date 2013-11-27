@@ -532,19 +532,19 @@ void MOAILayer::Draw ( int subPrimID ) {
 		
 		// TODO: fix this - these should just be special layers
 		
-//		#if MOAI_WITH_CHIPMUNK
-//			if ( this->mCpSpace ) {
-//				this->mCpSpace->DrawDebug ();
-//				gfxDevice.Flush ();
-//			}
-//		#endif
-//		
-//		#if MOAI_WITH_BOX2D
-//			if ( this->mBox2DWorld ) {
-//				this->mBox2DWorld->DrawDebug ();
-//				gfxDevice.Flush ();
-//			}
-//		#endif
+		#if MOAI_WITH_CHIPMUNK
+			if ( this->mCpSpace ) {
+				this->mCpSpace->DrawDebug ();
+				gfxDevice.Flush ();
+			}
+		#endif
+		
+		#if MOAI_WITH_BOX2D
+			if ( this->mBox2DWorld ) {
+				this->mBox2DWorld->DrawDebug ();
+				gfxDevice.Flush ();
+			}
+		#endif
 	}
 	
 	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );

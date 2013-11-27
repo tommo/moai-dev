@@ -99,9 +99,9 @@ public:
 
 		ZLMetaVec3D < TYPE > heading;
 	
-		heading.mX = m [ C0_R0 ];
-		heading.mY = m [ C0_R1 ];
-		heading.mZ = m [ C0_R1 ];
+		heading.mX = m [ C2_R0 ];
+		heading.mY = m [ C2_R1 ];
+		heading.mZ = m [ C2_R2 ];
 
 		heading.NormSafe ();
 		
@@ -111,7 +111,7 @@ public:
 	//----------------------------------------------------------------//
 	TYPE GetRot () const {
 
-		float rot = ( TYPE )( atan2 ( m [ C0_R0 ], m [ C0_R1 ]) * R2D );
+		float rot = ( TYPE )( atan2 ( m [ C0_R1 ], m [ C0_R0 ]) * R2D );
 		return rot;
 	}
 

@@ -500,6 +500,9 @@ int	MOAIBox2DWorld::_addRopeJoint ( lua_State* L ) {
 	@in		MOAIBox2DBody bodyB
 	@in		number anchorX	in units, in world coordinates, converted to meters
 	@in		number anchorY	in units, in world coordinates, converted to meters
+	@in		number referAngle	reference angle, in degree
+	@in		number frequency	mass-spring-damper frequency in Hertz. Rotation only.
+	@in		number dampingRatio	damping ratio. 0 = no damping, 1 = critical damping.
 	@out	MOAIBox2DJoint joint
 */
 int	MOAIBox2DWorld::_addWeldJoint ( lua_State* L ) {
@@ -521,7 +524,10 @@ int	MOAIBox2DWorld::_addWeldJoint ( lua_State* L ) {
 	
 	b2WeldJointDef jointDef;
 	jointDef.Initialize ( bodyA->mBody, bodyB->mBody, anchor );
-	
+	jointDef.referenceAngle = state.GetValue < float > ( 6, 0 ) *D2R ; 
+	jointDef.frequencyHz    = state.GetValue < float > ( 7, 0 ); 
+	jointDef.dampingRatio   = state.GetValue < float > ( 8, 0 ); 
+
 	MOAIBox2DWeldJoint* joint = new MOAIBox2DWeldJoint ();
 	joint->SetJoint ( self->mWorld->CreateJoint ( &jointDef ));
 	joint->SetWorld ( self );
