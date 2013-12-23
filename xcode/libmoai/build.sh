@@ -7,7 +7,7 @@
 #----------------------------------------------------------------#
 
 # osx_schemes="libmoai-osx libmoai-osx-3rdparty libmoai-osx-fmod-ex libmoai-osx-luaext libmoai-osx-untz libmoai-osx-zl-core libmoai-osx-zl-vfs "
-osx_schemes="libmoai-osx libmoai-osx-sim libmoai-osx-3rdparty libmoai-osx-luaext libmoai-osx-zl-core libmoai-osx-zl-vfs libmoai-osx-fmod-ex libmoai-osx-fmod-designer libmoai-osx-box2d libmoai-osx-http-client"
+osx_schemes="libmoai-osx libmoai-osx-sim libmoai-osx-3rdparty-core libmoai-osx-3rdparty-crypto libmoai-osx-3rdparty-curl libmoai-osx-luaext libmoai-osx-zl-core libmoai-osx-zl-vfs libmoai-osx-fmod-ex libmoai-osx-fmod-designer libmoai-osx-box2d libmoai-osx-http-client"
 osx_sdks=( "macosx" )
 osx_architectures_macosx=( "i386" )
 
@@ -67,7 +67,7 @@ basedir="../_build/$job"
 build() {
 	dir=${basedir}/${platform}/${scheme}/${sdk}/${config}
 	mkdir -p $dir
-	cmd="xcodebuild -configuration $config -workspace libmoai.xcodeproj/project.xcworkspace -scheme $scheme -sdk $sdk build CONFIGURATION_BUILD_DIR=$dir"
+	cmd="xcodebuild -configuration $config -target $scheme -sdk $sdk build CONFIGURATION_BUILD_DIR=$dir"
 	msg="Building libmoai/$scheme/$sdk for $platform $config..."
 
 	if $verbose; then
