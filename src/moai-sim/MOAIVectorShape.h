@@ -18,27 +18,28 @@ protected:
 	static const ZLVec3D	sNormal;
 
 	MOAIVectorStyle			mStyle;
-	bool					mOpen;
+	bool					mCanGroup;
 
 	//----------------------------------------------------------------//
+	static void			CopyAndTransformVertices	( ZLVec2D* vertices, const ZLAffine2D& transform, const ZLVec2D* src, u32 total );
 	void				CopyBoundaries				( TESStesselator* dest, TESStesselator* src );
-	void				Stroke						( MOAIVectorDrawing& drawing, TESStesselator* tess, const ZLVec2D* verts, int nVerts, float width, bool forward, bool interior );
-	void				StrokeBoundaries			( MOAIVectorDrawing& drawing, TESStesselator* tess, TESStesselator* outline, float width, bool forward, bool interior );
+	void				Stroke						( TESStesselator* tess, const ZLVec2D* verts, int nVerts, float width, bool forward, bool interior );
+	void				StrokeBoundaries			( TESStesselator* tess, TESStesselator* outline, float width, bool forward, bool interior );
 
 public:
 
 	friend class MOAIVectorDrawing;
 
 	GET_SET ( MOAIVectorStyle&, Style, mStyle );
-	GET_SET ( bool, Open, mOpen );
 	
 	//----------------------------------------------------------------//
-	virtual void		AddFillContours				( MOAIVectorDrawing& drawing, TESStesselator* tess );
-	virtual void		AddStrokeContours			( MOAIVectorDrawing& drawing, TESStesselator* tess );
+	virtual void		AddFillContours				( TESStesselator* tess );
+	virtual void		AddStrokeContours			( TESStesselator* tess );
+	bool				CanGroup					();
 	virtual bool		GroupShapes					( MOAIVectorShape** shapes, u32 total );
-	virtual bool		GroupVertices				( MOAIVectorDrawing& drawing, u32 total );
 						MOAIVectorShape				();
 	virtual				~MOAIVectorShape			();
+	virtual bool		SetVertices					( const ZLVec2D* vertices, u32 total, bool closed );
 	virtual void		Tessalate					( MOAIVectorDrawing& drawing );
 };
 

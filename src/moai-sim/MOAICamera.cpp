@@ -40,6 +40,43 @@ int MOAICamera::_getFieldOfView ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAICamera::_getFloorMove ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAICamera, "U" )
+
+	float x = state.GetValue < float >( 2, 0.0f );
+	float y = state.GetValue < float >( 3, 0.0f );
+
+	const ZLAffine3D& mtx = self->GetLocalToWorldMtx ();
+	
+	ZLVec3D v;
+	ZLVec3D h;
+	
+	v = mtx.GetZAxis ();
+	v.Scale ( -1.0f );
+	v.mZ = 0.0f;
+	
+	if ( v.NormSafe () == 0.0f ) {
+		v = mtx.GetYAxis ();
+	}
+	
+	ZLVec2D r ( v.mX, v.mY );
+	r.Rotate90Clockwise ();
+	h.Init ( r.mX, r.mY, 0.0f );
+	
+	h.Scale ( x );
+	v.Scale ( y );
+
+	ZLVec3D m = h;
+	m.Add ( v );
+
+	lua_pushnumber ( state, m.mX );
+	lua_pushnumber ( state, m.mY );
+	
+	return 2;
+}
+
+//----------------------------------------------------------------//
 /**	@name	getFocalLength
 	@text	Returns the camera's focal length given the width of
 			the view plane.
@@ -52,9 +89,7 @@ int MOAICamera::_getFocalLength ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICamera, "UN" )
 
 	float width = state.GetValue < float >( 2, 0.0f );
-	float c = Cot ( self->mFieldOfView * 0.5f * ( float )D2R );
-	lua_pushnumber ( state, width * c * 0.5f );
-
+	lua_pushnumber ( state, self->GetFocalLength ( width ));
 	return 1;
 }
 
@@ -143,6 +178,16 @@ ZLMatrix4x4 MOAICamera::GetBillboardMtx () const {
 }
 
 //----------------------------------------------------------------//
+float MOAICamera::GetFocalLength ( float width ) const {
+
+	if ( !this->mOrtho ) {
+		float c = Cot ( this->mFieldOfView * 0.5f * ( float )D2R );
+		return width * c * 0.5f;
+	}
+	return 0.0f;
+}
+
+//----------------------------------------------------------------//
 ZLMatrix4x4 MOAICamera::GetProjMtx ( const MOAIViewport& viewport ) const {
 	
 	ZLMatrix4x4 proj;
@@ -224,6 +269,7 @@ void MOAICamera::RegisterLuaFuncs ( MOAILuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "getFarPlane",		_getFarPlane },
 		{ "getFieldOfView",		_getFieldOfView },
+		{ "getFloorMove",		_getFloorMove },
 		{ "getFocalLength",		_getFocalLength },
 		{ "getNearPlane",		_getNearPlane },
 		{ "setFarPlane",		_setFarPlane },

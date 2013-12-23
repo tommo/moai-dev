@@ -11,8 +11,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIVectorRect::AddFillContours ( MOAIVectorDrawing& drawing, TESStesselator* tess ) {
-	UNUSED ( drawing );
+void MOAIVectorRect::AddFillContours ( TESStesselator* tess ) {
 
 	ZLVec2D* verts = ( ZLVec2D* )alloca ( sizeof ( ZLVec2D ) * 4 );
 
@@ -28,20 +27,24 @@ void MOAIVectorRect::AddFillContours ( MOAIVectorDrawing& drawing, TESStesselato
 	verts [ 3 ].mX = this->mRect.mXMin;
 	verts [ 3 ].mY = this->mRect.mYMax;
 
+	this->mStyle.GetTransform ().Transform ( verts [ 0 ]);
+	this->mStyle.GetTransform ().Transform ( verts [ 1 ]);
+	this->mStyle.GetTransform ().Transform ( verts [ 2 ]);
+	this->mStyle.GetTransform ().Transform ( verts [ 3 ]);
+
 	tessAddContour ( tess, 2, verts, sizeof ( ZLVec2D ), 4 );
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorRect::AddStrokeContours ( MOAIVectorDrawing& drawing, TESStesselator* tess ) {
+void MOAIVectorRect::AddStrokeContours ( TESStesselator* tess ) {
 
-	MOAIVectorShape::AddStrokeContours ( drawing, tess );
+	MOAIVectorShape::AddStrokeContours ( tess );
 }
 
 //----------------------------------------------------------------//
 void MOAIVectorRect::Init ( float xMin, float yMin, float xMax, float yMax ) {
 
 	this->mRect.Init ( xMin, yMin, xMax, yMax );
-	this->SetOpen ( false );
 }
 
 //----------------------------------------------------------------//
