@@ -1584,6 +1584,20 @@ bool MOAIImage::IsPng ( ZLStream& stream ) {
 }
 
 //----------------------------------------------------------------//
+bool MOAIImage::IsWebP ( ZLStream& stream ) {
+
+	u8 riff [4] = { 'R', 'I', 'F', 'F' };
+	u8 webp [4] = { 'W', 'E', 'B', 'P' };
+
+	char buffer [ 12 ];
+	u32 size = stream.PeekBytes ( buffer, 12 );
+	if ( size < 12 ) return false;
+	
+	return ( memcmp ( buffer, riff, 4 ) == 0 && memcmp ( buffer+8, webp, 4 ) == 0 );
+}
+
+
+//----------------------------------------------------------------//
 void MOAIImage::Load ( cc8* filename, u32 transform ) {
 
 	this->Clear ();
@@ -1611,6 +1625,11 @@ void MOAIImage::Load ( ZLStream& stream, u32 transform ) {
 	else if ( MOAIImage::IsJpg ( stream )) {
 		#if MOAI_WITH_LIBJPG
 			this->LoadJpg ( stream, transform );
+		#endif
+	}
+	else if ( MOAIImage::IsWebP ( stream )) {
+		#if MOAI_WITH_LIBWEBP
+			this->LoadWebP ( stream, transform );
 		#endif
 	}
 }

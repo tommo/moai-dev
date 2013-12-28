@@ -85,6 +85,7 @@ private:
 	void			Init				( void* bitmap, u32 width, u32 height, ZLColor::Format colorFmt, bool copy );
 	static bool		IsJpg				( ZLStream& stream );
 	static bool		IsPng				( ZLStream& stream );
+	static bool		IsWebP			( ZLStream& stream );
 	
 	//----------------------------------------------------------------//
 	#if MOAI_WITH_LIBJPG
@@ -96,6 +97,10 @@ private:
 	#if MOAI_WITH_LIBPNG
 		void			LoadPng				( ZLStream& stream, u32 transform );
 		void			LoadPng				( void* pngParam, void* pngInfoParam, u32 transform );
+	#endif
+
+	#if MOAI_WITH_LIBWEBP
+		void			LoadWebP			( ZLStream& stream, u32 transform );
 	#endif
 
 public:
