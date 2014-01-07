@@ -164,7 +164,7 @@ int MOAIAction::_start ( lua_State* L ) {
 	MOAIAction* action = state.GetLuaObject < MOAIAction >( 2, true );
 	
 	if ( !action ) {
-		action = MOAIActionMgr::Get ().AffirmRoot ();
+		action = MOAIActionMgr::Get ().GetDefaultParent ();
 	}
 
 	self->Attach ( action );
@@ -315,6 +315,7 @@ STLString MOAIAction::GetDebugInfo() const {
 MOAIAction::MOAIAction () :
 	mNew ( true ),
 	mPass ( 0 ),
+	mIsDefaultParent ( 0 ),
 	mParent ( 0 ),
 	mChildIt ( 0 ),
 	mThrottle ( 1.0f ),
@@ -378,18 +379,18 @@ void MOAIAction::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAIInstanceEventSource::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
-		{ "addChild",			_addChild },
-		{ "attach",				_attach },
-		{ "clear",				_clear },
-		{ "detach",				_detach },
-		{ "isActive",			_isActive },
-		{ "isBusy",				_isBusy },
-		{ "isDone",				_isDone },
-		{ "pause",				_pause },
-		{ "setAutoStop",		_setAutoStop },
-		{ "start",				_start },
-		{ "stop",				_stop },
-		{ "throttle",			_throttle },
+		{ "addChild",				_addChild },
+		{ "attach",					_attach },
+		{ "clear",					_clear },
+		{ "detach",					_detach },
+		{ "isActive",				_isActive },
+		{ "isBusy",					_isBusy },
+		{ "isDone",					_isDone },
+		{ "pause",					_pause },
+		{ "setAutoStop",			_setAutoStop },
+		{ "start",					_start },
+		{ "stop",					_stop },
+		{ "throttle",				_throttle },
 		{ NULL, NULL }
 	};
 	
@@ -399,17 +400,19 @@ void MOAIAction::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIAction::Update ( float step, u32 pass, bool checkPass ) {
 
-	bool profilingEnabled = MOAIActionMgr::Get ().GetProfilingEnabled ();
+	MOAIActionMgr& actionMgr = MOAIActionMgr::Get ();
+
+	bool profilingEnabled = actionMgr.GetProfilingEnabled ();
 
 	if ( this->mIsPaused || this->IsBlocked ()){
-		if ( this->mNew ) { 		//avoid edge case that a new-created-paused action cannot receive further update
+		if ( this->mNew ) { 		//avoid edge case that a new-created-paused action cannot receive further updates
 			step = 0.0f;
 			checkPass = false;
 			this->mPass = 0;
 			this->mNew = false;
 		}
 		return;
-	} 
+	}
 	if (( checkPass ) && ( pass < this->mPass )) return;
 
 	double t0 = 0.0;
@@ -425,7 +428,10 @@ void MOAIAction::Update ( float step, u32 pass, bool checkPass ) {
 	}
 	
 	if (( checkPass == false ) || ( pass == this->mPass )) {
-		MOAIActionMgr::Get ().SetCurrentAction ( this );
+		
+		actionMgr.SetCurrentAction ( this );
+		actionMgr.SetDefaultParent ( 0 );
+		
 		this->OnUpdate ( step );
 	}
 
@@ -482,8 +488,8 @@ void MOAIAction::Update ( float step, u32 pass, bool checkPass ) {
 //----------------------------------------------------------------//
 void MOAIAction::Start () {
 
-	MOAIAction* root = MOAIActionMgr::Get ().AffirmRoot ();
-	this->Attach ( root );
+	MOAIAction* defaultParent = MOAIActionMgr::Get ().GetDefaultParent ();
+	this->Attach ( defaultParent );
 	this->mIsPaused = false;
 }
 
