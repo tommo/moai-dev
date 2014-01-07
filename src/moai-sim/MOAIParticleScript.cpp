@@ -240,6 +240,22 @@ int MOAIParticleScript::_angleVec ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	clamp
+	@text	Clamp v0 between v1 and v2.
+	
+	@in		MOAIParticleScript self
+	@in		number r0
+	@in		number v0
+	@in		number v1
+	@in		number v2
+	@out	nil
+*/
+int MOAIParticleScript::_clamp ( lua_State* L ) {
+	IMPL_LUA_PARTICLE_OP ( CLAMP, "RVVV" )
+}
+
+
+//----------------------------------------------------------------//
 /**	@name	cos
  @text	r0 = cos(v0)
  
@@ -655,6 +671,7 @@ void MOAIParticleScript::RegisterLuaFuncs ( MOAILuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "add",				_add },
 		{ "angleVec",			_angleVec },
+		{ "clamp",				_clamp },
 		{ "cos",				_cos },
 		{ "cycle",				_cycle },
 		{ "div",				_div },
@@ -741,6 +758,20 @@ void MOAIParticleScript::Run ( MOAIParticleSystem& system, MOAIParticle& particl
 				if( r0 && r1){
 					*r0 = ( float )( Cos ( v0 * ( float )D2R ));
 					*r1 = ( float )( Sin ( v0 * ( float )D2R ));
+				}
+				break;
+
+			case CLAMP: // RVVV
+				
+				READ_ADDR	( r0, bytecode );
+				READ_VALUE	( v0, bytecode );
+				READ_VALUE	( v1, bytecode );
+				READ_VALUE	( v2, bytecode );
+				
+				if ( r0 ) {
+					if ( v0 < v1 ) { v0 = v1; }
+					if ( v0 > v2 ) { v0 = v2; }						
+					*r0 = v0;
 				}
 				break;
 			

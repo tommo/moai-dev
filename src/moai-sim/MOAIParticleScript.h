@@ -76,6 +76,7 @@ private:
 		TIME,
 		VEC_ANGLE,
 		WRAP,
+		CLAMP,
 	};
 	
 	//----------------------------------------------------------------//
@@ -126,6 +127,7 @@ private:
 	static int		_time				( lua_State* L );
 	static int		_vecAngle			( lua_State* L );
 	static int		_wrap				( lua_State* L );
+	static int		_clamp				( lua_State* L );
 	
 	//----------------------------------------------------------------//
 	static u64		Pack64					( u32 low, u32 hi );

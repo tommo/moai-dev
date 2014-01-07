@@ -6,13 +6,22 @@
 #include <zl-util/ZLTrig.h>
 #include <zl-util/ZLInterpolate.h>
 
+#ifndef PI
+#define PI 3.1415926545
+#endif
+
 //================================================================//
 // ZLInterpolate
 //================================================================//
 
+inline float _ABS( float a ) {
+	if( a >= 0.0f ) return a;
+	return -a;
+}
+
 //----------------------------------------------------------------//
 float ZLInterpolate::Curve ( u32 mode, float t ) {
-
+	float t2;
 	switch ( mode ) {
 		
 		case kEaseIn:
@@ -77,16 +86,50 @@ float ZLInterpolate::Curve ( u32 mode, float t ) {
 			t = ( t * 2.0f ) - 2.0f;
 			return ( 2.0f - ( t * t )) * 0.5f;
 
-		case kElastic:
-			return -pow( 2.0f, 10.0f*( t-1 ) ) * sin( ((t-1) - 0.3/4.0) * 2 * 3.14159265/4.0 );
+		case kBackIn:
+			return t * t * (2.70158 * t - 1.70158);
 
-		case kBounce:
-			if( 1.0-t < 1.0/2.75 ) return 1.0 - pow( 7.5625 * ( 1.0 - t ), 2.0 );
-			if( 1.0-t < 2.0/2.75 ) return 1.0 - ( 7.5625 * pow( 1.0 - t - 1.5/2.75, 2.0 ) + 0.75 );
-			if( 1.0-t < 2.5/2.75 ) return 1.0 - ( 7.5625 * pow( 1.0 - t - 2.25/2.75, 2.0 ) + 0.9375 );
-			return 1.0 - ( 7.5625 * pow( 1.0 - t - 2.625/2.75, 2 ) +0.984375 );
+		case kBackOut:
+			return 1 + (--t) * t * (2.70158 * t + 1.70158);
 			
+		case kBackSmooth:
+			if( t < 0.5 ) {
+				return t * t * (7 * t - 2.5) * 2;
+			} else {
+				return 1 + (--t) * t * 2 * (7 * t + 2.5);
+			}
 
+		case kElasticIn:			 
+	    return t * t * t * t * sin( t * PI * 4.5 );
+			
+		case kElasticOut:
+			t = t - 1.0f;
+			return 1 - t * t * t * t * cos( t * PI * 4.5 );
+		
+		case kElasticSmooth:			
+			if( t < 0.45 ) {
+				t2 = t * t;
+				return 8 * t2 * t2 * sin( t * PI * 9 );
+			} else if( t < 0.55 ) {
+				return 0.5 + 0.75 * sin( t * PI * 4 );
+			} else {
+				t2 = (t - 1) * (t - 1);
+				return 1 - 8 * t2 * t2 * sin( t * PI * 9 );
+			}
+
+		case kBounceIn:
+			return pow( 2, 6 * (t - 1) ) * _ABS( sin( t * PI * 3.5 ) );
+			
+		case kBounceOut:
+			return 1 - pow( 2, -6 * t ) * _ABS( cos( t * PI * 3.5 ) );
+		
+		case kBounceSmooth:
+			if( t < 0.5 ) {
+				return 8 * pow( 2, 8 * (t - 1) ) * _ABS( sin( t * PI * 7 ) );
+			} else {
+				return 1 - 8 * pow( 2, -8 * t ) * _ABS( sin( t * PI * 7 ) );
+			}		
+			
 	}
 	return 0.0f;
 }

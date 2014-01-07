@@ -8,6 +8,7 @@
 #include <moai-sim/MOAIParticleState.h>
 #include <moai-sim/MOAIParticleSystem.h>
 #include <moai-sim/MOAITextureBase.h>
+#include <moai-sim/MOAIRenderMgr.h>
 
 class MOAIDataBuffer;
 
@@ -373,6 +374,8 @@ void MOAIParticleSystem::Draw ( int subPrimID ) {
 	
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	// MOAIRenderMgr& renderMgr = MOAIRenderMgr::Get ();
+	// MOAICamera* camera = renderMgr.GetCamera ();
 	
 	if ( this->mUVTransform ) {
 		ZLAffine3D uvMtx = this->mUVTransform->GetLocalToWorldMtx ();
@@ -395,10 +398,10 @@ void MOAIParticleSystem::Draw ( int subPrimID ) {
 		total = maxSprites;
 	}
 
-	bool billboard = this->mFlags & FLAGS_BILLBOARD;
-	ZLAffine3D faceCameraMtx;
+	// bool billboard = this->mBillboard != 0;
+	// ZLAffine3D faceCameraMtx;
 	ZLVec3D worldLoc;
-	if ( billboard ) faceCameraMtx.Init( gfxDevice.GetBillboardMtx () );
+	// if ( billboard ) faceCameraMtx.Init( camera->GetBillboardMtx () );
 	
 	int k, step;
 	if ( this->mReversedDrawOrder ) {
@@ -421,18 +424,18 @@ void MOAIParticleSystem::Draw ( int subPrimID ) {
 		drawingMtx = this->GetLocalToWorldMtx ();
 		drawingMtx.Prepend ( spriteMtx );
 
-		if( billboard ) {
-			worldLoc.mX = drawingMtx.m [ ZLAffine3D::C3_R0 ];
-			worldLoc.mY = drawingMtx.m [ ZLAffine3D::C3_R1 ];
-			worldLoc.mZ = drawingMtx.m [ ZLAffine3D::C3_R2 ];
-			drawingMtx.m [ ZLAffine3D::C3_R0 ] = 0.0f;
-			drawingMtx.m [ ZLAffine3D::C3_R1 ] = 0.0f;
-			drawingMtx.m [ ZLAffine3D::C3_R2 ] = 0.0f;
-			drawingMtx.Append ( faceCameraMtx );
-			drawingMtx.m [ ZLAffine3D::C3_R0 ] = worldLoc.mX;
-			drawingMtx.m [ ZLAffine3D::C3_R1 ] = worldLoc.mY;
-			drawingMtx.m [ ZLAffine3D::C3_R2 ] = worldLoc.mZ;
-		} 
+		// if( billboard ) {
+		// 	worldLoc.mX = drawingMtx.m [ ZLAffine3D::C3_R0 ];
+		// 	worldLoc.mY = drawingMtx.m [ ZLAffine3D::C3_R1 ];
+		// 	worldLoc.mZ = drawingMtx.m [ ZLAffine3D::C3_R2 ];
+		// 	drawingMtx.m [ ZLAffine3D::C3_R0 ] = 0.0f;
+		// 	drawingMtx.m [ ZLAffine3D::C3_R1 ] = 0.0f;
+		// 	drawingMtx.m [ ZLAffine3D::C3_R2 ] = 0.0f;
+		// 	drawingMtx.Append ( faceCameraMtx );
+		// 	drawingMtx.m [ ZLAffine3D::C3_R0 ] = worldLoc.mX;
+		// 	drawingMtx.m [ ZLAffine3D::C3_R1 ] = worldLoc.mY;
+		// 	drawingMtx.m [ ZLAffine3D::C3_R2 ] = worldLoc.mZ;
+		// } 
 		
 		gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, drawingMtx );
 		
