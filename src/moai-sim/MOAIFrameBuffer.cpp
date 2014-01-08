@@ -406,21 +406,21 @@ ZLRect MOAIFrameBuffer::WndRectToDevice ( ZLRect rect ) const {
 
 	rect.Bless ();
 
-	if ( this->mLandscape ) {
+	// if ( this->mLandscape ) {
 	
-		float width = ( float )this->mBufferWidth;
+	// 	float width = ( float )this->mBufferWidth;
 		
-		float xMin = width - rect.mXMax;
-		float yMin = rect.mYMin;
-		float xMax = width - rect.mXMin;
-		float yMax = rect.mYMax;
+	// 	float xMin = width - rect.mXMax;
+	// 	float yMin = rect.mYMin;
+	// 	float xMax = width - rect.mXMin;
+	// 	float yMax = rect.mYMax;
 		
-		rect.mXMin = xMin;
-		rect.mYMin = yMin;
-		rect.mXMax = xMax;
-		rect.mYMax = yMax;
-	}
-	else {
+	// 	rect.mXMin = xMin;
+	// 	rect.mYMin = yMin;
+	// 	rect.mXMax = xMax;
+	// 	rect.mYMax = yMax;
+	// }
+	// else {
 	
 		float height = ( float )this->mBufferHeight;
 		
@@ -433,7 +433,7 @@ ZLRect MOAIFrameBuffer::WndRectToDevice ( ZLRect rect ) const {
 		rect.mYMin = yMin;
 		rect.mXMax = xMax;
 		rect.mYMax = yMax;
-	}
+	// }
 
 	rect.Scale ( this->mBufferScale, this->mBufferScale );
 	return rect;
