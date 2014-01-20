@@ -271,7 +271,7 @@ void MOAITexture::OnCreate () {
 		this->CreateTextureFromPVR ( this->mData, this->mDataSize );
 	}
 
-	if ( this->mFilename.size ()) {
+	// if ( this->mFilename.size ()) {
 		
 		this->mImage.Clear ();
 		
@@ -280,7 +280,7 @@ void MOAITexture::OnCreate () {
 			this->mData = NULL;
 		}
 		this->mDataSize = 0;
-	}
+	// }
 }
 
 //----------------------------------------------------------------//

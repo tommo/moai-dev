@@ -2035,7 +2035,7 @@ void EventManager::_InitInternals()
 		m_aReverbInstances.push_back(pNewInstance);
 	}
     
-    //setup time offset dsp callback 
+    // setup time offset dsp callback 
     { 
         FMOD_DSP_DESCRIPTION  offsetDspDesc; 
         memset(&offsetDspDesc, 0, sizeof(FMOD_DSP_DESCRIPTION)); 

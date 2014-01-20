@@ -16,6 +16,8 @@ private:
 
 	MOAIThread		mThread; // TODO: inherit?
 	
+	static int		_stop					( lua_State* L );
+	
 	//----------------------------------------------------------------//
 	static void		_main					( void* param, MOAIThreadState& threadState );
 

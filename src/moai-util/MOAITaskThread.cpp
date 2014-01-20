@@ -4,6 +4,13 @@
 #include "pch.h"
 #include <moai-util/MOAITaskThread.h>
 
+//----------------------------------------------------------------//
+int MOAITaskThread::_stop ( lua_State *L ) {
+	MOAI_LUA_SETUP( MOAITaskThread, "U" );
+	self->Stop();
+	return 0;
+}
+
 //================================================================//
 // MOAITaskThread main
 //================================================================//
@@ -50,6 +57,11 @@ void MOAITaskThread::RegisterLuaClass ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAITaskThread::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAITaskQueue::RegisterLuaFuncs ( state );
+	luaL_Reg regTable [] = {
+		{ "stop",		_stop },
+		{ NULL, NULL }
+	};
+	luaL_register ( state, 0, regTable );
 }
 
 //----------------------------------------------------------------//
