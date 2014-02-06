@@ -420,7 +420,11 @@ void MOAIParticleSystem::Draw ( int subPrimID ) {
 		AKUParticleSprite& sprite = this->mSprites [ idx ];
 		gfxDevice.SetPenColor ( sprite.mRed, sprite.mGreen, sprite.mBlue, sprite.mAlpha );
 
-		spriteMtx.ScRoTr ( sprite.mXScl, sprite.mYScl, 1.0f, 0.0f, 0.0f, sprite.mZRot * ( float )D2R, sprite.mXLoc, sprite.mYLoc, 0.0f );
+		spriteMtx.ScRoTr ( 
+			sprite.mXScl, sprite.mYScl, sprite.mZScl, 
+			sprite.mXRot * ( float )D2R, sprite.mYRot * ( float )D2R, sprite.mZRot * ( float )D2R, 
+			sprite.mXLoc, sprite.mYLoc, sprite.mZLoc
+			);
 		drawingMtx = this->GetLocalToWorldMtx ();
 		drawingMtx.Prepend ( spriteMtx );
 
@@ -569,6 +573,11 @@ bool MOAIParticleSystem::PushParticle ( float x, float y ) {
 
 //----------------------------------------------------------------//
 bool MOAIParticleSystem::PushParticle ( float x, float y, float dx, float dy ) {
+	return this->PushParticle ( x, y, 0.0f, dx, dy, 0.0f );
+}
+
+//----------------------------------------------------------------//
+bool MOAIParticleSystem::PushParticle ( float x, float y, float z, float dx, float dy, float dz ) {
 	
 	if (( !this->mFree ) && this->mCapParticles ) {
 		return false;
@@ -594,6 +603,7 @@ bool MOAIParticleSystem::PushParticle ( float x, float y, float dx, float dy ) {
 		
 		r [ MOAIParticle::PARTICLE_X ] = x;
 		r [ MOAIParticle::PARTICLE_Y ] = y;
+		r [ MOAIParticle::PARTICLE_Z ] = z;
 		r [ MOAIParticle::PARTICLE_DX ] = dx;
 		r [ MOAIParticle::PARTICLE_DY ] = dy;
 		
@@ -626,8 +636,8 @@ bool MOAIParticleSystem::PushSprite ( const AKUParticleSprite& sprite ) {
 		// TODO: need to take rotation into account
 		ZLBox bounds = this->mDeck->GetBounds ( sprite.mGfxID, this->mRemapper );
 		
-		ZLVec3D offset ( sprite.mXLoc, sprite.mYLoc, 0.0f );
-		ZLVec3D scale ( sprite.mXScl, sprite.mYScl, 0.0f );
+		ZLVec3D offset ( sprite.mXLoc, sprite.mYLoc, sprite.mZLoc );
+		ZLVec3D scale ( sprite.mXScl, sprite.mYScl, sprite.mZScl );
 		
 		bounds.Scale ( scale );
 		

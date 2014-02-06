@@ -68,6 +68,7 @@ int MOAIParticleForce::_initLinear ( lua_State* L ) {
 	self->mShape = LINEAR;
 	self->mVec.mX = state.GetValue < float >( 2, 0.0f );
 	self->mVec.mY = state.GetValue < float >( 3, 0.0f );
+	self->mVec.mZ = state.GetValue < float >( 4, 0.0f );
 
 	self->ScheduleUpdate ();
 
@@ -135,6 +136,7 @@ void MOAIParticleForce::Eval ( const ZLVec3D& loc, float mass, ZLVec3D& accelera
 				
 				force.mX = vec.mX * dist;
 				force.mY = vec.mY * dist;
+				force.mZ = vec.mZ * dist;
 			}
 			break;
 		}
@@ -149,6 +151,7 @@ void MOAIParticleForce::Eval ( const ZLVec3D& loc, float mass, ZLVec3D& accelera
 			
 			force.mX = vec.mX * dist;
 			force.mY = vec.mY * dist;
+			force.mZ = vec.mZ * dist;
 			
 			break;
 		}

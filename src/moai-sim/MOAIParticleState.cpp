@@ -215,11 +215,13 @@ void MOAIParticleState::GatherForces ( ZLVec3D& loc, ZLVec3D& velocity, float ma
 	
 	velocity.mX += acceleration.mX * step;
 	velocity.mY += acceleration.mY * step;
+	velocity.mZ += acceleration.mZ * step;
 	
 	velocity.Scale ( ZLFloat::Clamp ( 1.0f - ( this->mDamping * step ), 0.0f, 1.0f ));
 	
 	loc.mX += ( velocity.mX + offset.mX ) * step;
 	loc.mY += ( velocity.mY + offset.mY ) * step;
+	loc.mZ += ( velocity.mZ + offset.mZ ) * step;
 }
 
 //----------------------------------------------------------------//
@@ -320,18 +322,20 @@ void MOAIParticleState::ProcessParticle ( MOAIParticleSystem& system, MOAIPartic
 	
 	loc.mX = r [ MOAIParticle::PARTICLE_X ];
 	loc.mY = r [ MOAIParticle::PARTICLE_Y ];
-	loc.mZ = 0.0f;
+	loc.mZ = r [ MOAIParticle::PARTICLE_Z ];
 	
 	vel.mX = r [ MOAIParticle::PARTICLE_DX ];
 	vel.mY = r [ MOAIParticle::PARTICLE_DY ];
-	vel.mZ = 0.0f;
+	vel.mZ = r [ MOAIParticle::PARTICLE_DZ ];
 	
 	this->GatherForces ( loc, vel, particle.mMass, step );
 	
 	r [ MOAIParticle::PARTICLE_X ]	= loc.mX;
 	r [ MOAIParticle::PARTICLE_Y ]	= loc.mY;
+	r [ MOAIParticle::PARTICLE_Z ]	= loc.mZ;
 	r [ MOAIParticle::PARTICLE_DX ]	= vel.mX;
 	r [ MOAIParticle::PARTICLE_DY ]	= vel.mY;
+	r [ MOAIParticle::PARTICLE_DZ ]	= vel.mZ;
 
 	if ( this->mRender ) {
 		this->mRender->Run ( system, particle, t0, t1 );

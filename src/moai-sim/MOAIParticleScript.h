@@ -43,9 +43,13 @@ private:
 	enum {
 		SPRITE_X_LOC,
 		SPRITE_Y_LOC,
-		SPRITE_ROT,
+		SPRITE_Z_LOC,
+		SPRITE_X_ROT,
+		SPRITE_Y_ROT,
+		SPRITE_Z_ROT,
 		SPRITE_X_SCL,
 		SPRITE_Y_SCL,
+		SPRITE_Z_SCL,
 		SPRITE_RED,
 		SPRITE_GREEN,
 		SPRITE_BLUE,
@@ -58,6 +62,7 @@ private:
 	enum {
 		END = 0,
 		ADD,
+		AGE,
 		ANGLE_VEC,
 		COS,
 		CYCLE,
@@ -108,6 +113,7 @@ private:
 	//----------------------------------------------------------------//
 	static int		_add				( lua_State* L );
 	static int		_angleVec			( lua_State* L );
+	static int		_age				( lua_State* L );
 	static int		_cos				( lua_State* L );
 	static int		_cycle				( lua_State* L );
 	static int		_div				( lua_State* L );

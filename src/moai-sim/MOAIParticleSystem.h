@@ -86,6 +86,7 @@ public:
 					~MOAIParticleSystem		();
 	bool			PushParticle			( float x, float y );
 	bool			PushParticle			( float x, float y, float dx, float dy );
+	bool			PushParticle			( float x, float y, float z, float dx, float dy, float dz );
 	bool			PushSprite				( const AKUParticleSprite& sprite );
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );

@@ -17,9 +17,13 @@ public:
 	
 	float		mXLoc;
 	float		mYLoc;
+	float		mZLoc;
+	float		mXRot;
+	float		mYRot;
 	float		mZRot;
 	float		mXScl;
 	float		mYScl;
+	float		mZScl;
 	float		mRed;
 	float		mGreen;
 	float		mBlue;

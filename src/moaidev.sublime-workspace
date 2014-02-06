@@ -520,26 +520,10 @@
 	"buffers":
 	[
 		{
-			"file": "moai-sim/MOAISim.h",
+			"file": "moai-sim/MOAIAction.cpp",
 			"settings":
 			{
-				"buffer_size": 6904,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "moai-sim/MOAIImage.cpp",
-			"settings":
-			{
-				"buffer_size": 54499,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "moai-sim/MOAICoroutine.h",
-			"settings":
-			{
-				"buffer_size": 1700,
+				"buffer_size": 12510,
 				"line_ending": "Unix"
 			}
 		},
@@ -552,68 +536,10 @@
 			}
 		},
 		{
-			"file": "moai-sim/MOAIActionMgr.cpp",
+			"file": "moai-util/MOAITaskQueue.h",
 			"settings":
 			{
-				"buffer_size": 4493,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "moai-sim/MOAIAction.h",
-			"settings":
-			{
-				"buffer_size": 2623,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"contents": "Searching 1205 files for \"mIsDefaultParent\"\n\n/Users/tommo/dev/moai-dev/src/moai-sim/MOAIAction.cpp:\n  316  	mNew ( true ),\n  317  	mPass ( 0 ),\n  318: 	mIsDefaultParent ( 0 ),\n  319  	mParent ( 0 ),\n  320  	mChildIt ( 0 ),\n\n/Users/tommo/dev/moai-dev/src/moai-sim/MOAIAction.h:\n   23  	bool	mNew;\n   24  	u32		mPass;\n   25: 	bool	mIsDefaultParent;\n   26  	\n   27  	MOAIAction* mParent;\n   ..\n   58  protected:\n   59  \n   60: 	GET_SET ( bool, IsDefaultParent, mIsDefaultParent )\n   61  \n   62  	//----------------------------------------------------------------//\n\n/Users/tommo/dev/moai-dev/src/moai-sim/MOAIActionMgr.cpp:\n   93  	MOAIAction* cursor = this->mCurrentAction;\n   94  	for ( ; cursor; cursor = cursor->mParent ) {\n   95: 		if ( cursor->mIsDefaultParent ) {\n   96  			return cursor;\n   97  		}\n\n4 matches across 3 files\n",
-			"settings":
-			{
-				"buffer_size": 830,
-				"line_ending": "Unix",
-				"name": "Find Results",
-				"scratch": true
-			}
-		},
-		{
-			"file": "moai-sim/MOAIAction.cpp",
-			"settings":
-			{
-				"buffer_size": 12510,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "moai-sim/MOAIMesh.cpp",
-			"settings":
-			{
-				"buffer_size": 6153,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "moai-sim/MOAIProp.h",
-			"settings":
-			{
-				"buffer_size": 7343,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "moai-util/MOAIDataIOTask.h",
-			"settings":
-			{
-				"buffer_size": 1344,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "moai-util/MOAITaskThread.cpp",
-			"settings":
-			{
-				"buffer_size": 1739,
+				"buffer_size": 999,
 				"line_ending": "Unix"
 			}
 		}
@@ -1106,10 +1032,27 @@
 	},
 	"file_history":
 	[
-		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIAction.cpp",
+		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAITexture.cpp",
+		"/Users/tommo/dev/moai-dev/src/moai-util/MOAITaskThread.h",
+		"/Users/tommo/dev/moai-dev/src/moai-util/MOAITaskThread.cpp",
+		"/Users/tommo/dev/moai-dev/src/moai-util/MOAIThread.cpp",
+		"/Users/tommo/dev/moai-dev/src/moai-fmod-designer/Source/EventManager.cpp",
+		"/Users/tommo/dev/moai-dev/src/moai-util/MOAITask.h",
+		"/Users/tommo/dev/moai-dev/src/moai-util/MOAITaskSubscriber.cpp",
+		"/Users/tommo/dev/moai-dev/src/moai-util/MOAITaskQueue.cpp",
+		"/Users/tommo/dev/moai-dev/samples/texture/texture-load-async/main.lua",
+		"/Users/tommo/dev/moai-dev/src/moai-util/MOAIThread_posix.cpp",
+		"/Users/tommo/dev/moai-dev/src/moai-util/MOAIThread.h",
 		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIAction.h",
-		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAICoroutine.cpp",
 		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIActionMgr.cpp",
+		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAICoroutine.h",
+		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIImage.cpp",
+		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAISim.h",
+		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAICoroutine.cpp",
+		"/Users/tommo/dev/moai-dev/src/moai-util/MOAIDataIOTask.h",
+		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIProp.h",
+		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIMesh.cpp",
+		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIAction.cpp",
 		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIActionMgr.h",
 		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAINode.cpp",
 		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAINode.h",
@@ -1124,21 +1067,14 @@
 		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAILayer.cpp",
 		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIGfxResource.h",
 		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAITextureBase.h",
-		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAITexture.cpp",
 		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIGfxResource.cpp",
 		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIMesh.h",
 		"/Users/tommo/dev/moai-dev/src/moai-core/MOAILogMgr.cpp",
 		"/Users/tommo/dev/moai-dev/src/moai-util/MOAIDataIOTask.cpp",
-		"/Users/tommo/dev/moai-dev/src/moai-util/MOAITaskQueue.cpp",
-		"/Users/tommo/dev/moai-dev/src/moai-util/MOAIDataIOTask.h",
-		"/Users/tommo/dev/moai-dev/src/moai-util/MOAITask.h",
 		"/Users/tommo/dev/moai-dev/src/moai-util/MOAITask.cpp",
 		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIImageTexture.cpp",
 		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAISim.cpp",
-		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIImage.cpp",
 		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAITextureBase.cpp",
-		"/Users/tommo/dev/moai-dev/src/moai-util/MOAITaskThread.h",
-		"/Users/tommo/dev/moai-dev/src/moai-util/MOAITaskThread.cpp",
 		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIImage-png.cpp",
 		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAITransform.h",
 		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAITransform.cpp",
@@ -1170,7 +1106,6 @@
 		"/Users/tommo/dev/moai-dev/src/zl-util/ZLLeanList.h",
 		"/Users/tommo/dev/moai-dev/src/zl-util/STLMap.h",
 		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAITextDesigner.cpp",
-		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIProp.h",
 		"/Users/tommo/dev/moai-dev/src/moai-sim/host_particles.h",
 		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIParticleTimedEmitter.cpp",
 		"/Users/tommo/dev/moai-dev/src/moai-sim/host_particles.cpp",
@@ -1224,16 +1159,7 @@
 		"/Users/tommo/dev/lib/libwebp-0.3.1/src/dec/vp8i.h",
 		"/Users/tommo/dev/lib/libwebp-0.3.1/src/dec/vp8.c",
 		"/Users/tommo/dev/lib/libwebp-0.3.1/src/webp/types.h",
-		"/Users/tommo/dev/moai-dev/src/moai-sim/shaders/MOAIFontShader-fsh.h",
-		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIImage-jpg.cpp",
-		"/Users/tommo/dev/lib/libwebp-0.3.1/src/utils/thread.c",
-		"/Users/tommo/dev/lib/libwebp-0.3.1/src/dec/Makefile",
-		"/Volumes/prj/bmx/nogii/network/gNetwork/networkID.bmx",
-		"/Volumes/prj/bmx/nogii/network/gNetwork/networkHost.bmx",
-		"/Volumes/prj/bmx/nogii/network/gNetwork/networkPeer.bmx",
-		"/Volumes/prj/bmx/nogii/network/gNetwork/networkServer.bmx",
-		"/Volumes/prj/bmx/nogii/network/gNetwork/RPCParam.bmx",
-		"/Volumes/prj/bmx/nogii/network/gNetwork/RPCType.bmx"
+		"/Users/tommo/dev/moai-dev/src/moai-sim/shaders/MOAIFontShader-fsh.h"
 	],
 	"find":
 	{
@@ -1330,6 +1256,16 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"Stop()",
+			"stop",
+			"SetState",
+			"isrunning",
+			"Sleep",
+			"IsRunning",
+			"timeOffsetDSPCallback",
+			"GetDSPTimeOffsetMs",
+			"lastDSPUpdateTime",
+			"timeOffsetDSPCallback",
 			"GetDefaultParent",
 			"mIsDefaultParent",
 			"isdefault",
@@ -1447,17 +1383,7 @@
 			"width",
 			"buffer",
 			"cpsmo",
-			"colorSpace",
-			"cspMode",
-			"WebPFreeDecBuffer",
-			"buffer",
-			"no",
-			"ParseHeadersInternal",
-			"features",
-			"GetFeatures",
-			"WebPGetFeatures",
-			"features",
-			"WebPGetFeatures"
+			"colorSpace"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1603,235 +1529,10 @@
 	"groups":
 	[
 		{
-			"selected": 3,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "moai-sim/MOAISim.h",
-					"settings":
-					{
-						"buffer_size": 6904,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								705,
-								705
-							]
-						],
-						"settings":
-						{
-							"color_scheme": "Packages/Color Scheme - Default/tommo_inactive.tmTheme",
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 25.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "moai-sim/MOAIImage.cpp",
-					"settings":
-					{
-						"buffer_size": 54499,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								9746,
-								9746
-							]
-						],
-						"settings":
-						{
-							"color_scheme": "Packages/Color Scheme - Default/tommo_inactive.tmTheme",
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "moai-sim/MOAICoroutine.h",
-					"settings":
-					{
-						"buffer_size": 1700,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1087,
-								1104
-							]
-						],
-						"settings":
-						{
-							"color_scheme": "Packages/Color Scheme - Default/tommo_inactive.tmTheme",
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 230.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "moai-sim/MOAICoroutine.cpp",
-					"settings":
-					{
-						"buffer_size": 7930,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								7545,
-								7561
-							]
-						],
-						"settings":
-						{
-							"color_scheme": "Packages/Color Scheme - Default/tommo.tmTheme",
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1883.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "moai-sim/MOAIActionMgr.cpp",
-					"settings":
-					{
-						"buffer_size": 4493,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2562,
-								2562
-							]
-						],
-						"settings":
-						{
-							"color_scheme": "Packages/Color Scheme - Default/tommo_inactive.tmTheme",
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1221.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "moai-sim/MOAIAction.h",
-					"settings":
-					{
-						"buffer_size": 2623,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1399,
-								1404
-							]
-						],
-						"settings":
-						{
-							"color_scheme": "Packages/Color Scheme - Default/tommo_inactive.tmTheme",
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 456.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"settings":
-					{
-						"buffer_size": 830,
-						"regions":
-						{
-							"match":
-							{
-								"flags": 112,
-								"regions":
-								[
-									[
-										152,
-										168
-									],
-									[
-										329,
-										345
-									],
-									[
-										458,
-										474
-									],
-									[
-										747,
-										763
-									]
-								],
-								"scope": ""
-							}
-						},
-						"selection":
-						[
-							[
-								755,
-								755
-							]
-						],
-						"settings":
-						{
-							"color_scheme": "Packages/Color Scheme - Default/tommo_inactive.tmTheme",
-							"detect_indentation": false,
-							"output_tag": 1,
-							"result_base_dir": "",
-							"result_file_regex": "^([A-Za-z\\\\/<].*):$",
-							"result_line_regex": "^ +([0-9]+):",
-							"scroll_past_end": true,
-							"syntax": "Packages/Default/Find Results.hidden-tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 7,
 					"file": "moai-sim/MOAIAction.cpp",
 					"settings":
 					{
@@ -1842,8 +1543,8 @@
 						"selection":
 						[
 							[
-								4320,
-								4331
+								12340,
+								12340
 							]
 						],
 						"settings":
@@ -1853,107 +1554,17 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 2790.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				}
-			]
-		},
-		{
-			"selected": 3,
-			"sheets":
-			[
-				{
-					"buffer": 8,
-					"file": "moai-sim/MOAIMesh.cpp",
-					"settings":
-					{
-						"buffer_size": 6153,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								5586,
-								5589
-							]
-						],
-						"settings":
-						{
-							"color_scheme": "Packages/Color Scheme - Default/tommo_inactive.tmTheme",
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 7710.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
-					"buffer": 9,
-					"file": "moai-sim/MOAIProp.h",
+					"buffer": 1,
+					"file": "moai-sim/MOAICoroutine.cpp",
 					"settings":
 					{
-						"buffer_size": 7343,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								3633,
-								3638
-							]
-						],
-						"settings":
-						{
-							"color_scheme": "Packages/Color Scheme - Default/tommo_inactive.tmTheme",
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1926.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 10,
-					"file": "moai-util/MOAIDataIOTask.h",
-					"settings":
-					{
-						"buffer_size": 1344,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								173,
-								173
-							]
-						],
-						"settings":
-						{
-							"color_scheme": "Packages/Color Scheme - Default/tommo_inactive.tmTheme",
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 110.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 11,
-					"file": "moai-util/MOAITaskThread.cpp",
-					"settings":
-					{
-						"buffer_size": 1739,
+						"buffer_size": 7930,
 						"regions":
 						{
 						},
@@ -1971,11 +1582,44 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 105.0,
+						"translation.y": 1843.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "moai-util/MOAITaskQueue.h",
+					"settings":
+					{
+						"buffer_size": 999,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								870,
+								870
+							]
+						],
+						"settings":
+						{
+							"color_scheme": "Packages/Color Scheme - Default/tommo_inactive.tmTheme",
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				}
+			]
+		},
+		{
+			"sheets":
+			[
 			]
 		}
 	],
@@ -2051,6 +1695,34 @@
 		"height": 0.0,
 		"selected_items":
 		[
+			[
+				"moaitex",
+				"moai-sim/MOAITexture.cpp"
+			],
+			[
+				"even",
+				"moai-fmod-designer/Source/EventManager.cpp"
+			],
+			[
+				"moaithread",
+				"moai-util/MOAIThread.cpp"
+			],
+			[
+				"taskqu",
+				"moai-util/MOAITaskQueue.h"
+			],
+			[
+				"eventm",
+				"moai-fmod-designer/Source/EventManager.cpp"
+			],
+			[
+				"texture",
+				"moai-sim/MOAITexture.cpp"
+			],
+			[
+				"corou",
+				"moai-sim/MOAICoroutine.cpp"
+			],
 			[
 				"coroutine",
 				"moai-sim/MOAICoroutine.cpp"
@@ -2138,10 +1810,6 @@
 			[
 				"databuf",
 				"moai-util/MOAIDataBuffer.cpp"
-			],
-			[
-				"texture",
-				"moai-sim/MOAITexture.cpp"
 			],
 			[
 				"transformba",
@@ -2538,30 +2206,6 @@
 			[
 				"moaitext",
 				"moai-sim/MOAITexture.cpp"
-			],
-			[
-				"text",
-				"moai-sim/MOAITexture.cpp"
-			],
-			[
-				"fntread",
-				"moai-sim/MOAIBitmapFontReader.cpp"
-			],
-			[
-				"zlaff",
-				"zl-util/ZLAffine3D.h"
-			],
-			[
-				"moaicolor",
-				"moai-sim/MOAIColor.cpp"
-			],
-			[
-				"moaiim",
-				"moai-sim/MOAIImage.cpp"
-			],
-			[
-				"moaitex",
-				"moai-sim/MOAITexture.cpp"
 			]
 		],
 		"width": 0.0
@@ -2572,16 +2216,16 @@
 		"selected_items":
 		[
 			[
+				"mdd",
+				"/Volumes/prj/moai/MDD/MDD.sublime-project"
+			],
+			[
 				"spel",
 				"/Users/tommo/prj/moai/spell/lua/spell.sublime-project"
 			],
 			[
 				"spell",
 				"/Users/tommo/prj/moai/spell/lua/spell.sublime-project"
-			],
-			[
-				"mdd",
-				"/Volumes/prj/moai/MDD/MDD.sublime-project"
 			],
 			[
 				"mock",
