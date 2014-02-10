@@ -25,12 +25,14 @@ job="moai"
 configurations="all"
 platforms="all"
 verbose=true
+task=true
 
-while getopts c:j:p: o; do
+while getopts c:j:p:t: o; do
 	case $o in
 	c)	configurations=$OPTARG;;
 	j)	job=$OPTARG;;
 	p)	platforms=$OPTARG;;
+	t)  task=$OPTARG;;
 	v)	verbose=true;;
 	\?)	usage;;
 	esac
@@ -97,7 +99,11 @@ for platform in $platforms; do
 	schemes=
 	sdks=
 	architectures=
-	eval schemes=\$${platform}_schemes
+	if [ $task = true ]; then
+		eval schemes=\$${platform}_schemes
+	else
+		schemes=$task		
+	fi
 	eval sdks=\$${platform}_sdks
 
 	for config in $configurations; do

@@ -389,6 +389,21 @@ int MOAIFmodEventInstance::_getTime ( lua_State* L ) {
 	return 0;
 }
 
+
+int MOAIFmodEventInstance::_setSubChannelTime ( lua_State* L ) {
+    MOAI_LUA_SETUP ( MOAIFmodEventInstance, "UNN" )
+    
+    FMODDesigner::EventInstance* pInstance = *( self->mEventHandle );
+    if ( pInstance ) {
+        u32 idx = state.GetValue < u32 > ( 2, 0 );
+        u32 pos = state.GetValue < float > ( 3, 0 ) * 1000;
+        pInstance->SetSubChannelPosition( idx, pos );
+        return 0;
+    } 
+    
+    return 0;
+}
+
 //----------------------------------------------------------------//
 /**	@name	getDominantFrequency
     @text	Returns the fundamental frequency of this Event Instance.
@@ -532,6 +547,7 @@ void MOAIFmodEventInstance::RegisterLuaFuncs ( MOAILuaState& state ) {
 
         { "getTime",                _getTime },
         { "getDominantFrequency",   _getDominantFrequency },
+        { "setSubChannelTime",      _setSubChannelTime },
 
         { "getTempo",               _getTempo },
         { "getBeatFraction",        _getBeatFraction },

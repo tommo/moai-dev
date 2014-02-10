@@ -31,6 +31,7 @@ namespace FMODDesigner
         void SetOrientation( const ZLVec3D& vForward, const ZLVec3D& vUp = ZLVec3D( 0.f, 1.f, 0.f ) );
         void SetTime( float fTime );
         void SetTimeMs( u32 time );
+        void SetSubChannelPosition( u32 idx, u32 pos );
         void SetDelayMs( u32 delay, bool start = true );
         void SetPitch( float fPitch );
         float GetPitch() const;
