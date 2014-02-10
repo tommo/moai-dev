@@ -51,26 +51,26 @@ typedef STLSet < struct Table* > TableSet;
 
 			case LUA_TBOOLEAN:
 
-				ZLLog::Print ( format, tvalue, "bool", name );
-				ZLLog::Print ( " = %s", lua_toboolean ( state, idx ) ? "true" : "false" );
+				ZLLog::LogF ( ZLLog::CONSOLE, format, tvalue, "bool", name );
+				ZLLog::LogF ( ZLLog::CONSOLE, " = %s", lua_toboolean ( state, idx ) ? "true" : "false" );
 				break;
 
 			case LUA_TFUNCTION: {
 
 				const char *funcType = iscfunction ( tvalue ) ? "C function" : "Lua function";
 
-				ZLLog::Print ( format, clvalue ( tvalue ), funcType, name );
+				ZLLog::LogF ( ZLLog::CONSOLE, format, clvalue ( tvalue ), funcType, name );
 				break;
 			}
 
 			case LUA_TLIGHTUSERDATA:
 
-				ZLLog::Print ( format, pvalue ( tvalue ), "pointer", name );
+				ZLLog::LogF ( ZLLog::CONSOLE, format, pvalue ( tvalue ), "pointer", name );
 				break;
 
 			case LUA_TNIL:
 
-				ZLLog::Print ( format, tvalue, "nil", name );
+				ZLLog::LogF ( ZLLog::CONSOLE, format, tvalue, "nil", name );
 				break;
 
 			case LUA_TNONE:
@@ -79,14 +79,14 @@ typedef STLSet < struct Table* > TableSet;
 
 			case LUA_TNUMBER:
 
-				ZLLog::Print ( format, tvalue, "number", name );
-				ZLLog::Print ( " = %f", lua_tonumber ( state, idx ));
+				ZLLog::LogF ( ZLLog::CONSOLE, format, tvalue, "number", name );
+				ZLLog::LogF ( ZLLog::CONSOLE, " = %f", lua_tonumber ( state, idx ));
 				break;
 
 			case LUA_TSTRING:
 
-				ZLLog::Print ( format, rawtsvalue( tvalue ), "string", name );
-				ZLLog::Print ( " = \"%s\"", lua_tostring ( state, idx ));
+				ZLLog::LogF ( ZLLog::CONSOLE, format, rawtsvalue( tvalue ), "string", name );
+				ZLLog::LogF ( ZLLog::CONSOLE, " = \"%s\"", lua_tostring ( state, idx ));
 				break;
 
 			case LUA_TTABLE: {
@@ -95,18 +95,18 @@ typedef STLSet < struct Table* > TableSet;
 
 				if ( foundTables.contains ( htable )) {
 
-					ZLLog::Print ( DUMP_FORMAT " (see above)", htable, "table", name );
+					ZLLog::LogF ( ZLLog::CONSOLE, DUMP_FORMAT " (see above)", htable, "table", name );
 					break;
 				}
 				else {
 
 					foundTables.insert ( htable );
 
-					ZLLog::Print ( format, htable, "table", name );
+					ZLLog::LogF ( ZLLog::CONSOLE, format, htable, "table", name );
 
 					if ( verbose ) {
 
-						ZLLog::Print ( "\n" );
+						ZLLog::LogF ( ZLLog::CONSOLE, "\n" );
 						lua_pushnil ( state );
 
 						while ( lua_next ( state, idx ) ) {
@@ -124,18 +124,18 @@ typedef STLSet < struct Table* > TableSet;
 
 			case LUA_TTHREAD:
 
-				ZLLog::Print ( format, thvalue( tvalue ), "thread", name );
+				ZLLog::LogF ( ZLLog::CONSOLE, format, thvalue( tvalue ), "thread", name );
 				break;
 
 			case LUA_TUSERDATA:
 
 				if ( lua_islightuserdata ( state, idx ) ) {
 					
-					ZLLog::Print ( format, lua_topointer ( state, idx ) , "light userdata", name );
+					ZLLog::LogF ( ZLLog::CONSOLE, format, lua_topointer ( state, idx ) , "light userdata", name );
 				}
 				else {
 
-					ZLLog::Print ( format, lua_topointer( state, idx ), "userdata", name );
+					ZLLog::LogF ( ZLLog::CONSOLE, format, lua_topointer( state, idx ), "userdata", name );
 
 					if ( verbose ) {
 
@@ -144,17 +144,17 @@ typedef STLSet < struct Table* > TableSet;
 						
 						lua_pcall ( state, 1, 1, 0 );
 
-						ZLLog::Print ( "\n\t%s", lua_tostring ( state, -1 ));
+						ZLLog::LogF ( ZLLog::CONSOLE, "\n\t%s", lua_tostring ( state, -1 ));
 						state.Pop ( 1 );
 					}
 				}
 				break;
 
 			default:
-				ZLLog::Print ( "*** Unexpected type: %d ***", lua_type ( state, idx ));
+				ZLLog::LogF ( ZLLog::CONSOLE, "*** Unexpected type: %d ***", lua_type ( state, idx ));
 		}
 
-		ZLLog::Print ( "\n" );
+		ZLLog::LogF ( ZLLog::CONSOLE, "\n" );
 	}
 
 	//----------------------------------------------------------------//
@@ -244,7 +244,7 @@ int MOAILuaRuntime::_dumpStack ( lua_State* L ) {
 		TableSet foundTables;
 		for ( TValue* tvalue = state->stack; tvalue < state->top; ++tvalue ) {
 
-			ZLLog::Print ( "stack [ %d ] ", idx++ );
+			ZLLog::LogF ( ZLLog::CONSOLE, "stack [ %d ] ", idx++ );
 			_dumpTypeByAddress ( state, tvalue, "", verbose, foundTables );
 		}
 	#endif
@@ -285,12 +285,7 @@ int MOAILuaRuntime::_panic ( lua_State *L ) {
 
 	MOAILuaState state ( L );
 	state.PrintStackTrace ( ZLLog::CONSOLE, 1 );
-
-	#ifdef ANDROID
-		ZLLog::Print ( "PANIC: unprotected error in call to Lua API (%s)\n", lua_tostring ( L, -1 ));
-	#else
-		fprintf ( stderr, "PANIC: unprotected error in call to Lua API (%s)\n", lua_tostring ( L, -1 ));
-	#endif
+	ZLLog::LogF ( ZLLog::CONSOLE, "PANIC: unprotected error in call to Lua API (%s)\n", lua_tostring ( L, -1 ));
 	
 	return 0;
 }
@@ -388,14 +383,14 @@ int MOAILuaRuntime::_traceback ( lua_State *L ) {
 			lua_pushvalue ( state, 1 );
 			int result = lua_pcall ( state, 1, 0, 2 );
 			if ( result ) {
-				ZLLog::Print ( "error in user supplied traceback func\n" );
-				ZLLog::Print ( "falling back on default error handler:\n" );
+				ZLLog::LogF ( ZLLog::CONSOLE, "error in user supplied traceback func\n" );
+				ZLLog::LogF ( ZLLog::CONSOLE, "falling back on default error handler:\n" );
 			}
 		}
 	}
 
 	if ( msg ) {
-		ZLLog::Print ( "%s\n", msg );
+		ZLLog::LogF ( ZLLog::CONSOLE, "%s\n", msg );
 	}
 	state.PrintStackTrace ( ZLLog::CONSOLE, 0 );
 

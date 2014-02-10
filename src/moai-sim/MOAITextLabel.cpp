@@ -105,51 +105,6 @@ int MOAITextLabel::_getRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getStringBounds
-	@text	Returns the bounding rectange of a given substring on a
-			single line in the local space of the text box.
-
-	@in		MOAITextLabel self
-	@in		number index		Index of the first character in the substring.
-	@in		number size			Length of the substring.
-	@out	number xMin			Edge of rect or 'nil' is no match found.
-	@out	number yMin			Edge of rect or 'nil' is no match found.
-	@out	number xMax			Edge of rect or 'nil' is no match found.
-	@out	number yMax			Edge of rect or 'nil' is no match found.
-*/
-int MOAITextLabel::_getStringBounds ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITextLabel, "U" )
-	
-	ZLRect rect;
-	bool hasRect = false;
-	
-	if ( state.CheckParams ( 2, "NN", true )) {
-	
-		u32 index	= state.GetValue < u32 >( 2, 1 ) - 1;
-		u32 size	= state.GetValue < u32 >( 3, 0 );
-		
-		hasRect = self->mLayout.GetBoundsForRange ( index, size, rect );
-	}
-	else {
-	
-		hasRect = self->mLayout.GetBounds ( rect );
-	}
-	
-	if ( hasRect ) {
-	
-		rect.Bless ();
-			
-		lua_pushnumber ( state, rect.mXMin );
-		lua_pushnumber ( state, rect.mYMin );
-		lua_pushnumber ( state, rect.mXMax );
-		lua_pushnumber ( state, rect.mYMax );
-		
-		return 4;
-	}
-	return 0;
-}
-
-//----------------------------------------------------------------//
 /**	@name	getStyle
 	@text	Returns the style associated with a name or, if no name
 			is given, returns the default style.
@@ -171,11 +126,57 @@ int MOAITextLabel::_getStyle ( lua_State* L ) {
 	MOAITextStyle* style = 0;
 
 	cc8* styleName = state.GetValue < cc8* >( 2, 0 );
-	style = self->mStyler.GetStyle ( styleName );
+	style = self->mStyleCache.GetStyle ( styleName );
 
 	if ( style ) {
 		style->PushLuaUserdata ( state );
 		return 1;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@name	getTextBounds
+	@text	Returns the bounding rectange of a given substring on a
+			single line in the local space of the text box.
+
+	@in		MOAITextLabel self
+	@in		number index		Index of the first character in the substring.
+	@in		number size			Length of the substring.
+	@out	number xMin			Edge of rect or 'nil' is no match found.
+	@out	number yMin			Edge of rect or 'nil' is no match found.
+	@out	number xMax			Edge of rect or 'nil' is no match found.
+	@out	number yMax			Edge of rect or 'nil' is no match found.
+*/
+int MOAITextLabel::_getTextBounds ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextLabel, "U" )
+	
+	ZLRect rect;
+	bool hasRect = false;
+	
+	self->Refresh ();
+	
+	if ( state.CheckParams ( 2, "NN", false )) {
+	
+		u32 index	= state.GetValue < u32 >( 2, 1 ) - 1;
+		u32 size	= state.GetValue < u32 >( 3, 0 );
+		
+		hasRect = self->mLayout.GetBoundsForRange ( index, size, rect );
+	}
+	else {
+		hasRect = self->mLayout.GetBounds ( rect );
+	}
+	
+	if ( hasRect ) {
+	
+		rect.Bless ();
+			
+		lua_pushnumber ( state, rect.mXMin );
+		lua_pushnumber ( state, rect.mYMin );
+		lua_pushnumber ( state, rect.mXMax );
+		lua_pushnumber ( state, rect.mYMax );
+		
+		return 4;
 	}
 	return 0;
 }
@@ -452,20 +453,18 @@ int MOAITextLabel::_setSpeed ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setString
+/**	@name	setText
 	@text	Sets the text string to be displayed by this textbox.
 
 	@in		MOAITextLabel self
 	@in		string newStr				The new text string to be displayed.
 	@out	nil
 */
-int MOAITextLabel::_setString ( lua_State* L ) {
+int MOAITextLabel::_setText ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextLabel, "US" )
 
 	cc8* text = state.GetValue < cc8* >( 2, "" );
 	self->SetText ( text );
-	self->ScheduleLayout ();
-	self->mMore = ( text && text [ 0 ]);
 
 	return 0;
 }
@@ -496,12 +495,12 @@ int MOAITextLabel::_setStyle ( lua_State* L ) {
 	if ( strlen ( styleName )) {
 	
 		MOAITextStyle* style = state.GetLuaObject < MOAITextStyle >( 3, true );
-		self->mStyler.SetStyle ( styleName, style );
+		self->mStyleCache.SetStyle ( styleName, style );
 	}
 	else {
 	
 		MOAITextStyle* style = state.GetLuaObject < MOAITextStyle >( 2, true );
-		self->mStyler.SetStyle ( style );
+		self->mStyleCache.SetStyle ( style );
 	}
 	
 	self->ScheduleLayout ();
@@ -555,7 +554,6 @@ int MOAITextLabel::_setYFlip ( lua_State* L ) {
 			characters to 0 (i.e. MOAITextLabel:setReveal(0)).
 
 	@in		MOAITextLabel self
-	@in		number yFlip				Whether the vertical rendering direction should be inverted.
 	@out	MOAIAction action			The new MOAIAction which spools the text when run.
 */
 int MOAITextLabel::_spool ( lua_State* L ) {
@@ -621,10 +619,10 @@ int MOAITextLabel::_spool ( lua_State* L ) {
 const float MOAITextLabel::DEFAULT_SPOOL_SPEED = 24.0f;
 
 //----------------------------------------------------------------//
-void MOAITextLabel::Draw ( int subPrimID ) {
-	UNUSED ( subPrimID ); 
+void MOAITextLabel::Draw ( int subPrimID, float lod ) {
+	UNUSED ( subPrimID );
 	
-	if ( !this->IsVisible () ) return;
+	if ( !this->IsVisible ( lod )) return;
 	
 	if ( this->mReveal ) {
 		
@@ -655,8 +653,9 @@ void MOAITextLabel::Draw ( int subPrimID ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITextLabel::DrawDebug ( int subPrimID ) {
-	UNUSED ( subPrimID ); 
+void MOAITextLabel::DrawDebug ( int subPrimID, float lod ) {
+	UNUSED ( subPrimID );
+	UNUSED ( lod );
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	MOAIDebugLines& debugLines = MOAIDebugLines::Get ();
@@ -694,58 +693,35 @@ void MOAITextLabel::DrawDebug ( int subPrimID ) {
 }
 
 //----------------------------------------------------------------//
-u32 MOAITextLabel::GetPropBounds ( ZLBox& bounds ) {
-
-	ZLRect frame;
-	if ( this->mLayout.GetBounds ( frame )) {
-		bounds.Init ( frame.mXMin, frame.mYMax, frame.mXMax, frame.mYMin, 0.0f, 0.0f );
-		return MOAIProp::BOUNDS_OK;
-	}
-	return MOAIProp::BOUNDS_EMPTY;
-}
-
-//----------------------------------------------------------------//
 bool MOAITextLabel::IsDone () {
 
 	if ( this->IsActive ()) {
-		this->Layout ();
+		this->RefreshLayout ();
 		return ( this->mReveal >= this->mLayout.CountSprites ());
 	}
 	return true;
 }
 
 //----------------------------------------------------------------//
-void MOAITextLabel::Layout () {
-
-	if ( this->mNeedsLayout ) {
-		this->mStyler.BuildStyleMap ( this->mText.c_str ()); // TODO: don't do this every time
-		this->mDesigner.Layout ( this->mLayout, this->mStyler, this->mText.c_str (), this->mCurrentPageIdx, &this->mMore, &this->mNextPageIdx );
-	}
-	this->mNeedsLayout = false;
-}
-
-//----------------------------------------------------------------//
 MOAITextLabel::MOAITextLabel () :
+	mNeedsLayout ( false ),
 	mSpool ( 0.0f ),
 	mSpeed ( DEFAULT_SPOOL_SPEED ),
 	mReveal ( REVEAL_ALL ),
-	mNeedsLayout ( false ),
 	mCurrentPageIdx ( 0 ),
 	mNextPageIdx ( 0 ),
 	mMore ( false ) {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIProp )
+		RTTI_EXTEND ( MOAIGraphicsProp )
 		RTTI_EXTEND ( MOAIAction )
 	RTTI_END
 	
-	this->mStyler.SetOwner ( this );
+	this->mStyleCache.SetOwner ( this );
 	this->mDesigner.SetOwner ( this );
 
 	this->SetMask ( MOAIProp::CAN_DRAW | MOAIProp::CAN_DRAW_DEBUG );
 	this->mBlendMode.SetBlend ( ZGL_BLEND_FACTOR_SRC_ALPHA, ZGL_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA );
-	
-	this->SetText ( "" );
 }
 
 //----------------------------------------------------------------//
@@ -758,7 +734,7 @@ MOAITextLabel::~MOAITextLabel () {
 //----------------------------------------------------------------//
 bool MOAITextLabel::More () {
 	
-	this->Layout ();
+	this->Refresh ();
 	
 	if ( this->mReveal < this->mLayout.CountSprites ()) {
 		return true;
@@ -784,22 +760,19 @@ void MOAITextLabel::NextPage ( bool reveal ) {
 //----------------------------------------------------------------//
 void MOAITextLabel::OnDepNodeUpdate () {
 
-	this->Layout ();
+	this->Refresh ();
+	MOAIGraphicsProp::OnDepNodeUpdate ();
+}
 
-	if ( this->mStyler.CheckStylesChanged ()) {
-		this->mNeedsLayout = true;
-		this->mStyler.RefreshStyleGlyphs ( this->mText.c_str ());
+//----------------------------------------------------------------//
+u32 MOAITextLabel::OnGetModelBounds ( ZLBox& bounds ) {
+
+	ZLRect frame;
+	if ( this->mLayout.GetBounds ( frame )) {
+		bounds.Init ( frame.mXMin, frame.mYMax, frame.mXMax, frame.mYMin, 0.0f, 0.0f );
+		return MOAIProp::BOUNDS_OK;
 	}
-
-	MOAIProp::OnDepNodeUpdate ();
-
-	if ( this->mDesigner.GetYFlip ()) {
-			
-		ZLAffine3D mtx;
-		mtx.ScRoTr ( 1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, this->mLayout.GetYOffset (), 0.0f );
-		this->mLocalToWorldMtx.Prepend ( mtx );
-		this->mWorldToLocalMtx.Inverse ( this->mLocalToWorldMtx );
-	}
+	return MOAIProp::BOUNDS_EMPTY;
 }
 
 //----------------------------------------------------------------//
@@ -810,9 +783,51 @@ void MOAITextLabel::OnUpdate ( float step ) {
 }
 
 //----------------------------------------------------------------//
+void MOAITextLabel::PostBuildTransforms ( ZLAffine3D& localToWorldMtx ) {
+
+	if ( this->mDesigner.GetYFlip ()) {
+		ZLAffine3D mtx;
+		mtx.ScRoTr ( 1.0f, -1.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, this->mLayout.GetYOffset (), 0.0f );
+		localToWorldMtx.Prepend ( mtx );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAITextLabel::Refresh () {
+
+	if ( this->mStyleCache.CheckStylesChanged ()) {
+		this->mNeedsLayout = true;
+		this->RefreshStyleGlyphs ();
+	}
+
+	if ( this->mNeedsLayout ) {
+		this->RefreshLayout ();
+		this->mNeedsLayout = false;
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAITextLabel::RefreshLayout () {
+
+	this->mLayout.Reset ();
+	this->mStyleCache.ClearAnonymousStyles ();
+
+	this->mStyleMap.BuildStyleMap ( this->mStyleCache, this->mText.c_str ());
+
+	ZLVec2D offset ( 0.0f, 0.0f );
+	this->mDesigner.Layout ( this->mLayout, this->mStyleMap, this->mText.c_str (), this->mCurrentPageIdx, offset, &this->mMore, &this->mNextPageIdx );
+}
+
+//----------------------------------------------------------------//
+void MOAITextLabel::RefreshStyleGlyphs () {
+
+	this->mStyleMap.RefreshStyleGlyphs ( this->mText.c_str ());
+}
+
+//----------------------------------------------------------------//
 void MOAITextLabel::RegisterLuaClass ( MOAILuaState& state ) {
 
-	MOAIProp::RegisterLuaClass ( state );
+	MOAIGraphicsProp::RegisterLuaClass ( state );
 	MOAIAction::RegisterLuaClass ( state );
 
 	state.SetField ( -1, "WORD_BREAK_NONE", ( u32 )MOAITextDesigner::WORD_BREAK_NONE );
@@ -829,7 +844,7 @@ void MOAITextLabel::RegisterLuaClass ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAITextLabel::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
-	MOAIProp::RegisterLuaFuncs ( state );
+	MOAIGraphicsProp::RegisterLuaFuncs ( state );
 	MOAIAction::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
@@ -838,8 +853,8 @@ void MOAITextLabel::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "getGlyphScale",			_getGlyphScale },
 		{ "getLineSpacing",			_getLineSpacing },
 		{ "getRect",				_getRect },
-		{ "getStringBounds",		_getStringBounds },
 		{ "getStyle",				_getStyle },
+		{ "getTextBounds",			_getTextBounds },
 		{ "more",					_more },
 		{ "nextPage",				_nextPage },
 		{ "reserveCurves",			_reserveCurves },
@@ -850,11 +865,11 @@ void MOAITextLabel::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setLineSpacing",			_setLineSpacing },
 		{ "setHighlight",			_setHighlight },
 		{ "setReveal",				_setReveal },
-		{ "setSpeed",				_setSpeed },
-		{ "setString",				_setString },
-		{ "setStyle",				_setStyle },
 		{ "setRect",				_setRect },
 		{ "setRectLimits",			_setRectLimits },
+		{ "setSpeed",				_setSpeed },
+		{ "setStyle",				_setStyle },
+		{ "setText",				_setText },
 		{ "setWordBreak",			_setWordBreak },
 		{ "setYFlip",				_setYFlip },
 		{ "spool",					_spool },
@@ -879,21 +894,22 @@ void MOAITextLabel::ScheduleLayout () {
 }
 
 //----------------------------------------------------------------//
-void MOAITextLabel::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
-	UNUSED ( state );
-	UNUSED ( serializer );
+void MOAITextLabel::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {	
+	MOAIGraphicsProp::SerializeIn ( state, serializer );
+	MOAIAction::SerializeIn ( state, serializer );
 }
 
 //----------------------------------------------------------------//
 void MOAITextLabel::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
-	UNUSED ( state );
-	UNUSED ( serializer );
+	MOAIGraphicsProp::SerializeOut ( state, serializer );
+	MOAIAction::SerializeOut ( state, serializer );
 }
 
 //----------------------------------------------------------------//
 void MOAITextLabel::SetText ( cc8* text ) {
 
 	this->mText = text;
+	this->mMore = ( text && text [ 0 ]);
 	
 	this->mReveal = REVEAL_ALL;
 	this->mSpool = 0.0f;
@@ -901,6 +917,5 @@ void MOAITextLabel::SetText ( cc8* text ) {
 	this->mCurrentPageIdx = 0;
 	this->mNextPageIdx = 0;
 	
-	this->mStyler.ResetStyleMap ();
-	this->mLayout.ClearHighlights ();
+	this->ScheduleLayout ();
 }

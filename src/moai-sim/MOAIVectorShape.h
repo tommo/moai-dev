@@ -4,7 +4,7 @@
 #ifndef	MOAIVECTORSHAPE_H
 #define	MOAIVECTORSHAPE_H
 
-#include <moai-sim/MOAIVectorDrawing.h>
+#include <moai-sim/MOAIVectorTesselator.h>
 
 struct TESStesselator;
 
@@ -28,7 +28,7 @@ protected:
 
 public:
 
-	friend class MOAIVectorDrawing;
+	friend class MOAIVectorTesselator;
 
 	GET_SET ( MOAIVectorStyle&, Style, mStyle );
 	
@@ -37,10 +37,11 @@ public:
 	virtual void		AddStrokeContours			( TESStesselator* tess );
 	bool				CanGroup					();
 	virtual bool		GroupShapes					( MOAIVectorShape** shapes, u32 total );
+	virtual bool		IsClosed					() = 0;
 						MOAIVectorShape				();
 	virtual				~MOAIVectorShape			();
 	virtual bool		SetVertices					( const ZLVec2D* vertices, u32 total, bool closed );
-	virtual void		Tessalate					( MOAIVectorDrawing& drawing );
+	virtual void		Tesselate					( MOAIVectorTesselator& drawing );
 };
 
 #endif

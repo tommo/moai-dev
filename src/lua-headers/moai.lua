@@ -137,6 +137,34 @@ local function initTransform2DInterface ( interface, superInterface )
 end
 
 --============================================================--
+-- initTextLabelInterface
+--============================================================--
+local function initTextLabelInterface ( interface, superInterface )
+
+	----------------------------------------------------------------
+	function interface.affirmStyle ( self )
+		local style = self:getStyle ()
+		if not style then
+			style = MOAITextStyle.new ()
+			self:setStyle ( style )
+		end
+		return style
+	end
+	
+	----------------------------------------------------------------
+	function interface.setFont ( self, font )
+		local style = self:affirmStyle ()
+		style:setFont ( font )
+	end
+	
+	----------------------------------------------------------------
+	function interface.setTextSize ( self, points, dpi )
+		local style = self:affirmStyle ()
+		style:setSize ( points, dpi )
+	end
+end
+
+--============================================================--
 -- moai2D.lua - version 1.0 Beta
 --============================================================--
 
@@ -258,11 +286,11 @@ MOAILayer.extend (
 )
 
 --============================================================--
--- MOAIProp
+-- MOAIGraphicsProp
 --============================================================--
-MOAIProp.extend (
+MOAIGraphicsProp.extend (
 
-	'MOAIProp2D',
+	'MOAIGraphicsProp2D',
 	
 	----------------------------------------------------------------
 	function ( interface, class, superInterface, superClass )
@@ -402,28 +430,10 @@ MOAITextLabel.extend (
 	----------------------------------------------------------------
 	function ( interface, class, superInterface, superClass )
 		
-		-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
-		-- extend the interface
-		function interface.affirmStyle ( self )
-			local style = self:getStyle ()
-			if not style then
-				style = MOAITextStyle.new ()
-				self:setStyle ( style )
-			end
-			return style
-		end
+		initTextLabelInterface ( interface, superInterface )
 		
-		-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
-		function interface.setFont ( self, font )
-			local style = self:affirmStyle ()
-			style:setFont ( font )
-		end
-		
-		-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -
-		function interface.setTextSize ( self, points, dpi )
-			local style = self:affirmStyle ()
-			style:setSize ( points, dpi )
-		end
+		interface.getStringBounds = superInterface.getTextBounds
+		interface.setString = superInterface.setText
 	end
 )
 
@@ -502,6 +512,9 @@ MOAIXmlParser.extend (
 MOAIHashWriter	= MOAIHashWriterCrypto or MOAIHashWriter
 MOAITextBox		= MOAITextLabel
 MOAIThread		= MOAICoroutine
+
+MOAIProp		= MOAIGraphicsProp
+MOAIProp2D		= MOAIGraphicsProp2D
 
 --============================================================--
 -- Cross Platform

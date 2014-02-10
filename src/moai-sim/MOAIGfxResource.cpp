@@ -219,3 +219,9 @@ bool MOAIGfxResource::SoftRelease ( u32 age ) {
 	}
 	return false;
 }
+
+//----------------------------------------------------------------//
+void MOAIGfxResource::Unbind () {
+
+	this->OnUnbind ();
+}

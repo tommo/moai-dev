@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIVectorDrawing.h>
+#include <moai-sim/MOAIVectorTesselator.h>
 #include <moai-sim/MOAIVectorEllipse.h>
 #include <tesselator.h>
 
@@ -23,7 +23,7 @@ void MOAIVectorEllipse::AddFillContours ( TESStesselator* tess ) {
 	for ( u32 i = 0; i < steps; ++i, angle += step ) {
 		verts [ i ].mX = this->mLoc.mX + ( Cos ( angle ) * this->mXRad );
 		verts [ i ].mY = this->mLoc.mY + ( Sin ( angle ) * this->mYRad );
-		this->mStyle.GetTransform ().Transform ( verts [ i ]);
+		this->mStyle.GetDrawingToWorld ().Transform ( verts [ i ]);
 	}
 	tessAddContour ( tess, 2, verts, sizeof ( ZLVec2D ), steps );
 }
@@ -40,6 +40,11 @@ void MOAIVectorEllipse::Init ( float x, float y, float xRad, float yRad ) {
 	this->mLoc.Init ( x, y );
 	this->mXRad = xRad;
 	this->mYRad = yRad;
+}
+
+//----------------------------------------------------------------//
+bool MOAIVectorEllipse::IsClosed () {
+	return true;
 }
 
 //----------------------------------------------------------------//

@@ -1202,6 +1202,22 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\moai-sim\MOAIShaderProgram.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moai-sim\MOAIShaderProgram.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moai-sim\MOAIShaderUniform.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moai-sim\MOAIShaderUniform.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moai-sim\MOAIVertexBuffer.cpp"
 				>
 			</File>
@@ -1642,19 +1658,27 @@
 			Name="prop"
 			>
 			<File
+				RelativePath="..\..\src\moai-sim\MOAIGraphicsProp.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moai-sim\MOAIGraphicsProp.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moai-sim\MOAIGraphicsProp2D.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moai-sim\MOAIGraphicsProp2D.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moai-sim\MOAIProp.cpp"
 				>
 			</File>
 			<File
 				RelativePath="..\..\src\moai-sim\MOAIProp.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moai-sim\MOAIProp2D.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moai-sim\MOAIProp2D.h"
 				>
 			</File>
 			<File
@@ -1763,14 +1787,6 @@
 			</File>
 			<File
 				RelativePath="..\..\src\moai-sim\MOAITileDeck2D.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moai-sim\MOAIVectorDrawingDeck.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moai-sim\MOAIVectorDrawingDeck.h"
 				>
 			</File>
 		</Filter>
@@ -1914,11 +1930,27 @@
 			Name="collision"
 			>
 			<File
+				RelativePath="..\..\src\moai-sim\MOAICollisionProp.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moai-sim\MOAICollisionProp.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moai-sim\MOAICollisionShape.cpp"
 				>
 			</File>
 			<File
 				RelativePath="..\..\src\moai-sim\MOAICollisionShape.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moai-sim\MOAICollisionWorld.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moai-sim\MOAICollisionWorld.h"
 				>
 			</File>
 		</Filter>
@@ -2042,19 +2074,27 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\src\moai-sim\MOAITextStyleCache.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moai-sim\MOAITextStyleCache.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moai-sim\MOAITextStyleMap.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moai-sim\MOAITextStyleMap.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\src\moai-sim\MOAITextStyleParser.cpp"
 				>
 			</File>
 			<File
 				RelativePath="..\..\src\moai-sim\MOAITextStyleParser.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moai-sim\MOAITextStyler.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moai-sim\MOAITextStyler.h"
 				>
 			</File>
 		</Filter>
@@ -2162,14 +2202,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\src\moai-sim\MOAIVectorDrawing.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\src\moai-sim\MOAIVectorDrawing.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\src\moai-sim\MOAIVectorEllipse.cpp"
 				>
 			</File>
@@ -2207,6 +2239,14 @@
 			</File>
 			<File
 				RelativePath="..\..\src\moai-sim\MOAIVectorStyle.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moai-sim\MOAIVectorTesselator.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\moai-sim\MOAIVectorTesselator.h"
 				>
 			</File>
 			<File

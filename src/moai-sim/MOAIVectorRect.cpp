@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIVectorDrawing.h>
+#include <moai-sim/MOAIVectorTesselator.h>
 #include <moai-sim/MOAIVectorRect.h>
 #include <tesselator.h>
 
@@ -27,10 +27,10 @@ void MOAIVectorRect::AddFillContours ( TESStesselator* tess ) {
 	verts [ 3 ].mX = this->mRect.mXMin;
 	verts [ 3 ].mY = this->mRect.mYMax;
 
-	this->mStyle.GetTransform ().Transform ( verts [ 0 ]);
-	this->mStyle.GetTransform ().Transform ( verts [ 1 ]);
-	this->mStyle.GetTransform ().Transform ( verts [ 2 ]);
-	this->mStyle.GetTransform ().Transform ( verts [ 3 ]);
+	this->mStyle.GetDrawingToWorld ().Transform ( verts [ 0 ]);
+	this->mStyle.GetDrawingToWorld ().Transform ( verts [ 1 ]);
+	this->mStyle.GetDrawingToWorld ().Transform ( verts [ 2 ]);
+	this->mStyle.GetDrawingToWorld ().Transform ( verts [ 3 ]);
 
 	tessAddContour ( tess, 2, verts, sizeof ( ZLVec2D ), 4 );
 }
@@ -45,6 +45,11 @@ void MOAIVectorRect::AddStrokeContours ( TESStesselator* tess ) {
 void MOAIVectorRect::Init ( float xMin, float yMin, float xMax, float yMax ) {
 
 	this->mRect.Init ( xMin, yMin, xMax, yMax );
+}
+
+//----------------------------------------------------------------//
+bool MOAIVectorRect::IsClosed () {
+	return true;
 }
 
 //----------------------------------------------------------------//

@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIVectorDrawing.h>
+#include <moai-sim/MOAIVectorTesselator.h>
 #include <moai-sim/MOAIVectorPoly.h>
 #include <moai-sim/MOAIVectorUtil.h>
 #include <tesselator.h>
@@ -13,6 +13,8 @@
 
 //----------------------------------------------------------------//
 void MOAIVectorPoly::AddFillContours ( TESStesselator* tess ) {
+	
+	if ( this->mVertices.Size () < 3 ) return;
 	
 	TESStesselator* outline = tessNewTess ( 0 );
 	assert ( outline );
@@ -78,6 +80,11 @@ void MOAIVectorPoly::AddStrokeContours ( TESStesselator* tess ) {
 }
 
 //----------------------------------------------------------------//
+bool MOAIVectorPoly::IsClosed () {
+	return this->mIsClosed;
+}
+
+//----------------------------------------------------------------//
 MOAIVectorPoly::MOAIVectorPoly () :
 	mIsClosed ( true ) {
 }
@@ -91,7 +98,7 @@ bool MOAIVectorPoly::SetVertices ( const ZLVec2D* vertices, u32 total, bool clos
 
 	if ( total ) {
 		this->mVertices.Init ( total );
-		MOAIVectorShape::CopyAndTransformVertices ( this->mVertices, this->mStyle.GetTransform (), vertices, total );
+		MOAIVectorShape::CopyAndTransformVertices ( this->mVertices, this->mStyle.GetDrawingToWorld (), vertices, total );
 		this->mIsClosed = closed;
 		//this->SetOpen ( false );
 	}

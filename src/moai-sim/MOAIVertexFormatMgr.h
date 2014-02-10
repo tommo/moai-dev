@@ -10,19 +10,22 @@
 // MOAIVertexFormatMgr
 //================================================================//
 class MOAIVertexFormatMgr :
-	public MOAIGlobalClass < MOAIVertexFormatMgr > {
+	public MOAIGlobalClass < MOAIVertexFormatMgr, MOAILuaObject > {
 public:
 
 	enum {
 		XYZC,
 		XYZWC,
 		XYZWUVC,
-		TOTAL_PRESETS,
+		TOTAL_FORMATS,
 	};
 
 private:
 	
-	MOAIVertexFormat mFormats [ TOTAL_PRESETS ];
+	MOAIVertexFormat* mFormats [ TOTAL_FORMATS ];
+	
+	//----------------------------------------------------------------//
+	static int			_getFormat			( lua_State* L );
 	
 public:
 	
@@ -44,11 +47,15 @@ public:
 		XYZWUVC_SIZE,
 	};
 	
+	DECL_LUA_SINGLETON ( MOAIVertexFormatMgr )
+	
 	//----------------------------------------------------------------//
-	const MOAIVertexFormat&		GetPreset					( u32 presetID );
-	u32							GetVertexSize				( u32 presetID );
-								MOAIVertexFormatMgr			();
-								~MOAIVertexFormatMgr		();
+	MOAIVertexFormat&		GetFormat					( u32 formatID );
+	u32						GetVertexSize				( u32 formatID );
+							MOAIVertexFormatMgr			();
+							~MOAIVertexFormatMgr		();
+	void					RegisterLuaClass			( MOAILuaState& state );
+	void					RegisterLuaFuncs			( MOAILuaState& state );
 };
 
 #endif

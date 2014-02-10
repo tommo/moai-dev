@@ -11,6 +11,7 @@
 	
 //----------------------------------------------------------------//
 void MOAIVectorStyle::Default () {
+
 	this->SetFillStyle ( MOAIVectorStyle::FILL_SOLID );
 	this->mFillColor.SetWhite ();
 	
@@ -39,7 +40,11 @@ void MOAIVectorStyle::Default () {
 	this->mShadowColor.SetBlack ();
 	this->mShadowCurve = ZLInterpolate::kLinear;
 	
-	this->mTransform.Ident ();
+	this->mDrawingToWorld.Ident ();
+	this->mWorldToDrawing.Ident ();
+	
+	this->mFillExtraID = 0;
+	this->mStrokeExtraID = 0;
 }
 
 //----------------------------------------------------------------//

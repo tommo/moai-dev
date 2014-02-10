@@ -86,8 +86,9 @@ protected:
 	static int	_worldToModelVec	( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void	BuildTransforms			();
-	void	OnDepNodeUpdate			();
+	void			BuildTransforms			();
+	void			OnDepNodeUpdate			();
+	virtual void	PostBuildTransforms		( ZLAffine3D& localToWorldMtx );
 
 public:
 

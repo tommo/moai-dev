@@ -878,23 +878,6 @@ void MOAIBox2DWorld::Destroy () {
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DWorld::DrawDebug () {
-
-	if ( this->mDebugDraw ) {
-		
-		MOAIDraw::Bind ();
-		
-		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-		
-		gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_WORLD, MOAIGfxDevice::VTX_STAGE_PROJ );
-		gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
-		
-		this->mDebugDraw->mScale = 1.0f / this->mUnitsToMeters;
-		this->mWorld->DrawDebugData ();
-	}
-}
-
-//----------------------------------------------------------------//
 bool MOAIBox2DWorld::IsDone () {
 
 	return false;
@@ -921,6 +904,7 @@ MOAIBox2DWorld::MOAIBox2DWorld () :
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIAction )
+		RTTI_EXTEND ( MOAIRenderable )
 	RTTI_END
 	
 	this->mArbiter.Set ( *this, new MOAIBox2DArbiter ( *this ));
@@ -978,6 +962,7 @@ void MOAIBox2DWorld::OnUpdate ( float step ) {
 void MOAIBox2DWorld::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAIAction::RegisterLuaClass ( state );
+	MOAIRenderable::RegisterLuaClass ( state );
 	
 	state.SetField ( -1, "DEBUG_DRAW_SHAPES", ( u32 )DEBUG_DRAW_SHAPES );
 	state.SetField ( -1, "DEBUG_DRAW_JOINTS", ( u32 )DEBUG_DRAW_JOINTS );
@@ -992,6 +977,7 @@ void MOAIBox2DWorld::RegisterLuaClass ( MOAILuaState& state ) {
 void MOAIBox2DWorld::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	MOAIAction::RegisterLuaFuncs ( state );
+	MOAIRenderable::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
 		{ "addBody",					_addBody },
@@ -1078,4 +1064,21 @@ void MOAIBox2DWorld::ScheduleDestruction ( MOAIBox2DJoint& joint ) {
 		joint.mDestroy = true;
 	}
 	this->Destroy ();
+}
+
+//----------------------------------------------------------------//
+void MOAIBox2DWorld::Render () {
+
+	if ( this->mDebugDraw ) {
+		
+		MOAIDraw::Bind ();
+		
+		MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+		
+		gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_WORLD, MOAIGfxDevice::VTX_STAGE_PROJ );
+		gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM );
+		
+		this->mDebugDraw->mScale = 1.0f / this->mUnitsToMeters;
+		this->mWorld->DrawDebugData ();
+	}
 }

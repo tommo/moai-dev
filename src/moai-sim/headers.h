@@ -20,7 +20,9 @@
 #include <moai-sim/MOAICamera.h>
 #include <moai-sim/MOAICameraAnchor2D.h>
 #include <moai-sim/MOAICameraFitter2D.h>
+#include <moai-sim/MOAICollisionProp.h>
 #include <moai-sim/MOAICollisionShape.h>
+#include <moai-sim/MOAICollisionWorld.h>
 #include <moai-sim/MOAIColor.h>
 #include <moai-sim/MOAICompassSensor.h>
 #include <moai-sim/MOAICoroutine.h>
@@ -37,6 +39,7 @@
 #include <moai-sim/MOAIGfxQuad2D.h>
 #include <moai-sim/MOAIGfxQuadDeck2D.h>
 #include <moai-sim/MOAIGfxQuadListDeck2D.h>
+#include <moai-sim/MOAIGraphicsProp.h>
 #include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAIGridDeck2D.h>
 #include <moai-sim/MOAIGridPathGraph.h>
@@ -94,6 +97,8 @@
 #include <moai-sim/MOAISensor.h>
 #include <moai-sim/MOAIShader.h>
 #include <moai-sim/MOAIShaderMgr.h>
+#include <moai-sim/MOAIShaderProgram.h>
+#include <moai-sim/MOAIShaderUniform.h>
 #include <moai-sim/MOAISim.h>
 #include <moai-sim/MOAISpanList.h>
 #include <moai-sim/MOAIStretchPatch2D.h>
@@ -109,13 +114,13 @@
 #include <moai-sim/MOAIVecPathGraph.h>
 #include <moai-sim/MOAIVectorCombo.h>
 #include <moai-sim/MOAIVectorEllipse.h>
-#include <moai-sim/MOAIVectorDrawing.h>
-#include <moai-sim/MOAIVectorDrawingDeck.h>
 #include <moai-sim/MOAIVectorPoly.h>
 #include <moai-sim/MOAIVectorPoly.h>
 #include <moai-sim/MOAIVectorRect.h>
 #include <moai-sim/MOAIVectorShape.h>
 #include <moai-sim/MOAIVectorStyle.h>
+#include <moai-sim/MOAIVectorTesselator.h>
+#include <moai-sim/MOAIVectorUtil.h>
 #include <moai-sim/MOAIVertexBuffer.h>
 #include <moai-sim/MOAIVertexFormat.h>
 #include <moai-sim/MOAIVertexFormatMgr.h>
@@ -138,7 +143,8 @@
 #include <moai-sim/MOAITextDesignParser.h>
 #include <moai-sim/MOAITextLabel.h>
 #include <moai-sim/MOAITextStyle.h>
-#include <moai-sim/MOAITextStyler.h>
+#include <moai-sim/MOAITextStyleCache.h>
+#include <moai-sim/MOAITextStyleMap.h>
 #include <moai-sim/MOAITextStyleParser.h>
 
 #endif
