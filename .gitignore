@@ -28,3 +28,6 @@ tmp
 
 # Produced by test runner
 test/xml-results
+
+/src/*.sublime-project
+/src/*.sublime-workspace
