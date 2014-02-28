@@ -468,6 +468,20 @@ int MOAIParticleScript::_sin ( lua_State* L ) {
 	IMPL_LUA_PARTICLE_OP ( SIN, "RV" )
 }
 
+
+//----------------------------------------------------------------//
+/**	@name	sign
+ @text	if v0 > 0 then r0 =1; elseif v0 < 0 then r0 = -1; else r0 = 0
+ 
+ @in		MOAIParticleScript self
+ @in		number r0
+ @in		number v0
+ @out	nil
+ */
+int MOAIParticleScript::_sign ( lua_State* L ) {
+	IMPL_LUA_PARTICLE_OP ( SIGN, "RV" )
+}
+
 //----------------------------------------------------------------//
 /**	@name	sprite
 	@text	Push a new sprite for rendering. To render a particle, first
@@ -711,6 +725,7 @@ void MOAIParticleScript::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "randVec",			_randVec },
 		{ "set",				_set },
 		{ "sin",				_sin },
+		{ "sign",				_sign },
 		{ "sprite",				_sprite },
 		{ "sub",				_sub },
 		{ "tan",				_tan },
@@ -950,6 +965,23 @@ void MOAIParticleScript::Run ( MOAIParticleSystem& system, MOAIParticle& particl
 					*r0 = v0;
 				}
 				break;
+
+			case SIGN: // RV
+
+				READ_ADDR   ( r0, bytecode );
+				READ_VALUE  ( v0, bytecode );
+				
+				if ( r0 ) {
+					if( v0 > 0.0f ){
+						*r0 = 1.0f;
+					} else if( v0 < 0.0f ){
+						*r0 = -1.0f;
+					} else {
+						*r0 = 0.0f;
+					}
+				}
+				break;
+
 			case SIN: // RV
 
 				READ_ADDR   ( r0, bytecode );

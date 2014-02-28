@@ -76,6 +76,7 @@ private:
 		SET,
 		SIN,
 		SPRITE,
+		SIGN,
 		SUB,
 		TAN,
 		TIME,
@@ -126,6 +127,7 @@ private:
 	static int		_rand				( lua_State* L );
 	static int		_randVec			( lua_State* L );
 	static int		_set				( lua_State* L );
+	static int		_sign				( lua_State* L );
 	static int		_sin				( lua_State* L );
 	static int		_sprite				( lua_State* L );
 	static int		_sub				( lua_State* L );

@@ -372,6 +372,8 @@
 		04A5903518A8AD0100F99F46 /* types.h in Headers */ = {isa = PBXBuildFile; fileRef = 04A58F8918A8AD0100F99F46 /* types.h */; };
 		04A5903618A8B24E00F99F46 /* MOAIVectorUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4C050D18500C18005B0520 /* MOAIVectorUtil.cpp */; };
 		04A5903718A8B32400F99F46 /* MOAIVectorStyle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4C050C18500C18005B0520 /* MOAIVectorStyle.cpp */; };
+		04B0B45A18AE150C0092FA39 /* lpeg.c in Sources */ = {isa = PBXBuildFile; fileRef = 04B0B45918AE150C0092FA39 /* lpeg.c */; };
+		04B0B45B18AE150C0092FA39 /* lpeg.c in Sources */ = {isa = PBXBuildFile; fileRef = 04B0B45918AE150C0092FA39 /* lpeg.c */; };
 		0765874E145CD06900723A7D /* tlsf.c in Sources */ = {isa = PBXBuildFile; fileRef = 0765874B145CD06900723A7D /* tlsf.c */; };
 		0765874F145CD06900723A7D /* tlsf.c in Sources */ = {isa = PBXBuildFile; fileRef = 0765874B145CD06900723A7D /* tlsf.c */; };
 		07658750145CD06900723A7D /* tlsf.h in Headers */ = {isa = PBXBuildFile; fileRef = 0765874C145CD06900723A7D /* tlsf.h */; };
@@ -5730,6 +5732,7 @@
 		04A58F8718A8AD0100F99F46 /* mux.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mux.h; sourceTree = "<group>"; };
 		04A58F8818A8AD0100F99F46 /* mux_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mux_types.h; sourceTree = "<group>"; };
 		04A58F8918A8AD0100F99F46 /* types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = types.h; sourceTree = "<group>"; };
+		04B0B45918AE150C0092FA39 /* lpeg.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lpeg.c; path = "../../3rdparty/lpeg-0.10.2/lpeg.c"; sourceTree = "<group>"; };
 		0765874B145CD06900723A7D /* tlsf.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = tlsf.c; path = "../../3rdparty/tlsf-2.0/tlsf.c"; sourceTree = "<group>"; };
 		0765874C145CD06900723A7D /* tlsf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tlsf.h; path = "../../3rdparty/tlsf-2.0/tlsf.h"; sourceTree = "<group>"; };
 		0765874D145CD06900723A7D /* tlsfbits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tlsfbits.h; path = "../../3rdparty/tlsf-2.0/tlsfbits.h"; sourceTree = "<group>"; };
@@ -8426,6 +8429,7 @@
 		032409EE13564CAF000ADC60 /* 3rd party */ = {
 			isa = PBXGroup;
 			children = (
+				04B0B45818AE14F00092FA39 /* lpeg */,
 				04A58F1918A8ABC100F99F46 /* libwebp */,
 				B0FC2A0616F4004900796249 /* sfmt */,
 				0725E2EB14F45AC700551DB5 /* adcolony */,
@@ -9276,6 +9280,14 @@
 				04A58F8918A8AD0100F99F46 /* types.h */,
 			);
 			path = webp;
+			sourceTree = "<group>";
+		};
+		04B0B45818AE14F00092FA39 /* lpeg */ = {
+			isa = PBXGroup;
+			children = (
+				04B0B45918AE150C0092FA39 /* lpeg.c */,
+			);
+			name = lpeg;
 			sourceTree = "<group>";
 		};
 		0725E2EB14F45AC700551DB5 /* adcolony */ = {
@@ -18913,6 +18925,7 @@
 				CDD06DB61398838D00AB0420 /* inet.c in Sources */,
 				CDD06DB81398838D00AB0420 /* io.c in Sources */,
 				CDD06DBA1398838D00AB0420 /* luasocket.c in Sources */,
+				04B0B45A18AE150C0092FA39 /* lpeg.c in Sources */,
 				CDD491F617FA7CA400525B77 /* ls_sqlite3.c in Sources */,
 				CDD491F717FA7CA400525B77 /* luasql.c in Sources */,
 				CDD06DBD1398838D00AB0420 /* mime.c in Sources */,
@@ -18942,6 +18955,7 @@
 				CDD06DD61398838D00AB0420 /* inet.c in Sources */,
 				CDD06DD81398838D00AB0420 /* io.c in Sources */,
 				CDD06DDA1398838D00AB0420 /* luasocket.c in Sources */,
+				04B0B45B18AE150C0092FA39 /* lpeg.c in Sources */,
 				CDD491F917FA7CA600525B77 /* ls_sqlite3.c in Sources */,
 				CDD491FA17FA7CA600525B77 /* luasql.c in Sources */,
 				CDD06DDD1398838D00AB0420 /* mime.c in Sources */,

@@ -6,6 +6,7 @@
 extern "C" {	
 	extern int luaopen_crypto			( lua_State *L );
 	extern int luaopen_lfs				( lua_State *L );
+	extern int luaopen_lpeg				( lua_State *L );
 	extern int luaopen_luacurl			( lua_State *L );
 	extern int luaopen_luasql_sqlite3	( lua_State *L );
 	extern int luapreload_fullluasocket ( lua_State *L );
@@ -32,4 +33,5 @@ void AKULuaExtContextInitialize () {
 	luaopen_lfs ( state );
 	luapreload_fullluasocket ( state );
 	luaopen_luasql_sqlite3 ( state );
+	luaopen_lpeg( state );
 }
