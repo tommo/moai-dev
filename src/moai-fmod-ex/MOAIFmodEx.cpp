@@ -74,7 +74,7 @@ int MOAIFmodEx::_mute ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 void MOAIFmodEx::CloseSoundSystem () {
-
+	if ( mExternalSys ) return ;
 	if ( !this->mSoundSys ) return;
 	
 	this->mSoundSys->close ();
@@ -84,7 +84,9 @@ void MOAIFmodEx::CloseSoundSystem () {
 
 //----------------------------------------------------------------//
 MOAIFmodEx::MOAIFmodEx () :
-	mSoundSys ( 0 ) {
+	mSoundSys ( 0 ),
+	mExternalSys( false )
+{
 }
 
 //----------------------------------------------------------------//
@@ -127,6 +129,18 @@ void MOAIFmodEx::OpenSoundSystem () {
 	result = this->mSoundSys->getMasterChannelGroup ( &this->mMainChannelGroup );
 	if ( result != FMOD_OK ) return;
 }
+
+//----------------------------------------------------------------//
+void MOAIFmodEx::UseSoundSystem ( FMOD::System *sys ) {
+	this->mSoundSys = sys;
+	if( sys ) {
+		this->mExternalSys = true;
+	}
+	else{
+		this->mExternalSys = false;
+	}
+}
+
 
 //----------------------------------------------------------------//
 void MOAIFmodEx::RegisterLuaClass ( MOAILuaState& state ) {

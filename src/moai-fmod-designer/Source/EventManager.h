@@ -122,6 +122,9 @@ namespace FMODDesigner
          */
         bool Init(const SoundInitParams& );
 
+        /*get internal FMOD sound system*/
+        FMOD::System* GetSoundSystem();
+
         /*! Shuts down the sound manager and does cleanup */
         void Shutdown();
 

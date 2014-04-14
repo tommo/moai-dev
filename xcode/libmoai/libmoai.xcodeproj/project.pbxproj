@@ -196,6 +196,14 @@
 		03240EF413564CB0000ADC60 /* tinyxml.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240BA813564CB0000ADC60 /* tinyxml.h */; };
 		03240EF513564CB0000ADC60 /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03240BA913564CB0000ADC60 /* tinyxmlerror.cpp */; };
 		03240EF613564CB0000ADC60 /* tinyxmlparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03240BAA13564CB0000ADC60 /* tinyxmlparser.cpp */; };
+		040094A218F2694F00D129F9 /* host.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6B791739A02200DFE837 /* host.cpp */; };
+		040094A318F2694F00D129F9 /* MOAIFmodEx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6B7B1739A02200DFE837 /* MOAIFmodEx.cpp */; };
+		040094A418F2694F00D129F9 /* MOAIFmodExChannel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6B7D1739A02200DFE837 /* MOAIFmodExChannel.cpp */; };
+		040094A518F2694F00D129F9 /* MOAIFmodExSound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6B7F1739A02200DFE837 /* MOAIFmodExSound.cpp */; };
+		040094A618F2698E00D129F9 /* host.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6B791739A02200DFE837 /* host.cpp */; };
+		040094A718F2698E00D129F9 /* MOAIFmodEx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6B7B1739A02200DFE837 /* MOAIFmodEx.cpp */; };
+		040094A818F2698E00D129F9 /* MOAIFmodExChannel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6B7D1739A02200DFE837 /* MOAIFmodExChannel.cpp */; };
+		040094A918F2698E00D129F9 /* MOAIFmodExSound.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6B7F1739A02200DFE837 /* MOAIFmodExSound.cpp */; };
 		04A58F1718A8AAF800F99F46 /* MOAIImage-webp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04A58F1618A8AAF800F99F46 /* MOAIImage-webp.cpp */; };
 		04A58F1818A8AAF800F99F46 /* MOAIImage-webp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04A58F1618A8AAF800F99F46 /* MOAIImage-webp.cpp */; };
 		04A58F8A18A8AD0100F99F46 /* alpha.c in Sources */ = {isa = PBXBuildFile; fileRef = 04A58F1C18A8AD0000F99F46 /* alpha.c */; };
@@ -18060,6 +18068,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				040094A218F2694F00D129F9 /* host.cpp in Sources */,
+				040094A318F2694F00D129F9 /* MOAIFmodEx.cpp in Sources */,
+				040094A418F2694F00D129F9 /* MOAIFmodExChannel.cpp in Sources */,
+				040094A518F2694F00D129F9 /* MOAIFmodExSound.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -19699,6 +19711,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				040094A618F2698E00D129F9 /* host.cpp in Sources */,
+				040094A718F2698E00D129F9 /* MOAIFmodEx.cpp in Sources */,
+				040094A818F2698E00D129F9 /* MOAIFmodExChannel.cpp in Sources */,
+				040094A918F2698E00D129F9 /* MOAIFmodExSound.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -130,6 +130,21 @@ int MOAIFmodExSound::_release ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+int MOAIFmodExSound::_getLength ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIFmodExSound, "U" )
+
+	if( !self->mSound ) return 0;
+	u32 length = 0;
+	FMOD_RESULT result = self->mSound->getLength( &length, FMOD_TIMEUNIT_MS );
+	if( result == FMOD_OK ) {
+		state.Push( (float)length/1000.0f  );
+		return 1;
+	} else {
+		return 0;
+	}
+}
+
 //================================================================//
 // MOAIFmodExSound
 //================================================================//
@@ -267,6 +282,7 @@ void MOAIFmodExSound::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "loadBGM",		_loadBGM },
 		{ "loadSFX",		_loadSFX },
 		{ "release",		_release },
+		{ "getLength",		_getLength },
 		{ NULL, NULL }
 	};
 

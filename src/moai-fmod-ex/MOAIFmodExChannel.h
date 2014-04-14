@@ -41,6 +41,9 @@ private:
 	static int	_setPaused			( lua_State* L );
 	static int	_setVolume			( lua_State* L );
 	static int  _setLooping			( lua_State* L );
+	static int  _getPosition		( lua_State* L );
+	static int  _getLoopCount		( lua_State* L );
+	// static int  _setPosition		( lua_State* L );
 	static int	_stop				( lua_State* L );
 
 public:
@@ -52,6 +55,7 @@ public:
 
 	enum {
 		ATTR_VOLUME,
+		ATTR_POSITION,
 		TOTAL_ATTR,
 	};
 
@@ -66,6 +70,8 @@ public:
 	void		SetPaused			( bool paused );
 	void		SetVolume			( float volume );
 	void		Stop				();
+	float		GetPosition ();
+	float		SetPosition ( float pos );
 	STLString	ToString			();
 };
 

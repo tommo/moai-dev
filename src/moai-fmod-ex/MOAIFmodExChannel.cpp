@@ -26,6 +26,22 @@ int MOAIFmodExChannel::_getVolume ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	getPostion
+ @text	Returns the cursor postion of the channel.
+ 
+ @in	MOAIFmodExChannel self
+ @out	float Postion - the playback position of current channel
+ */
+int MOAIFmodExChannel::_getPosition ( lua_State* L ) {
+	
+	MOAI_LUA_SETUP ( MOAIFmodExChannel, "U" )
+	
+	lua_pushnumber ( state, self->GetPosition ());
+	return 1;
+}
+
+
+//----------------------------------------------------------------//
 /**	@name	isPlaying
  @text	Returns true if channel is playing.
  
@@ -205,8 +221,12 @@ bool MOAIFmodExChannel::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 		attrID = UNPACK_ATTR ( attrID );
 
 		if ( attrID == ATTR_VOLUME ) {
-			this->mVolume = attrOp.Apply ( this->mVolume, op, MOAIAttrOp::ATTR_READ_WRITE );
+			this->mVolume = attrOp.Apply ( this->mVolume, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT );
 			this->SetVolume ( this->mVolume );
+			return true;
+		} else if ( attrID == ATTR_POSITION ) {
+			float pos = this->GetPosition();
+			attrOp.Apply ( pos, op, MOAIAttrOp::ATTR_READ, MOAIAttrOp::ATTR_TYPE_FLOAT );
 			return true;
 		}
 	}
@@ -273,6 +293,7 @@ void MOAIFmodExChannel::Play ( MOAIFmodExSound* sound, int loopCount ) {
 void MOAIFmodExChannel::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	state.SetField ( -1, "ATTR_VOLUME", MOAIFmodExChannelAttr::Pack ( ATTR_VOLUME ));
+	state.SetField ( -1, "ATTR_POSITION", MOAIFmodExChannelAttr::Pack ( ATTR_POSITION ));
 }
 
 //----------------------------------------------------------------//
@@ -287,6 +308,7 @@ void MOAIFmodExChannel::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setPaused",		_setPaused },
 		{ "setLooping",		_setLooping },
 		{ "setVolume",		_setVolume },
+		{ "getPosition",		_getPosition },
 		{ "stop",			_stop },
 		{ NULL, NULL }
 	};
@@ -315,4 +337,21 @@ void MOAIFmodExChannel::Stop () {
 
 	if ( !this->mChannel ) return;
 	this->mChannel->stop();
+}
+
+//----------------------------------------------------------------//
+float MOAIFmodExChannel::GetPosition() {
+	if ( !this->mChannel ) return -1.0f;
+	u32 pos;
+	FMOD_RESULT result = this->mChannel->getPosition( &pos, FMOD_TIMEUNIT_MS );
+	if( result == FMOD_OK) {
+		return (float) pos / 1000.0f;
+	} else {
+		return -1.0f;
+	}
+}
+
+float MOAIFmodExChannel::SetPosition( float pos ) {
+	//TODO
+	return 0;
 }

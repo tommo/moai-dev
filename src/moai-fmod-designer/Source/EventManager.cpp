@@ -118,6 +118,12 @@ bool EventManager::Init(const SoundInitParams& initParams)
     return m_enabled;
 }
 
+FMOD::System* EventManager::GetSoundSystem() {
+    FMOD::System* pSystem = NULL;
+    FMOD_RESULT result = s_pFMODEventSystem->getSystemObject( &pSystem );
+    return pSystem;
+}
+
 void EventManager::Shutdown() 
 {  
     if (m_enabled)
@@ -2682,7 +2688,7 @@ static FMOD_RESULT GetReverbPreset( const STLString& name, FMOD_REVERB_PROPERTIE
         FMOD_RESULT result = FMOD_OK;        
 
         // Grab the project
-        int id = -1;
+        int id = 0;
         result = FMODDesigner::s_pFMODEventSystem->getReverbPreset( name.c_str(), &reverb, &id );
         if( result == FMOD_OK )
         {

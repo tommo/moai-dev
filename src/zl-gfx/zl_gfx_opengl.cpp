@@ -104,6 +104,14 @@ GLenum _remapEnum ( u32 zglEnum ) {
 
 	switch ( zglEnum ) {
 
+		case ZGL_PRIM_LINE_LOOP:						return GL_LINE_LOOP;
+		case ZGL_PRIM_LINE_STRIP:						return GL_LINE_STRIP;
+		case ZGL_PRIM_LINES:							return GL_LINES;
+		case ZGL_PRIM_POINTS:							return GL_POINTS;
+		case ZGL_PRIM_TRIANGLE_FAN:						return GL_TRIANGLE_FAN;
+		case ZGL_PRIM_TRIANGLE_STRIP:					return GL_TRIANGLE_STRIP;
+		case ZGL_PRIM_TRIANGLES:						return GL_TRIANGLES;
+		
 		case ZGL_BLEND_FACTOR_DST_ALPHA:					return GL_DST_ALPHA;
 		case ZGL_BLEND_FACTOR_DST_COLOR:					return GL_DST_COLOR;
 		case ZGL_BLEND_FACTOR_ONE:							return GL_ONE;
@@ -291,14 +299,6 @@ GLenum _remapEnum ( u32 zglEnum ) {
 		#endif
 
 		case ZGL_PIXEL_TYPE_UNSIGNED_SHORT_5_5_5_1:		return GL_UNSIGNED_SHORT_5_5_5_1;
-
-		case ZGL_PRIM_LINE_LOOP:						return GL_LINE_LOOP;
-		case ZGL_PRIM_LINE_STRIP:						return GL_LINE_STRIP;
-		case ZGL_PRIM_LINES:							return GL_LINES;
-		case ZGL_PRIM_POINTS:							return GL_POINTS;
-		case ZGL_PRIM_TRIANGLE_FAN:						return GL_TRIANGLE_FAN;
-		case ZGL_PRIM_TRIANGLE_STRIP:					return GL_TRIANGLE_STRIP;
-		case ZGL_PRIM_TRIANGLES:						return GL_TRIANGLES;
 
 		case ZGL_PROGRAM_INFO_ACTIVE_ATTRIBUTES:			return GL_ACTIVE_ATTRIBUTES;
 		case ZGL_PROGRAM_INFO_ACTIVE_ATTRIBUTE_MAX_LENGTH:	return GL_ACTIVE_ATTRIBUTE_MAX_LENGTH;

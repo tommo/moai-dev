@@ -74,6 +74,12 @@ namespace FMODDesigner
         float GetTempo() const;
         float GetBeatFraction() const;
         float GetMeasureFraction() const;
+        
+        // For marker use
+        // default to false to preserve existing calls.
+        // Correct default may actually be true?
+        float GetDuration(bool subsoundTime=false) const;
+
 
         // Voice API    
         bool ContainsVoiceData() const                                  { return GetFlag(kSIF_ResidentVoice); }    
@@ -124,10 +130,6 @@ namespace FMODDesigner
         void MuteInternal( bool bMute );
         void SetPositionInternal(const ZLVec3D& vPos, const ZLVec3D& vVelocity, const ZLVec3D& vForward);
 
-        // For marker use
-        // default to false to preserve existing calls.
-        // Correct default may actually be true?
-        float GetDuration(bool subsoundTime=false) const;
 
         // Utility functions for the EventInstance and EventManager        
         void SetFlag(StateFlags flag, bool value);

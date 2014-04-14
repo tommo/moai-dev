@@ -25,6 +25,7 @@ private:
 
 	FMOD::System* mSoundSys;
 	FMOD::ChannelGroup* mMainChannelGroup;
+	bool mExternalSys;
 
 	//----------------------------------------------------------------//
 	static int	_getMemoryStats		( lua_State* L );
@@ -44,6 +45,7 @@ public:
 					~MOAIFmodEx			();
 	void			MuteChannels		( bool mute );
 	void			OpenSoundSystem		();
+	void			UseSoundSystem		( FMOD::System* sys );
 	void			RegisterLuaClass	( MOAILuaState& state );
 	void			RegisterLuaFuncs	( MOAILuaState& state );
 	void			Update				();

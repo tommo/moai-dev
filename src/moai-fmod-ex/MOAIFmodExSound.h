@@ -28,6 +28,7 @@ private:
 	static int	_loadBGM			( lua_State* L );
 	static int	_loadSFX			( lua_State* L );
 	static int	_release			( lua_State* L );
+	static int	_getLength		( lua_State* L );
 
 public:
 

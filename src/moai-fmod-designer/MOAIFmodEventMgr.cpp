@@ -8,6 +8,7 @@
 #include <moai-fmod-designer/Source/EventManager.h>
 #include <moai-fmod-designer/Source/EventProperties.h>
 #include <moai-fmod-designer/Source/SoundInitParams.h>
+#include <moai-fmod-ex/MOAIFmodEx.h>
 
 #ifdef MOAI_OS_NACL
 #include <fmodnacl.h>
@@ -82,6 +83,9 @@ int MOAIFmodEventMgr::_init ( lua_State* L ) {
     params.m_dopplerScale = state.GetField < float > ( -1, "dopplerScale", 0.f );
 
     const bool b = FMODDesigner::tEventManager.Init ( params );
+    if ( b ) {
+        MOAIFmodEx::Get().UseSoundSystem( FMODDesigner::tEventManager.GetSoundSystem() );
+    }
     lua_pushboolean ( L, b );
 	return 1;
 }

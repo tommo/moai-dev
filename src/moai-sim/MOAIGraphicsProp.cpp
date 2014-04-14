@@ -643,6 +643,13 @@ void MOAIGraphicsProp::OnDepNodeUpdate () {
 	
 	bool visible = ZLFloat::ToBoolean ( this->GetLinkedValue ( MOAIGraphicsPropAttr::Pack ( INHERIT_VISIBLE ), 1.0f ));
 	this->mFlags = visible && ( this->mFlags & FLAGS_LOCAL_VISIBLE ) ? this->mFlags | FLAGS_VISIBLE : this->mFlags & ~FLAGS_VISIBLE ;	
+	// if( this->mFlags && FLAGS_VISIBLE == 0 ) {
+	// 	//remove mask CAN_DRAW
+	// 	this->SetMask( 0 );
+	// }	else {
+	// 	//restore mask CAN_DRAW
+	// 	this->SetMask( MOAIProp::CAN_DRAW | MOAIProp::CAN_DRAW_DEBUG );
+	// }
 }
 
 //----------------------------------------------------------------//
