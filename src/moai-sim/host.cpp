@@ -225,10 +225,10 @@ double AKUGetSimStep () {
 void AKUPause ( bool pause ) {
 
 	if ( pause ) {
-		MOAISim::Get().PauseMOAI ();
+		MOAISim::Get().Pause ();
 	}
 	else {
-		MOAISim::Get().ResumeMOAI ();
+		MOAISim::Get().Resume ();
 	}
 }
 
@@ -344,6 +344,18 @@ void AKUSetInputDeviceTouch ( int deviceID, int sensorID, char const* name ) {
 void AKUSetInputDeviceWheel ( int deviceID, int sensorID, char const* name ) {
 
 	MOAIInputMgr::Get ().SetSensor (( u8 )deviceID, ( u8 )sensorID, name, MOAISensor::WHEEL );
+}
+
+//----------------------------------------------------------------//
+void AKUSetInputTimebase ( double timebase ) {
+
+	MOAIInputMgr::Get ().SetTimebase ( timebase );
+}
+
+//----------------------------------------------------------------//
+void AKUSetInputTimestamp ( double timestamp ) {
+
+	MOAIInputMgr::Get ().SetTimestamp ( timestamp );
 }
 
 //----------------------------------------------------------------//

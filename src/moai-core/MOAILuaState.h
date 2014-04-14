@@ -83,6 +83,7 @@ public:
 	void			Push					( lua_CFunction value );
 	void			Push					( MOAILuaObject* luaObject );
 	void			Push					( MOAILuaRef& ref );
+	void			Push					( const void* value );
 	void			Push					( void* data, size_t size );
 	void			PushPtrUserData			( void* ptr );
 	int				PushTableItr			( int idx );
@@ -151,6 +152,7 @@ template <> u8			MOAILuaState::GetValue < u8 >			( int idx, u8 value );
 template <> u16			MOAILuaState::GetValue < u16 >			( int idx, u16 value );
 template <> u32			MOAILuaState::GetValue < u32 >			( int idx, u32 value );
 template <> u64			MOAILuaState::GetValue < u64 >			( int idx, u64 value );
+template <> void*		MOAILuaState::GetValue < void* >		( int idx, void* value );
 template <> uintptr		MOAILuaState::GetValue < uintptr >		( int idx, uintptr value );
 
 #endif

@@ -418,6 +418,7 @@ int MOAILayer::_wndToWorld ( lua_State* L ) {
 	@in		MOAILayer self
 	@in		number x
 	@in		number y
+	@in		number d	If non-zero, scale normal by dist to plane d units away from camera. Default is zero.
 	@out	number x
 	@out	number y
 	@out	number z
@@ -436,37 +437,61 @@ int MOAILayer::_wndToWorldRay ( lua_State* L ) {
 	loc.mZ = 0.0f;
 	loc.mW = 1.0f;
 
-	ZLVec4D origin = loc;
-	origin.mZ = -1.0f;
+	float d = state.GetValue < float >( 4, 0.0f );
+
+	ZLVec4D origin;
 
 	if ( self->mCamera  && ( self->mCamera->GetType () == MOAICamera::CAMERA_TYPE_3D )) {
-		ZLVec3D cameraLoc = self->mCamera->GetLoc ();
+		const ZLAffine3D& localToWorldMtx = self->mCamera->GetLocalToWorldMtx ();
+		ZLVec3D cameraLoc = localToWorldMtx.GetTranslation ();
 		origin.mX = cameraLoc.mX;
 		origin.mY = cameraLoc.mY;
 		origin.mZ = cameraLoc.mZ;
 	}
 	else {
+		origin = loc;
 		wndToWorld.Project ( origin );
 	}
-		
+	
 	lua_pushnumber ( state, origin.mX );
 	lua_pushnumber ( state, origin.mY );
 	lua_pushnumber ( state, origin.mZ );
 
-	ZLVec4D vec = loc;
-	wndToWorld.Project ( vec );
-
 	ZLVec3D norm;
 
-	norm.mX = vec.mX - origin.mX;
-	norm.mY = vec.mY - origin.mY;
-	norm.mZ = vec.mZ - origin.mZ;
+	if ( self->mCamera  && ( self->mCamera->GetType () == MOAICamera::CAMERA_TYPE_3D )) {
+		
+		wndToWorld.Project ( loc );
 	
-	norm.Norm ();
+		norm.mX = loc.mX - origin.mX;
+		norm.mY = loc.mY - origin.mY;
+		norm.mZ = loc.mZ - origin.mZ;
+		norm.Norm ();
+	}
+	else {
+		
+		norm.mX = 0.0f;
+		norm.mY = 0.0f;
+		norm.mZ = -1.0f;
+	}
 	
-	lua_pushnumber ( state, norm.mX );
-	lua_pushnumber ( state, norm.mY );
-	lua_pushnumber ( state, norm.mZ );
+	float ns = 1.0f;
+	
+	if ( d != 0.0f ) {
+	
+		if ( self->mCamera  && ( self->mCamera->GetType () == MOAICamera::CAMERA_TYPE_3D )) {
+			const ZLAffine3D& localToWorldMtx = self->mCamera->GetLocalToWorldMtx ();
+			ZLVec3D zAxis = localToWorldMtx.GetZAxis ();
+			ns = -( d / zAxis.Dot ( norm ));
+		}
+		else {
+			ns = d;
+		}
+	}
+	
+	lua_pushnumber ( state, norm.mX * ns );
+	lua_pushnumber ( state, norm.mY * ns );
+	lua_pushnumber ( state, norm.mZ * ns );
 
 	return 6;
 }
@@ -586,26 +611,13 @@ void MOAILayer::Draw ( int subPrimID, float lod  ) {
 			this->mSortScale [ 3 ]
 		);
 		
-		totalResults = buffer.Sort ( this->mSortMode );
+		buffer.Sort ( this->mSortMode );
 		
 		// set up the ambient color
 		gfxDevice.SetAmbientColor ( this->mColor );
 		
 		// figure out the correct LOD factor
 		float lod = this->mLODFactor * this->GetLinkedValue ( MOAILayerAttr::Pack ( ATTR_LOD ), 1.0f );;
-		
-//		if (( this->mLODMode == LOD_FROM_CAMERA_LOCAL_Z ) && ( this->mCamera )) {
-//			MOAICamera* camera = this->mCamera;
-//			ZLVec3D loc = camera->GetLoc ();
-//			lod = loc.mZ * this->mLODFactor;
-//		}
-//		
-//		if (( this->mLODMode == LOD_FROM_CAMERA_WORLD_Z ) && ( this->mCamera )) {
-//			MOAICamera* camera = this->mCamera;
-//			const ZLAffine3D& mtx = camera->GetLocalToWorldMtx ();
-//			ZLVec3D worldLoc = mtx.GetTranslation ();
-//			lod = worldLoc.mZ * this->mLODFactor;
-//		}
 		
 		this->DrawProps ( buffer, lod );
 		
@@ -675,6 +687,13 @@ float MOAILayer::GetFitting ( ZLRect& worldRect, float hPad, float vPad ) {
 	float vFit = ( viewRect.Height () - ( vPad * 2 )) / worldRect.Height ();
 	
 	return ( hFit < vFit ) ? hFit : vFit;
+}
+
+//----------------------------------------------------------------//
+MOAIPartition* MOAILayer::GetPartition () {
+
+	this->AffirmPartition ();
+	return this->mPartition;
 }
 
 //----------------------------------------------------------------//
