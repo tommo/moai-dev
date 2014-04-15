@@ -10,6 +10,7 @@
 #include "VoiceLRU.h"
 #include <algorithm>
 #include <cmath>
+#include <unistd.h>
 
 using namespace FMODDesigner;
 
