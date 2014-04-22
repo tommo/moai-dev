@@ -75,7 +75,8 @@ protected:
 	//----------------------------------------------------------------//
 	virtual void	OnDepNodeUpdate		();
 	bool			PullLinkedAttr		( u32 attrID, MOAIAttrOp& attrOp );
-
+	
+public:
 	//----------------------------------------------------------------//
 	template < typename TYPE >
 	TYPE GetLinkedValue ( u32 attrID, const TYPE& value ) {
@@ -106,7 +107,6 @@ protected:
 		this->ScheduleUpdate ();
 	}
 
-public:
 	
 	friend class MOAINodeMgr;
 	

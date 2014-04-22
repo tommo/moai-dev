@@ -19776,6 +19776,7 @@
 					"\"/usr/X11R6/include\"",
 					"$(inherited)",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				PRODUCT_NAME = "moai-osx-3rdparty-core";
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
@@ -19822,6 +19823,7 @@
 					"\"/usr/X11R6/include\"",
 					"$(inherited)",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				PRODUCT_NAME = "moai-osx-3rdparty-core";
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
@@ -20048,6 +20050,7 @@
 					"\"../../3rdparty/libwebp-0.3.1/src\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				OTHER_CFLAGS = (
 					"-DNS_BLOCK_ASSERTIONS=1",
 					"-include",
@@ -22014,6 +22017,7 @@
 					"\"../../3rdparty/libwebp-0.3.1/src\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				OTHER_CFLAGS = (
 					"-include",
 					"\"zl-vfs/zl_replace.h\"",
@@ -26110,6 +26114,7 @@
 					"\"../../3rdparty/libwebp-0.3.1/src\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				OTHER_CFLAGS = (
 					"-DNS_BLOCK_ASSERTIONS=1",
 					"-include",
@@ -26323,6 +26328,7 @@
 					"\"/usr/X11R6/include\"",
 					"$(inherited)",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				PRODUCT_NAME = "moai-osx-3rdparty-core";
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
@@ -26539,6 +26545,7 @@
 					"\"../../3rdparty/libwebp-0.3.1/src\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				OTHER_CFLAGS = (
 					"-DNS_BLOCK_ASSERTIONS=1",
 					"-include",
@@ -26752,6 +26759,7 @@
 					"\"/usr/X11R6/include\"",
 					"$(inherited)",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				PRODUCT_NAME = "moai-osx-3rdparty-core";
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
