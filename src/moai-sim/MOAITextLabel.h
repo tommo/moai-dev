@@ -160,6 +160,7 @@ protected:
 	static int			_getLineSpacing			( lua_State* L );
 	static int			_getRect				( lua_State* L );
 	static int			_getStyle				( lua_State* L );
+	static int			_getText				( lua_State* L );
 	static int			_getTextBounds			( lua_State* L );
 	static int			_more					( lua_State* L );
 	static int			_nextPage				( lua_State* L );
@@ -191,6 +192,7 @@ protected:
 	//----------------------------------------------------------------//
 	void				BuildLocalToWorldMtx	( ZLAffine3D& localToWorldMtx );
 	ZLMatrix4x4			GetWorldDrawingMtx		();
+	bool				IsClear					() const;
 	void				OnDepNodeUpdate			();
 	u32					OnGetModelBounds		( ZLBox& bounds );
 	void				OnUpdate				( float step );

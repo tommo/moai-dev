@@ -19861,8 +19861,12 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				PRODUCT_NAME = "moai-osx-3rdparty-core";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -19877,8 +19881,12 @@
 					LUA_USE_MACOSX,
 				);
 				PRODUCT_NAME = "moai-osx";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 			};
 			name = Debug;
 		};
@@ -19892,8 +19900,12 @@
 					LUA_USE_MACOSX,
 				);
 				PRODUCT_NAME = "moai-osx";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 			};
 			name = Release;
 		};
@@ -19927,7 +19939,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-3rdparty-core";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -19962,7 +19973,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-3rdparty-core";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -19971,8 +19981,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+<<<<<<< HEAD
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libstdc++";
+=======
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				DEAD_CODE_STRIPPING = YES;
@@ -20134,7 +20147,6 @@
 				);
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 			};
 			name = Debug;
 		};
@@ -20167,7 +20179,6 @@
 				);
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 			};
 			name = Release;
 		};
@@ -20199,7 +20210,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-sim";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -20232,7 +20242,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-sim";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -20265,7 +20274,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-sim";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -20298,7 +20306,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-sim";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -20335,8 +20342,12 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-sim";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -20373,8 +20384,12 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-sim";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -20411,8 +20426,12 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-sim";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -20449,8 +20468,12 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-sim";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -20487,8 +20510,12 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-box2d";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -20525,8 +20552,12 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-box2d";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -20563,8 +20594,12 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-box2d";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -20601,8 +20636,12 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-box2d";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -20635,7 +20674,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-box2d";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -20668,7 +20706,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-box2d";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -20701,7 +20738,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-box2d";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -20734,7 +20770,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-box2d";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -20767,7 +20802,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-chipmunk";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -20800,7 +20834,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-chipmunk";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -20833,7 +20866,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-chipmunk";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -20866,7 +20898,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-chipmunk";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -20903,8 +20934,12 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-chipmunk";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -20941,8 +20976,12 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-chipmunk";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -20979,8 +21018,12 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-chipmunk";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -21017,8 +21060,12 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-chipmunk";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -21055,8 +21102,12 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-http-client";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -21093,8 +21144,12 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-http-client";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -21131,8 +21186,12 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-http-client";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -21169,8 +21228,12 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-http-client";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -21203,7 +21266,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-http-client";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -21236,7 +21298,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-http-client";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -21269,7 +21330,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-http-client";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -21302,7 +21362,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-http-client";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -21335,7 +21394,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-harness";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -21368,7 +21426,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-harness";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -21401,7 +21458,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-harness";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -21434,7 +21490,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-harness";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -21471,8 +21526,12 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-harness";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -21509,8 +21568,12 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-harness";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -21547,8 +21610,12 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-harness";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -21585,8 +21652,12 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-harness";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -21619,7 +21690,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-http-server";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -21652,7 +21722,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-http-server";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -21685,7 +21754,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-http-server";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -21718,7 +21786,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-http-server";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -21755,8 +21822,12 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-http-server";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -21793,8 +21864,12 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-http-server";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -21831,8 +21906,12 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-http-server";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -21869,8 +21948,12 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-http-server";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -21885,8 +21968,12 @@
 					LUA_USE_MACOSX,
 				);
 				PRODUCT_NAME = "moai-osx-test";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 			};
 			name = Debug;
 		};
@@ -21900,8 +21987,12 @@
 					LUA_USE_MACOSX,
 				);
 				PRODUCT_NAME = "moai-osx-test";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 			};
 			name = Release;
 		};
@@ -21915,8 +22006,12 @@
 					LUA_USE_MACOSX,
 				);
 				PRODUCT_NAME = "moai-osx-test";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 			};
 			name = AdHoc;
 		};
@@ -21930,8 +22025,12 @@
 					LUA_USE_MACOSX,
 				);
 				PRODUCT_NAME = "moai-osx-test";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 			};
 			name = Distribution;
 		};
@@ -21939,8 +22038,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+<<<<<<< HEAD
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libstdc++";
+=======
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
@@ -22073,7 +22175,6 @@
 				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				PRODUCT_NAME = "moai-ios-zl-core";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -22085,7 +22186,6 @@
 				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				PRODUCT_NAME = "moai-ios-zl-core";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -22100,8 +22200,12 @@
 					LUA_USE_MACOSX,
 				);
 				PRODUCT_NAME = "moai-osx-zl-core";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -22116,8 +22220,12 @@
 					LUA_USE_MACOSX,
 				);
 				PRODUCT_NAME = "moai-osx-zl-core";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -22150,7 +22258,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-untz";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -22183,7 +22290,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-untz";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -22219,8 +22325,12 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-osx-untz";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -22256,8 +22366,12 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-osx-untz";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -22290,7 +22404,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-crypto";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -22323,7 +22436,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-crypto";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -22356,7 +22468,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-crypto";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -22389,7 +22500,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-crypto";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -22429,7 +22539,6 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-mobile-app-tracker";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 			};
 			name = Debug;
 		};
@@ -22463,7 +22572,6 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-mobile-app-tracker";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 			};
 			name = Release;
 		};
@@ -22497,7 +22605,6 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-mobile-app-tracker";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 			};
 			name = AdHoc;
 		};
@@ -22531,7 +22638,6 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-mobile-app-tracker";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 			};
 			name = Distribution;
 		};
@@ -22570,7 +22676,6 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-urban-airship";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 			};
 			name = Debug;
 		};
@@ -22604,7 +22709,6 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-urban-airship";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 			};
 			name = Release;
 		};
@@ -22638,7 +22742,6 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-urban-airship";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 			};
 			name = AdHoc;
 		};
@@ -22672,7 +22775,6 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-urban-airship";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 			};
 			name = Distribution;
 		};
@@ -22708,7 +22810,6 @@
 				);
 				PRODUCT_NAME = "moai-ios-fmod-ex";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -22745,7 +22846,6 @@
 				);
 				PRODUCT_NAME = "moai-ios-fmod-ex";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -22782,7 +22882,6 @@
 				);
 				PRODUCT_NAME = "moai-ios-fmod-ex";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -22819,7 +22918,6 @@
 				);
 				PRODUCT_NAME = "moai-ios-fmod-ex";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -22859,7 +22957,6 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-crittercism";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 			};
 			name = Debug;
 		};
@@ -22893,7 +22990,6 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-crittercism";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 			};
 			name = Release;
 		};
@@ -22927,7 +23023,6 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-crittercism";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 			};
 			name = AdHoc;
 		};
@@ -22961,7 +23056,6 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-crittercism";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 			};
 			name = Distribution;
 		};
@@ -22976,8 +23070,12 @@
 				);
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-osx-zl-vfs";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -22993,8 +23091,12 @@
 				);
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-osx-zl-vfs";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -23010,8 +23112,12 @@
 				);
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-osx-zl-vfs";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -23027,8 +23133,12 @@
 				);
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-osx-zl-vfs";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -23068,7 +23178,6 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-flurry";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 			};
 			name = Debug;
 		};
@@ -23102,7 +23211,6 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-flurry";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 			};
 			name = Release;
 		};
@@ -23136,7 +23244,6 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-flurry";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 			};
 			name = AdHoc;
 		};
@@ -23170,7 +23277,6 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-flurry";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 			};
 			name = Distribution;
 		};
@@ -23209,7 +23315,6 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-mixpanel";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 			};
 			name = Debug;
 		};
@@ -23243,7 +23348,6 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-mixpanel";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 			};
 			name = Release;
 		};
@@ -23277,7 +23381,6 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-mixpanel";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 			};
 			name = AdHoc;
 		};
@@ -23311,7 +23414,6 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-mixpanel";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 			};
 			name = Distribution;
 		};
@@ -23351,7 +23453,6 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-3rdparty-mixpanel";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 			};
 			name = Debug;
 		};
@@ -23386,7 +23487,6 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-3rdparty-mixpanel";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 			};
 			name = Release;
 		};
@@ -23421,7 +23521,6 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-3rdparty-mixpanel";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 			};
 			name = AdHoc;
 		};
@@ -23456,7 +23555,6 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-3rdparty-mixpanel";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 			};
 			name = Distribution;
 		};
@@ -23495,7 +23593,6 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-kontagent";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 			};
 			name = Debug;
 		};
@@ -23529,7 +23626,6 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-kontagent";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 			};
 			name = Release;
 		};
@@ -23563,7 +23659,6 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-kontagent";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 			};
 			name = AdHoc;
 		};
@@ -23597,7 +23692,6 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-kontagent";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 			};
 			name = Distribution;
 		};
@@ -23639,8 +23733,12 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = "moai-osx-3rdparty-crypto";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -23685,8 +23783,12 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = "moai-osx-3rdparty-crypto";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -23731,8 +23833,12 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = "moai-osx-3rdparty-crypto";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -23777,8 +23883,12 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = "moai-osx-3rdparty-crypto";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -23821,8 +23931,12 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = "moai-osx-3rdparty-curl";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -23867,8 +23981,12 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = "moai-osx-3rdparty-curl";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -23913,8 +24031,12 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = "moai-osx-3rdparty-curl";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -23959,8 +24081,12 @@
 					"$(inherited)",
 				);
 				PRODUCT_NAME = "moai-osx-3rdparty-curl";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -23975,8 +24101,12 @@
 					LUA_USE_MACOSX,
 				);
 				PRODUCT_NAME = "moai-osx-zl-crypto";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -23991,8 +24121,12 @@
 					LUA_USE_MACOSX,
 				);
 				PRODUCT_NAME = "moai-osx-zl-crypto";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -24007,8 +24141,12 @@
 					LUA_USE_MACOSX,
 				);
 				PRODUCT_NAME = "moai-osx-zl-crypto";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -24023,8 +24161,12 @@
 					LUA_USE_MACOSX,
 				);
 				PRODUCT_NAME = "moai-osx-zl-crypto";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -24061,8 +24203,12 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-crypto";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -24099,8 +24245,12 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-crypto";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -24137,8 +24287,12 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-crypto";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -24175,8 +24329,12 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-crypto";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -24216,7 +24374,6 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-billing";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 			};
 			name = Debug;
 		};
@@ -24250,7 +24407,6 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-billing";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 			};
 			name = Release;
 		};
@@ -24284,7 +24440,6 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-billing";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 			};
 			name = AdHoc;
 		};
@@ -24318,7 +24473,6 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-billing";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 			};
 			name = Distribution;
 		};
@@ -24357,7 +24511,6 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-chartboost";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 			};
 			name = Debug;
 		};
@@ -24391,7 +24544,6 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-chartboost";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 			};
 			name = Release;
 		};
@@ -24425,7 +24577,6 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-chartboost";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 			};
 			name = AdHoc;
 		};
@@ -24459,7 +24610,6 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-chartboost";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 			};
 			name = Distribution;
 		};
@@ -24498,7 +24648,6 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-facebook";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 			};
 			name = Debug;
 		};
@@ -24532,7 +24681,6 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-facebook";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 			};
 			name = Release;
 		};
@@ -24566,7 +24714,6 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-facebook";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 			};
 			name = AdHoc;
 		};
@@ -24600,7 +24747,6 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-facebook";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 			};
 			name = Distribution;
 		};
@@ -24639,7 +24785,6 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-gamecenter";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 			};
 			name = Debug;
 		};
@@ -24673,7 +24818,6 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-gamecenter";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 			};
 			name = Release;
 		};
@@ -24707,7 +24851,6 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-gamecenter";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 			};
 			name = AdHoc;
 		};
@@ -24741,7 +24884,6 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-gamecenter";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 			};
 			name = Distribution;
 		};
@@ -24780,7 +24922,6 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-tapjoy";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 			};
 			name = Debug;
 		};
@@ -24814,7 +24955,6 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-tapjoy";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 			};
 			name = Release;
 		};
@@ -24848,7 +24988,6 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-tapjoy";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 			};
 			name = AdHoc;
 		};
@@ -24882,7 +25021,6 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-tapjoy";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 			};
 			name = Distribution;
 		};
@@ -24921,7 +25059,6 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-vungle";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 			};
 			name = Debug;
 		};
@@ -24955,7 +25092,6 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-vungle";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 			};
 			name = Release;
 		};
@@ -24989,7 +25125,6 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-vungle";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 			};
 			name = AdHoc;
 		};
@@ -25023,7 +25158,6 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				PRODUCT_NAME = "moai-ios-vungle";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 			};
 			name = Distribution;
 		};
@@ -25034,7 +25168,6 @@
 				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				PRODUCT_NAME = "moai-ios-zl-crypto";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -25046,7 +25179,6 @@
 				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				PRODUCT_NAME = "moai-ios-zl-crypto";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -25058,7 +25190,6 @@
 				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				PRODUCT_NAME = "moai-ios-zl-crypto";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -25070,7 +25201,6 @@
 				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				PRODUCT_NAME = "moai-ios-zl-crypto";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -25103,7 +25233,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-luaext";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -25136,7 +25265,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-luaext";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -25172,8 +25300,12 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-osx-luaext";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -25209,8 +25341,12 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-osx-luaext";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -25245,7 +25381,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-3rdparty-curl";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -25280,7 +25415,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-3rdparty-curl";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -25315,7 +25449,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-3rdparty-curl";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -25350,7 +25483,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-3rdparty-curl";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -25385,7 +25517,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-3rdparty-crypto";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -25420,7 +25551,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-3rdparty-crypto";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -25455,7 +25585,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-3rdparty-crypto";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -25490,7 +25619,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-3rdparty-crypto";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -25528,7 +25656,6 @@
 				);
 				PRODUCT_NAME = "moai-ios-fmod-designer";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -25566,7 +25693,6 @@
 				);
 				PRODUCT_NAME = "moai-ios-fmod-designer";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -25604,7 +25730,6 @@
 				);
 				PRODUCT_NAME = "moai-ios-fmod-designer";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -25642,7 +25767,6 @@
 				);
 				PRODUCT_NAME = "moai-ios-fmod-designer";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -25683,8 +25807,12 @@
 					"$(FMOD_OSX_SDK_ROOT)/api/inc",
 				);
 				PRODUCT_NAME = "moai-osx-fmod-designer";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -25725,8 +25853,12 @@
 					"$(FMOD_OSX_SDK_ROOT)/api/inc",
 				);
 				PRODUCT_NAME = "moai-osx-fmod-designer";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -25767,8 +25899,12 @@
 					"$(FMOD_OSX_SDK_ROOT)/api/inc",
 				);
 				PRODUCT_NAME = "moai-osx-fmod-designer";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -25809,8 +25945,12 @@
 					"$(FMOD_OSX_SDK_ROOT)/api/inc",
 				);
 				PRODUCT_NAME = "moai-osx-fmod-designer";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -25850,8 +25990,12 @@
 					"$(FMOD_OSX_SDK_ROOT)/api/inc",
 				);
 				PRODUCT_NAME = "moai-osx-fmod-ex";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -25891,8 +26035,12 @@
 					"$(FMOD_OSX_SDK_ROOT)/api/inc",
 				);
 				PRODUCT_NAME = "moai-osx-fmod-ex";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -25932,8 +26080,12 @@
 					"$(FMOD_OSX_SDK_ROOT)/api/inc",
 				);
 				PRODUCT_NAME = "moai-osx-fmod-ex";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -25973,8 +26125,12 @@
 					"$(FMOD_OSX_SDK_ROOT)/api/inc",
 				);
 				PRODUCT_NAME = "moai-osx-fmod-ex";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -25987,7 +26143,6 @@
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-ios-zl-vfs";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Debug;
@@ -26000,7 +26155,6 @@
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-ios-zl-vfs";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Release;
@@ -26013,7 +26167,6 @@
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-ios-zl-vfs";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -26026,7 +26179,6 @@
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "moai-ios-zl-vfs";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -26035,8 +26187,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+<<<<<<< HEAD
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libstdc++";
+=======
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				DEAD_CODE_STRIPPING = YES;
@@ -26193,7 +26348,6 @@
 				);
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 			};
 			name = Distribution;
 		};
@@ -26227,7 +26381,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-3rdparty-core";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -26260,7 +26413,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-luaext";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -26293,7 +26445,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-untz";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -26305,7 +26456,6 @@
 				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				PRODUCT_NAME = "moai-ios-zl-core";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -26320,8 +26470,12 @@
 					LUA_USE_MACOSX,
 				);
 				PRODUCT_NAME = "moai-osx";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 			};
 			name = Distribution;
 		};
@@ -26366,8 +26520,12 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				PRODUCT_NAME = "moai-osx-3rdparty-core";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -26403,8 +26561,12 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-osx-luaext";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -26440,8 +26602,12 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-osx-untz";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -26456,8 +26622,12 @@
 					LUA_USE_MACOSX,
 				);
 				PRODUCT_NAME = "moai-osx-zl-core";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = Distribution;
@@ -26466,8 +26636,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+<<<<<<< HEAD
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libstdc++";
+=======
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				DEAD_CODE_STRIPPING = YES;
@@ -26624,7 +26797,6 @@
 				);
 				PRODUCT_NAME = "moai-ios";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 			};
 			name = AdHoc;
 		};
@@ -26658,7 +26830,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-3rdparty-core";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -26691,7 +26862,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-luaext";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -26724,7 +26894,6 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-ios-untz";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -26736,7 +26905,6 @@
 				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				PRODUCT_NAME = "moai-ios-zl-core";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "i386 armv7 armv7s";
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -26751,8 +26919,12 @@
 					LUA_USE_MACOSX,
 				);
 				PRODUCT_NAME = "moai-osx";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 			};
 			name = AdHoc;
 		};
@@ -26797,8 +26969,12 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				PRODUCT_NAME = "moai-osx-3rdparty-core";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -26834,8 +27010,12 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-osx-luaext";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -26871,8 +27051,12 @@
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				PRODUCT_NAME = "moai-osx-untz";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
@@ -26887,8 +27071,12 @@
 					LUA_USE_MACOSX,
 				);
 				PRODUCT_NAME = "moai-osx-zl-core";
+<<<<<<< HEAD
 				SDKROOT = macosx10.8;
 				VALID_ARCHS = "i386 x86_64 ppc970 ppc7400 ppc64 ppc";
+=======
+				SDKROOT = macosx;
+>>>>>>> f7288d19a9033523c2737f995bf3656d72362b7d
 				WARNING_CFLAGS = "-w";
 			};
 			name = AdHoc;
