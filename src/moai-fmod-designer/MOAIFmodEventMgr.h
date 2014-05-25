@@ -66,6 +66,7 @@ private:
 
     // reverb/global processing interface
     static int _setDefaultReverb           ( lua_State* L );
+    static int _setGlobalReverb            ( lua_State* L );
     static int _setDistantOcclusion        ( lua_State* L );
     static int _setNear2DBlend             ( lua_State* L );    
 

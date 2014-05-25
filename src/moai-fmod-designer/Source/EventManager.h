@@ -337,6 +337,9 @@ namespace FMODDesigner
         // Environmental Reverb API   
 
         /*! Set the default regional reverb */
+        void SetGlobalReverb( const STLString& name );
+
+        /*! Set the default regional reverb */
         void SetDefaultReverb( const STLString& name );
 
         /*! Clear the default regional reverb */

@@ -159,6 +159,8 @@ protected:
 	static int			_getGlyphScale			( lua_State* L );
 	static int			_getLineSpacing			( lua_State* L );
 	static int			_getRect				( lua_State* L );
+	static int			_getReveal				( lua_State* L );
+	static int			_getSpool				( lua_State* L );
 	static int			_getStyle				( lua_State* L );
 	static int			_getText				( lua_State* L );
 	static int			_getTextBounds			( lua_State* L );
@@ -181,7 +183,7 @@ protected:
 	static int			_setWordBreak			( lua_State* L );
 	static int			_setYFlip				( lua_State* L );
 	static int			_spool					( lua_State* L );
-	
+
 	//----------------------------------------------------------------//
 	#ifdef DOXYGEN
 		static int		_affirmStyle			( lua_State* L );
