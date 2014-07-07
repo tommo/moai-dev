@@ -2793,6 +2793,23 @@ void EventManager::_MuteSoundCategory(const SoundCategoryState* pCategoryState, 
 }
 
 
+void EventManager::SetGlobalReverb( const STLString& reverbName )
+{
+    assert( reverbName.length() > 0 );
+    FMOD_REVERB_PROPERTIES reverbProperties;
+    FMOD_RESULT result = GetReverbPreset( reverbName, reverbProperties );
+    if( result == FMOD_OK )
+    {
+        result = s_pFMODEventSystem->setReverbProperties( &reverbProperties );
+    }
+    else
+    {
+        Trace(TT_Sound, TL_Warning, "Global Reverb Preset %s not found skipping", reverbName.c_str());
+        HANDLE_FMOD_ERROR(result);
+        m_DefaultReverb = "";
+    }
+}
+
 
 void EventManager::SetDefaultReverb( const STLString& reverbName )
 {

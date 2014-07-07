@@ -257,7 +257,8 @@ void MOAIParticleEmitter::OnDepNodeUpdate () {
 			this->GetRandomParticle ( loc, vec );
 			this->mLocalToWorldMtx.Transform ( loc );
 			this->mLocalToWorldMtx.TransformVec ( vec );
-			this->mSystem->PushParticle ( loc.mX, loc.mY, vec.mX, vec.mY );
+			// this->mSystem->PushParticle ( loc.mX, loc.mY, vec.mX, vec.mY );
+			this->mSystem->PushParticle ( loc.mX, loc.mY, loc.mZ, vec.mX, vec.mY, vec.mZ );
 		}
 	}
 	

@@ -107,6 +107,33 @@ int MOAITextLabel::_getRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	getReveal
+	@text	Get the number of renderable characters will be shown. 
+			
+	@in		MOAITextLabel self
+	@out	The number of renderable characters (i.e. not whitespace) will be shown.
+*/
+int MOAITextLabel::_getReveal ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextLabel, "U" )
+	state.Push( self->mReveal );
+	return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@name	getReveal
+	@text	Get the number of renderable characters already in spool. 
+			
+	@in		MOAITextLabel self
+	@out	The number of renderable characters (i.e. not whitespace) in spool.
+*/
+int MOAITextLabel::_getSpool ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextLabel, "U" )
+	state.Push( self->mSpool );
+	return 1;
+}
+
+
+//----------------------------------------------------------------//
 /**	@name	getStyle
 	@text	Returns the style associated with a name or, if no name
 			is given, returns the default style.
@@ -930,6 +957,8 @@ void MOAITextLabel::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "getGlyphScale",			_getGlyphScale },
 		{ "getLineSpacing",			_getLineSpacing },
 		{ "getRect",				_getRect },
+		{ "getReveal",				_getReveal },
+		{ "getSpool",				_getSpool },
 		{ "getStyle",				_getStyle },
 		{ "getText",				_getText },
 		{ "getTextBounds",			_getTextBounds },

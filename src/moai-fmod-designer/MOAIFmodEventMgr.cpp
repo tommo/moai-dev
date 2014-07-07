@@ -741,6 +741,28 @@ int MOAIFmodEventMgr::_setDefaultReverb ( lua_State* L ) {
     return 0;
 }
 
+
+//----------------------------------------------------------------//
+/** @name   setGlobalReverb
+    @text   Set the global Reverb
+
+    @in    string reverbName      Name of the Reverb (defined in Designer)
+
+    @out    nil
+*/
+
+int MOAIFmodEventMgr::_setGlobalReverb ( lua_State* L ) {
+    MOAILuaState state ( L );
+
+    cc8* reverbName = state.GetValue < cc8* > ( 1, "" );
+    if ( reverbName[0] != '\0' ) {
+        FMODDesigner::tEventManager.SetGlobalReverb ( STLString( reverbName ) );
+    }
+     
+    return 0;
+}
+
+
 //----------------------------------------------------------------//
 /**	@name	setDistantOcclusion
     @text	Sets a lowpass filter on distant sounds -- a filter added to 
@@ -933,6 +955,7 @@ void MOAIFmodEventMgr::RegisterLuaClass ( MOAILuaState& state ) {
         { "preloadVoiceLine",                   _preloadVoiceLine },        
 
         { "setDefaultReverb",                   _setDefaultReverb },                
+        { "setGlobalReverb",                    _setGlobalReverb },                
 
         { "setDistantOcclusion",                _setDistantOcclusion },                
         { "setNear2DBlend",                     _setNear2DBlend },         

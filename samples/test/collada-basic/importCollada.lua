@@ -131,7 +131,7 @@ function colladaToMesh( colladafile, textureFile )
 	vbo:reserveVerts ( #vertexData.positionData )
 	
 	--verts
-	--print ( "Writing " .. #vertexData.positionData .. " vertices")
+	print ( "Writing " .. #vertexData.positionData .. " vertices")
 	for i=1,#vertexData.positionData,1 do
 		if vertexData.positionData[i] ~= nil then
 			--print ( vertexData.positionData[i][1] .. " " .. vertexData.positionData[i][2] .. " " .. vertexData.positionData[i][3] )
@@ -156,7 +156,7 @@ function colladaToMesh( colladafile, textureFile )
 	ibo:reserve ( #triangleIndices )
 
 	-- indices
-	--print ( "Writing " .. #triangleIndices .. " indices")
+	print ( "Writing " .. #triangleIndices .. " indices")
 	for i=1,#triangleIndices,1 do
 		--print ( i .. " " .. tonumber(triangleIndices[i]) + 1 )
 		ibo:setIndex ( i, tonumber(triangleIndices[i]) + 1 )

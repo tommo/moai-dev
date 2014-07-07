@@ -329,6 +329,7 @@ void MOAIFrameBuffer::Render () {
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	this->mLastDrawCount = gfxDevice.GetDrawCount ();
 
+	gfxDevice.ResetState (); 
 	gfxDevice.SetFrameBuffer ( this );
 	
 	//disable scissor rect for clear
