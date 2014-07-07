@@ -7,7 +7,7 @@
 //----------------------------------------------------------------//
 int MOAITaskThread::_stop ( lua_State *L ) {
 	MOAI_LUA_SETUP( MOAITaskThread, "U" );
-	self->Stop();
+	self->mThread.Stop ();
 	return 0;
 }
 

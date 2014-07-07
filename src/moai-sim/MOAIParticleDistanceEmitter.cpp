@@ -136,8 +136,10 @@ void MOAIParticleDistanceEmitter::OnDepNodeUpdate () {
 				this->mSystem->PushParticle (
 					particleLoc.mX + ( this->mEmitLoc.mX - loc.mX ),
 					particleLoc.mY + ( this->mEmitLoc.mY - loc.mY ),
+					particleLoc.mZ + ( this->mEmitLoc.mZ - loc.mZ ),
 					particleVec.mX,
-					particleVec.mY
+					particleVec.mY,
+					particleVec.mZ
 				);
 			}
 			
