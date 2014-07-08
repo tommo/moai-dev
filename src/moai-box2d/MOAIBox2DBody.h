@@ -58,7 +58,6 @@ private:
 	static int		_setGravityScale				( lua_State* L );
 	static int		_setBullet				( lua_State* L );
 	static int		_setFixedRotation		( lua_State* L );
-	static int		_setGravityScale		( lua_State* L );
 	static int		_setLinearDamping		( lua_State* L );
 	static int		_setLinearVelocity		( lua_State* L );
 	static int		_setMassData			( lua_State* L );

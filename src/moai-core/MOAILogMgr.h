@@ -67,7 +67,7 @@ public:
 		LOG_STATUS,
 	};
 	
-	GET ( FILE*, File, mFile ? mFile : ZLLog::CONSOLE )
+	GET ( FILE*, File, mFile )
 	
 	//----------------------------------------------------------------//
 	void			CloseFile				();

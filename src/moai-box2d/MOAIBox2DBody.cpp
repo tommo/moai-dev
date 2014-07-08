@@ -845,28 +845,6 @@ int MOAIBox2DBody::_setFixedRotation ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setGravityScale
-	@text	See Box2D documentation.
-	
-	@in		MOAIBox2DBody self
-	@opt	number gravityScale.
-	@out	nil
-*/
-int MOAIBox2DBody::_setGravityScale ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIBox2DBody, "UN" );
-
-	if ( !self->mBody ) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DBody_MissingInstance );
-		return 0;
-	}
-
-	float scale = state.GetValue < float >( 2, 0.0f );
-	self->mBody->SetGravityScale ( scale );
-
-	return 0;
-}
-
-//----------------------------------------------------------------//
 /**	@name	setLinearDamping
 	@text	See Box2D documentation.
 	

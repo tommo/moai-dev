@@ -39,7 +39,7 @@ private:
 	void			OnClear					();
 	void			OnCreate				();
 	void			OnLoad					();
-	void			OnInvalidate		();
+	// void			OnInvalidate		();
 
 public:
 	

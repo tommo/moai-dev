@@ -287,23 +287,6 @@ void MOAIPartitionResultBuffer::SetResultsBuffer ( MOAIPartitionResult* buffer )
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionResultBuffer::SetResultsBuffer ( MOAIPartitionResult* buffer ) {
-
-	assert (( buffer == this->mBufferA ) || ( buffer == this->mBufferB ));
-	
-	this->mResults = buffer;
-	
-	if ( buffer == this->mBufferA ) {
-		this->mMainBuffer = &this->mBufferA;
-		this->mSwapBuffer = &this->mBufferB;
-	}
-	else {
-		this->mMainBuffer = &this->mBufferB;
-		this->mSwapBuffer = &this->mBufferA;
-	}
-}
-
-//----------------------------------------------------------------//
 void MOAIPartitionResultBuffer::Reset () {
 
 	this->mBufferA.Grow ( 1, BLOCK_SIZE );

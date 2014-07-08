@@ -232,6 +232,25 @@ int MOAIParticleSystem::_setComputeBounds ( lua_State* L ) {
 	return 0;
 }
 
+
+ 
+//----------------------------------------------------------------//
+/**	@name	setReversedDrawOrder
+	@text	Set the a flag controlling whether draw earlier sprites first
+	
+	@in		MOAIParticleSystem self
+	@opt	boolean reversedDrawOrder		Default value is false.
+	@out	nil
+*/
+int MOAIParticleSystem::_setReversedDrawOrder ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIParticleSystem, "U" )
+
+	self->mReversedDrawOrder = state.GetValue < bool >( 2, false );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+
 //----------------------------------------------------------------//
 /**	@name	setSpriteColor
 	@text	Set the color of the most recently added sprite.
@@ -381,10 +400,20 @@ void MOAIParticleSystem::Draw ( int subPrimID, float lod ) {
 		total = maxSprites;
 	}
 	
+	int k, step;
+	if ( this->mReversedDrawOrder ) {
+		k = total - 1;
+		step = -1;
+	} else {
+		k = 0;
+		step = 1;
+	}
+
 	for ( u32 i = 0; i < total; ++i ) {
 		
-		u32 idx = ( base + i ) % maxSprites;
-		
+		u32 idx = ( base + k ) % maxSprites;
+		k += step;
+
 		AKUParticleSprite& sprite = this->mSprites [ idx ];
 		gfxDevice.SetPenColor ( sprite.mRed, sprite.mGreen, sprite.mBlue, sprite.mAlpha );
 		
@@ -443,6 +472,7 @@ MOAIParticleSystem::MOAIParticleSystem () :
 	mParticleSize ( 0 ),
 	mCapParticles ( false ),
 	mCapSprites ( false ),
+	mReversedDrawOrder ( false ),
 	mHead ( 0 ),
 	mTail ( 0 ),
 	mFree ( 0 ),
@@ -566,6 +596,52 @@ bool MOAIParticleSystem::PushParticle ( float x, float y, float dx, float dy ) {
 	return false;
 }
 
+
+//----------------------------------------------------------------//
+bool MOAIParticleSystem::PushParticle ( float x, float y, float z, float dx, float dy, float dz ) {
+	
+	if (( !this->mFree ) && this->mCapParticles ) {
+		return false;
+	}
+	
+	MOAIParticleState* state = this->GetState ( 0 );
+	if ( !state ) return false;
+	
+	MOAIParticle* particle = 0;
+	
+	if ( this->mFree ) {
+		particle = this->mFree;
+		this->mFree = particle->mNext;
+	}
+	else if ( this->mHead ) {
+		particle = this->mHead;
+		this->mHead = particle->mNext;
+	}
+	
+	if ( particle ) {
+		
+		float* r = particle->mData;
+		
+		r [ MOAIParticle::PARTICLE_X ] = x;
+		r [ MOAIParticle::PARTICLE_Y ] = y;
+		r [ MOAIParticle::PARTICLE_Z ] = z;
+		r [ MOAIParticle::PARTICLE_DX ] = dx;
+		r [ MOAIParticle::PARTICLE_DY ] = dy;
+		r [ MOAIParticle::PARTICLE_DZ ] = dz;
+		
+		for ( u32 i = MOAIParticle::TOTAL_PARTICLE_REG; i < this->mParticleSize; ++i ) {
+			r [ i ] = 0.0f;
+		}
+		
+		state->InitParticle ( *this, *particle );
+		this->EnqueueParticle ( *particle );
+		
+		return true;
+	}
+	return false;
+}
+
+
 //----------------------------------------------------------------//
 bool MOAIParticleSystem::PushSprite ( const AKUParticleSprite& sprite ) {
 
@@ -630,6 +706,7 @@ void MOAIParticleSystem::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "reserveSprites",		_reserveSprites },
 		{ "reserveStates",		_reserveStates },
 		{ "setComputeBounds",	_setComputeBounds },
+		{ "setReversedDrawOrder",	_setReversedDrawOrder },
 		{ "setSpriteColor",		_setSpriteColor },
 		{ "setSpriteDeckIdx",	_setSpriteDeckIdx },
 		{ "setState",			_setState },
