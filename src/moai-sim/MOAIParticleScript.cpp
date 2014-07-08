@@ -22,6 +22,9 @@
 		if ( type == PARAM_TYPE_SPRITE_REG ) {					\
 			reg = &spriteRegisters [ regIdx ];					\
 		}														\
+		else if ( type == PARAM_TYPE_LIVE_REG ) {					\
+			reg = &this->mLiveRegisters [ regIdx ];					\
+		}														\
 		else {													\
 			reg = &particleRegisters [ regIdx ];				\
 		}														\
@@ -43,6 +46,9 @@
 		if ( type & PARAM_TYPE_REG_MASK ) {						\
 			if ( type == PARAM_TYPE_SPRITE_REG ) {				\
 				var = spriteRegisters [ regIdx ];				\
+			}													\
+			else if ( type == PARAM_TYPE_LIVE_REG ) {				\
+				var = this->mLiveRegisters [ regIdx ];				\
 			}													\
 			else {												\
 				var = particleRegisters [ regIdx ];				\
@@ -224,22 +230,6 @@ int MOAIParticleScript::_add ( lua_State* L ) {
 	IMPL_LUA_PARTICLE_OP ( ADD, "RVV" )
 }
 
-
-//----------------------------------------------------------------//
-/**	@name	age
-	@text	age of particle, in second
-	
-	@in		MOAIParticleScript self
-	@in		number r0
-	@in		number v0
-	@in		number v1
-	@out	nil
-*/
-int MOAIParticleScript::_age ( lua_State* L ) {
-	IMPL_LUA_PARTICLE_OP ( AGE, "RVV" )
-}
-
-
 //----------------------------------------------------------------//
 /**	@name	angleVec
 	@text	Load two registers with the X and Y components of a unit
@@ -256,20 +246,24 @@ int MOAIParticleScript::_angleVec ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	clamp
-	@text	Clamp v0 between v1 and v2.
-	
-	@in		MOAIParticleScript self
-	@in		number r0
-	@in		number v0
-	@in		number v1
-	@in		number v2
-	@out	nil
-*/
-int MOAIParticleScript::_clamp ( lua_State* L ) {
-	IMPL_LUA_PARTICLE_OP ( CLAMP, "RVVV" )
-}
+/**	@name	color
+ @text	r0, r1, r2, r3 = color (of the MOAIParticleSystem)
 
+ Note that if you do not specify SPRITE_RED and related values,
+ sprites are rendered with the current values. This function is
+ useful to store the values when the initialization script is
+ run in registers.
+ 
+ @in		MOAIParticleScript self
+ @in		number r0 (r)
+ @in		number r1 (g)
+ @in		number r2 (b)
+ @in		number r3 (a) (optional)
+ @out	nil
+ */
+int MOAIParticleScript::_color ( lua_State* L ) {
+	IMPL_LUA_PARTICLE_OP ( COLOR, "RRRR" )
+}
 
 //----------------------------------------------------------------//
 /**	@name	cos
@@ -361,9 +355,9 @@ int MOAIParticleScript::_mul ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	norm
-	@text	r0 = v0 / |v|
-	@text	r1 = v1 / |v|
-	@text	Where |v| == sqrt( v0^2 + v1^2)
+	@text	<p>r0 = v0 / |v|</p>
+			<p>r1 = v1 / |v|</p>
+			<p>Where |v| == sqrt( v0^2 + v1^2)</p>
 	
 	@in		MOAIParticleScript self
 	@in		number r0
@@ -380,9 +374,8 @@ int MOAIParticleScript::_norm ( lua_State* L ) {
 /**	@name	packConst
 	@text	Pack a const value into a particle script param.
 	
-	@in		MOAIParticleScript self
 	@in		number const		Const value to pack.
-	@out	nil
+	@out	number packed		The packed value.
 */
 int MOAIParticleScript::_packConst ( lua_State* L ) {
 	MOAILuaState state ( L );
@@ -396,12 +389,27 @@ int MOAIParticleScript::_packConst ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	packLiveReg
+	@text	Pack a live register index into a particle script param.
+	
+	@in		number regIdx		Register index to pack.
+	@out	number packed		The packed value.
+*/
+int MOAIParticleScript::_packLiveReg ( lua_State* L ) {
+	MOAILuaState state ( L );
+
+	u8 val = (state.GetValue < u8 >( 1, 0 ) - 1) % LIVE_REG_COUNT;
+	state.Push ( Pack64 ( val, PARAM_TYPE_LIVE_REG ));
+
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@name	packReg
 	@text	Pack a register index into a particle script param.
 	
-	@in		MOAIParticleScript self
 	@in		number regIdx		Register index to pack.
-	@out	nil
+	@out	number packed		The packed value.
 */
 int MOAIParticleScript::_packReg ( lua_State* L ) {
 	MOAILuaState state ( L );
@@ -456,6 +464,34 @@ int MOAIParticleScript::_set ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setLiveReg
+	@text	Load a value into a live register. Live registers can be updated
+			by additional calls to setReg, which does not alter the compiled particle
+			script. Live registers are a distinct register set from the normal register
+			set; use load () to load live register data into registers in an initialize
+			or render script.
+	
+	@in		MOAIParticleScript self
+	@in		number r0					Register to store result.
+	@in		number v0					Value to load.
+	@out	nil
+*/
+int MOAIParticleScript::_setLiveReg ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIParticleScript, "UNN" )
+	/* assumption:
+	 * the packing system will always put the bits we care about in the
+	 * low-order parts of a packed value
+	 */
+	int reg			= state.GetValue < u64 >( 2, 0 ) & 0xFF;
+	float value		= state.GetValue < float >( 3, 0.0f );
+	if ( reg < 0 || reg >= LIVE_REG_COUNT ) {
+		return 0;
+	}
+	self->mLiveRegisters[reg] = value;
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	sin
  @text	r0 = sin(v0)
  
@@ -466,20 +502,6 @@ int MOAIParticleScript::_set ( lua_State* L ) {
  */
 int MOAIParticleScript::_sin ( lua_State* L ) {
 	IMPL_LUA_PARTICLE_OP ( SIN, "RV" )
-}
-
-
-//----------------------------------------------------------------//
-/**	@name	sign
- @text	if v0 > 0 then r0 =1; elseif v0 < 0 then r0 = -1; else r0 = 0
- 
- @in		MOAIParticleScript self
- @in		number r0
- @in		number v0
- @out	nil
- */
-int MOAIParticleScript::_sign ( lua_State* L ) {
-	IMPL_LUA_PARTICLE_OP ( SIGN, "RV" )
 }
 
 //----------------------------------------------------------------//
@@ -587,7 +609,7 @@ u8* MOAIParticleScript::Compile () {
 	
 	u8* cursor = this->mBytecode;
 	
-	u8* top = ( u8* )(( uintptr )cursor + size );
+	u8* top = ( u8* )(( size_t )cursor + size );
 	UNUSED ( top );
 	
 	FOREACH ( InstructionIt, instructionIt, this->mInstructions ) {
@@ -606,10 +628,16 @@ u8* MOAIParticleScript::Compile () {
 //----------------------------------------------------------------//
 MOAIParticleScript::MOAIParticleScript () :
 	mCompiled ( false ) {
+
+	int i;
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
+
+	for (i = 0; i < LIVE_REG_COUNT; ++i) {
+		this->mLiveRegisters[i] = 0.0;
+	}
 }
 
 //----------------------------------------------------------------//
@@ -647,15 +675,11 @@ void MOAIParticleScript::PushSprite ( MOAIParticleSystem& system, float* registe
 
 	sprite.mXLoc		= registers [ SPRITE_X_LOC ];
 	sprite.mYLoc		= registers [ SPRITE_Y_LOC ];
-	sprite.mZLoc		= registers [ SPRITE_Z_LOC ];
 	
-	sprite.mXRot		= registers [ SPRITE_X_ROT ];
-	sprite.mYRot		= registers [ SPRITE_Y_ROT ];
-	sprite.mZRot		= registers [ SPRITE_Z_ROT ];
+	sprite.mZRot		= registers [ SPRITE_ROT ];
 	
 	sprite.mXScl		= registers [ SPRITE_X_SCL ];
 	sprite.mYScl		= registers [ SPRITE_Y_SCL ];
-	sprite.mZScl		= registers [ SPRITE_Z_SCL ];
 	
 	float opacity		= registers [ SPRITE_OPACITY ];
 	float glow			= 1.0f - registers [ SPRITE_GLOW ];
@@ -675,21 +699,14 @@ void MOAIParticleScript::RegisterLuaClass ( MOAILuaState& state ) {
 
 	state.SetField ( -1, "PARTICLE_X",			Pack64 ( MOAIParticle::PARTICLE_X, PARAM_TYPE_PARTICLE_REG ));
 	state.SetField ( -1, "PARTICLE_Y",			Pack64 ( MOAIParticle::PARTICLE_Y, PARAM_TYPE_PARTICLE_REG ));
-	state.SetField ( -1, "PARTICLE_Z",			Pack64 ( MOAIParticle::PARTICLE_Z, PARAM_TYPE_PARTICLE_REG ));
 	state.SetField ( -1, "PARTICLE_DX",			Pack64 ( MOAIParticle::PARTICLE_DX, PARAM_TYPE_PARTICLE_REG ));
 	state.SetField ( -1, "PARTICLE_DY",			Pack64 ( MOAIParticle::PARTICLE_DY, PARAM_TYPE_PARTICLE_REG ));
-	state.SetField ( -1, "PARTICLE_DZ",			Pack64 ( MOAIParticle::PARTICLE_DZ, PARAM_TYPE_PARTICLE_REG ));
 
 	state.SetField ( -1, "SPRITE_X_LOC",		Pack64 ( SPRITE_X_LOC, PARAM_TYPE_SPRITE_REG ));
 	state.SetField ( -1, "SPRITE_Y_LOC",		Pack64 ( SPRITE_Y_LOC, PARAM_TYPE_SPRITE_REG ));
-	state.SetField ( -1, "SPRITE_Z_LOC",		Pack64 ( SPRITE_Z_LOC, PARAM_TYPE_SPRITE_REG ));
-	state.SetField ( -1, "SPRITE_X_ROT",			Pack64 ( SPRITE_X_ROT, PARAM_TYPE_SPRITE_REG ));
-	state.SetField ( -1, "SPRITE_Y_ROT",			Pack64 ( SPRITE_Y_ROT, PARAM_TYPE_SPRITE_REG ));
-	state.SetField ( -1, "SPRITE_Z_ROT",			Pack64 ( SPRITE_Z_ROT, PARAM_TYPE_SPRITE_REG ));
+	state.SetField ( -1, "SPRITE_ROT",			Pack64 ( SPRITE_ROT, PARAM_TYPE_SPRITE_REG ));
 	state.SetField ( -1, "SPRITE_X_SCL",		Pack64 ( SPRITE_X_SCL, PARAM_TYPE_SPRITE_REG ));
 	state.SetField ( -1, "SPRITE_Y_SCL",		Pack64 ( SPRITE_Y_SCL, PARAM_TYPE_SPRITE_REG ));
-	state.SetField ( -1, "SPRITE_Z_SCL",		Pack64 ( SPRITE_Z_SCL, PARAM_TYPE_SPRITE_REG ));
-	state.SetField ( -1, "SPRITE_ROT",			Pack64 ( SPRITE_Z_ROT, PARAM_TYPE_SPRITE_REG ));
 	state.SetField ( -1, "SPRITE_RED",			Pack64 ( SPRITE_RED, PARAM_TYPE_SPRITE_REG ));
 	state.SetField ( -1, "SPRITE_GREEN",		Pack64 ( SPRITE_GREEN, PARAM_TYPE_SPRITE_REG ));
 	state.SetField ( -1, "SPRITE_BLUE",			Pack64 ( SPRITE_BLUE, PARAM_TYPE_SPRITE_REG ));
@@ -699,6 +716,7 @@ void MOAIParticleScript::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		{ "packConst",			_packConst },
+		{ "packLiveReg",		_packLiveReg },
 		{ "packReg",			_packReg },
 		{ NULL, NULL }
 	};
@@ -711,9 +729,8 @@ void MOAIParticleScript::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		{ "add",				_add },
-		{ "age",				_age },
 		{ "angleVec",			_angleVec },
-		{ "clamp",				_clamp },
+		{ "color",				_color },
 		{ "cos",				_cos },
 		{ "cycle",				_cycle },
 		{ "div",				_div },
@@ -724,8 +741,9 @@ void MOAIParticleScript::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "rand",				_rand },
 		{ "randVec",			_randVec },
 		{ "set",				_set },
+		{ "setLiveReg",			_setLiveReg },
+		{ "setReg",				_setLiveReg }, // TODO: mark as deprecated
 		{ "sin",				_sin },
-		{ "sign",				_sign },
 		{ "sprite",				_sprite },
 		{ "sub",				_sub },
 		{ "tan",				_tan },
@@ -739,21 +757,17 @@ void MOAIParticleScript::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleScript::ResetRegisters ( float* spriteRegisters, float* particleRegisters ) {
+void MOAIParticleScript::ResetRegisters ( float* spriteRegisters, float* particleRegisters, const MOAIParticleSystem &system ) {
 
 	spriteRegisters [ SPRITE_X_LOC ]		= particleRegisters [ MOAIParticle::PARTICLE_X ];
 	spriteRegisters [ SPRITE_Y_LOC ]		= particleRegisters [ MOAIParticle::PARTICLE_Y ];
-	spriteRegisters [ SPRITE_Z_LOC ]		= particleRegisters [ MOAIParticle::PARTICLE_Z ];
-	spriteRegisters [ SPRITE_X_ROT ]		= 0.0f;
-	spriteRegisters [ SPRITE_Y_ROT ]		= 0.0f;
-	spriteRegisters [ SPRITE_Z_ROT ]		= 0.0f;
+	spriteRegisters [ SPRITE_ROT ]			= 0.0f;
 	spriteRegisters [ SPRITE_X_SCL ]		= 1.0f;
 	spriteRegisters [ SPRITE_Y_SCL ]		= 1.0f;
-	spriteRegisters [ SPRITE_Z_SCL ]		= 1.0f;
-	spriteRegisters [ SPRITE_RED ]			= 1.0f;
-	spriteRegisters [ SPRITE_GREEN ]		= 1.0f;
-	spriteRegisters [ SPRITE_BLUE ]			= 1.0f;
-	spriteRegisters [ SPRITE_OPACITY ]		= 1.0f;
+	spriteRegisters [ SPRITE_RED ]			= system.mR;
+	spriteRegisters [ SPRITE_GREEN ]		= system.mG;
+	spriteRegisters [ SPRITE_BLUE ]			= system.mB;
+	spriteRegisters [ SPRITE_OPACITY ]		= system.mA;
 	spriteRegisters [ SPRITE_GLOW ]			= 0.0f;
 	spriteRegisters [ SPRITE_IDX ]			= 1.0f;
 }
@@ -772,6 +786,8 @@ void MOAIParticleScript::Run ( MOAIParticleSystem& system, MOAIParticle& particl
 	
 	float* r0;
 	float* r1;
+	float* r2;
+	float* r3;
 	float v0, v1, v2, v3;
 	u32 i0;
 	
@@ -807,21 +823,23 @@ void MOAIParticleScript::Run ( MOAIParticleSystem& system, MOAIParticle& particl
 					*r1 = ( float )( Sin ( v0 * ( float )D2R ));
 				}
 				break;
+			
+			case COLOR: // RRRR
+				READ_ADDR   ( r0, bytecode );
+				READ_ADDR   ( r1, bytecode );
+				READ_ADDR   ( r2, bytecode );
+				READ_ADDR   ( r3, bytecode );
 
-			case CLAMP: // RVVV
-				
-				READ_ADDR	( r0, bytecode );
-				READ_VALUE	( v0, bytecode );
-				READ_VALUE	( v1, bytecode );
-				READ_VALUE	( v2, bytecode );
-				
-				if ( r0 ) {
-					if ( v0 < v1 ) { v0 = v1; }
-					if ( v0 > v2 ) { v0 = v2; }						
-					*r0 = v0;
+				if (r0 && r1 && r2) {
+					*r0 = system.mR;
+					*r1 = system.mG;
+					*r2 = system.mB;
+					// allow Alpha to be omitted.
+					if (r3) {
+						*r3 = system.mA;
+					}
 				}
 				break;
-			
 			case COS: // RVV
 				READ_ADDR   ( r0, bytecode );
 				READ_VALUE  ( v0, bytecode );
@@ -965,23 +983,6 @@ void MOAIParticleScript::Run ( MOAIParticleSystem& system, MOAIParticle& particl
 					*r0 = v0;
 				}
 				break;
-
-			case SIGN: // RV
-
-				READ_ADDR   ( r0, bytecode );
-				READ_VALUE  ( v0, bytecode );
-				
-				if ( r0 ) {
-					if( v0 > 0.0f ){
-						*r0 = 1.0f;
-					} else if( v0 < 0.0f ){
-						*r0 = -1.0f;
-					} else {
-						*r0 = 0.0f;
-					}
-				}
-				break;
-
 			case SIN: // RV
 
 				READ_ADDR   ( r0, bytecode );
@@ -997,7 +998,7 @@ void MOAIParticleScript::Run ( MOAIParticleSystem& system, MOAIParticle& particl
 				if ( push ) {
 					this->PushSprite ( system, spriteRegisters );
 				}
-				this->ResetRegisters ( spriteRegisters, particleRegisters );
+				this->ResetRegisters ( spriteRegisters, particleRegisters, system );
 				push = true;
 				break;
 			
@@ -1028,15 +1029,6 @@ void MOAIParticleScript::Run ( MOAIParticleSystem& system, MOAIParticle& particl
 				
 				if ( r0 ) {
 					*r0 = t1;
-				}
-				break;
-
-			case AGE: // RVV
-				
-				READ_ADDR	( r0, bytecode );
-				
-				if ( r0 ) {
-					*r0 = particle.mAge;
 				}
 				break;
 			

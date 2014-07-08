@@ -224,12 +224,18 @@ u32 MOAIShaderProgram::CompileShader ( u32 type, cc8* source ) {
 
 	u32 shader = zglCreateShader ( type );
 
-	cc8* sources [ 2 ];
+	cc8* sources [ 3 ];
 
 	sources [ 0 ] = gfxDevice.IsOpenGLES () ? OPENGL_ES_PREPROC : OPENGL_PREPROC;
-	sources [ 1 ] = source;
+	if ((type == ZGL_SHADER_TYPE_FRAGMENT) && gfxDevice.IsOpenGLES() ) {
+		sources [ 1 ] = WEBGL_PREPROC;
+	} else {
+		sources [ 1 ] = " ";
+	}
 
-	zglShaderSource ( shader, 2, sources, NULL );
+	sources [ 2 ] = source;
+
+	zglShaderSource ( shader, 3, sources, NULL );
 	zglCompileShader ( shader );
 
 	s32 status;
@@ -317,6 +323,11 @@ void MOAIShaderProgram::OnBind () {
 
 	// use shader program.
 	zglUseProgram ( this->mProgram );
+
+	// reload the uniform values
+	//for ( u32 i = 0; i < this->mUniforms.Size (); ++i ) {
+	//	this->mUniforms [ i ].Bind ();
+	//}
 }
 
 //----------------------------------------------------------------//
@@ -370,7 +381,6 @@ void MOAIShaderProgram::OnCreate () {
 
 		if ( uniform.mType != MOAIShaderUniform::UNIFORM_NONE ) {
 			uniform.mAddr = zglGetUniformLocation ( this->mProgram, uniform.mName );
-			uniform.mName.clear ();
 		}
 	}
 
@@ -417,8 +427,6 @@ void MOAIShaderProgram::OnLoad () {
 
 //----------------------------------------------------------------//
 void MOAIShaderProgram::OnUnbind () {
-
-	zglUseProgram ( 0 );
 }
 
 //----------------------------------------------------------------//

@@ -129,10 +129,17 @@ int MOAIUntzSound::_isPlaying ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	load
-	@text	Loads a sound from disk.
+	@text	Loads a sound from disk or from a buffer.
 	
+	@overload
 	@in		MOAIUntzSound self
 	@in		string filename
+	@opt	boolean loadIntoMemory			Default value is true
+	@out	nil
+	
+	@overload
+	@in		MOAIUntzSound self
+	@in		MOAIUntzSampleBuffer data
 	@out	nil
 */
 int MOAIUntzSound::_load ( lua_State* L ) {
@@ -171,7 +178,7 @@ int MOAIUntzSound::_load ( lua_State* L ) {
 /**	@name	moveVolume
 	@text	Animation helper for volume attribute,
 	
-	@in		MOAITransform self
+	@in		MOAIUntzSound self
 	@in		number vDelta		Delta to be added to v.
 	@in		number length		Length of animation in seconds.
 	@opt	number mode			The ease mode. One of MOAIEaseType.EASE_IN, MOAIEaseType.EASE_OUT, MOAIEaseType.FLAT MOAIEaseType.LINEAR,
@@ -185,24 +192,27 @@ int MOAIUntzSound::_moveVolume ( lua_State* L ) {
 	float volume	= state.GetValue < float >( 2, 0.0f );
 	float delay		= state.GetValue < float >( 3, 0.0f );
 	
-	if ( delay > 0.0f ) {
+	if ( self->mSound ) {
+		
+		if ( delay > 0.0f ) {
 	
-		u32 mode = state.GetValue < u32 >( 4, ZLInterpolate::kSmooth );
+			u32 mode = state.GetValue < u32 >( 4, ZLInterpolate::kSmooth );
 		
-		MOAIEaseDriver* action = new MOAIEaseDriver ();
-		action->ReserveLinks ( 1 );
+			MOAIEaseDriver* action = new MOAIEaseDriver ();
+			action->ReserveLinks ( 1 );
 		
-		action->SetLink ( 0, self, MOAIUntzSoundAttr::Pack ( ATTR_VOLUME ), volume, mode );
+			action->SetLink ( 0, self, MOAIUntzSoundAttr::Pack ( ATTR_VOLUME ), volume, mode );
 		
-		action->SetSpan ( delay );
-		action->Start ();
-		action->PushLuaUserdata ( state );
+			action->SetSpan ( delay );
+			action->Start ();
+			action->PushLuaUserdata ( state );
 
-		return 1;
-	}
+			return 1;
+		}
 	
-	self->mSound->setVolume ( self->mSound->getVolume () + volume );
-	self->ScheduleUpdate ();
+		self->mSound->setVolume ( self->mSound->getVolume () + volume );
+		self->ScheduleUpdate ();
+	}
 	
 	return 0;
 }
@@ -240,10 +250,31 @@ int MOAIUntzSound::_play ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	release
+	@text	Release memory before gc does.
+ 
+	@in		MOAIUntzSound self
+	@out	nil
+ */
+int MOAIUntzSound::_release ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIUntzSound, "U" )
+	
+	if ( self->mSound ) {
+		
+		self->mSound->stop ();
+		
+		UNTZ::Sound::dispose ( self->mSound );
+		self->mSound = NULL;
+	}
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	seekVolume
 	@text	Animation helper for volume attribute,
 	
-	@in		MOAITransform self
+	@in		MOAIUntzSound self
 	@in		number vGoal		Desired resulting value for v.
 	@in		number length		Length of animation in seconds.
 	@opt	number mode			The ease mode. One of MOAIEaseType.EASE_IN, MOAIEaseType.EASE_OUT, MOAIEaseType.FLAT MOAIEaseType.LINEAR,
@@ -257,24 +288,27 @@ int MOAIUntzSound::_seekVolume ( lua_State* L ) {
 	float volume	= state.GetValue < float >( 2, 0.0f );
 	float delay		= state.GetValue < float >( 3, 0.0f );
 	
-	if ( delay > 0.0f ) {
+	if ( self->mSound ) {
+		
+		if ( delay > 0.0f ) {
 	
-		u32 mode = state.GetValue < u32 >( 4, ZLInterpolate::kSmooth );
+			u32 mode = state.GetValue < u32 >( 4, ZLInterpolate::kSmooth );
 		
-		MOAIEaseDriver* action = new MOAIEaseDriver ();
-		action->ReserveLinks ( 1 );
+			MOAIEaseDriver* action = new MOAIEaseDriver ();
+			action->ReserveLinks ( 1 );
 		
-		action->SetLink ( 0, self, MOAIUntzSoundAttr::Pack ( ATTR_VOLUME ), volume - self->mSound->getVolume (), mode );
+			action->SetLink ( 0, self, MOAIUntzSoundAttr::Pack ( ATTR_VOLUME ), volume - self->mSound->getVolume (), mode );
 		
-		action->SetSpan ( delay );
-		action->Start ();
-		action->PushLuaUserdata ( state );
+			action->SetSpan ( delay );
+			action->Start ();
+			action->PushLuaUserdata ( state );
 
-		return 1;
-	}
+			return 1;
+		}
 	
-	self->mSound->setVolume ( volume );
-	self->ScheduleUpdate ();
+		self->mSound->setVolume ( volume );
+		self->ScheduleUpdate ();
+	}
 	
 	return 0;
 }
@@ -302,8 +336,8 @@ int MOAIUntzSound::_setLooping ( lua_State* L ) {
 	@text	Sets the start and end looping positions for the sound
 	
 	@in		MOAIUntzSound self
-	@in		double startTime
-	@in		double endTime
+	@in		number startTime
+	@in		number endTime
 	
 	@out	nil
 */
@@ -323,7 +357,7 @@ int MOAIUntzSound::_setLoopPoints ( lua_State* L ) {
 	@text	Sets the position of the sound cursor.
 	
 	@in		MOAIUntzSound self
-	@opt	boolean position		Default value is 0.
+	@opt	number position		Default value is 0.
 	@out	nil
 */
 int MOAIUntzSound::_setPosition ( lua_State* L ) {
@@ -341,7 +375,7 @@ int MOAIUntzSound::_setPosition ( lua_State* L ) {
 	@text	Sets the volume of the sound.
 	
 	@in		MOAIUntzSound self
-	@opt	boolean volume			Default value is 0.
+	@opt	number volume			Default value is 0.
 	@out	nil
 */
 int MOAIUntzSound::_setVolume ( lua_State* L ) {
@@ -431,6 +465,7 @@ void MOAIUntzSound::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "moveVolume",			_moveVolume },
 		{ "pause",				_pause },
 		{ "play",				_play },
+		{ "release",			_release },		
 		{ "seekVolume",			_seekVolume },
 		{ "setLooping",			_setLooping },
 		{ "setLoopPoints",		_setLoopPoints },

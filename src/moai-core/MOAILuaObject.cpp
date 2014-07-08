@@ -5,8 +5,10 @@
 #include <moai-core/MOAIDeserializer.h>
 #include <moai-core/MOAILua.h>
 #include <moai-core/MOAISerializer.h>
+#include <moai-core/MOAILuaState-impl.h>
 
 #define FINALIZE_FUNC_NAME "finalize"
+#define MOAI_TAG "moai"
 
 //================================================================//
 // local
@@ -60,6 +62,14 @@ int MOAILuaObject::_getClass ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+int MOAILuaObject::_getMemberTable ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAILuaObject, "U" )
+	
+	self->PushMemberTable ( state );
+	return 1;
+}
+
+//----------------------------------------------------------------//
 int MOAILuaObject::_getRefTable ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILuaObject, "U" )
 
@@ -78,6 +88,24 @@ int MOAILuaObject::_getClassName ( lua_State* L ) {
 		return 1;
 	}
 	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAILuaObject::_serializeIn ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAILuaObject, "UT" )
+	
+	MOAIDeserializer dummy;
+	self->SerializeIn ( state, dummy );
+	return 1;
+}
+
+//----------------------------------------------------------------//
+int MOAILuaObject::_serializeOut ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAILuaObject, "UT" )
+	
+	MOAISerializer dummy;
+	self->SerializeOut ( state, dummy );
+	return 1;
 }
 
 //----------------------------------------------------------------//
@@ -238,6 +266,19 @@ bool MOAILuaObject::IsBound () {
 }
 
 //----------------------------------------------------------------//
+bool MOAILuaObject::IsMoaiUserdata ( MOAILuaState& state, int idx ) {
+
+	bool result = false;
+	if ( state.IsType ( idx, LUA_TUSERDATA )) {
+		if ( lua_getmetatable ( state, idx )) {
+			result = state.HasField ( -1, MOAI_TAG );
+			state.Pop ( 1 );
+		}
+	}
+	return result;
+}
+
+//----------------------------------------------------------------//
 bool MOAILuaObject::IsSingleton () {
 
 	MOAILuaClass* luaClass = this->GetLuaClass ();
@@ -300,6 +341,10 @@ void MOAILuaObject::LuaRetain ( MOAILuaObject* object ) {
 MOAILuaObject::MOAILuaObject ():
 	mCollected ( false ) {
 	RTTI_SINGLE ( RTTIBase )
+	
+	if ( MOAILuaRuntime::IsValid ()) {
+		MOAILuaRuntime::Get ().RegisterObject ( *this );
+	}
 }
 
 //----------------------------------------------------------------//
@@ -309,7 +354,8 @@ MOAILuaObject::~MOAILuaObject () {
 		
 		MOAILuaRuntime::Get ().DeregisterObject ( *this );
 		
-		if ( this->mUserdata ) {
+		// TODO: change from both patrick's fork and the community branch; double check
+		if (( !this->mCollected ) && this->mUserdata ) {
 			MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 			
 			// clear out the gc
@@ -346,6 +392,11 @@ void MOAILuaObject::MakeLuaBinding ( MOAILuaState& state ) {
 	
 	lua_pushcfunction ( state, MOAILuaObject::_tostring );
 	lua_setfield ( state, refTable, "__tostring" );
+	
+	// ref table gets 'moai' tag set to true
+	lua_pushboolean ( state, 1 );
+	lua_setfield ( state, refTable, MOAI_TAG );
+	
 	
 	// member table is __index and __newindex for ref table
 	lua_pushvalue ( state, memberTable );
@@ -425,7 +476,7 @@ bool MOAILuaObject::PushRefTable ( MOAILuaState& state ) {
 		lua_pushnil ( state );
 		return false;
 	}
-		
+	
 	if ( luaClass->IsSingleton ()) {
 		luaClass->PushRefTable ( state );
 		return true;
@@ -452,8 +503,11 @@ void MOAILuaObject::RegisterLuaFuncs ( MOAILuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "getClass",				_getClass },
 		{ "getClassName",			_getClassName },
+		{ "getMemberTable",			_getMemberTable },
 		{ "getRefTable",			_getRefTable },
 		{ "pin",					_pin },
+		{ "serializeIn",			_serializeIn },
+		{ "serializeOut",			_serializeOut },
 		{ "setFinalizer",			_setFinalizer },
 		{ "setInterface",			_setInterface },
 		{ "setMembers",				_setMembers },

@@ -24,6 +24,33 @@
 #include <moai-sim/MOAIViewport.h>
 
 //================================================================//
+// MOAIFacet
+//================================================================//
+
+//----------------------------------------------------------------//
+MOAIProp& MOAIFacet::GetProp () {
+	assert ( this->mProp );
+	return *this->mProp;
+}
+
+//----------------------------------------------------------------//
+MOAIFacet::MOAIFacet () :
+	mProp ( 0 ) {
+}
+
+//----------------------------------------------------------------//
+MOAIFacet::~MOAIFacet () {
+}
+
+//----------------------------------------------------------------//
+void MOAIFacet::OnAttach ( MOAIProp& prop ) {
+}
+
+//----------------------------------------------------------------//
+void MOAIFacet::OnDetach ( MOAIProp& prop ) {
+}
+
+//================================================================//
 // local
 //================================================================//
 
@@ -31,7 +58,7 @@
 /**	@name	getBounds
 	@text	Return the prop's local bounds or 'nil' if prop bounds is
 			global or missing. The bounds are in model space and will
-			be overidden by the prop's bounds if it's been set (using
+			be overridden by the prop's bounds if it's been set (using
 			setBounds ())
 	
 	@in		MOAIProp self
@@ -62,6 +89,23 @@ int MOAIProp::_getBounds ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	getDeck
+	@text	Get the deck.
+               
+	@in		MOAIProp self
+	@out	MOAIDeck deck
+*/
+int MOAIProp::_getDeck ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIProp, "U" )
+
+	if ( self->mDeck ) {
+		self->mDeck->PushLuaUserdata ( state );
+		return 1;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	getDims
 	@text	Return the prop's width and height or 'nil' if prop rect is global.
                
@@ -83,6 +127,21 @@ int MOAIProp::_getDims ( lua_State* L ) {
 	state.Push ( bounds.mMax.mZ - bounds.mMin.mZ );
  
 	return 3;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIProp::_getFacet ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIProp, "U" )
+	
+	u32 facetID = state.GetValue ( 2, UNKNOWN_FACET );
+	MOAIFacet* facet = self->GetFacet ( facetID );
+	
+	if ( facet ) {
+		state.Push ( facet );
+		return 1;
+	}
+	return 0;
 }
 
 //----------------------------------------------------------------//
@@ -257,6 +316,21 @@ int MOAIProp::_setBounds ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIProp::_setBoundsPad ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIProp, "U" )
+
+	self->mBoundsPad.mX	= state.GetValue < float >( 2, 0.0f );
+	self->mBoundsPad.mY	= state.GetValue < float >( 3, 0.0f );
+	self->mBoundsPad.mZ	= state.GetValue < float >( 4, 0.0f );
+
+	bool pad = (( self->mBoundsPad.mX != 0.0f ) || ( self->mBoundsPad.mY != 0.0f ) || ( self->mBoundsPad.mZ != 0.0f ));
+	self->mFlags = pad ? ( self->mFlags | FLAGS_PAD_BOUNDS ) : ( self->mFlags & ~FLAGS_PAD_BOUNDS );
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setDeck
 	@text	Sets or clears the deck to be indexed by the prop.
 	
@@ -310,6 +384,19 @@ int MOAIProp::_setExpandForSort ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIProp::_setFacet ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIProp, "U" )
+	
+	u32 facetID			= state.GetValue < u32 >( 2, 0 );
+	MOAIFacet* facet	= state.GetLuaObject < MOAIFacet >( 3, true );
+	
+	self->SetFacet ( facetID, facet );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setGrid
 	@text	Sets or clears the prop's grid indexer. The grid indexer (if any)
 			will override the standard indexer.
@@ -322,7 +409,7 @@ int MOAIProp::_setGrid ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIProp, "U" )
 	
 	MOAIGrid* grid = state.GetLuaObject < MOAIGrid >( 2, true );
-	// if ( !grid ) return 0;
+	if ( !grid ) return 0;
 	
 	self->mGrid.Set ( *self, grid );
 	
@@ -535,11 +622,6 @@ void MOAIProp::GatherSurfaces ( MOAISurfaceSampler2D& sampler ) {
 }
 
 //----------------------------------------------------------------//
-MOAICollisionProp* MOAIProp::GetCollisionProp () {
-	return 0;
-}
-
-//----------------------------------------------------------------//
 bool MOAIProp::GetCellRect ( ZLRect* cellRect, ZLRect* paddedRect ) {
 
 	if ( !( cellRect || paddedRect )) return false;
@@ -575,6 +657,18 @@ bool MOAIProp::GetCellRect ( ZLRect* cellRect, ZLRect* paddedRect ) {
 }
 
 //----------------------------------------------------------------//
+MOAICollisionFacet* MOAIProp::GetCollisionFacet () {
+
+	return MOAICast < MOAICollisionFacet >( this->mFacets [ COLLISION_FACET ]);
+}
+
+//----------------------------------------------------------------//
+MOAIFacet* MOAIProp::GetFacet ( u32 facetID ) {
+
+	return this->mFacets [ facetID ];
+}
+
+//----------------------------------------------------------------//
 MOAIGraphicsProp* MOAIProp::GetGraphicsProp () {
 	return 0;
 }
@@ -599,12 +693,21 @@ void MOAIProp::GetGridBoundsInView ( MOAICellCoord& c0, MOAICellCoord& c1 ) {
 //----------------------------------------------------------------//
 u32 MOAIProp::GetModelBounds ( ZLBox& bounds ) {
 
+	u32 status = BOUNDS_EMPTY;
+
 	if ( this->mFlags & FLAGS_OVERRIDE_BOUNDS ) {
 		bounds = this->mBoundsOverride;
-		return BOUNDS_OK;
+		status = BOUNDS_OK;
+	}
+	else {
+		status = this->OnGetModelBounds ( bounds );
 	}
 	
-	return this->OnGetModelBounds ( bounds );
+	if (( status == BOUNDS_OK ) && ( this->mFlags & FLAGS_PAD_BOUNDS )) {
+		bounds.Pad ( this->mBoundsPad.mX, this->mBoundsPad.mY, this->mBoundsPad.mZ );
+	}
+	
+	return status;
 }
 
 //----------------------------------------------------------------//
@@ -628,6 +731,8 @@ bool MOAIProp::Inside ( ZLVec3D vec, float pad ) {
 	
 	bounds.Bless ();
 	bounds.Inflate ( pad );
+    if ( pad != 0 ) bounds.Bless ();
+    
 	return bounds.Contains ( vec );
 }
 
@@ -641,7 +746,8 @@ MOAIProp::MOAIProp () :
 	mPriority ( UNKNOWN_PRIORITY ),
 	mFlags ( 0 ),
 	mIndex( 1 ),
-	mGridScale ( 1.0f, 1.0f ) {
+	mGridScale ( 1.0f, 1.0f ),
+	mBoundsPad ( 0.0f, 0.0f, 0.0f ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAITransform )
@@ -649,6 +755,8 @@ MOAIProp::MOAIProp () :
 	
 	this->mLinkInCell.Data ( this );
 	this->mWorldBounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
+	
+	memset ( this->mFacets, 0, sizeof ( this->mFacets ));
 }
 
 //----------------------------------------------------------------//
@@ -662,6 +770,8 @@ MOAIProp::~MOAIProp () {
 	this->mDeck.Set ( *this, 0 );
 	this->mRemapper.Set ( *this, 0 );
 	this->mGrid.Set ( *this, 0 );
+	
+	this->SetFacet ( COLLISION_FACET, 0 );
 }
 
 //----------------------------------------------------------------//
@@ -685,7 +795,6 @@ u32 MOAIProp::OnGetModelBounds ( ZLBox& bounds ) {
 		if ( this->mGrid->GetRepeat ()) {
 			return BOUNDS_GLOBAL;
 		}
-		
 		ZLRect rect = this->mGrid->GetBounds ();
 		bounds.Init ( rect.mXMin, rect.mYMin, rect.mXMax, rect.mYMax, 0.0f, 0.0f );
 		return this->mGrid->GetRepeat () ? BOUNDS_GLOBAL : BOUNDS_OK;
@@ -706,6 +815,8 @@ void MOAIProp::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	state.SetField ( -1, "ATTR_INDEX",					MOAIPropAttr::Pack ( ATTR_INDEX ));
 	state.SetField ( -1, "ATTR_PARTITION",				MOAIPropAttr::Pack ( ATTR_PARTITION ));
+	
+	state.SetField ( -1, "COLLISION_FACET",				( u32 )COLLISION_FACET );
 }
 
 //----------------------------------------------------------------//
@@ -715,7 +826,9 @@ void MOAIProp::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "getBounds",				_getBounds },
+		{ "getDeck",				_getDeck },
 		{ "getDims",				_getDims },
+		{ "getFacet",				_getFacet },
 		{ "getGrid",				_getGrid },
 		{ "getIndex",				_getIndex },
 		{ "getPriority",			_getPriority },
@@ -723,8 +836,10 @@ void MOAIProp::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "getWorldBoundsCenter",	_getWorldBoundsCenter },
 		{ "inside",					_inside },
 		{ "setBounds",				_setBounds },
+		{ "setBoundsPad",			_setBoundsPad },
 		{ "setDeck",				_setDeck },
 		{ "setExpandForSort",		_setExpandForSort },
+		{ "setFacet",				_setFacet },
 		{ "setGrid",				_setGrid },
 		{ "setGridScale",			_setGridScale },
 		{ "setIndex",				_setIndex },
@@ -739,12 +854,30 @@ void MOAIProp::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
+MOAIFacet* MOAIProp::ReplaceFacet ( MOAIFacet* oldFacet, MOAIFacet* newFacet ) {
+
+	if ( oldFacet != newFacet ) {
+	
+		if ( oldFacet ) {
+			oldFacet->OnDetach ( *this );
+			this->LuaRelease ( oldFacet );
+		}
+	
+		if ( newFacet ) {
+			this->LuaRetain ( newFacet );
+			newFacet->OnAttach ( *this );
+		}
+	}
+	return newFacet;
+}
+
+//----------------------------------------------------------------//
 void MOAIProp::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 	
 	MOAITransform::SerializeIn ( state, serializer );
 	
-	this->mDeck.Set ( *this, serializer.MemberIDToObject < MOAIDeck >( state.GetField < uintptr >( -1, "mDeck", 0 )));
-	this->mGrid.Set ( *this, serializer.MemberIDToObject < MOAIGrid >( state.GetField < uintptr >( -1, "mGrid", 0 )));
+	this->mDeck.Set ( *this, serializer.MemberIDToObject < MOAIDeck >( state.GetField < MOAISerializerBase::ObjID >( -1, "mDeck", 0 )));
+	this->mGrid.Set ( *this, serializer.MemberIDToObject < MOAIGrid >( state.GetField < MOAISerializerBase::ObjID >( -1, "mGrid", 0 )));
 }
 
 //----------------------------------------------------------------//
@@ -754,6 +887,15 @@ void MOAIProp::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) 
 	
 	state.SetField ( -1, "mDeck", serializer.AffirmMemberID ( this->mDeck ));
 	state.SetField ( -1, "mGrid", serializer.AffirmMemberID ( this->mGrid ));
+}
+
+//----------------------------------------------------------------//
+void MOAIProp::SetFacet ( u32 facetID, MOAIFacet* facet ) {
+
+	this->mFacets [ facetID ] = this->ReplaceFacet ( this->mFacets [ facetID ], facet );
+	if ( facet ) {
+		facet->mProp = this;
+	}
 }
 
 //----------------------------------------------------------------//

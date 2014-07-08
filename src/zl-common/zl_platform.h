@@ -45,17 +45,18 @@
 
 #ifdef _MSC_VER
 	#define MOAI_COMPILER_MSVC
-
+	
 #else
 	#define MOAI_COMPILER_GCC
 
 #endif
 
 #ifdef MOAI_OS_WINDOWS
-
-	#pragma warning ( disable : 4290 )
-	#pragma warning ( disable : 4995 )
-	#pragma warning ( disable : 4996 )
+	#ifdef MOAI_COMPILER_MSVC
+		#pragma warning ( disable : 4290 )
+		#pragma warning ( disable : 4995 )
+		#pragma warning ( disable : 4996 )
+	#endif
 
 	#ifndef _CRTDBG_MAP_ALLOC
 		#define _CRTDBG_MAP_ALLOC
@@ -69,7 +70,14 @@
 		#define STRSAFE_NO_DEPRECATE
 	#endif
 
-	#include <crtdbg.h>
+	#ifdef MOAI_COMPILER_GCC
+		#include <malloc.h>
+	#endif
+	
+	#ifdef MOAI_COMPILER_MSVC
+		#include <crtdbg.h>
+    #endif
+	
 	#include <direct.h>
 
 	#ifndef PATH_MAX
@@ -111,6 +119,7 @@
 #include <time.h>
 
 #ifdef __cplusplus
+	#include <algorithm>
 	#include <cstdio>
 	#include <cstdlib>
 	#include <map>

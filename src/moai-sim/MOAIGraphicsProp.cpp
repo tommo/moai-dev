@@ -3,7 +3,6 @@
 
 #include "pch.h"
 #include <moai-sim/MOAICamera.h>
-#include <moai-sim/MOAICollisionShape.h>
 #include <moai-sim/MOAIDeck.h>
 #include <moai-sim/MOAIDeckRemapper.h>
 #include <moai-sim/MOAIDebugLines.h>
@@ -25,6 +24,23 @@
 //================================================================//
 // local
 //================================================================//
+
+//----------------------------------------------------------------//
+/**	@name	getTexture
+	@text	Returns the texture.
+	
+	@in		MOAIProp self
+	@out	MOAITexture texture
+*/
+int MOAIGraphicsProp::_getTexture ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGraphicsProp, "U" )
+	
+	if ( self->mTexture ) {
+		self->mTexture->PushLuaUserdata ( state );
+		return 1;
+	}
+	return 0;
+}
 
 //----------------------------------------------------------------//
 /**	@name	isVisible
@@ -437,39 +453,14 @@ void MOAIGraphicsProp::DrawDebug ( int subPrimID, float lod ) {
 void MOAIGraphicsProp::DrawGrid ( int subPrimID ) {
 
 	MOAIGrid& grid = *this->mGrid;
-	
-	float tileWidth = grid.GetTileWidth ();
-	float tileHeight = grid.GetTileHeight ();
-	
-	if ( subPrimID == MOAIGraphicsProp::NO_SUBPRIM_ID ) {
+	MOAICellCoord c0, c1;
 
-		MOAICellCoord c0;
-		MOAICellCoord c1;
-		
+	if ( subPrimID == MOAIProp::NO_SUBPRIM_ID ) {
 		this->GetGridBoundsInView ( c0, c1 );
-		
-		for ( int y = c0.mY; y <= c1.mY; ++y ) {
-			for ( int x = c0.mX; x <= c1.mX; ++x ) {
-				
-				MOAICellCoord wrap = grid.WrapCellCoord ( x, y );
-				u32 idx = grid.GetTile ( wrap.mX, wrap.mY );
-				
-				MOAICellCoord coord ( x, y );
-				ZLVec2D loc = grid.GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER );
-
-				this->mDeck->Draw ( idx, this->mRemapper, loc.mX, loc.mY, 0.0f, tileWidth, tileHeight, 1.0f );
-			}
-		}
+	} else {
+		c0 = c1 = grid.GetCellCoord ( subPrimID );
 	}
-	else {
-		
-		MOAICellCoord coord = grid.GetCellCoord ( subPrimID );
-		
-		u32 idx = grid.GetTile ( coord.mX, coord.mY );
-		ZLVec2D loc = grid.GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER );
-		
-		this->mDeck->Draw ( idx, this->mRemapper, loc.mX, loc.mY, 0.0f, tileWidth, tileHeight, 1.0f );
-	}
+	grid.Draw ( this->mDeck, this->mRemapper, c0, c1 );
 }
 
 //----------------------------------------------------------------//
@@ -686,13 +677,6 @@ void MOAIGraphicsProp::OnDepNodeUpdate () {
 	
 	bool visible = ZLFloat::ToBoolean ( this->GetLinkedValue ( MOAIGraphicsPropAttr::Pack ( INHERIT_VISIBLE ), 1.0f ));
 	this->mFlags = visible && ( this->mFlags & FLAGS_LOCAL_VISIBLE ) ? this->mFlags | FLAGS_VISIBLE : this->mFlags & ~FLAGS_VISIBLE ;	
-	// if( this->mFlags && FLAGS_VISIBLE == 0 ) {
-	// 	//remove mask CAN_DRAW
-	// 	this->SetMask( 0 );
-	// }	else {
-	// 	//restore mask CAN_DRAW
-	// 	this->SetMask( MOAIProp::CAN_DRAW | MOAIProp::CAN_DRAW_DEBUG );
-	// }
 }
 
 //----------------------------------------------------------------//
@@ -764,6 +748,7 @@ void MOAIGraphicsProp::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAIColor::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
+		{ "getTexture",			_getTexture },
 		{ "isVisible",			_isVisible },
 		{ "setBillboard",		_setBillboard },
 		{ "setBlendEquation",	_setBlendEquation },

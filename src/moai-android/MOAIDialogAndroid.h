@@ -10,8 +10,8 @@
 // MOAIDialogAndroid
 //================================================================//
 /**	@name	MOAIDialogAndroid
-	@text	Wrapper for a simple native dialog implementation on
-			Android devices. Exposed to lua via MOAIDialog on all
+	@text	Wrapper for a simple native dialog implementation on 
+			Android devices. Exposed to Lua via MOAIDialog on all 
 			mobile platforms.
 
 	@const	DIALOG_RESULT_POSITIVE	Result code when the dialog is dismissed by pressing the positive button.

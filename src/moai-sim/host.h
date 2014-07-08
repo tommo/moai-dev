@@ -17,8 +17,10 @@ enum {
 // Callbacks
 typedef void ( *AKUEnterFullscreenModeFunc )	();
 typedef void ( *AKUExitFullscreenModeFunc )		();
+typedef void ( *AKUHideCursorFunc )				();
 typedef void ( *AKUOpenWindowFunc )				( const char* title, int width, int height );
 typedef void ( *AKUSetSimStepFunc )				( double step );
+typedef void ( *AKUShowCursorFunc )				();
 
 // setup
 AKU_API void			AKUSimAppFinalize				();
@@ -41,6 +43,8 @@ AKU_API void			AKUUpdate						();
 // callback management
 AKU_API void			AKUSetFunc_EnterFullscreenMode	( AKUEnterFullscreenModeFunc func );
 AKU_API void			AKUSetFunc_ExitFullscreenMode	( AKUExitFullscreenModeFunc func );
+AKU_API void			AKUSetFunc_ShowCursor			( AKUShowCursorFunc func );
+AKU_API void			AKUSetFunc_HideCursor			( AKUHideCursorFunc func );
 AKU_API void			AKUSetFunc_OpenWindow			( AKUOpenWindowFunc func );
 AKU_API void			AKUSetFunc_SetSimStep			( AKUSetSimStepFunc func );
 
@@ -49,10 +53,12 @@ AKU_API void			AKUReserveInputDevices			( int total );
 AKU_API void			AKUReserveInputDeviceSensors	( int deviceID, int total );
 AKU_API void			AKUSetInputConfigurationName	( char const* name );
 AKU_API void			AKUSetInputDevice				( int deviceID, char const* name );
+AKU_API void			AKUSetInputDeviceHardwareInfo	( int deviceID, char const* hardwareInfo );
 AKU_API void			AKUSetInputDeviceActive			( int deviceID, bool active );
 AKU_API void			AKUSetInputDeviceButton			( int deviceID, int sensorID, char const* name );
 AKU_API void			AKUSetInputDeviceCompass		( int deviceID, int sensorID, char const* name );
 AKU_API void			AKUSetInputDeviceKeyboard		( int deviceID, int sensorID, char const* name );
+AKU_API void			AKUSetInputDeviceJoystick		( int deviceID, int sensorID, char const* name );
 AKU_API void			AKUSetInputDeviceLevel			( int deviceID, int sensorID, char const* name );
 AKU_API void			AKUSetInputDeviceLocation		( int deviceID, int sensorID, char const* name );
 AKU_API void			AKUSetInputDevicePointer		( int deviceID, int sensorID, char const* name );
@@ -64,6 +70,7 @@ AKU_API void			AKUSetInputTimestamp			( double timestamp ); // optional: sets ti
 // input events api
 AKU_API void			AKUEnqueueButtonEvent			( int deviceID, int sensorID, bool down );
 AKU_API void			AKUEnqueueCompassEvent			( int deviceID, int sensorID, float heading );
+AKU_API void			AKUEnqueueJoystickEvent			( int deviceID, int sensorID, float x, float y );
 AKU_API void			AKUEnqueueKeyboardAltEvent		( int deviceID, int sensorID, bool down );
 AKU_API void			AKUEnqueueKeyboardControlEvent	( int deviceID, int sensorID, bool down );
 AKU_API void			AKUEnqueueKeyboardEvent			( int deviceID, int sensorID, int keyID, bool down );

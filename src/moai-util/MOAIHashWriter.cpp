@@ -11,11 +11,11 @@
 //----------------------------------------------------------------//
 /**	@name	close
 	@text	Flush any remaining buffered data and detach the target stream.
-			(This only detatches the target from the formatter; it does
+			(This only detaches the target from the formatter; it does
 			not also close the target stream). Return the hash as a hex
 			string.
 	
-	@in		MOAIStreamWriter self
+	@in		MOAIHashWriter self
 	@out	string hash
 */
 int MOAIHashWriter::_close ( lua_State* L ) {
@@ -95,7 +95,7 @@ int MOAIHashWriter::_getHashHex ( lua_State* L ) {
 	@text	Open a Adler32 hash stream for writing. (i.e. compute Adler32
 			hash of data while writing)
 	
-	@in		MOAIStreamWriter self
+	@in		MOAIHashWriter self
 	@opt	MOAIStream target
 	@out	boolean success
 */
@@ -108,7 +108,7 @@ int MOAIHashWriter::_openAdler32 ( lua_State* L ) {
 	@text	Open a CRC32 hash stream for writing. (i.e. compute CRC32
 			hash of data while writing)
 	
-	@in		MOAIStreamWriter self
+	@in		MOAIHashWriter self
 	@opt	MOAIStream target
 	@out	boolean success
 */
@@ -123,7 +123,7 @@ int MOAIHashWriter::_openCRC32 ( lua_State* L ) {
 	@text	Open a CRC32b hash stream for writing. (i.e. compute CRC32b
 			hash of data while writing)
 	
-	@in		MOAIStreamWriter self
+	@in		MOAIHashWriter self
 	@opt	MOAIStream target
 	@out	boolean success
 */
@@ -138,7 +138,7 @@ int MOAIHashWriter::_openCRC32b ( lua_State* L ) {
 	@text	Open a Whirlpool hash stream for writing. (i.e. compute Whirlpool
 			hash of data while writing)
 	
-	@in		MOAIStreamWriter self
+	@in		MOAIHashWriter self
 	@opt	MOAIStream target
 	@out	boolean success
 */

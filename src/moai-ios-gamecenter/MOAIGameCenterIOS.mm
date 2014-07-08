@@ -25,10 +25,10 @@ int MOAIGameCenterIOS::_authenticatePlayer ( lua_State* L ) {
 	MOAILuaState state ( L );
 	
 	// TODO: investigate copy constructor support for MOAILuaStrongRef
-	MOAILuaStrongRef& onAuthenticate = *( new MOAILuaStrongRef ()); // wow this is hideous
-	if ( state.IsType ( 1, LUA_TFUNCTION )) {
-		onAuthenticate.SetRef ( state, 1 );
-	}
+	//MOAILuaStrongRef& onAuthenticate = *( new MOAILuaStrongRef ()); // wow this is hideous
+	//if ( state.IsType ( 1, LUA_TFUNCTION )) {
+	//	onAuthenticate.SetRef ( state, 1 );
+	//}
 	
 	// Check for presence of GKLocalPlayer class.
     BOOL localPlayerClassAvailable = ( NSClassFromString ( @"GKLocalPlayer" )) != nil;
@@ -56,13 +56,13 @@ int MOAIGameCenterIOS::_authenticatePlayer ( lua_State* L ) {
 			}
 			
 			// TODO: investigate copy constructor support for MOAILuaState
-			MOAILuaState localState ( L );
-			if ( onAuthenticate ) {
-				onAuthenticate.PushRef ( localState );
-				localState.Push ( success );
-				localState.DebugCall ( 1, 0 );
-			}
-			delete ( &onAuthenticate ); // really? :/
+			//MOAILuaState localState ( L );
+			//if ( onAuthenticate ) {
+			//	onAuthenticate.PushRef ( localState );
+			//	localState.Push ( success );
+			//	localState.DebugCall ( 1, 0 );
+			//}
+			//delete ( &onAuthenticate ); // really? :/
 		 }];
 	}	
 	
@@ -130,7 +130,7 @@ int MOAIGameCenterIOS::_getScores ( lua_State* L ) {
 		
             if ( error != nil ) {
 	
-				printf ( "Error in getting leaderboard scores: %d\n", [ error code ]);
+				printf ( "Error in getting leaderboard scores: %ld\n", ( long )[ error code ]);
             }
             if ( scores != nil ) {
 	
@@ -427,7 +427,7 @@ void MOAIGameCenterIOS::ReportAchievementProgress ( cc8* identifier, float perce
 			
 			[ achievement reportAchievementWithCompletionHandler:^( NSError *error ) {
 				if ( error != nil ) {
-					printf ( "Error in achievement reporting: %d", [ error code ]);
+					printf ( "Error in achievement reporting: %ld", ( long )[ error code ]);
 					// TODO: Save off achievement for later if network error
 				}
 			}];
@@ -447,7 +447,7 @@ void MOAIGameCenterIOS::ReportScore ( s64 score, cc8* category ) {
 		[ scoreReporter reportScoreWithCompletionHandler: ^( NSError *error ) {
 			if ( error != nil ) {
 				
-				printf ( "Error in score reporting: %d", [ error code ]);
+				printf ( "Error in score reporting: %ld", ( long )[ error code ]);
 				// TODO: Save off score for later if network error
 			}
 		}];

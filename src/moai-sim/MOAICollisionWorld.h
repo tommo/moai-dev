@@ -4,9 +4,14 @@
 #ifndef	MOAICOLLISIONWORLD_H
 #define	MOAICOLLISIONWORLD_H
 
+#include <moai-sim/MOAIAction.h>
+#include <moai-sim/MOAICollisionFacet.h>
 #include <moai-sim/MOAIPartition.h>
+#include <moai-sim/MOAIRenderable.h>
 
-class MOAICollisionProp;
+class MOAICollisionFacet;
+class MOAIOverlapInfo;
+class MOAIProp;
 
 //================================================================//
 // MOAICollisionWorld
@@ -17,16 +22,11 @@ class MOAICollisionWorld :
 	public MOAIRenderable {
 private:
 
-	enum {
-		OVERLAP_PASS_INIT	= 0x01,
-		OVERLAP_PASS_XOR	= 0x03,
-	};
-
 	bool	mUpdated;
 	u32		mOverlapPass;
 
-	typedef ZLLeanList < MOAICollisionProp* >::Iterator ActiveListIt;
-	ZLLeanList < MOAICollisionProp* > mActiveList;
+	typedef ZLLeanList < MOAICollisionFacet* >::Iterator ActiveListIt;
+	ZLLeanList < MOAICollisionFacet* > mActiveList;
 	
 	typedef ZLLeanList < MOAIPropOverlap* >::Iterator OverlapListIt;
 	ZLLeanList < MOAIPropOverlap* > mOverlapList;
@@ -36,22 +36,26 @@ private:
 	MOAILuaStrongRef mCallback;
 
 	//----------------------------------------------------------------//
+	static int			_processOverlaps		( lua_State* L );
 	static int			_setCallback			( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void				ClearOverlaps			( MOAICollisionProp& prop );
-	void				DoCallback				( u32 eventID, MOAICollisionProp& prop0, MOAICollisionProp& prop1 );
-	void				DoCallback				( u32 eventID, MOAICollisionProp& prop0, MOAICollisionProp& prop1, const ZLBox& overlap );
-	bool				GetOverlap				( MOAICollisionProp& prop0, MOAICollisionProp& prop1, ZLBox& bounds );
-	void				HandleOverlap			( MOAICollisionProp& prop0, MOAICollisionProp& prop1, const ZLBox& bounds );
+	void				AffirmOverlap			( MOAICollisionFacet& facet0, MOAICollisionFacet& facet1, const MOAIOverlapInfo& overlapInfo );
+	void				ClearOverlap			( MOAICollisionFacet& facet0, MOAICollisionFacet& facet1 );
+	void				ClearOverlaps			( MOAICollisionFacet& facet );
+	void				DoCallback				( u32 eventID, MOAICollisionFacet& facet0, MOAICollisionFacet& facet1 );
+	void				DoCallback				( u32 eventID, MOAICollisionFacet& facet0, MOAICollisionFacet& facet1, const MOAIOverlapInfo& overlapInfo );
+	void				DrawFacet				( MOAICollisionFacet& facet );
 	bool				IsDone					();
-	void				MakeActive				( MOAICollisionProp& prop );
-	void				MakeInactive			( MOAICollisionProp& prop );
+	void				InvalidateOverlaps		( MOAICollisionFacet& facet, u32 nextPass );
+	void				MakeActive				( MOAICollisionFacet& facet0 );
+	void				MakeInactive			( MOAICollisionFacet& facet0 );
 	void				OnPropInserted			( MOAIProp& prop );	
 	void				OnPropRemoved			( MOAIProp& prop );	
 	void				OnPropUpdated			( MOAIProp& prop );
 	void				OnUpdate				( float step );
 	void				ProcessOverlaps			();
+	void				PruneOverlaps			( MOAICollisionFacet& facet );
 	void				Render					();
 
 public:
@@ -62,6 +66,10 @@ public:
 		OVERLAP_BEGIN,
 		OVERLAP_END,
 		OVERLAP_UPDATE,
+	};
+	
+	enum {
+		OVERLAP_PASS_INIT	= 0,
 	};
 	
 	//----------------------------------------------------------------//

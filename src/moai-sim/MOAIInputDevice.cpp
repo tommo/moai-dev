@@ -16,6 +16,19 @@
 #include <moai-sim/MOAIWheelSensor.h>
 
 //================================================================//
+// lua
+//================================================================//
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIInputDevice::_getHardwareInfo ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIInputDevice, "U" )
+	
+	lua_pushstring(state, self->mHardwareInfo.c_str ());
+	return 1;
+}
+
+//================================================================//
 // MOAIInputDevice
 //================================================================//
 
@@ -47,6 +60,7 @@ MOAIInputDevice::~MOAIInputDevice () {
 void MOAIInputDevice::RegisterLuaClass ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
+		{ "getHardwareInfo",		_getHardwareInfo },
 		{ "new",					MOAILogMessages::_alertNewIsUnsupported },
 		{ NULL, NULL }
 	};
@@ -75,6 +89,12 @@ void MOAIInputDevice::ResetSensors () {
 			sensor->Reset ();
 		}
 	}
+}
+
+//----------------------------------------------------------------//
+void MOAIInputDevice::SetHardwareInfo ( cc8* hardwareInfo ) {
+
+	this->mHardwareInfo = hardwareInfo;
 }
 
 //----------------------------------------------------------------//

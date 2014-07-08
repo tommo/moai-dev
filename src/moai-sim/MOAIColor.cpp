@@ -10,10 +10,18 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
+/**	@name	getColor
+	@text	Return the color.
+	
+	@in		MOAIProp self
+	@out	number rDelta
+	@out	number gDelta
+	@out	number bDelta
+	@out	number aDelta
+*/
 int MOAIColor::_getColor ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIColor, "U" )
-	
+
 	state.Push ( self->mR );
 	state.Push ( self->mG );
 	state.Push ( self->mB );
@@ -203,6 +211,12 @@ bool MOAIColor::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 ZLColorVec MOAIColor::GetColorTrait () {
 
 	return this->mColor;
+}
+
+//----------------------------------------------------------------//
+bool MOAIColor::IsClear () {
+
+	return this->mColor.IsClear ();
 }
 
 //----------------------------------------------------------------//

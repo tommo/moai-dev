@@ -28,6 +28,8 @@ namespace ZLColor {
 	void			Convert				( void* dest, Format destFmt, const void* src, Format srcFmt, u32 nColors );
 	u32				ConvertFromRGBA		( u32 color, Format format );
 	u32				ConvertToRGBA		( u32 color, Format format );
+	void			Desaturate			( void* colors, Format format, u32 nColors, float K );
+	void			GammaCorrection		( void* colors, Format format, u32 nColors, float gamma );	
 	u32				GetDepth			( Format format );
 	u32				GetMask				( Format format );
 	u32				GetSize				( Format format );
@@ -80,6 +82,7 @@ public:
 	void			FromHSV				( float h, float s, float v );
 	void			FromYUV				( float y, float u, float v);
 	float			GetLuma				() const;
+	bool			IsClear				();
 	void			Lerp				( u32 mode, const ZLColorVec& v0, const ZLColorVec& v1, float t );
 	void			Modulate			( const ZLColorVec& v0 );
 	u32				PackRGBA			() const;
@@ -91,6 +94,36 @@ public:
 	void			ToYUV				( float& y, float& u, float& v );
 					ZLColorVec			();
 					ZLColorVec			( float r, float g, float b, float a );
+	bool operator!=(const ZLColorVec &other) const {
+		return ((this->mR != other.mR) ||
+		        (this->mG != other.mG) ||
+		        (this->mB != other.mB) ||
+		        (this->mA != other.mA));
+	}
+	ZLColorVec operator*(const ZLColorVec &other) const {
+		return ZLColorVec(this->mR * other.mR,
+		        	  this->mG * other.mG,
+		        	  this->mB * other.mB,
+		        	  this->mA * other.mA);
+	}
+	ZLColorVec ScaleColor(const float other) const {
+		return ZLColorVec(this->mR * other,
+		        	  this->mG * other,
+		        	  this->mB * other,
+		        	  this->mA);
+	}
+	ZLColorVec ScaleAlpha(const float other) const {
+		return ZLColorVec(this->mR,
+		        	  this->mG,
+		        	  this->mB,
+		        	  this->mA * other);
+	}
+	ZLColorVec operator*(const float other) const {
+		return ZLColorVec(this->mR * other,
+		        	  this->mG * other,
+		        	  this->mB * other,
+		        	  this->mA);
+	}
 };
 
 #endif

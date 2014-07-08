@@ -11,6 +11,7 @@
 
 #import <moai-sim/headers.h>
 
+
 //-----------------------------------------------------------------//
 void AKUAppDidStartSession ( bool resumed ) {
 
@@ -83,8 +84,7 @@ void AKUIphoneInit ( UIApplication* application ) {
 	REGISTER_LUA_CLASS ( MOAIBillingIOS )
 	REGISTER_LUA_CLASS ( MOAIDialogIOS )
 	REGISTER_LUA_CLASS ( MOAIGameCenterIOS )
-	REGISTER_LUA_CLASS ( MOAIKeyboardIOS )
-	REGISTER_LUA_CLASS ( MOAIMobileAppTrackerIOS )
+	REGISTER_LUA_CLASS ( MOAIKeyboardIOS )		
 	REGISTER_LUA_CLASS ( MOAIMoviePlayerIOS )
 	REGISTER_LUA_CLASS ( MOAIBrowserIOS )
 	REGISTER_LUA_CLASS ( MOAIWebViewIOS )
@@ -95,6 +95,10 @@ void AKUIphoneInit ( UIApplication* application ) {
 	
 	#ifndef DISABLE_TAPJOY
 		REGISTER_LUA_CLASS ( MOAITapjoyIOS )
+	#endif
+
+	#ifndef DISABLE_MOBILEAPPTRACKER
+		REGISTER_LUA_CLASS ( MOAIMobileAppTrackerIOS )
 	#endif
 
 	#ifndef DISABLE_NOTIFICATIONS
@@ -116,9 +120,17 @@ void AKUIphoneInit ( UIApplication* application ) {
 	#ifndef DISABLE_PLAYHAVEN
 		//REGISTER_LUA_CLASS ( MOAIPlayhavenIOS )
 	#endif
-		
-	REGISTER_LUA_CLASS ( MOAIHttpTaskNSURL )
-	MOAIUrlMgrNSURL::Affirm ();
+	
+	#ifndef DISABLE_CHARTBOOST
+	   MOAIChartBoostIOS::Affirm();
+	   REGISTER_LUA_CLASS ( MOAIChartBoostIOS );
+	
+	#endif
+	
+	#if MOAI_WITH_HTTP_CLIENT	
+		REGISTER_LUA_CLASS ( MOAIHttpTaskNSURL )
+		MOAIUrlMgrNSURL::Affirm ();
+	#endif
 		
 	// Device properties
 	MOAIEnvironment& environment = MOAIEnvironment::Get ();
@@ -131,12 +143,10 @@ void AKUIphoneInit ( UIApplication* application ) {
 	environment.SetValue ( MOAI_ENV_cacheDirectory,		[[ NSSearchPathForDirectoriesInDomains ( NSCachesDirectory, NSUserDomainMask, YES ) objectAtIndex:0 ] UTF8String ]);
 	environment.SetValue ( MOAI_ENV_countryCode,		[[[ NSLocale currentLocale ] objectForKey: NSLocaleCountryCode ] UTF8String ]);
 	environment.SetValue ( MOAI_ENV_devModel,			[[ UIDevice currentDevice ].model UTF8String ] );
+    environment.SetValue ( MOAI_ENV_devName,			[[ UIDevice currentDevice ].name UTF8String ] );
 
 	//AJV TODO: checking with HBS on intention here
 	//environment.SetValue ( MOAI_ENV_devPlatform,		[[ UIDevice currentDevice ].platform UTF8String ]);
-	environment.SetValue ( MOAI_ENV_documentDirectory,	[[ NSSearchPathForDirectoriesInDomains ( NSDocumentDirectory, NSUserDomainMask, YES ) objectAtIndex:0 ] UTF8String ]);
-	environment.SetValue ( MOAI_ENV_iosRetinaDisplay,	[[ UIScreen mainScreen ] scale ] == 2.0 );
-
 	environment.SetValue ( MOAI_ENV_documentDirectory,	[[ NSSearchPathForDirectoriesInDomains ( NSDocumentDirectory, NSUserDomainMask, YES ) objectAtIndex:0 ] UTF8String ]);
 	environment.SetValue ( MOAI_ENV_iosRetinaDisplay,	[[ UIScreen mainScreen ] scale ] == 2.0 );	
 	environment.SetValue ( MOAI_ENV_languageCode,		[[[ NSLocale currentLocale ] objectForKey: NSLocaleLanguageCode ] UTF8String ]);

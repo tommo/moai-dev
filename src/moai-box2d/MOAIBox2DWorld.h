@@ -13,6 +13,7 @@ class MOAIBox2DDebugDraw;
 class MOAIBox2DFixture;
 class MOAIBox2DJoint;
 class MOAIBox2DWorld;
+class MOAIBox2DRayCastCallback;
 
 //================================================================//
 // MOAIBox2DPrim
@@ -21,10 +22,10 @@ class MOAIBox2DPrim :
 	public virtual MOAILuaObject  {
 protected:
 
-	MOAIBox2DWorld* mWorld;
+	MOAIBox2DWorld*		mWorld;
 	
-	bool			mDestroy;
-	MOAIBox2DPrim*	mDestroyNext;
+	bool				mDestroy;
+	MOAIBox2DPrim*		mDestroyNext;
 
 	//----------------------------------------------------------------//
 	
@@ -40,8 +41,8 @@ public:
 					MOAIBox2DPrim			();
 	
 	//----------------------------------------------------------------//
-	inline bool IsDestroyed () {
-		return this->mDestroy;
+	inline bool IsValid () {
+		return this->mWorld != NULL;
 	}
 };
 
@@ -85,6 +86,7 @@ private:
 	static int		_addDistanceJoint			( lua_State* L );
 	static int		_addFrictionJoint			( lua_State* L );
 	static int		_addGearJoint				( lua_State* L );
+	static int 		_addMotorJoint				( lua_State* L );
 	static int		_addMouseJoint				( lua_State* L );
 	static int		_addPrismaticJoint			( lua_State* L );
 	static int		_addPulleyJoint				( lua_State* L );
@@ -96,6 +98,7 @@ private:
 	static int		_getAutoClearForces			( lua_State* L );
 	static int		_getGravity					( lua_State* L );
 	static int		_getLinearSleepTolerance	( lua_State* L );
+	static int		_getRayCast					( lua_State* L );
 	static int		_getTimeToSleep				( lua_State* L );
 	static int		_setAngularSleepTolerance	( lua_State* L );
 	static int		_setAutoClearForces			( lua_State* L );

@@ -50,8 +50,8 @@ int MOAITextLabel::_clearHighlights ( lua_State* L ) {
 	@text	Returns the alignment of the text
 
 	@in		MOAITextLabel self
-	@out	enum horizontal alignment
-	@out	enum vertical alignment
+	@out	number hAlign			horizontal alignment
+	@out	number vAlign			vertical alignment
 */
 int MOAITextLabel::_getAlignment ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextLabel, "U" )
@@ -165,13 +165,20 @@ int MOAITextLabel::_getStyle ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO:
+/**	@name	getText
+	@text	Return the text string.
+
+	@in		MOAITextLabel self
+	@out	string text				Text string.
+*/
 int MOAITextLabel::_getText ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextLabel, "U" )
 
-	state.Push ( self->mText );
-
-	return 1;
+	if ( self->mText ) {
+		lua_pushstring ( state, self->mText );
+		return 1;
+	}
+	return 0;
 }
 
 //----------------------------------------------------------------//
@@ -239,6 +246,7 @@ int MOAITextLabel::_more ( lua_State* L ) {
 	@text	Advances to the next page of text (if any) or wraps to the start of the text (if at end).
 
 	@in		MOAITextLabel self
+	@opt	boolean reveal		Default is true
 	@out	nil
 */
 int MOAITextLabel::_nextPage ( lua_State* L ) {
@@ -288,8 +296,8 @@ int MOAITextLabel::_revealAll ( lua_State* L ) {
 	@text	Sets the horizontal and/or vertical alignment of the text in the text box.
 
 	@in		MOAITextLabel self
-	@in		enum hAlignment				Can be one of LEFT_JUSTIFY, CENTER_JUSTIFY or RIGHT_JUSTIFY.
-	@in		enum vAlignment				Can be one of TOP_JUSTIFY, CENTER_JUSTIFY, BOTTOM_JUSTIFY or BASELINE_JUSTIFY.
+	@in		number hAlignment				Can be one of LEFT_JUSTIFY, CENTER_JUSTIFY or RIGHT_JUSTIFY.
+	@in		number vAlignment				Can be one of TOP_JUSTIFY, CENTER_JUSTIFY, BOTTOM_JUSTIFY or BASELINE_JUSTIFY.
 	@out	nil
 */
 int MOAITextLabel::_setAlignment ( lua_State* L ) {
@@ -326,6 +334,7 @@ int MOAITextLabel::_setAutoFlip ( lua_State* L ) {
 	@overload
 		
 		@in		MOAITextLabel self
+		@out	nil
 */
 int MOAITextLabel::_setCurve ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextLabel, "U" )
@@ -377,12 +386,14 @@ int MOAITextLabel::_setGlyphScale ( lua_State* L ) {
 		@in		number g
 		@in		number b
 		@opt	number a			Default value is 1.
+	@out	nil
 	
 	@overload
 		
 		@in		MOAITextLabel self
 		@in		number index		Index of the first character in the substring.
 		@in		number size			Length of the substring.
+		@out	nil
 */
 int MOAITextLabel::_setHighlight ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextLabel, "UNN" )
@@ -404,12 +415,35 @@ int MOAITextLabel::_setHighlight ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setLineSnap
+	@text	Sets the snapping boundary for lines of text. Only applied during layout and in the
+			text label's local space.
+
+	@in		MOAITextLabel self
+	@opt	number hLineSnap
+	@opt	number vLineSnap			Default value is hLineSnap.
+	@out	nil
+*/
+int MOAITextLabel::_setLineSnap ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextLabel, "U" )
+	
+	float hLineSnap = state.GetValue < float >( 2, 0.0f );
+	float vLineSnap = state.GetValue < float >( 3, hLineSnap );
+	
+	self->mDesigner.SetHLineSnap ( hLineSnap );
+	self->mDesigner.SetVLineSnap ( vLineSnap );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	setLineSpacing
 	@text	Sets additional space between lines in text units. '0' uses
-			the default spacing. Value must be positive.
+			the default spacing.
 
 	@in		MOAITextLabel self
 	@in		number lineSpacing		Default value is 0.
+	@out	nil
 */
 int MOAITextLabel::_setLineSpacing ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextLabel, "U" )
@@ -452,8 +486,8 @@ int MOAITextLabel::_setRect ( lua_State* L ) {
 	@text	Toggles width/height constraints based on the rect.
 
 	@in		MOAITextLabel self
-	@opt	bool limitWidth		Limit text to the rect's width. Default value is 'false'.
-	@opt	bool limitHeight	Limit text to the rect's height. Default value is 'false'.
+	@opt	boolean limitWidth		Limit text to the rect's width. Default value is 'false'.
+	@opt	boolean limitHeight		Limit text to the rect's height. Default value is 'false'.
 	@out	nil
 */
 int MOAITextLabel::_setRectLimits ( lua_State* L ) {
@@ -581,7 +615,7 @@ int MOAITextLabel::_setWordBreak ( lua_State* L ) {
 			Y moves up the screen).
 
 	@in		MOAITextLabel self
-	@in		number yFlip				Whether the vertical rendering direction should be inverted.
+	@in		boolean yFlip				Whether the vertical rendering direction should be inverted.
 	@out	nil
 */
 int MOAITextLabel::_setYFlip ( lua_State* L ) {
@@ -706,7 +740,7 @@ void MOAITextLabel::Draw ( int subPrimID, float lod ) {
 		if ( !this->mShader ) {
 			// TODO: this should really come from MOAIFont, which should really be a
 			// specialized implementation of MOAIDeck...
-			gfxDevice.SetShaderPreset ( MOAIShaderMgr::FONT_SHADER );
+			gfxDevice.SetShaderPreset ( MOAIShaderMgr::FONT_SNAPPING_SHADER );
 		}
 
 		gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
@@ -970,6 +1004,7 @@ void MOAITextLabel::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setAutoFlip",			_setAutoFlip },
 		{ "setCurve",				_setCurve },
 		{ "setGlyphScale",			_setGlyphScale },
+		{ "setLineSnap",			_setLineSnap },
 		{ "setLineSpacing",			_setLineSpacing },
 		{ "setHighlight",			_setHighlight },
 		{ "setReveal",				_setReveal },

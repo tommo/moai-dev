@@ -18,7 +18,7 @@
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DFrictionJoint self
-	@out	number maxForce in kg * units / s^2, converted from N [kg * m / s^2].
+	@out	number maxForce					in kg * units / s^2, converted from N [kg * m / s^2].
 */
 int MOAIBox2DFrictionJoint::_getMaxForce ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DFrictionJoint, "U" )
@@ -135,10 +135,10 @@ void MOAIBox2DFrictionJoint::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAIBox2DJoint::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
-		{ "_getMaxForce",			_getMaxForce },
-		{ "_getMaxTorque",			_getMaxTorque },
-		{ "_setMaxForce",			_setMaxForce },
-		{ "_setMaxTorque",			_setMaxTorque },
+		{ "getMaxForce",			_getMaxForce },
+		{ "getMaxTorque",			_getMaxTorque },
+		{ "setMaxForce",			_setMaxForce },
+		{ "setMaxTorque",			_setMaxTorque },
 		{ NULL, NULL }
 	};
 	

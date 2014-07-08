@@ -15,7 +15,7 @@
  @text	Returns the current volume of the channel.
  
  @in	MOAIFmodExChannel self
- @out	float Volume - the volume currently set in this channel.
+ @out	number volume				the volume currently set in this channel.
  */
 int MOAIFmodExChannel::_getVolume ( lua_State* L ) {
 	
@@ -46,7 +46,7 @@ int MOAIFmodExChannel::_getPosition ( lua_State* L ) {
  @text	Returns true if channel is playing.
  
  @in	MOAIFmodExChannel self
- @out	boolean.
+ @out	boolean
  */
 int MOAIFmodExChannel::_isPlaying ( lua_State* L ) {
 	
@@ -96,7 +96,7 @@ int MOAIFmodExChannel::_moveVolume ( lua_State* L ) {
 
 	@in		MOAIFmodExChannel self
 	@in		MOAIFmodExSound sound		The sound to play.
-	@in		boolean loop			Whether the sound should be looped.
+	@in		number loopCount			Number of loops.
 	@out	nil
 */
 int MOAIFmodExChannel::_play ( lua_State* L ) {

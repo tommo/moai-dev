@@ -46,7 +46,7 @@ void AKUSimContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAICamera )
 	REGISTER_LUA_CLASS ( MOAICameraAnchor2D )
 	REGISTER_LUA_CLASS ( MOAICameraFitter2D )
-	REGISTER_LUA_CLASS ( MOAICollisionProp )
+	REGISTER_LUA_CLASS ( MOAICollisionFacet )
 	REGISTER_LUA_CLASS ( MOAICollisionWorld )
 	REGISTER_LUA_CLASS ( MOAIColor )
 	REGISTER_LUA_CLASS ( MOAICompassSensor )
@@ -68,6 +68,7 @@ void AKUSimContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAIGridDeck2D )
 	REGISTER_LUA_CLASS ( MOAIGridSpace )
 	REGISTER_LUA_CLASS ( MOAIGridPathGraph )
+	REGISTER_LUA_CLASS ( MOAIGridFancy )
 	REGISTER_LUA_CLASS ( MOAIImage )
 	REGISTER_LUA_CLASS ( MOAIImageTexture )
 	REGISTER_LUA_CLASS ( MOAIIndexBuffer )
@@ -76,7 +77,6 @@ void AKUSimContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAIJoystickSensor )
 	REGISTER_LUA_CLASS ( MOAIKeyboardSensor )
 	REGISTER_LUA_CLASS ( MOAILayer )
-	REGISTER_LUA_CLASS ( MOAIPinTransform )
 	//REGISTER_LUA_CLASS ( MOAILayoutFrame )
 	REGISTER_LUA_CLASS ( MOAILocationSensor )
 	REGISTER_LUA_CLASS ( MOAIMesh )
@@ -92,6 +92,7 @@ void AKUSimContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAIPartition )
 	REGISTER_LUA_CLASS ( MOAIPathFinder )
 	REGISTER_LUA_CLASS ( MOAIPathTerrainDeck )
+	REGISTER_LUA_CLASS ( MOAIPinTransform )
 	REGISTER_LUA_CLASS ( MOAIPointerSensor )
 	//REGISTER_LUA_CLASS ( MOAIProfilerReportBox )
 	REGISTER_LUA_CLASS ( MOAIRenderMgr )
@@ -153,6 +154,12 @@ void AKUEnqueueButtonEvent ( int deviceID, int sensorID, bool down ) {
 void AKUEnqueueCompassEvent ( int deviceID, int sensorID, float heading ) {
 
 	MOAIInputMgr::Get ().EnqueueCompassEvent (( u8 )deviceID, ( u8 )sensorID, heading );
+}
+
+//----------------------------------------------------------------//
+void AKUEnqueueJoystickEvent( int deviceID, int sensorID, float x, float y ) {
+
+	MOAIInputMgr::Get ().EnqueueJoystickEvent(( u8 )deviceID, ( u8 )sensorID, x, y );
 }
 
 //----------------------------------------------------------------//
@@ -245,6 +252,12 @@ void AKURender () {
 }
 
 //----------------------------------------------------------------//
+void AKUSetFunc_HideCursor ( AKUHideCursorFunc func ) {
+
+	MOAISim::Get ().SetHideCursorFunc ( func );
+}
+
+//----------------------------------------------------------------//
 void AKUReserveInputDevices ( int total ) {
 
 	MOAIInputMgr::Get ().ReserveDevices (( u8 )total );
@@ -293,6 +306,12 @@ void AKUSetInputDevice ( int deviceID, char const* name ) {
 }
 
 //----------------------------------------------------------------//
+void AKUSetInputDeviceHardwareInfo ( int deviceID, char const* hardwareInfo ) {
+
+	MOAIInputMgr::Get ().SetDeviceHardwareInfo (( u8 )deviceID, hardwareInfo );
+}
+
+//----------------------------------------------------------------//
 void AKUSetInputDeviceActive ( int deviceID, bool active ) {
 
 	MOAIInputMgr::Get ().SetDeviceActive (( u8 )deviceID, active );
@@ -314,6 +333,12 @@ void AKUSetInputDeviceCompass ( int deviceID, int sensorID, char const* name ) {
 void AKUSetInputDeviceKeyboard ( int deviceID, int sensorID, char const* name ) {
 
 	MOAIInputMgr::Get ().SetSensor (( u8 )deviceID, ( u8 )sensorID, name, MOAISensor::KEYBOARD );
+}
+
+//----------------------------------------------------------------//
+void AKUSetInputDeviceJoystick ( int deviceID, int sensorID, char const* name ) {
+
+	MOAIInputMgr::Get ().SetSensor (( u8 )deviceID, ( u8 )sensorID, name, MOAISensor::JOYSTICK );
 }
 
 //----------------------------------------------------------------//
@@ -396,6 +421,12 @@ void AKUSetViewSize ( int width, int height ) {
 			state.DebugCall ( 2, 0 );
 		}
 	}
+}
+
+//----------------------------------------------------------------//
+void AKUSetFunc_ShowCursor ( AKUShowCursorFunc func ) {
+
+	MOAISim::Get ().SetShowCursorFunc ( func );
 }
 
 //----------------------------------------------------------------//

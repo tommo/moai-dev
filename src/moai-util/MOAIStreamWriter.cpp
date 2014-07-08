@@ -11,7 +11,7 @@
 //----------------------------------------------------------------//
 /**	@name	close
 	@text	Flush any remaining buffered data and detach the target stream.
-			(This only detatches the target from the formatter; it does
+			(This only detaches the target from the formatter; it does
 			not also close the target stream).
 	
 	@in		MOAIStreamWriter self
@@ -56,6 +56,8 @@ int MOAIStreamWriter::_openBase64 ( lua_State* L ) {
 	
 	@in		MOAIStreamWriter self
 	@in		MOAIStream target
+	@opt	number level			The level used in the DEFLATE algorithm.
+	@opt	number windowBits		The window bits used in the DEFLATE algorithm.
 	@out	boolean success
 */
 int MOAIStreamWriter::_openDeflate ( lua_State* L ) {

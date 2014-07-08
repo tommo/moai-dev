@@ -78,7 +78,7 @@ int MOAIPathTerrainDeck::_setMask ( lua_State* L ) {
 
 	@in		MOAIPathTerrainDeck self
 	@in		number idx
-	@in		...
+	@in		float... values
 	@out	nil
 */
 int MOAIPathTerrainDeck::_setTerrainVec ( lua_State* L ) {
@@ -104,7 +104,7 @@ int MOAIPathTerrainDeck::_setTerrainVec ( lua_State* L ) {
 /**	@name	reserve
 	@text	Allocates terrain vectors.
 
-	Pin		MOAIPathTerrainDeck self
+	@in		MOAIPathTerrainDeck self
 	@in		number deckSize
 	@in		number terrainVecSize
 	@out	nil

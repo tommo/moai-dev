@@ -20,7 +20,7 @@
 #include <moai-sim/MOAICamera.h>
 #include <moai-sim/MOAICameraAnchor2D.h>
 #include <moai-sim/MOAICameraFitter2D.h>
-#include <moai-sim/MOAICollisionProp.h>
+#include <moai-sim/MOAICollisionFacet.h>
 #include <moai-sim/MOAICollisionShape.h>
 #include <moai-sim/MOAICollisionWorld.h>
 #include <moai-sim/MOAIColor.h>
@@ -42,6 +42,7 @@
 #include <moai-sim/MOAIGraphicsProp.h>
 #include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAIGridDeck2D.h>
+#include <moai-sim/MOAIGridFancy.h>
 #include <moai-sim/MOAIGridPathGraph.h>
 #include <moai-sim/MOAIGridSpace.h>
 #include <moai-sim/MOAIImage.h>
@@ -52,7 +53,6 @@
 #include <moai-sim/MOAIJoystickSensor.h>
 #include <moai-sim/MOAIKeyboardSensor.h>
 #include <moai-sim/MOAILayer.h>
-#include <moai-sim/MOAIPinTransform.h>
 #include <moai-sim/MOAILayoutFrame.h>
 #include <moai-sim/MOAILocationSensor.h>
 #include <moai-sim/MOAIMesh.h>
@@ -78,6 +78,7 @@
 #include <moai-sim/MOAIPartitionResultMgr.h>
 #include <moai-sim/MOAIPathFinder.h>
 #include <moai-sim/MOAIPathTerrainDeck.h>
+#include <moai-sim/MOAIPinTransform.h>
 #include <moai-sim/MOAIPointerSensor.h>
 //#include <moai-sim/MOAIProfiler.h>
 //#include <moai-sim/MOAIProfilerAutoScope.h>

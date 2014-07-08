@@ -36,7 +36,7 @@ int MOAIStream::_getCursor ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStream, "U" );
 	if ( !self->mStream ) return 0;
 	size_t cursor = self->mStream->GetCursor ();
-	state.Push ( cursor );
+	state.Push (( u32 )cursor ); // TODO: overflow?
 	return 1;
 }
 
@@ -51,7 +51,7 @@ int MOAIStream::_getLength ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStream, "U" );
 	if ( !self->mStream ) return 0;
 	size_t length = self->mStream->GetLength ();
-	state.Push ( length );
+	state.Push (( u32 )length ); // TODO: overflow?
 	return 1;
 }
 
@@ -60,9 +60,9 @@ int MOAIStream::_getLength ( lua_State* L ) {
 	@text	Reads bytes from the stream.
 	
 	@in		MOAIStream self
-	@out	number size			Number of bytes to read. Default value is the length of the stream.
-	@out	string bytes		Data read from the stream.
-	@out	number size			Size of data successfully read.
+	@opt	number byteCount		Number of bytes to read. Default value is the length of the stream.
+	@out	string bytes			Data read from the stream.
+	@out	number actualByteCount	Size of data successfully read.
 */
 int MOAIStream::_read ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStream, "U" );
@@ -102,7 +102,7 @@ int MOAIStream::_read ( lua_State* L ) {
 		free ( buffer );
 	}
 	
-	state.Push ( len );
+	state.Push (( u32 )len ); // TODO: overflow?
 	return 2;
 }
 
@@ -179,7 +179,7 @@ int MOAIStream::_readFloat ( lua_State* L ) {
 	
 	@in		MOAIStream self
 	@in		string format
-	@out	...					Values read from the stream or 'nil'.
+	@out	...	values			Values read from the stream or 'nil'.
 	@out	number size			Number of bytes successfully read.
 */
 int MOAIStream::_readFormat ( lua_State* L ) {
@@ -253,7 +253,7 @@ int MOAIStream::_seek ( lua_State* L ) {
 	@text	Write binary data to the stream.
 	
 	@in		MOAIStream self
-	@out	string bytes		Binary data to write.
+	@in		string bytes		Binary data to write.
 	@opt	number size			Number of bytes to write. Default value is the size of the string.
 	@out	number size			Number of bytes successfully written.
 */
@@ -265,14 +265,15 @@ int MOAIStream::_write ( lua_State* L ) {
 	size_t len;
 	cc8* str = lua_tolstring ( state, 2, &len );
 	
-	size_t writeLen = state.GetValue < size_t >( 3, len );
+	// TODO: 64bit
+	size_t writeLen = state.GetValue < u32 >( 3, ( u32 )len );
 	if ( len < writeLen ) {
 		writeLen = len;
 	}
 	
 	writeLen = self->mStream->WriteBytes ( str, writeLen );
 	
-	state.Push ( writeLen );
+	state.Push (( u32 )writeLen ); // TODO: overflow?
 	return 1;
 }
 
@@ -329,7 +330,7 @@ int MOAIStream::_writeDouble ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	write32
+/**	@name	writeFloat
 	@text	Writes a 32-bit floating point value to the stream.
 	
 	@in		MOAIStream self
@@ -348,7 +349,7 @@ int MOAIStream::_writeFloat ( lua_State* L ) {
 	
 	@in		MOAIStream self
 	@in		string format
-	@in		...					Values to be written to the stream.
+	@in		... values			Values to be written to the stream.
 	@out	number size			Number of bytes successfully written.
 */
 int MOAIStream::_writeFormat ( lua_State* L ) {
@@ -390,7 +391,7 @@ int MOAIStream::_writeStream ( lua_State* L ) {
 		}
 	}
 	
-	state.Push ( result );
+	state.Push (( u32 )result ); // TODO: overflow?
 	return 1;
 }
 
@@ -700,6 +701,6 @@ int MOAIStream::WriteFormat ( MOAILuaState& state, int idx ) {
 		}
 	}
 	
-	state.Push ( bytes );
+	state.Push (( u32 )bytes ); // TODO: overflow?
 	return 1;
 }

@@ -29,8 +29,8 @@
 		MOAIKeyboardIOS& keyboard = MOAIKeyboardIOS::Get ();
 		
 		if ( keyboard.PushListener ( MOAIKeyboardIOS::EVENT_INPUT, state )) {
-			state.Push ( mRange.location );
-			state.Push ( mRange.length );
+			state.Push (( u32 )mRange.location ); // TODO: overflow?
+			state.Push (( u32 )mRange.length ); // TODO: overflow?
 			state.Push ([ string UTF8String ]);
 			state.DebugCall ( 3, 0 );
 		}
@@ -39,6 +39,26 @@
 	//----------------------------------------------------------------//
 	-( BOOL ) textField :( UITextField* )textField shouldChangeCharactersInRange:( NSRange )range replacementString:( NSString* )string {
 		UNUSED ( textField );
+		
+		MOAIKeyboardIOS& keyboard = MOAIKeyboardIOS::Get ();
+		u32 maxLength = keyboard.GetMaxLength();
+		
+		if ( maxLength > 0 )
+		{
+			if ([string compare:@"\n"] != 0)
+			{
+				NSUInteger textLength = textField.text.length;
+				NSUInteger rangeLength = range.length;
+				NSUInteger stringLength = string.length;
+				
+				NSUInteger length = textLength - rangeLength + stringLength;
+				
+				if (length > maxLength) {
+					return NO;
+				}
+			}
+		}
+		
 		
 		mRange = range;
 		[ self performSelector:@selector(onChanged:) withObject:string afterDelay:0.0f ];
@@ -84,6 +104,22 @@ int MOAIKeyboardIOS::_getText ( lua_State* L ) {
 	MOAILuaState state ( L );
 	MOAIKeyboardIOS::Get ().PushText ( state );
 	return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@name	setMaxLength
+ @text	Set the maxLength.
+ 
+ @in	number maxLength
+ 
+ */
+int MOAIKeyboardIOS::_setMaxLength ( lua_State* L ) {
+	MOAILuaState state ( L );
+	
+	u32 maxLength = state.GetValue < u32 >( 1, 0 );
+	MOAIKeyboardIOS::Get ().SetMaxLength( maxLength );
+	
+	return 0;
 }
 
 //----------------------------------------------------------------//
@@ -216,6 +252,7 @@ void MOAIKeyboardIOS::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "getListener",		&MOAIGlobalEventSource::_getListener < MOAIKeyboardIOS > },
 		{ "getText",			_getText },
 		{ "setListener",		&MOAIGlobalEventSource::_setListener < MOAIKeyboardIOS > },
+		{ "setMaxLength",		_setMaxLength },
 		{ "showKeyboard",		_showKeyboard },
 		{ "hideKeyboard",		_hideKeyboard },
 		{ NULL, NULL }

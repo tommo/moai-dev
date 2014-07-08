@@ -91,6 +91,24 @@ int MOAIVectorTesselator::_finish ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+int MOAIVectorTesselator::_getTransform ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIVectorTesselator, "U" )
+	
+	const ZLAffine2D& drawingToWorld = self->mStyle.mDrawingToWorld;
+	
+	state.Push ( drawingToWorld.m [ ZLAffine2D::C0_R0 ]);
+	state.Push ( drawingToWorld.m [ ZLAffine2D::C0_R1 ]);
+	
+	state.Push ( drawingToWorld.m [ ZLAffine2D::C1_R0 ]);
+	state.Push ( drawingToWorld.m [ ZLAffine2D::C1_R1 ]);
+	
+	state.Push ( drawingToWorld.m [ ZLAffine2D::C2_R0 ]);
+	state.Push ( drawingToWorld.m [ ZLAffine2D::C2_R1 ]);
+	
+	return 6;
+}
+
+//----------------------------------------------------------------//
 int MOAIVectorTesselator::_getTriangles ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorTesselator, "U" )
 
@@ -823,6 +841,7 @@ void MOAIVectorTesselator::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "drawingToWorld",			_drawingToWorld },
 		{ "drawingToWorldVec",		_drawingToWorldVec },
 		{ "finish",					_finish },
+		{ "getTransform",			_getTransform },
 		{ "getTriangles",			_getTriangles },
 		{ "pushBezierVertices",		_pushBezierVertices },
 		{ "pushCombo",				_pushCombo },
@@ -1041,8 +1060,11 @@ void MOAIVectorTesselator::WriteVertices ( TESStesselator* tess, float z, u32 co
 
 	z = z != 0.0f ? z : this->mDepthOffset;
 
+	STLString log;
+
 	if ( this->mVerbose ) {
-		MOAIPrint ( "WRITING VERTICES:\n" );
+		log = "";
+		log.write ( "WRITING VERTICES:\n" );
 	}
 
 	const float* verts = tessGetVertices ( tess );
@@ -1053,13 +1075,14 @@ void MOAIVectorTesselator::WriteVertices ( TESStesselator* tess, float z, u32 co
 		const ZLVec2D& vert = (( const ZLVec2D* )verts )[ i ];
 		
 		if ( this->mVerbose ) {
-			MOAIPrint ( "%d: %f, %f\n", i, vert.mX, vert.mY );
+			log.write ( "%d: %f, %f\n", i, vert.mX, vert.mY );
 		}
 		this->WriteVertex ( vert.mX, vert.mY, z, color, vertexExtraID );
 	}
 	
 	if ( this->mVerbose ) {
-		MOAIPrint ( "\n" );
+		log.write ( "\n" );
+		MOAILog ( 0, 0, log.c_str ());
 	}
 
 	this->mDepthOffset += this->mDepthBias;

@@ -36,7 +36,7 @@ public:
 // MOAIInstanceEventSource
 //================================================================//
 /**	@name	MOAIInstanceEventSource
-	@text	Derivation of MOAIEventSource for non-global lua objects.
+	@text	Derivation of MOAIEventSource for non-global Lua objects.
 */
 class MOAIInstanceEventSource :
 	public virtual MOAIEventSource {
@@ -68,7 +68,7 @@ public:
 // MOAIGlobalEventSource
 //================================================================//
 /**	@name	MOAIGlobalEventSource
-	@text	Derivation of MOAIEventSource for global lua objects.
+	@text	Derivation of MOAIEventSource for global Lua objects.
 */
 class MOAIGlobalEventSource :
 	public virtual MOAIEventSource {

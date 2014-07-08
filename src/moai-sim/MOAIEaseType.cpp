@@ -22,6 +22,7 @@ void MOAIEaseType::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "SOFT_EASE_IN", ( u32 )ZLInterpolate::kSoftEaseIn );
 	state.SetField ( -1, "SOFT_EASE_OUT", ( u32 )ZLInterpolate::kSoftEaseOut );
 	state.SetField ( -1, "SOFT_SMOOTH", ( u32 )ZLInterpolate::kSoftSmooth );
+	state.SetField ( -1, "SOFT_SMOOTH_EASE_OUT",			( u32 )ZLInterpolate::kSoftSmoothEaseOut );
 	state.SetField ( -1, "BACK_IN", ( u32 )ZLInterpolate::kBackIn );
 	state.SetField ( -1, "BACK_OUT", ( u32 )ZLInterpolate::kBackOut );
 	state.SetField ( -1, "BACK_SMOOTH", ( u32 )ZLInterpolate::kBackSmooth );

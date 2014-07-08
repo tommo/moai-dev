@@ -1,75 +1,37 @@
-# cmake_minimum_required ( VERSION 2.8.5 )
-# project ( untz )
-# 
-# if ( MOAI_UNTZ )
-# 
-#   
-#   
-#   
-#   include_directories ( 
-#     ${SDL_INCLUDES}
-#     ${UNTZ_INCLUDES}
-#     ${VORBIS_INCLUDES}
-#     ${OGG_INCLUDES}
-#   )
-#   
-#   
-#   add_library ( untz STATIC 
-#   )
-# 
-# endif ( MOAI_UNTZ )
-
 cmake_minimum_required ( VERSION 2.8.5 )
 project ( untz )
 
-if ( MOAI_UNTZ )
+set ( CMAKE_CURRENT_SOURCE_DIR "${MOAI_ROOT}/3rdparty/untz/src/" )
+set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D__SDL__")
+set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D__SDL__")
 
-  if ( MOAI_SDL OR BUILD_BLACKBERRY )
-    # TODO: Use 3rdparty's SDL
-  
-  
-  else ( MOAI_SDL OR BUILD_BLACKBERRY )
-    find_package(PkgConfig)
-    pkg_check_modules(SDL REQUIRED sdl)
-    set ( SDL_INCLUDES "${SDL_INCLUDE_DIRS}" CACHE INTERNAL "" )
-    set ( SDL_LIBRARY "${SDL_LIBRARIES}" CACHE INTERNAL "" )
-  endif ( MOAI_SDL OR BUILD_BLACKBERRY )
+set ( UNTZ_INCLUDES 
+  ${SDL_INCLUDES}
+  "${MOAI_ROOT}/3rdparty/untz/include/"
+  "${MOAI_ROOT}/3rdparty/untz/src/"
+  "${MOAI_ROOT}/3rdparty/untz/src/native/sdl/" 
+)
+file ( GLOB UNTZ_SOURCES
+  "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp"
+  "${CMAKE_CURRENT_SOURCE_DIR}/native/sdl/*.cpp"
+)
+file ( GLOB UNTZ_HEADERS
+  "${CMAKE_CURRENT_SOURCE_DIR}/*.h"
+  "${CMAKE_CURRENT_SOURCE_DIR}/native/sdl/*.h"
+)
+if ( NOT MOAI_VORBIS )
+  list ( REMOVE_ITEM UNTZ_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/OggAudioSource.cpp")
+  list ( REMOVE_ITEM UNTZ_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/OggAudioSource.h")
+endif ( NOT MOAI_VORBIS )
 
-  set ( CMAKE_CURRENT_SOURCE_DIR "../../../3rdparty/untz/src/" )
+add_library ( untz STATIC ${UNTZ_SOURCES} ${UNTZ_HEADERS} )
 
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_UNTZ=1" CACHE INTERNAL "doc string" )
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_UNTZ=1" CACHE INTERNAL "doc string" )
+target_link_libraries( untz SDL2-static )
 
-  set ( UNTZ_INCLUDES 
-    ${SDL_INCLUDES}
-    "../../3rdparty/untz/include/"
-    "../../3rdparty/untz/src/"
-    "../../3rdparty/untz/src/native/sdl/" 
-  CACHE INTERNAL "doc string" )
+if (MOAI_VORBIS)
+  target_link_libraries ( untz vorbis )
+endif (MOAI_VORBIS)
 
-  if ( BUILD_BLACKBERRY )
-    set ( UNTZ_INCLUDES "${UNTZ_INCLUDES};../../3rdparty/SDL/include/" CACHE INTERNAL "doc string" )
-  endif ( BUILD_BLACKBERRY )
+target_include_directories ( untz PUBLIC ${UNTZ_INCLUDES} )
 
-  set ( UNTZ_SOURCES 
-
-    ${CMAKE_CURRENT_SOURCE_DIR}/AudioMixer.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/BufferedAudioSource.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/BufferedAudioSourceThread.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/MemoryAudioSource.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/OggAudioSource.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/UntzSound.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/UserAudioSource.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/native/sdl/RiffFile.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/native/sdl/UntzSystem.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/native/sdl/WaveFile.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/native/sdl/WaveFileAudioSource.cpp
-
-  CACHE INTERNAL "doc string" )
-
-else ( MOAI_UNTZ )
-
-  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DMOAI_WITH_UNTZ=0" CACHE INTERNAL "doc string" )
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DMOAI_WITH_UNTZ=0" CACHE INTERNAL "doc string" )
-
-endif ( MOAI_UNTZ )
+set_target_properties( untz PROPERTIES FOLDER Third-Party )

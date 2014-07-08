@@ -277,14 +277,14 @@ int MOAICpSpace::_getStaticBody ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	insertProp
-	@text	Inserts a new prop into the world (can be used as a body, joint, etc.)
+/**	@name	insertPrim
+	@text	Inserts a new prim into the world (can be used as a body, joint, etc.)
 
 	@in		MOAICpSpace self
-	@in		MOAICpPrim prop
+	@in		MOAICpPrim prim
 	@out	nil
 */
-int MOAICpSpace::_insertProp ( lua_State* L ) {
+int MOAICpSpace::_insertPrim ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICpSpace, "UU" )
 	
 	MOAICpPrim* prim = state.GetLuaObject < MOAICpPrim >( 2, true );
@@ -299,6 +299,7 @@ int MOAICpSpace::_insertProp ( lua_State* L ) {
 	@text	Updates the shape in the spatial hash.
 
 	@in		MOAICpSpace self
+	@in		MOAICpShape shape
 	@out	nil
 */
 int MOAICpSpace::_rehashShape ( lua_State* L ) {
@@ -326,14 +327,14 @@ int MOAICpSpace::_rehashStatic ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	removeProp
-	@text	Removes a prop (body, joint, etc.) from the space.
+/**	@name	removePrim
+	@text	Removes a prim (body, joint, etc.) from the space.
 
 	@in		MOAICpSpace self
-	@in		MOAICpPrim prop
+	@in		MOAICpPrim prim
 	@out	nil
 */
-int MOAICpSpace::_removeProp ( lua_State* L ) {
+int MOAICpSpace::_removePrim ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICpSpace, "UU" )
 	
 	MOAICpPrim* prim = state.GetLuaObject < MOAICpPrim >( 2, true );
@@ -345,7 +346,7 @@ int MOAICpSpace::_removeProp ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	resizeActiveHash
-	@text	Sets the dimenstions of the active object hash.
+	@text	Sets the dimensions of the active object hash.
 
 	@in		MOAICpSpace self
 	@in		number dim
@@ -364,7 +365,7 @@ int MOAICpSpace::_resizeActiveHash ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	resizeStaticHash
-	@text	Sets the dimenstions of the static object hash.
+	@text	Sets the dimensions of the static object hash.
 
 	@in		MOAICpSpace self
 	@in		number dim
@@ -623,7 +624,7 @@ int MOAICpSpace::_shapeForSegment ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	shapeListForPoint
-	@text	Retrieves a list of shaps that overlap the point specified, that exists
+	@text	Retrieves a list of shapes that overlap the point specified, that exists
 			on the specified layer (or any layer if nil) and is part of the
 			specified group (or any group if nil).
 			
@@ -632,7 +633,7 @@ int MOAICpSpace::_shapeForSegment ( lua_State* L ) {
 	@in		number y
 	@opt	number layers
 	@opt	number group
-	@out	MOAICpShape shapes The shapes that were matched as multiple return values.
+	@out	MOAICpShape shapes		The shapes that were matched as multiple return values.
 */
 int MOAICpSpace::_shapeListForPoint ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICpSpace, "UNN" )
@@ -661,7 +662,7 @@ int MOAICpSpace::_shapeListForPoint ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	shapeListForRect
-	@text	Retrieves a list of shaps that overlap the rect specified, that exists
+	@text	Retrieves a list of shapes that overlap the rect specified, that exists
 			on the specified layer (or any layer if nil) and is part of the
 			specified group (or any group if nil).
 			
@@ -672,7 +673,7 @@ int MOAICpSpace::_shapeListForPoint ( lua_State* L ) {
 	@in		number yMax
 	@opt	number layers
 	@opt	number group
-	@out	MOAICpShape shapes The shapes that were matched as multiple return values.
+	@out	MOAICpShape shapes		The shapes that were matched as multiple return values.
 */
 int MOAICpSpace::_shapeListForRect ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICpSpace, "UNNNN" )
@@ -706,7 +707,7 @@ int MOAICpSpace::_shapeListForRect ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	shapeListForSegment
-	@text	Retrieves a list of shaps that overlap the segment specified, that exists
+	@text	Retrieves a list of shapes that overlap the segment specified, that exists
 			on the specified layer (or any layer if nil) and is part of the
 			specified group (or any group if nil).
 			
@@ -717,7 +718,7 @@ int MOAICpSpace::_shapeListForRect ( lua_State* L ) {
 	@in		number y2
 	@opt	number layers
 	@opt	number group
-	@out	MOAICpShape shapes The shapes that were matched as multiple return values.
+	@out	MOAICpShape shapes		The shapes that were matched as multiple return values.
 */
 int MOAICpSpace::_shapeListForSegment ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICpSpace, "UNNNN" )
@@ -897,10 +898,10 @@ void MOAICpSpace::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "getIterations",					_getIterations },
 		{ "getSleepTimeThreshold",			_getSleepTimeThreshold },
 		{ "getStaticBody",					_getStaticBody },
-		{ "insertPrim",						_insertProp },
+		{ "insertPrim",						_insertPrim },
 		{ "rehashShape",					_rehashShape },
 		{ "rehashStatic",					_rehashStatic },
-		{ "removePrim",						_removeProp },
+		{ "removePrim",						_removePrim },
 		{ "resizeActiveHash",				_resizeActiveHash },
 		{ "resizeStaticHash",				_resizeStaticHash },
 		{ "setCollisionHandler",			_setCollisionHandler },

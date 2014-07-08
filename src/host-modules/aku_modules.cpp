@@ -3,6 +3,7 @@
 
 #include <string.h>
 #include <host-modules/aku_modules.h>
+#include <host-modules/aku_modules_custom.h>
 
 //================================================================//
 // implementation
@@ -62,6 +63,12 @@ void AKUModulesAppFinalize () {
 	#if AKU_WITH_UTIL
 		AKUUtilAppFinalize ();
 	#endif
+
+	#if AKU_WITH_PLUGINS
+		AKUPluginsAppFinalize ();
+	#endif
+	
+	AKUModulesCustomAppFinalize ();
 }
 
 //----------------------------------------------------------------//
@@ -118,6 +125,12 @@ void AKUModulesAppInitialize () {
 	#if AKU_WITH_UTIL
 		AKUUtilAppInitialize ();
 	#endif
+
+	#if AKU_WITH_PLUGINS
+		AKUPluginsAppInitialize ();
+	#endif
+	
+	AKUModulesCustomAppInitialize ();
 }
 
 //----------------------------------------------------------------//
@@ -174,6 +187,12 @@ void AKUModulesContextInitialize () {
 	#if AKU_WITH_UTIL
 		AKUUtilContextInitialize ();
 	#endif
+
+	#if AKU_WITH_PLUGINS
+		AKUPluginsContextInitialize ();
+	#endif
+	
+	AKUModulesCustomContextInitialize ();
 }
 
 //----------------------------------------------------------------//
@@ -210,4 +229,10 @@ void AKUModulesUpdate () {
 	#if AKU_WITH_SIM
 		AKUUpdate ();
 	#endif
+
+	#if AKU_WITH_PLUGINS
+		AKUPluginsUpdate ();
+	#endif
+		
+	AKUModulesCustomUpdate ();
 }

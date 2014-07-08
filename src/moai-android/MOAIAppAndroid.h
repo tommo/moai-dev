@@ -4,7 +4,10 @@
 #ifndef	MOAIAPPANDROID_H
 #define	MOAIAPPANDROID_H
 
+#include <moai-sim/host.h>
 #include <moai-core/headers.h>
+
+#include <pthread.h>
 
 //================================================================//
 // MOAIAppAndroid
@@ -30,23 +33,31 @@ private:
 		ACTIVITY_ON_RESUME,
 		ACTIVITY_ON_RESTART,
 		BACK_BUTTON_PRESSED,
+		EVENT_PICTURE_TAKEN,
 	};
 
 	//----------------------------------------------------------------//
-	static int	_exitGame			( lua_State* L );
-	static int	_getUTCTime			( lua_State* L );
-	static int 	_getStatusBarHeight ( lua_State* L );
+	static int	_getPictureCode			( lua_State* L );
+	static int	_getPicturePath			( lua_State* L );
+	static int	_getUTCTime				( lua_State* L );
+	static int 	_getStatusBarHeight 	( lua_State* L );
 	static int	_openURL			( lua_State* L );
-	static int	_sendMail			( lua_State* L );
-	static int	_share				( lua_State* L );
+	static int	_sendMail				( lua_State* L );
+	static int	_share					( lua_State* L );
+	static int	_takePicture			( lua_State* L );
 
 public:
 
 	DECL_LUA_SINGLETON ( MOAIAppAndroid )
 
 	//----------------------------------------------------------------//
+	void	AppOpenedFromURL			( jstring url );
 			MOAIAppAndroid				();
 			~MOAIAppAndroid				();
+	void	NotifyPictureTaken			();
+	void	PushPictureCode				( MOAILuaState& state );
+	void	PushPictureData				( MOAILuaState& state );
+	void	PushPicturePath				( MOAILuaState& state );
 	void	RegisterLuaClass			( MOAILuaState& state );
 };
 

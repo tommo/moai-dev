@@ -409,40 +409,44 @@ void MOAITouchSensor::ParseEvent ( ZLStream& eventStream ) {
 //----------------------------------------------------------------//
 void MOAITouchSensor::PrintStacks () {
 
-	MOAIPrint ( "[" );
+	STLString stacks = "";
+
+	stacks.write ( "[" );
 
 	for ( u32 i = 0; i < MAX_TOUCHES; ++i ) {
 	
 		if ( i == this->mTop ) {
-			MOAIPrint ( "|" );
+			stacks.write ( "|" );
 		}
 		else {
-			MOAIPrint ( " " );
+			stacks.write ( " " );
 		}
 	
-		MOAIPrint ( "%d", ( int )this->mAllocStack [ i ]);
+		stacks.write ( "%d", ( int )this->mAllocStack [ i ]);
 	}
 	
-	MOAIPrint ( " ] [" );
+	stacks.write ( " ] [" );
 	
 	for ( u32 i = 0; i < MAX_TOUCHES; ++i ) {
 	
 		if ( i == this->mTop ) {
-			MOAIPrint ( "|" );
+			stacks.write ( "|" );
 		}
 		else {
-			MOAIPrint ( " " );
+			stacks.write ( " " );
 		}
 		
 		if ( this->mActiveStack [ i ] < MAX_TOUCHES ) {
-			MOAIPrint ( "%d", ( int )this->mActiveStack [ i ]);
+			stacks.write ( "%d", ( int )this->mActiveStack [ i ]);
 		}
 		else {
-			MOAIPrint ( "-" );
+			stacks.write ( "-" );
 		}
 	}
 	
-	MOAIPrint ( " ]\n" );
+	stacks.write ( " ]\n" );
+	
+	MOAILog ( 0, 0, stacks.c_str ());
 }
 
 //----------------------------------------------------------------//
@@ -528,6 +532,8 @@ void MOAITouchSensor::Reset () {
 //----------------------------------------------------------------//
 void MOAITouchSensor::WriteEvent ( ZLStream& eventStream, u32 touchID, bool down, float x, float y, float time ) {
 
+	//printf ( "TOUCH EVENT: %s %d %f %f\n", down ? "down" : "up", touchID, x, y );
+
 	u32 eventType = down ? TOUCH_DOWN : TOUCH_UP;
 
 	eventStream.Write < u32 >( eventType );
@@ -539,6 +545,8 @@ void MOAITouchSensor::WriteEvent ( ZLStream& eventStream, u32 touchID, bool down
 
 //----------------------------------------------------------------//
 void MOAITouchSensor::WriteEventCancel ( ZLStream& eventStream ) {
+
+	//printf ( "TOUCH EVENT: cancel\n" );
 
 	eventStream.Write < u32 >( TOUCH_CANCEL );
 }

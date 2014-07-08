@@ -10,7 +10,7 @@
 
 //----------------------------------------------------------------//
 /**	@name	close
-	@text	Detach the target stream. (This only detatches the target
+	@text	Detach the target stream. (This only detaches the target
 			from the formatter; it does not also close the target stream).
 	
 	@in		MOAIStreamReader self
@@ -55,6 +55,7 @@ int MOAIStreamReader::_openBase64 ( lua_State* L ) {
 	
 	@in		MOAIStreamReader self
 	@in		MOAIStream target
+	@opt	number windowBits		The window bits used in the DEFLATE algorithm.
 	@out	boolean success
 */
 int MOAIStreamReader::_openDeflate ( lua_State* L ) {

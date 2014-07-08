@@ -159,7 +159,7 @@ int MOAILogMgr::_setLogLevel ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	setTypeCheckLuaParams
-	@text	Set or clear type checking of parameters passed to lua bound Moai API functions.
+	@text	Set or clear type checking of parameters passed to Lua bound Moai API functions.
 
 	@opt	boolean check		Default value is false.
 	@out	nil
@@ -220,12 +220,7 @@ void MOAILogMgr::LogVar ( lua_State *L, u32 messageID, va_list args ) {
 				if ( L ) {
 					this->Print ( "\n" );
 					MOAILuaState state ( L );
-					if ( MOAILuaRuntime::Get ().GetTracebackRef ()) {
-	
-						state.Push ( MOAILuaRuntime::Get ().GetTracebackRef ());
-						state.DebugCall ( 0, 0 );
-					}
-					state.PrintStackTrace ( this->mFile, 0 );
+					state.PrintStackTrace ( this->mFile, NULL, 0 );
 					this->Print ( "\n" );
 				}
 			}

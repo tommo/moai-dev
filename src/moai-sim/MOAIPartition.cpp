@@ -143,6 +143,40 @@ int MOAIPartition::_propForRay ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	propList
+	@text	Returns all props.
+	
+	@in		MOAIPartition self
+	@opt	number sortMode			One of the MOAILayer sort modes. Default value is SORT_NONE.
+	@opt	number xScale			X scale for vector sort. Default value is 0.
+	@opt	number yScale			Y scale for vector sort. Default value is 0.
+	@opt	number zScale			Z scale for vector sort. Default value is 0.
+	@opt	number priorityScale	Priority scale for vector sort. Default value is 1.
+	@out	... props				The props pushed onto the stack.
+*/
+int MOAIPartition::_propList ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIPartition, "U" )
+
+	MOAIPartitionResultBuffer& buffer = MOAIPartitionResultMgr::Get ().GetBuffer ();
+
+	u32 total = self->GatherProps ( buffer, 0 );
+	if ( total ) {
+	
+		u32 sortMode = state.GetValue < u32 >( 2, MOAIPartitionResultBuffer::SORT_NONE );
+		float xScale = state.GetValue < float >( 3, 0.0f );
+		float yScale = state.GetValue < float >( 4, 0.0f );
+		float zScale = state.GetValue < float >( 5, 0.0f );
+		float priorityScale = state.GetValue < float >( 6, 1.0f );
+		
+		buffer.GenerateKeys ( sortMode, xScale, yScale, zScale, priorityScale );
+		buffer.Sort ( sortMode );
+		buffer.PushProps ( L );
+		return total;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	propListForPoint
 	@text	Returns all props under a given world space point.
 	
@@ -155,7 +189,7 @@ int MOAIPartition::_propForRay ( lua_State* L ) {
 	@opt	number yScale			Y scale for vector sort. Default value is 0.
 	@opt	number zScale			Z scale for vector sort. Default value is 0.
 	@opt	number priorityScale	Priority scale for vector sort. Default value is 1.
-	@out	...						The props under the point, all pushed onto the stack.
+	@out	... props				The props under the point, all pushed onto the stack.
 */
 int MOAIPartition::_propListForPoint ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIPartition, "UNN" )
@@ -200,7 +234,7 @@ int MOAIPartition::_propListForPoint ( lua_State* L ) {
 	@opt	number yScale			Y scale for vector sort. Default value is 0.
 	@opt	number zScale			Z scale for vector sort. Default value is 0.
 	@opt	number priorityScale	Priority scale for vector sort. Default value is 1.
-	@out	...						The props under the point in order of depth, all pushed onto the stack.
+	@out	... props				The props under the point in order of depth, all pushed onto the stack.
 */
 int MOAIPartition::_propListForRay ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIPartition, "UNN" )
@@ -251,7 +285,7 @@ int MOAIPartition::_propListForRay ( lua_State* L ) {
 	@opt	number yScale			Y scale for vector sort. Default value is 0.
 	@opt	number zScale			Z scale for vector sort. Default value is 0.
 	@opt	number priorityScale	Priority scale for vector sort. Default value is 1.
-	@out	...						The props under the rect, all pushed onto the stack.
+	@out	... props				The props under the rect, all pushed onto the stack.
 */
 int MOAIPartition::_propListForRect ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIPartition, "UNNNN" )
@@ -306,7 +340,7 @@ int MOAIPartition::_removeProp ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	reserveLayers
+/**	@name	reserveLevels
 	@text	Reserves a stack of levels in the partition. Levels must be
 			initialized with setLevel (). This will trigger a full rebuild
 			of the partition if it contains any props.
@@ -330,10 +364,10 @@ int MOAIPartition::_reserveLevels ( lua_State* L ) {
 	@text	Initializes a level previously created by reserveLevels ().
 			This will trigger a full rebuild of the partition if it contains any props.
 			Each level is a loose grid. Props of a given size may be placed by
-			the system into any level with cells large enough to accomodate them.
+			the system into any level with cells large enough to accommodate them.
 			The dimensions of a level control how many cells the level contains.
 			If an object goes off of the edge of a level, it will wrap around
-			to the other side. It is possible to model a quad tree by initalizing
+			to the other side. It is possible to model a quad tree by initializing
 			levels correctly, but for some simulations better structures
 			may be possible.
 	
@@ -502,7 +536,7 @@ void MOAIPartition::InsertProp ( MOAIProp& prop ) {
 	prop.mPartition = this;
 	prop.ScheduleUpdate ();
 	
-	prop.mPartition->OnPropInserted ( prop );
+	this->OnPropInserted ( prop );
 }
 
 //----------------------------------------------------------------//
@@ -580,6 +614,7 @@ void MOAIPartition::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "insertProp",					_insertProp },
 		{ "propForPoint",				_propForPoint },
 		{ "propForRay",					_propForRay },
+		{ "propList",					_propList },
 		{ "propListForPoint",			_propListForPoint },
 		{ "propListForRay",				_propListForRay },
 		{ "propListForRect",			_propListForRect },
@@ -602,8 +637,9 @@ void MOAIPartition::RemoveProp ( MOAIProp& prop ) {
 		prop.mCell->RemoveProp ( prop );
 	}
 
-	prop.mPartition->OnPropRemoved ( prop );
 	prop.mPartition = 0;
+	this->OnPropRemoved ( prop );
+
 	this->LuaRelease ( &prop );
 }
 

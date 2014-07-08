@@ -1,7 +1,7 @@
 #ifndef ZL_UTIL_PCH_H
 #define	ZL_UTIL_PCH_H
 
-#include <config-default/moai_config.h>
+#include <moai_config.h>
 
 #ifndef TIXML_USE_STL
 	#define TIXML_USE_STL

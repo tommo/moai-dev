@@ -104,7 +104,7 @@ int MOAIGrid::_getTileFlags ( lua_State* L ) {
 
 	@in		MOAIGrid self
 	@in		number row
-	@in		...
+	@in		... values
 	@out	nil
 */
 int MOAIGrid::_setRow ( lua_State* L ) {
@@ -185,7 +185,7 @@ int MOAIGrid::_streamTilesIn ( lua_State* L ) {
 	
 	MOAIStream* stream = state.GetLuaObject < MOAIStream >( 2, true );
 	if ( stream ) {
-		state.Push ( self->StreamTilesIn ( stream->GetZLStream ()));
+		state.Push (( u32 )self->StreamTilesIn ( stream->GetZLStream ())); // TODO: overflow?
 		return 1;
 	}
 	return 0;
@@ -205,7 +205,7 @@ int MOAIGrid::_streamTilesOut ( lua_State* L ) {
 	
 	MOAIStream* stream = state.GetLuaObject < MOAIStream >( 2, true );
 	if ( stream ) {
-		state.Push ( self->StreamTilesOut ( stream->GetZLStream ()));
+		state.Push (( u32 )self->StreamTilesOut ( stream->GetZLStream ())); // TODO: overflow?
 		return 1;
 	}
 	return 0;
@@ -317,6 +317,8 @@ void MOAIGrid::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer )
 
 	if ( state.IsType ( -1, LUA_TSTRING )) {
 		
+		// TODO: all this is unsafe; don't assume sizes will be reasonable of that deflated data is guaranteed to be smaller; rewrite this with checking and recover in place
+		
 		void* tiles = this->mTiles;
 		size_t tilesSize = this->mTiles.Size () * sizeof ( u32 );
 		
@@ -392,4 +394,22 @@ size_t MOAIGrid::StreamTilesOut ( ZLStream* stream ) {
 
 	size_t size = this->mTiles.Size () * sizeof ( u32 );
 	return stream->WriteBytes ( this->mTiles, size );
+}
+
+//----------------------------------------------------------------//
+void MOAIGrid::Draw ( MOAIDeck *deck, MOAIDeckRemapper *remapper, const MOAICellCoord &c0, const MOAICellCoord &c1 ) {
+	float tileWidth = this->GetTileWidth ();
+	float tileHeight = this->GetTileHeight ();
+	for ( int y = c0.mY; y <= c1.mY; ++y ) {
+		for ( int x = c0.mX; x <= c1.mX; ++x ) {
+			
+			MOAICellCoord wrap = this->WrapCellCoord ( x, y );
+			u32 idx = this->GetTile ( wrap.mX, wrap.mY );
+			
+			MOAICellCoord coord ( x, y );
+			ZLVec2D loc = this->GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER );
+
+			deck->Draw ( idx, remapper, loc.mX, loc.mY, 0.0f, tileWidth, tileHeight, 1.0f );
+		}
+	}
 }

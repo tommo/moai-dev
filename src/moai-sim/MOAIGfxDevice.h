@@ -169,6 +169,7 @@ private:
 	static int				_setPenColor			( lua_State* L );
 	static int				_setPenWidth			( lua_State* L );
 	static int				_setPointSize			( lua_State* L );
+	static int				_release				( lua_State* L );
 
 	//----------------------------------------------------------------//
 	void					Clear					();
@@ -215,9 +216,9 @@ public:
 	void					BeginLayer				();
 	void					BeginPrim				();
 	void					BeginPrim				( u32 primType );
-	void					ClearColorBuffer		( u32 color );
 	
 	void					ClearErrors				();
+	void					ClearSurface			( u32 clearFlags ); // takes zgl clear flags
 	void					DetectContext			();
 	void					EndPrim					();
 	void					Flush					();
@@ -228,6 +229,7 @@ public:
 	u32						GetHeight				() const;
 	
 	ZLMatrix4x4				GetNormToWndMtx			() const;
+		
 	
 	void					GetUVMtxMode			( u32& input, u32& output ) const;
 	const ZLMatrix4x4&		GetUVTransform			() const;

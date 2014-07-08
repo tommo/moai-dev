@@ -10,6 +10,7 @@
 #include <moai-sim/MOAIProp.h>
 #include <moai-sim/MOAISim.h>
 #include <moai-sim/MOAITextureBase.h>
+#include <moai-sim/MOAIRenderMgr.h>
 
 #if defined(_WIN32)
 	#include <windows.h>
@@ -19,6 +20,10 @@
 	#include <mach/mach.h>
 	#include <unistd.h>
 #elif defined (__QNX__)
+	#include <unistd.h>
+#elif defined (__EMSCRIPTEN__)
+  #include <unistd.h>
+#elif defined (ANDROID)
   #include <unistd.h>
 #endif
 
@@ -43,7 +48,7 @@ int MOAISim::_clearLoopFlags ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	crash
-	@text	Crashes moai with a null pointer dereference.
+	@text	Crashes Moai with a null pointer dereference.
  
 	@out	nil
 */
@@ -100,15 +105,10 @@ int MOAISim::_exitFullscreenMode ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name forceGC
-	@text	Runs the garbage collector repeatedly until no more MOAIObjects
-			can be collected.
-
-	@out	nil
-*/
+// TODO: deprecate
 int MOAISim::_forceGC ( lua_State* L ) {
 	UNUSED ( L );
-	MOAISim::Get ().mForceGC = true;
+	MOAILuaRuntime::Get ().ForceGarbageCollection ();
 	return 0;
 }
 
@@ -117,7 +117,7 @@ int MOAISim::_forceGC ( lua_State* L ) {
 	@text	Converts the number of frames to time passed in seconds.
 
 	@in		number frames		The number of frames.
-	@out	number time			The equivilant number of seconds for the specified number of frames.
+	@out	number time			The equivalent number of seconds for the specified number of frames.
 */
 int MOAISim::_framesToTime ( lua_State* L ) {
 
@@ -141,19 +141,6 @@ int MOAISim::_framesToTime ( lua_State* L ) {
 int MOAISim::_getDeviceTime ( lua_State* L ) {
 	
 	lua_pushnumber ( L, ZLDeviceTime::GetTimeInSeconds ());
-	return 1;
-}
-
-//----------------------------------------------------------------//
-/**	@name	getElapsedFrames
-	@text	Gets the number of frames elapsed since the application was started.
-
-	@out	number frames		The number of elapsed frames.
-*/
-int MOAISim::_getElapsedFrames ( lua_State* L ) {
-	
-	MOAISim& device = MOAISim::Get ();
-	lua_pushnumber ( L, device.mSimTime / device.mStep );
 	return 1;
 }
 
@@ -302,6 +289,36 @@ int MOAISim::_getStep ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	getStepCount
+	@text	Gets the number of times the sim was stepped since the application was started.
+
+	@out	number steps		The number of times the sim was stepped.
+*/
+int MOAISim::_getStepCount ( lua_State* L ) {
+	
+	lua_pushnumber ( L, MOAISim::Get ().mStepCount );
+	return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@name	hideCursor
+	@text	Hides system cursor.
+
+	@out	nil
+*/
+int MOAISim::_hideCursor ( lua_State* L ) {
+
+	MOAILuaState state ( L );
+
+	HideCursorFunc func = MOAISim::Get ().GetHideCursorFunc ();
+	if ( func ) {
+		func ();
+	}
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	openWindow
 	@text	Opens a new window for the application to render on.  This must be called before any rendering can be done, and it must only be called once.
 
@@ -398,8 +415,8 @@ int MOAISim::_setGCStep ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	setLongDelayThreshold
-	@text	Sets the long delay threshold. If the sim step falls behind
-			the given threshold, the deficit will be dropped: sim will
+	@text	Sets the long delay threshold. If the simulation step falls behind
+			the given threshold, the deficit will be dropped: the simulation will
 			neither spin nor boost to catch up.
 
 	@opt	number longDelayThreshold		Default value is DEFAULT_LONG_DELAY_THRESHOLD.
@@ -416,10 +433,10 @@ int MOAISim::_setLongDelayThreshold ( lua_State* L ) {
 	@text	Fine tune behavior of the simulation loop. MOAISim.SIM_LOOP_ALLOW_SPIN
 			will allow the simulation step to run multiple times per update to try
 			and catch up with device time, but will abort if processing the simulation
-			exceeds the configfured step time. MOAISim.SIM_LOOP_ALLOW_BOOST will permit
+			exceeds the configured step time. MOAISim.SIM_LOOP_ALLOW_BOOST will permit
 			a *variable* update step if simulation time falls too far behind
 			device time (based on the boost threshold). Be warned: this can wreak
-			havok with physics and stepwise animation or game AI.
+			havoc with physics and stepwise animation or game AI.
 			
 			Three presets are provided: MOAISim.LOOP_FLAGS_DEFAULT, MOAISim.LOOP_FLAGS_FIXED,
 			and MOAISim.LOOP_FLAGS_MULTISTEP.
@@ -493,7 +510,7 @@ int MOAISim::_setTimerError ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	setTraceback
-	@text	Sets the function to call when a traceback occurs in lua
+	@text	Sets the function to call when a traceback occurs in Lua
  
 	@in		function callback		Function to execute when the traceback occurs
 	@out	nil
@@ -507,11 +524,29 @@ int MOAISim::_setTraceback ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	showCursor
+	@text	Shows system cursor.
+
+	@out	nil
+*/
+int MOAISim::_showCursor ( lua_State* L ) {
+
+	MOAILuaState state ( L );
+
+	ShowCursorFunc func = MOAISim::Get ().GetShowCursorFunc ();
+	if ( func ) {
+		func ();
+	}
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@name	timeToFrames
 	@text	Converts the number of time passed in seconds to frames.
 
 	@in		number time			The number of seconds.
-	@out	number frames		The equivilant number of frames for the specified number of seconds.
+	@out	number frames		The equivalent number of frames for the specified number of seconds.
 */
 int MOAISim::_timeToFrames ( lua_State* L ) {
 
@@ -587,6 +622,8 @@ MOAISim::MOAISim () :
 	mSimTime ( 0.0 ),
 	mRealTime ( 0.0 ),
 	mFrameTime ( 0.0 ),
+	mPauseTime ( 0.0 ),
+	mStepCount ( 0 ),
 	mFrameRate ( 0.0f ),
 	mFrameRateIdx ( 0 ),
 	mLoopFlags ( LOOP_FLAGS_DEFAULT ),
@@ -600,9 +637,10 @@ MOAISim::MOAISim () :
 	mExitFullscreenModeFunc ( 0 ),
 	mOpenWindowFunc ( 0 ),
 	mSetSimStepFunc ( 0 ),
+	mShowCursorFunc ( 0 ),
+	mHideCursorFunc ( 0 ),
 	mGCActive ( true ),
-	mGCStep ( 0 ),
-	mForceGC ( false ) {
+	mGCStep ( 0 ) {
 	
 	RTTI_SINGLE ( MOAIGlobalEventSource )
 	
@@ -699,7 +737,6 @@ void MOAISim::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "forceGC",					_forceGC },
 		{ "framesToTime",				_framesToTime },
 		{ "getDeviceTime",				_getDeviceTime },
-		{ "getElapsedFrames",			_getElapsedFrames },
 		{ "getElapsedTime",				_getElapsedTime },
 		{ "getListener",				&MOAIGlobalEventSource::_getListener < MOAISim > },
 		{ "getLoopFlags",				_getLoopFlags },
@@ -707,6 +744,8 @@ void MOAISim::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "getMemoryUsage",				_getMemoryUsage },
 		{ "getPerformance",				_getPerformance },
 		{ "getStep",					_getStep },
+		{ "getStepCount",				_getStepCount },
+		{ "hideCursor",					_hideCursor },
 		{ "openWindow",					_openWindow },
 		{ "pauseTimer",					_pauseTimer },
 		{ "setBoostThreshold",			_setBoostThreshold },
@@ -721,6 +760,7 @@ void MOAISim::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "setStepMultiplier",			_setStepMultiplier },
 		{ "setTimerError",				_setTimerError },
 		{ "setTraceback",				_setTraceback },
+		{ "showCursor",					_showCursor },
 		{ "timeToFrames",				_timeToFrames },
 		{ NULL, NULL }
 	};
@@ -793,18 +833,15 @@ double MOAISim::StepSim ( double step, u32 multiplier ) {
 	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 
 	for ( u32 s = 0; s < multiplier; ++s ) {
-
-		if ( this->mForceGC ) {
-			MOAILuaRuntime::Get ().ForceGarbageCollection ();
-			this->mForceGC = false;
-		}
 		
 		lua_gc ( state, LUA_GCSTOP, 0 );
 		
 		MOAIInputMgr::Get ().Update ( step );
 		MOAIActionMgr::Get ().Update (( float )step );		
 		MOAINodeMgr::Get ().Update ();
+		
 		this->mSimTime += step;
+		this->mStepCount++;
 		
 		if ( this->mGCActive ) {
 			// crank the garbage collector

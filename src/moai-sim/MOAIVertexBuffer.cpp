@@ -390,3 +390,40 @@ void MOAIVertexBuffer::ReserveVBOs ( u32 gpuBuffers ) {
 		this->mUseVBOs = false;
 	}
 }
+
+//----------------------------------------------------------------//
+void MOAIVertexBuffer::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
+	UNUSED ( serializer );
+
+	u32 bufferSize		= state.GetField < u32 >( -1, "mBufferSize", 0 );
+
+	this->Reserve ( bufferSize );
+
+	state.GetField ( -1, "mBuffer" );
+
+	if ( state.IsType ( -1, LUA_TSTRING )) {
+		
+		STLString zipString = lua_tostring ( state, -1 );
+		size_t unzipLen = zipString.zip_inflate ( this->mBuffer.Data (), bufferSize );
+		assert ( unzipLen == bufferSize ); // TODO: fail gracefully
+		this->mStream.SetLength ( bufferSize );
+		this->mStream.Seek ( bufferSize, SEEK_SET );
+	}
+	
+	lua_pop ( state, 1 );
+}
+
+//----------------------------------------------------------------//
+void MOAIVertexBuffer::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
+	UNUSED ( serializer );
+
+	size_t size = this->mStream.GetLength ();
+
+	state.SetField ( -1, "mBufferSize", ( u32 )size ); // TODO: overflow
+	
+	STLString zipString;
+	zipString.zip_deflate ( this->mBuffer.Data (), size );
+	
+	lua_pushstring ( state, zipString.str ());
+	lua_setfield ( state, -2, "mBuffer" );
+}

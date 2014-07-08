@@ -10,7 +10,7 @@
 
 //----------------------------------------------------------------//
 /**	@name	close
-	@text	Close the mem stream and release its buffers.
+	@text	Close the memory stream and release its buffers.
 	
 	@in		MOAIMemStream self
 	@out	nil
@@ -59,7 +59,7 @@ int MOAIMemStream::_getString ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@name	open
-	@text	Create a mem stream and optionally reserve some memory and set
+	@text	Create a memory stream and optionally reserve some memory and set
 			the chunk size by which the stream will grow if additional memory
 			is needed.
 	
@@ -125,7 +125,7 @@ void MOAIMemStream::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAIStream::RegisterLuaClass ( state );
 	
-	state.SetField ( -1, "DEFAULT_CHUNK_SIZE", ZLMemStream::DEFAULT_CHUNK_SIZE );
+	state.SetField ( -1, "DEFAULT_CHUNK_SIZE", ( u32 )ZLMemStream::DEFAULT_CHUNK_SIZE );
 }
 
 //----------------------------------------------------------------//

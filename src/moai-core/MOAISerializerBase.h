@@ -23,20 +23,29 @@ public:
 //================================================================//
 class MOAISerializerBase :
 	public virtual MOAILuaObject {
+public:
+
+	typedef u32 ObjID;
+	static const ObjID NULL_OBJ_ID;
+
+private:
+
+	STLMap < const void*, u32 > mObjectIDs;
+
 protected:
 
 	// maps IDs onto objects
-	typedef STLMap < uintptr, MOAISerializerObjectEntry >::iterator ObjectMapIt;
-	STLMap < uintptr, MOAISerializerObjectEntry > mObjectMap;
+	typedef STLMap < ObjID, MOAISerializerObjectEntry >::iterator ObjectMapIt;
+	STLMap < ObjID, MOAISerializerObjectEntry > mObjectMap;
 
 	// maps IDs onto tables
-	typedef STLMap < uintptr, MOAILuaStrongRef >::iterator TableMapIt;
-	STLMap < uintptr, MOAILuaStrongRef > mTableMap;
+	typedef STLMap < ObjID, MOAILuaStrongRef >::iterator TableMapIt;
+	STLMap < ObjID, MOAILuaStrongRef > mTableMap;
 
 	//----------------------------------------------------------------//
 	virtual cc8*	GetFileMagic			();
-	uintptr			GetID					( MOAILuaObject* object );
-	uintptr			GetID					( MOAILuaState& state, int idx );
+	ObjID			GetID					( MOAILuaObject* object );
+	ObjID			GetID					( MOAILuaState& state, int idx );
 
 public:
 

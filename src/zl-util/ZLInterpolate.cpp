@@ -9,6 +9,38 @@
 #ifndef PI
 #define PI 3.1415926545
 #endif
+//----------------------------------------------------------------//
+// t ^ 4
+static float _pow ( float t ) {
+
+	return t * t * t * t;
+}
+
+//----------------------------------------------------------------//
+// t ^ 16
+static float _pow_extra_sharp ( float t ) {
+
+	t = t * t * t * t;
+	t = t * t;
+	t = t * t;
+	return t;
+}
+
+//----------------------------------------------------------------//
+// t ^ 8
+static float _pow_sharp ( float t ) {
+
+	t = t * t * t * t;
+	t = t * t;
+	return t;
+}
+
+//----------------------------------------------------------------//
+// t ^ 2
+static float _pow_soft ( float t ) {
+
+	return t * t;
+}
 
 //================================================================//
 // ZLInterpolate
@@ -23,68 +55,120 @@ inline float _ABS( float a ) {
 float ZLInterpolate::Curve ( u32 mode, float t ) {
 	float t2;
 	switch ( mode ) {
-		
+
+		//................................................................
 		case kEaseIn:
 		
 			t = t - 1.0f;
-			return 1.0f - ( t * t * t * t );
+			return 1.0f - _pow ( t );
 		
+		//................................................................
 		case kEaseOut:
 		
-			return t * t * t * t;
-			
+			return _pow ( t );
+		
+		//................................................................
+		case kExtraSharpEaseIn:
+		
+			t = t - 1.0f;
+			return 1.0f - _pow_extra_sharp ( t );
+		
+		//................................................................
+		case kExtraSharpEaseOut:
+		
+			return _pow_extra_sharp ( t );
+		
+		//................................................................
+		case kExtraSharpSmooth:
+		
+			if ( t < 0.5f ) {
+				t = t * 2.0f;
+				return _pow_extra_sharp ( t ) * 0.5f;
+			}
+			t = ( t * 2.0f ) - 2.0f;
+			return ( 2.0f - _pow_extra_sharp ( t )) * 0.5f;
+		
+		//................................................................
+		case kExtraSharpSmoothEaseOut:
+		
+			return Curve ( kExtraSharpSmooth, _pow ( t ));
+		
+		//................................................................
 		case kFlat:
 		
 			return ( t < 1.0f ) ? 0.0f : 1.0f;
 		
+		//................................................................
 		case kLinear:
 		
 			return t;
 		
+		//................................................................
 		case kSharpEaseIn:
 		
 			t = t - 1.0f;
-			return 1.0f - ( t * t * t * t * t * t * t * t );
-			
+			return 1.0f - _pow_sharp ( t );
+		
+		//................................................................
 		case kSharpEaseOut:
 		
-			return t * t * t * t * t * t;
+			return _pow_sharp ( t );
 		
+		//................................................................
 		case kSharpSmooth:
 		
 			if ( t < 0.5f ) {
 				t = t * 2.0f;
-				return ( t * t * t * t * t * t ) * 0.5f;
+				return _pow_sharp ( t ) * 0.5f;
 			}
 			t = ( t * 2.0f ) - 2.0f;
-			return ( 2.0f - ( t * t * t * t * t * t )) * 0.5f;
+			return ( 2.0f - _pow_sharp ( t )) * 0.5f;
 		
+		//................................................................
+		case kSharpSmoothEaseOut:
+		
+			return Curve ( kSharpSmooth, _pow ( t ));
+		
+		//................................................................
 		case kSmooth:
 		
 			if ( t < 0.5f ) {
 				t = t * 2.0f;
-				return ( t * t * t * t ) * 0.5f;
+				return _pow ( t ) * 0.5f;
 			}
 			t = ( t * 2.0f ) - 2.0f;
-			return ( 2.0f - ( t * t * t * t )) * 0.5f;
+			return ( 2.0f - _pow ( t )) * 0.5f;
 		
+		//................................................................
+		case kSmoothEaseOut:
+		
+			return Curve ( kSmooth, _pow ( t ));
+		
+		//................................................................
 		case kSoftEaseIn:
 		
 			t = t - 1.0f;
-			return 1.0f - ( t * t );
-			
+			return 1.0f - _pow_soft ( t );
+		
+		//................................................................
 		case kSoftEaseOut:
 		
-			return t * t;
+			return _pow_soft ( t );
 		
+		//................................................................
 		case kSoftSmooth:
 		
 			if ( t < 0.5f ) {
 				t = t * 2.0f;
-				return ( t * t ) * 0.5f;
+				return _pow_soft ( t ) * 0.5f;
 			}
 			t = ( t * 2.0f ) - 2.0f;
-			return ( 2.0f - ( t * t )) * 0.5f;
+			return ( 2.0f - _pow_soft ( t )) * 0.5f;
+		
+		//................................................................
+		case kSoftSmoothEaseOut:
+		
+			return Curve ( kSoftSmooth, _pow ( t ));
 
 		case kBackIn:
 			return t * t * (2.70158 * t - 1.70158);
@@ -152,7 +236,6 @@ float ZLInterpolate::Interpolate ( u32 mode, float x0, float x1, float t ) {
 	float s = Curve ( mode, t );
 	return x0 + (( x1 - x0 ) * s );
 }
-
 
 //----------------------------------------------------------------//
 float ZLInterpolate::Interpolate ( u32 mode, float x0, float x1, float t, float w ) {

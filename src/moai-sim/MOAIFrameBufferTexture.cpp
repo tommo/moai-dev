@@ -16,6 +16,9 @@
 	@in		MOAIFrameBufferTexture self
 	@in		number width
 	@in		number height
+	@opt	number colorFormat
+	@opt	number depthFormat
+	@opt	number stencilFormat
 	@out	nil
 */
 int MOAIFrameBufferTexture::_init ( lua_State* L ) {
@@ -25,7 +28,7 @@ int MOAIFrameBufferTexture::_init ( lua_State* L ) {
 	u32 height				= state.GetValue < u32 >( 3, 0 );
 	
 	// TODO: fix me
-	#ifdef MOAI_OS_ANDROID
+	#if defined ( MOAI_OS_ANDROID ) || defined ( MOAI_OS_HTML )
 		u32 colorFormat		= state.GetValue < u32 >( 4, ZGL_PIXEL_FORMAT_RGB565 );
 	#else
 		u32 colorFormat		= state.GetValue < u32 >( 4, ZGL_PIXEL_FORMAT_RGBA8 );
@@ -156,6 +159,10 @@ void MOAIFrameBufferTexture::OnCreate () {
 				
 		// refresh tex params on next bind
 		this->mIsDirty = true;
+		
+        // clearing framebuffer because it might contain garbage
+        zglClearColor ( 0, 0, 0, 0 );
+        zglClear ( ZGL_CLEAR_COLOR_BUFFER_BIT | ZGL_CLEAR_STENCIL_BUFFER_BIT | ZGL_CLEAR_DEPTH_BUFFER_BIT );
 	}
 	else {
 		this->Clear ();

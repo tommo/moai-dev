@@ -57,7 +57,7 @@ void MOAIGfxDeleter::Delete () {
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getMaxTextureUnits
+/**	@name	getFrameBuffer
 	@text	Returns the frame buffer associated with the device.
 
 	@out	MOAIFrameBuffer frameBuffer
@@ -88,8 +88,8 @@ int MOAIGfxDevice::_getMaxTextureUnits ( lua_State* L ) {
 /**	@name	getViewSize
 	@text	Returns the width and height of the view
 	
-	@out	int width
-	@out	int height
+	@out	number width
+	@out	number height
 */
 int MOAIGfxDevice::_getViewSize ( lua_State* L  ) {
 
@@ -196,6 +196,22 @@ int MOAIGfxDevice::_setPointSize ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+/**	@name	release
+
+	@in		release textures scheduled to be released
+	@out	nil
+ */
+// TODO: rename this to something more descriptive?
+int MOAIGfxDevice::_release ( lua_State* L ) {
+
+	MOAILuaState state ( L );
+
+	MOAIGfxDevice::Get ().ProcessDeleters ();
+	zglFlush ();
+	return 0;
+}
+
 //================================================================//
 // MOAIGfxDevice
 //================================================================//
@@ -235,22 +251,27 @@ void MOAIGfxDevice::Clear () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::ClearColorBuffer ( u32 color ) {
-
-	ZLColorVec colorVec;
-	colorVec.SetRGBA ( color );
-	
-	zglClearColor ( colorVec.mR, colorVec.mG, colorVec.mB, 1.0f );
-	zglClear ( ZGL_CLEAR_COLOR_BUFFER_BIT );
+void MOAIGfxDevice::ClearErrors () {
+	#ifndef MOAI_OS_NACL
+		if ( this->mHasContext ) {
+			while ( zglGetError () != ZGL_ERROR_NONE );
+		}
+	#endif
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::ClearErrors () {
-#ifndef MOAI_OS_NACL
-	if ( this->mHasContext ) {
-		while ( zglGetError () != ZGL_ERROR_NONE );
+void MOAIGfxDevice::ClearSurface ( u32 clearFlags ) {
+
+	if ( clearFlags ) {
+		if (( clearFlags & ZGL_CLEAR_DEPTH_BUFFER_BIT ) && !this->mDepthMask ) {
+			zglDepthMask ( true );
+			zglClear ( clearFlags );
+			zglDepthMask ( false );
+		}
+		else {
+			zglClear ( clearFlags );
+		}
 	}
-#endif
 }
 
 //----------------------------------------------------------------//
@@ -545,7 +566,7 @@ MOAIGfxDevice::MOAIGfxDevice () :
 	mCpuUVTransform ( false ),
 	mHasContext ( false ),
 	mIsFramebufferSupported ( 0 ),
-#if defined ( MOAI_OS_NACL ) || defined ( MOAI_OS_IPHONE ) || defined ( MOAI_OS_ANDROID )
+#if defined ( MOAI_OS_NACL ) || defined ( MOAI_OS_IPHONE ) || defined ( MOAI_OS_ANDROID ) || defined ( EMSCRIPTEN )
 	mIsOpenGLES ( true ),
 #else
 	mIsOpenGLES ( false ),
@@ -641,6 +662,7 @@ void MOAIGfxDevice::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "setPenColor",				_setPenColor },
 		{ "setPenWidth",				_setPenWidth },
 		{ "setPointSize",				_setPointSize },
+		{ "release",					_release },
 		{ NULL, NULL }
 	};
 
@@ -745,9 +767,9 @@ void MOAIGfxDevice::ResetState () {
 	zglDisable ( ZGL_PIPELINE_DEPTH );
 	this->mDepthFunc = 0;
 	
-	// enable depth write
-	zglDepthMask ( this->mDepthMask );
-	this->mDepthMask = true;
+	// disable depth write
+	zglDepthMask ( false );
+	this->mDepthMask = false;
 	
 	// clear the vertex format
 	this->SetVertexFormat ();
@@ -1687,3 +1709,4 @@ void MOAIGfxDevice::WriteQuad ( const ZLVec2D* vtx, const ZLVec2D* uv, float xOf
 	
 	this->TransformAndWriteQuad ( vtxBuffer, uvBuffer );
 }
+

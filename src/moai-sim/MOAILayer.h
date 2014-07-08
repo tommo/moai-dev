@@ -46,7 +46,6 @@ private:
 
 	ZLVec3D		mParallax;
 	bool		mShowDebugLines;
-	bool		mNoClear;
 	u32			mSortMode;
 	bool		mSortInViewSpace;
 	
@@ -81,7 +80,6 @@ private:
 	static int		_wndToWorld				( lua_State* L );
 	static int		_wndToWorldRay			( lua_State* L );
 	static int		_worldToWnd				( lua_State* L );
-	static int		_setNoClearFrameBuffer (lua_State* L);
 	
 	//----------------------------------------------------------------//
 	void			AffirmPartition			();

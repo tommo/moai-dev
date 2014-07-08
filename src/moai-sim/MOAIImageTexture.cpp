@@ -11,27 +11,27 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	invalidate
-	@text	Invalidate either a sub-region of the texture or the whole
-			texture. Invalidated regions will be reloaded from the image
-			the next time the texture is bound.
+/**	@name	updateRegion
+	@text	Update either a sub-region of the texture or the whole
+			texture to match changes in the image. Updated regions will
+			be reloaded from the image the next time the texture is bound.
 
-	@in		MOAIImage self
+	@in		MOAIImageTexture self
 	@in		number xMin
 	@in		number yMin
 	@in		number xMax
 	@in		number yMax
 	@out	nil
 */
-int MOAIImageTexture::_invalidate ( lua_State* L ) {
+int MOAIImageTexture::_updateRegion ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIImageTexture, "U" )
 	
 	if ( state.GetTop () > 1 ) {
 		ZLIntRect rect = state.GetRect < int >( 2 );
-		self->Invalidate ( rect );
+		self->UpdateRegion ( rect );
 	}
 	else {
-		self->Invalidate ();
+		self->UpdateRegion ();
 	}
 	return 0;
 }
@@ -39,35 +39,6 @@ int MOAIImageTexture::_invalidate ( lua_State* L ) {
 //================================================================//
 // MOAIImageTexture
 //================================================================//
-
-//----------------------------------------------------------------//
-void MOAIImageTexture::Invalidate () {
-
-	this->mStatus = INVALID;
-	
-	this->MOAIGfxResource::Invalidate ();
-	this->MOAIGfxResource::Load ();
-}
-
-//----------------------------------------------------------------//
-void MOAIImageTexture::Invalidate ( ZLIntRect rect ) {
-	
-	if ( this->mStatus == INVALID ) return;
-
-	rect.Bless ();
-	this->GetRect ().Clip ( rect );
-
-	if ( this->mStatus == VALID ) {
-		this->mRegion = rect;
-	}
-	else {
-		this->mRegion.Grow ( rect );
-	}
-	this->mStatus = INVALID_REGION;
-	
-	this->MOAIGfxResource::Invalidate ();
-	this->MOAIGfxResource::Load ();
-}
 
 //----------------------------------------------------------------//
 bool MOAIImageTexture::IsRenewable () {
@@ -93,12 +64,6 @@ MOAIImageTexture::MOAIImageTexture () :
 
 //----------------------------------------------------------------//
 MOAIImageTexture::~MOAIImageTexture () {
-}
-
-
-//----------------------------------------------------------------//
-void MOAIImageTexture::OnInvalidate () {
-	
 }
 
 //----------------------------------------------------------------//
@@ -131,6 +96,7 @@ void MOAIImageTexture::OnCreate () {
 void MOAIImageTexture::OnLoad () {
 }
 
+
 //----------------------------------------------------------------//
 void MOAIImageTexture::RegisterLuaClass ( MOAILuaState& state ) {
 	
@@ -145,7 +111,8 @@ void MOAIImageTexture::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAIImage::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
-		{ "invalidate",				_invalidate },
+		{ "invalidate",					_updateRegion }, // TODO: deprecate
+		{ "updateRegion",				_updateRegion },
 		{ NULL, NULL }
 	};
 
@@ -160,4 +127,30 @@ void MOAIImageTexture::SerializeIn ( MOAILuaState& state, MOAIDeserializer& seri
 //----------------------------------------------------------------//
 void MOAIImageTexture::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 	MOAITextureBase::SerializeOut ( state, serializer );
+}
+
+//----------------------------------------------------------------//
+void MOAIImageTexture::UpdateRegion () {
+
+	this->mStatus = INVALID;
+ 	this->MOAIGfxResource::Load ();
+}
+
+//----------------------------------------------------------------//
+void MOAIImageTexture::UpdateRegion ( ZLIntRect rect ) {
+	
+	if ( this->mStatus == INVALID ) return;
+
+	rect.Bless ();
+	this->GetRect ().Clip ( rect );
+
+	if ( this->mStatus == VALID ) {
+		this->mRegion = rect;
+	}
+	else {
+		this->mRegion.Grow ( rect );
+	}
+	this->mStatus = INVALID_REGION;
+	
+	this->MOAIGfxResource::Load ();
 }

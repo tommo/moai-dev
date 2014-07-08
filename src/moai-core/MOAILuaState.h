@@ -45,9 +45,11 @@ public:
 	STLString		GetField				( int idx, int key, const STLString& value );
 	bool			GetFieldWithType		( int idx, cc8* name, int type );
 	bool			GetFieldWithType		( int idx, int key, int type );
+	bool			GetSubfieldWithType		( int idx, cc8* format, int type, ... );
 	static cc8*		GetLuaTypeName			( int type );
 	void*			GetPtrUserData			( int idx );
-	STLString		GetStackTrace			( int level );
+	STLString		GetStackDump			();
+	STLString		GetStackTrace			( cc8* title, int level );
 	int				GetTop					();
 	void*			GetUserData				( int idx, void* value );
 	void*			GetUserData				( int idx, cc8* name, void* value );
@@ -56,6 +58,7 @@ public:
 	bool			HasField				( int idx, int key );
 	bool			HasField				( int idx, cc8* name, int type );
 	bool			HasField				( int idx, int name, int type );
+	bool			HasKeys					( int idx );
 	bool			HexDecode				( int idx );
 	bool			HexEncode				( int idx );
 	bool			Inflate					( int idx, int windowBits );
@@ -69,7 +72,9 @@ public:
 	void			Pop						( int n );
 	bool			PrepMemberFunc			( int idx, cc8* name );
 	bool			PrintErrors				( FILE* file, int status );
-	void			PrintStackTrace			( FILE* file, int level );
+	void			PrintStackDump			();
+	void			PrintStackDump			( FILE* file );
+	void			PrintStackTrace			( FILE* file, cc8* title, int level );
 	void			Push					();
 	void			Push					( bool value );
 	void			Push					( cc8* value );
@@ -79,8 +84,6 @@ public:
 	void			Push					( u16 value );
 	void			Push					( u32 value );
 	void			Push					( u64 value );
-	void			Push					( size_t value );
-	//void			Push					( uintptr value );
 	void			Push					( lua_CFunction value );
 	void			Push					( MOAILuaObject* luaObject );
 	void			Push					( MOAILuaRef& ref );
@@ -144,16 +147,14 @@ template <> bool		MOAILuaState::GetValue < bool >			( int idx, bool value );
 template <> cc8*		MOAILuaState::GetValue < cc8* >			( int idx, cc8* value );
 template <> double		MOAILuaState::GetValue < double >		( int idx, double value );
 template <> float		MOAILuaState::GetValue < float >		( int idx, float value );
-//template <> int			MOAILuaState::GetValue < int >			( int idx, int value );
 template <> s8			MOAILuaState::GetValue < s8 >			( int idx, s8 value );
 template <> s16			MOAILuaState::GetValue < s16 >			( int idx, s16 value );
 template <> s32			MOAILuaState::GetValue < s32 >			( int idx, s32 value );
-//template <> s64			MOAILuaState::GetValue < s64 >			( int idx, s64 value );
+template <> s64			MOAILuaState::GetValue < s64 >			( int idx, s64 value );
 template <> u8			MOAILuaState::GetValue < u8 >			( int idx, u8 value );
 template <> u16			MOAILuaState::GetValue < u16 >			( int idx, u16 value );
 template <> u32			MOAILuaState::GetValue < u32 >			( int idx, u32 value );
-//template <> u64			MOAILuaState::GetValue < u64 >			( int idx, u64 value );
+template <> u64			MOAILuaState::GetValue < u64 >			( int idx, u64 value );
 template <> void*		MOAILuaState::GetValue < void* >		( int idx, void* value );
-//template <> uintptr		MOAILuaState::GetValue < uintptr >		( int idx, uintptr value );
 
 #endif

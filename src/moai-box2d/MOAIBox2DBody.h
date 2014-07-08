@@ -40,6 +40,7 @@ private:
 	static int		_getAngle				( lua_State* L );
 	static int		_getAngularVelocity		( lua_State* L );
 	static int		_getInertia				( lua_State* L );
+	static int		_getGravityScale		( lua_State* L );
 	static int		_getLinearVelocity		( lua_State* L );
 	static int		_getLocalCenter			( lua_State* L );
 	static int		_getMass				( lua_State* L );
@@ -57,13 +58,16 @@ private:
 	static int		_setGravityScale				( lua_State* L );
 	static int		_setBullet				( lua_State* L );
 	static int		_setFixedRotation		( lua_State* L );
+	static int		_setGravityScale		( lua_State* L );
 	static int		_setLinearDamping		( lua_State* L );
 	static int		_setLinearVelocity		( lua_State* L );
 	static int		_setMassData			( lua_State* L );
 	static int		_setTransform			( lua_State* L );
 	static int		_setType				( lua_State* L );
+	
 	//----------------------------------------------------------------//
 	bool			ApplyAttrOp				( u32 attrID, MOAIAttrOp& attrOp, u32 op );
+	void			Clear					();
 	void			SetBody					( b2Body* body );
 	void			OnDepNodeUpdate			();
 

@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moai-core/MOAILuaObject.h>
+#include <moai-core/MOAILuaClass.h>
 #include <moai-core/MOAILuaRef.h>
 #include <moai-core/MOAILuaRuntime.h>
 
@@ -162,9 +163,9 @@ MOAILuaMemberRef::~MOAILuaMemberRef () {
 bool MOAILuaMemberRef::PushRef ( MOAILuaState& state ) {
 
 	if ( this->mRef != LUA_NOREF ) {
-	
+
 		bool isNil = true;
-	
+
 		if ( this->mOwner->IsBound ()) {
 			if ( this->mOwner->PushRefTable ( state )) {
 				lua_rawgeti ( state, -1, this->mRef );
@@ -172,7 +173,7 @@ bool MOAILuaMemberRef::PushRef ( MOAILuaState& state ) {
 			}
 			isNil = lua_isnil ( state, -1 );
 		}
-		
+
 		if ( isNil ) {
 			this->mRef = LUA_NOREF;
 			this->mOwner = 0;
@@ -195,10 +196,10 @@ void MOAILuaMemberRef::SetRef ( MOAILuaObject& owner, MOAILuaState& state, int i
 
 		this->mOwner = &owner;
 		this->mOwner->PushRefTable ( state );
-		
+
 		lua_pushvalue ( state, idx );
 		this->mRef = luaL_ref ( state, -2 );
-		
+
 		lua_pop ( state, 1 );
 	}
 }

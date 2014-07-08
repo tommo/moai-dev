@@ -8,7 +8,6 @@
 #include <moai-sim/MOAIParticleState.h>
 #include <moai-sim/MOAIParticleSystem.h>
 #include <moai-sim/MOAITextureBase.h>
-#include <moai-sim/MOAIRenderMgr.h>
 
 class MOAIDataBuffer;
 
@@ -23,7 +22,7 @@ class MOAIDataBuffer;
 			is full. Wrapping will overwrite the oldest particles with new particles.
 	
 	@in		MOAIParticleSystem self
-	@opt	boolean cap Default value is true.
+	@opt	boolean cap					Default value is true.
 	@out	nil
 */
 int MOAIParticleSystem::_capParticles ( lua_State* L ) {
@@ -38,7 +37,7 @@ int MOAIParticleSystem::_capParticles ( lua_State* L ) {
 	@text	Controls capping vs. wrapping of sprites.
 	
 	@in		MOAIParticleSystem self
-	@opt	boolean cap Default value is true.
+	@opt	boolean cap					Default value is true.
 	@out	nil
 */
 int MOAIParticleSystem::_capSprites ( lua_State* L ) {
@@ -67,6 +66,7 @@ int MOAIParticleSystem::_clearSprites ( lua_State* L ) {
 	@text	Returns a particle state for an index or nil if none exists.
 	
 	@in		MOAIParticleSystem self
+	@in		number index
 	@out	MOAIParticleState state
 */
 int MOAIParticleSystem::_getState ( lua_State* L ) {
@@ -83,12 +83,12 @@ int MOAIParticleSystem::_getState ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**  @name  isIdle	
-  @text  Returns true if the current system is not currently
-      processing any particles.
-  
-  @in    MOAIParticleSystem self
-  @out  boolean whether the system is currently idle	
+/** @name	isIdle
+	@text	Returns true if the current system is not currently
+			processing any particles.
+			
+	@in		MOAIParticleSystem self
+	@out	boolean isIdle				Indicates whether the system is currently idle.
 */
 int  MOAIParticleSystem::_isIdle( lua_State* L ) {
 	
@@ -106,11 +106,11 @@ int  MOAIParticleSystem::_isIdle( lua_State* L ) {
 	@text	Adds a particle to the system.
 	
 	@in		MOAIParticleSystem self
-	@opt	number x Default value is 0.
-	@opt	number y Default value is 0.
-	@opt	number dx Default value is 0.
-	@opt	number dy Default value is 0.
-	@out	boolean result 'true' is particle was added, 'false' if not.
+	@opt	number x					Default value is 0.
+	@opt	number y					Default value is 0.
+	@opt	number dx					Default value is 0.
+	@opt	number dy					Default value is 0.
+	@out	boolean result				true if particle was added, false if not.
 */
 int MOAIParticleSystem::_pushParticle ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticleSystem, "U" )
@@ -134,10 +134,10 @@ int MOAIParticleSystem::_pushParticle ( lua_State* L ) {
 	@in		MOAIParticleSystem self
 	@in		number x
 	@in		number y
-	@opt	number rot Rotation in degrees. Default value is 0.
-	@opt	number xScale Default value is 1.
-	@opt	number yScale Default value is 1.
-	@out	boolean result 'true' is sprite was added, 'false' if not.
+	@opt	number rot			Rotation in degrees. Default value is 0.
+	@opt	number xScale		Default value is 1.
+	@opt	number yScale		Default value is 1.
+	@out	boolean result		true is sprite was added, false if not.
 */
 int MOAIParticleSystem::_pushSprite ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticleSystem, "UNN" )
@@ -172,7 +172,7 @@ int MOAIParticleSystem::_pushSprite ( lua_State* L ) {
 	
 	@in		MOAIParticleSystem self
 	@in		number nParticles		Total number of particle records.
-	@in		number particleSize		Number of params reserved for the particle.
+	@in		number particleSize		Number of parameters reserved for the particle.
 	@out	nil
 */
 int MOAIParticleSystem::_reserveParticles ( lua_State* L ) {
@@ -229,21 +229,6 @@ int MOAIParticleSystem::_setComputeBounds ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticleSystem, "U" )
 
 	self->mComputeBounds = state.GetValue < bool >( 2, false );
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@name	setReversedDrawOrder
-	@text	Set the a flag controlling whether draw earlier sprites first
-	
-	@in		MOAIParticleSystem self
-	@opt	boolean reversedDrawOrder		Default value is false.
-	@out	nil
-*/
-int MOAIParticleSystem::_setReversedDrawOrder ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIParticleSystem, "U" )
-
-	self->mReversedDrawOrder = state.GetValue < bool >( 2, false );
 	return 0;
 }
 
@@ -322,11 +307,11 @@ int MOAIParticleSystem::_setState ( lua_State* L ) {
 	@text	Release a batch emission or particles into the system.
 	
 	@in		MOAIParticleSystem self
-	@opt	number total Default value is 1.
-	@opt	number x Default value is 0.
-	@opt	number y Default value is 0.
-	@opt	number dx Default value is 0.
-	@opt	number dy Default value is 0.
+	@opt	number total			Default value is 1.
+	@opt	number x				Default value is 0.
+	@opt	number y				Default value is 0.
+	@opt	number dx				Default value is 0.
+	@opt	number dy				Default value is 0.
 	@out	nil
 */
 int MOAIParticleSystem::_surge ( lua_State* L ) {
@@ -371,10 +356,9 @@ void MOAIParticleSystem::Draw ( int subPrimID, float lod ) {
 
 	if ( !this->IsVisible ( lod ) ) return;
 	if ( !this->mDeck ) return;
+	if ( this->IsClear ()) return;
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
-	// MOAIRenderMgr& renderMgr = MOAIRenderMgr::Get ();
-	// MOAICamera* camera = renderMgr.GetCamera ();
 	
 	if ( this->mUVTransform ) {
 		ZLAffine3D uvMtx = this->mUVTransform->GetLocalToWorldMtx ();
@@ -396,49 +380,18 @@ void MOAIParticleSystem::Draw ( int subPrimID, float lod ) {
 		base = total % maxSprites;
 		total = maxSprites;
 	}
-
-	// bool billboard = this->mBillboard != 0;
-	// ZLAffine3D faceCameraMtx;
-	ZLVec3D worldLoc;
-	// if ( billboard ) faceCameraMtx.Init( camera->GetBillboardMtx () );
 	
-	int k, step;
-	if ( this->mReversedDrawOrder ) {
-		k = total - 1;
-		step = -1;
-	} else {
-		k = 0;
-		step = 1;
-	}
-
 	for ( u32 i = 0; i < total; ++i ) {
 		
-		u32 idx = ( base + k ) % maxSprites;
-		k += step;
-
+		u32 idx = ( base + i ) % maxSprites;
+		
 		AKUParticleSprite& sprite = this->mSprites [ idx ];
 		gfxDevice.SetPenColor ( sprite.mRed, sprite.mGreen, sprite.mBlue, sprite.mAlpha );
-
-		spriteMtx.ScRoTr ( 
-			sprite.mXScl, sprite.mYScl, sprite.mZScl, 
-			sprite.mXRot * ( float )D2R, sprite.mYRot * ( float )D2R, sprite.mZRot * ( float )D2R, 
-			sprite.mXLoc, sprite.mYLoc, sprite.mZLoc
-			);
+		
+		spriteMtx.ScRoTr ( sprite.mXScl, sprite.mYScl, 1.0f, 0.0f, 0.0f, sprite.mZRot * ( float )D2R, sprite.mXLoc, sprite.mYLoc, 0.0f );
+		
 		drawingMtx = this->GetLocalToWorldMtx ();
 		drawingMtx.Prepend ( spriteMtx );
-
-		// if( billboard ) {
-		// 	worldLoc.mX = drawingMtx.m [ ZLAffine3D::C3_R0 ];
-		// 	worldLoc.mY = drawingMtx.m [ ZLAffine3D::C3_R1 ];
-		// 	worldLoc.mZ = drawingMtx.m [ ZLAffine3D::C3_R2 ];
-		// 	drawingMtx.m [ ZLAffine3D::C3_R0 ] = 0.0f;
-		// 	drawingMtx.m [ ZLAffine3D::C3_R1 ] = 0.0f;
-		// 	drawingMtx.m [ ZLAffine3D::C3_R2 ] = 0.0f;
-		// 	drawingMtx.Append ( faceCameraMtx );
-		// 	drawingMtx.m [ ZLAffine3D::C3_R0 ] = worldLoc.mX;
-		// 	drawingMtx.m [ ZLAffine3D::C3_R1 ] = worldLoc.mY;
-		// 	drawingMtx.m [ ZLAffine3D::C3_R2 ] = worldLoc.mZ;
-		// } 
 		
 		gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, drawingMtx );
 		
@@ -473,7 +426,7 @@ MOAIParticleState* MOAIParticleSystem::GetState ( u32 id ) {
 AKUParticleSprite* MOAIParticleSystem::GetTopSprite () {
 
 	if ( this->mSpriteTop ) {
-		u32 idx = this->mSpriteTop - 1;
+		u32 idx = (this->mSpriteTop - 1) % this->mSprites.Size();
 		return &this->mSprites [ idx ];
 	}
 	return 0;
@@ -490,7 +443,6 @@ MOAIParticleSystem::MOAIParticleSystem () :
 	mParticleSize ( 0 ),
 	mCapParticles ( false ),
 	mCapSprites ( false ),
-	mReversedDrawOrder ( false ),
 	mHead ( 0 ),
 	mTail ( 0 ),
 	mFree ( 0 ),
@@ -574,11 +526,6 @@ bool MOAIParticleSystem::PushParticle ( float x, float y ) {
 
 //----------------------------------------------------------------//
 bool MOAIParticleSystem::PushParticle ( float x, float y, float dx, float dy ) {
-	return this->PushParticle ( x, y, 0.0f, dx, dy, 0.0f );
-}
-
-//----------------------------------------------------------------//
-bool MOAIParticleSystem::PushParticle ( float x, float y, float z, float dx, float dy, float dz ) {
 	
 	if (( !this->mFree ) && this->mCapParticles ) {
 		return false;
@@ -604,7 +551,6 @@ bool MOAIParticleSystem::PushParticle ( float x, float y, float z, float dx, flo
 		
 		r [ MOAIParticle::PARTICLE_X ] = x;
 		r [ MOAIParticle::PARTICLE_Y ] = y;
-		r [ MOAIParticle::PARTICLE_Z ] = z;
 		r [ MOAIParticle::PARTICLE_DX ] = dx;
 		r [ MOAIParticle::PARTICLE_DY ] = dy;
 		
@@ -637,8 +583,8 @@ bool MOAIParticleSystem::PushSprite ( const AKUParticleSprite& sprite ) {
 		// TODO: need to take rotation into account
 		ZLBox bounds = this->mDeck->GetBounds ( sprite.mGfxID, this->mRemapper );
 		
-		ZLVec3D offset ( sprite.mXLoc, sprite.mYLoc, sprite.mZLoc );
-		ZLVec3D scale ( sprite.mXScl, sprite.mYScl, sprite.mZScl );
+		ZLVec3D offset ( sprite.mXLoc, sprite.mYLoc, 0.0f );
+		ZLVec3D scale ( sprite.mXScl, sprite.mYScl, 0.0f );
 		
 		bounds.Scale ( scale );
 		
@@ -684,7 +630,6 @@ void MOAIParticleSystem::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "reserveSprites",		_reserveSprites },
 		{ "reserveStates",		_reserveStates },
 		{ "setComputeBounds",	_setComputeBounds },
-		{ "setReversedDrawOrder",	_setReversedDrawOrder },
 		{ "setSpriteColor",		_setSpriteColor },
 		{ "setSpriteDeckIdx",	_setSpriteDeckIdx },
 		{ "setState",			_setState },

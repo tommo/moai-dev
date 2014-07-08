@@ -52,7 +52,7 @@ int MOAIBox2DArbiter::_getContactPoints ( lua_State* L ) {
 	@text	Returns total normal impulse for contact.
 	
 	@in		MOAIBox2DArbiter self
-	@out	number impulse in kg * units / s converted from kg * m / s
+	@out	number impulse			Impulse in kg * units / s converted from kg * m / s
 */
 int MOAIBox2DArbiter::_getNormalImpulse ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DArbiter, "U" )
@@ -70,7 +70,7 @@ int MOAIBox2DArbiter::_getNormalImpulse ( lua_State* L ) {
 	@text	Returns total tangent impulse for contact.
 	
 	@in		MOAIBox2DArbiter self
-	@out	number impulse in kg * units / s converted from kg * m / s
+	@out	number impulse			Impulse in kg * units / s converted from kg * m / s
 */
 int MOAIBox2DArbiter::_getTangentImpulse ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DArbiter, "U" )
@@ -88,7 +88,8 @@ int MOAIBox2DArbiter::_getTangentImpulse ( lua_State* L ) {
 	@text	Enabled or disable the contact.
 	
 	@in		MOAIBox2DArbiter self
-	@out	number impulse
+	@in		boolean enabled
+	@out	nil
 */
 int MOAIBox2DArbiter::_setContactEnabled ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DArbiter, "U" )
