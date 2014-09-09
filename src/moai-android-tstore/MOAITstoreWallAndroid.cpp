@@ -1,15 +1,13 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef DISABLE_TSTOREWALL
-
 #include "moai-core/pch.h"
 #include "moai-sim/pch.h"
 
 #include <jni.h>
 
 #include <moai-android/moaiext-jni.h>
-#include <moai-android/MOAITstoreWallAndroid.h>
+#include <moai-android-tstore/MOAITstoreWallAndroid.h>
 
 extern JavaVM* jvm;
 
@@ -32,7 +30,7 @@ int MOAITstoreWallAndroid::_setListener ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	showOfferWall
+/**	@lua	showOfferWall
 	@text	Displays the Tstore marketplace.
 				
 	@out	nil
@@ -115,5 +113,3 @@ extern "C" void Java_com_ziplinegames_moai_MoaiTstoreWall_AKUNotifyCurrencyAward
 
 	MOAITstoreWallAndroid::Get ().NotifyCurrencyAwarded ( amount );
 }
-
-#endif

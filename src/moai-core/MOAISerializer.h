@@ -22,7 +22,7 @@ private:
 //================================================================//
 // MOAISerializer
 //================================================================//
-/**	@name	MOAISerializer
+/**	@lua	MOAISerializer
 	@text	Manages serialization state of Lua tables and Moai objects.
 			The serializer will produce a Lua script that, when executed,
 			will return the ordered list of objects added to it using the
@@ -39,15 +39,17 @@ private:
 	// cache empty objects
 	STLSet < ObjID > mEmpties;
 
-	ObjID			mRoot;
+	ObjID				mRoot;
+	bool				mBase64;
 
 	//----------------------------------------------------------------//
 	static int			_getObjectTables			( lua_State* L );
 	static int			_serializeToFile			( lua_State* L );
 	static int			_serializeToString			( lua_State* L );
+	static int			_setBase64Enabled			( lua_State* L );
 
 	//----------------------------------------------------------------//
-	static STLString	EscapeString				( cc8* str );
+	STLString			EscapeString				( cc8* str, size_t len );
 	static bool			IsSimpleStringKey			( cc8* str );
 	void				PrintObjectID				( ZLStream& stream, cc8* format, ObjID objID );
 	void				WriteDecls					( ZLStream& stream );

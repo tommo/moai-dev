@@ -10,7 +10,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	initAttractor
+/**	@lua	initAttractor
 	@text	Greater force is exerted on particles as they approach
 			attractor.
 	
@@ -32,7 +32,7 @@ int MOAIParticleForce::_initAttractor ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	initBasin
+/**	@lua	initBasin
 	@text	Greater force is exerted on particles as they leave
 			attractor.
 	
@@ -54,7 +54,7 @@ int MOAIParticleForce::_initBasin ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	initLinear
+/**	@lua	initLinear
 	@text	A constant linear force will be applied to the particles.
 	
 	@in		MOAIParticleForce self
@@ -76,7 +76,7 @@ int MOAIParticleForce::_initLinear ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	initRadial
+/**	@lua	initRadial
 	@text	A constant radial force will be applied to the particles.
 	
 	@in		MOAIParticleForce self
@@ -95,7 +95,7 @@ int MOAIParticleForce::_initRadial ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setType
+/**	@lua	setType
 	@text	Set the type of force. FORCE will factor in the particle's mass. GRAVITY
 			will ignore the particle's mass. OFFSET will ignore both mass and damping.
 	

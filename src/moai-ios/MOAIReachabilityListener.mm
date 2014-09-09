@@ -9,19 +9,37 @@
 #import <CoreTelephony/CTCarrier.h>
 
 //================================================================//
+// MOAIReachabilityListener ()
+//================================================================//
+@interface MOAIReachabilityListener ()
+
+	//----------------------------------------------------------------//
+	-( void )	reachabilityChanged			:( NSNotification* )note;
+@end
+
+//================================================================//
 // MOAIReachabilityListener
 //================================================================//
 @implementation MOAIReachabilityListener
 
+//----------------------------------------------------------------//
+-( void ) dealloc {
+	
+	[ self stopListener ];
+}
 
 //----------------------------------------------------------------//
--(void) reachabilityChanged: ( NSNotification* )note {
+-( void ) reachabilityChanged: ( NSNotification* )note {
 	UNUSED ( note );
-	[ MOAIReachabilityListener updateMoaiEnvironment ];
+	[ self updateMoaiEnvironment ];
 }
 
 //----------------------------------------------------------------//
 - ( void ) startListener {
+
+	[ self stopListener ];
+
+	mContext = MOAIGlobalsMgr::Get ();
 
 	[[ NSNotificationCenter defaultCenter ] addObserver: self selector: @selector ( reachabilityChanged: ) name: kReachabilityChangedNotification object: nil ];
 	mReach = [[ MOAIReachability reachabilityForInternetConnection ] retain ];
@@ -30,16 +48,28 @@
 
 
 //----------------------------------------------------------------//
-- ( void ) stopListener {	
-	[ mReach release ];
+- ( void ) stopListener {
+
+	if ( mReach ) {
+		[ mReach stopNotifier ];
+		[ mReach release ];
+		[[ NSNotificationCenter defaultCenter ] removeObserver: self name: kReachabilityChangedNotification object: nil ];
+	}
+	mReach = nil;
 }
 
 //----------------------------------------------------------------//
-+( void ) updateMoaiEnvironment {
+-( void ) updateMoaiEnvironment {
+
+	MOAIScopedContext scopedContext;
+
+	if ( !MOAIGlobalsMgr::Check ( mContext )) return;
+	MOAIGlobalsMgr::Set ( mContext );
+	
+	if ( !MOAIEnvironment::IsValid ()) return;
+	MOAIEnvironment& environment = MOAIEnvironment::Get();
 
 	NetworkStatus status = [[ MOAIReachability reachabilityForInternetConnection ] currentReachabilityStatus ];
-	
-	MOAIEnvironment& environment = MOAIEnvironment::Get ();
 	environment.SetValue ( MOAI_ENV_connectionType, ( int )status );
 	
 	// If we have a cellualr connection, get carrier information

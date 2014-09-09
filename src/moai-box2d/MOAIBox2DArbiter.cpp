@@ -13,7 +13,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getContactNormal
+/**	@lua	getContactNormal
  @text	Returns the normal for the contact.
  
  @in	MOAIBox2DArbiter self
@@ -29,26 +29,7 @@ int MOAIBox2DArbiter::_getContactNormal ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getContactNormal
- @text	Returns the normal for the contact.
- 
- @in	MOAIBox2DArbiter self
- @out	list of contact points
- */
-int MOAIBox2DArbiter::_getContactPoints ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIBox2DArbiter, "U" )
-	int count = self->mContactPointCount;
-	b2Vec2 *p = self->mContactPoints;
-	if ( !p ) return 0;
-	for( int i = 0; i < count; ++i ) {		
-		state.Push( p[i].x );
-		state.Push( p[i].y );
-	}
-	return count * 2;
-}
-
-//----------------------------------------------------------------//
-/**	@name	getNormalImpulse
+/**	@lua	getNormalImpulse
 	@text	Returns total normal impulse for contact.
 	
 	@in		MOAIBox2DArbiter self
@@ -66,7 +47,7 @@ int MOAIBox2DArbiter::_getNormalImpulse ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getTangentImpulse
+/**	@lua	getTangentImpulse
 	@text	Returns total tangent impulse for contact.
 	
 	@in		MOAIBox2DArbiter self
@@ -84,7 +65,7 @@ int MOAIBox2DArbiter::_getTangentImpulse ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setContactEnabled
+/**	@lua	setContactEnabled
 	@text	Enabled or disable the contact.
 	
 	@in		MOAIBox2DArbiter self
@@ -109,9 +90,7 @@ void MOAIBox2DArbiter::BeginContact ( b2Contact* contact ) {
 	
 	this->mContact = contact;
 	this->mImpulse = 0;
-
-	this->mContactPointCount = 0;
-	this->mContactPoints = 0;
+	
 	this->mContactNormal = b2Vec2();
 	this->mNormalImpulse = 0.0f;
 	this->mTangentImpulse = 0.0f;
@@ -131,7 +110,6 @@ void MOAIBox2DArbiter::EndContact ( b2Contact* contact ) {
 	
 	this->mContact = contact;
 	this->mImpulse = 0;
-	this->mContactPoints = 0;
 	
 	b2Fixture* fixtureA = contact->GetFixtureA ();
 	b2Fixture* fixtureB = contact->GetFixtureB ();
@@ -190,14 +168,13 @@ void MOAIBox2DArbiter::PostSolve ( b2Contact* contact, const b2ContactImpulse* i
 	MOAIBox2DFixture* moaiFixtureA = ( MOAIBox2DFixture* )fixtureA->GetUserData ();
 	MOAIBox2DFixture* moaiFixtureB = ( MOAIBox2DFixture* )fixtureB->GetUserData ();
 		
-	b2Manifold* manifold = contact->GetManifold ();
-	u32 totalPoints = manifold->pointCount;
-	
 	b2WorldManifold* worldManifold = new b2WorldManifold ();
 	contact->GetWorldManifold ( worldManifold );
-	this->mContactPointCount = totalPoints;
 	this->mContactNormal = worldManifold->normal;
-	this->mContactPoints = worldManifold->points;
+	delete worldManifold;
+	
+	b2Manifold* manifold = contact->GetManifold ();
+	u32 totalPoints = manifold->pointCount;
 	
 	this->mNormalImpulse = 0.0f;
 	this->mTangentImpulse = 0.0f;
@@ -209,9 +186,6 @@ void MOAIBox2DArbiter::PostSolve ( b2Contact* contact, const b2ContactImpulse* i
 	
 	moaiFixtureA->HandleCollision ( POST_SOLVE, moaiFixtureB, this );
 	moaiFixtureB->HandleCollision ( POST_SOLVE, moaiFixtureA, this );
-	
-	delete worldManifold;
-	this->mContactPoints = 0;
 }
 
 //----------------------------------------------------------------//
@@ -253,7 +227,6 @@ void MOAIBox2DArbiter::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "getContactNormal",			_getContactNormal },
-		{ "getContactPoints",			_getContactPoints },
 		{ "getNormalImpulse",			_getNormalImpulse },
 		{ "getTangentImpulse",			_getTangentImpulse },
 		{ "setContactEnabled",			_setContactEnabled },

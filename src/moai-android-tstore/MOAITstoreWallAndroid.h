@@ -4,14 +4,12 @@
 #ifndef	MOAITSTOREWALLANDROID_H
 #define	MOAITSTOREWALLANDROID_H
 
-#ifndef DISABLE_TSTOREWALL
-
 #include <moai-core/headers.h>
 
 //================================================================//
 // MOAITstoreWallAndroid
 //================================================================//
-/**	@name	MOAITstoreWallAndroid
+/**	@lua	MOAITstoreWallAndroid
 */
 class MOAITstoreWallAndroid :
 	public MOAIGlobalClass < MOAITstoreWallAndroid, MOAILuaObject > {
@@ -37,7 +35,5 @@ public:
 	void	NotifyCurrencyAwarded	( int amount );
 	void	RegisterLuaClass		( MOAILuaState& state );
 };
-
-#endif  //DISABLE_TSTOREWALL
 
 #endif  //MOAITSTOREWALLANDROID_H

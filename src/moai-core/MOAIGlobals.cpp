@@ -34,6 +34,27 @@ MOAIGlobalClassBase::~MOAIGlobalClassBase () {
 //================================================================//
 
 //----------------------------------------------------------------//
+MOAIGlobals::MOAIGlobals () {
+}
+
+//----------------------------------------------------------------//
+MOAIGlobals::~MOAIGlobals () {
+
+	size_t total = this->mGlobals.Size ();
+	for ( size_t i = 1; i <= total; ++i ) {
+		MOAIGlobalPair& pair = this->mGlobals [ total - i ];
+		MOAIGlobalClassBase* global = pair.mGlobal;
+
+		pair.mIsValid = false;
+
+		if ( global ) {
+			global->OnGlobalsFinalize ();
+			delete global;
+		}
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIGlobals::Restore () {
 
 	size_t total = this->mGlobals.Size ();
@@ -59,33 +80,18 @@ void MOAIGlobals::Retire () {
 	}
 }
 
-//----------------------------------------------------------------//
-MOAIGlobals::MOAIGlobals () {
-}
-
-//----------------------------------------------------------------//
-MOAIGlobals::~MOAIGlobals () {
-
-	size_t total = this->mGlobals.Size ();
-	for ( size_t i = 1; i <= total; ++i ) {
-		MOAIGlobalPair& pair = this->mGlobals [ total - i ];
-		MOAIGlobalClassBase* global = pair.mGlobal;
-
-		pair.mIsValid = false;
-
-		if ( global ) {
-			global->OnGlobalsFinalize ();
-			delete global;
-		}
-	}
-}
-
 //================================================================//
 // MOAIGlobalsMgr
 //================================================================//
 
 MOAIGlobalsMgr::GlobalsSet* MOAIGlobalsMgr::sGlobalsSet = 0;
 MOAIGlobals* MOAIGlobalsMgr::sInstance = 0;
+
+//----------------------------------------------------------------//
+bool MOAIGlobalsMgr::Check ( MOAIGlobals* globals ) {
+
+	return sGlobalsSet->contains ( globals );
+}
 
 //----------------------------------------------------------------//
 MOAIGlobals* MOAIGlobalsMgr::Create () {
@@ -143,9 +149,11 @@ MOAIGlobals* MOAIGlobalsMgr::Get () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGlobalsMgr::Set ( MOAIGlobals* globals ) {
+MOAIGlobals* MOAIGlobalsMgr::Set ( MOAIGlobals* globals ) {
 
+	MOAIGlobals* prev = sInstance;
 	sInstance = globals;
+	return prev;
 }
 
 //----------------------------------------------------------------//
@@ -154,4 +162,20 @@ MOAIGlobalsMgr::MOAIGlobalsMgr () {
 
 //----------------------------------------------------------------//
 MOAIGlobalsMgr::~MOAIGlobalsMgr () {
+}
+
+//================================================================//
+// MOAIScopedContext
+//================================================================//
+	
+//----------------------------------------------------------------//
+MOAIScopedContext::MOAIScopedContext () {
+
+	this->mOriginalContext = MOAIGlobalsMgr::Get ();
+}
+
+//----------------------------------------------------------------//
+MOAIScopedContext::~MOAIScopedContext () {
+
+	MOAIGlobalsMgr::Set ( this->mOriginalContext );
 }

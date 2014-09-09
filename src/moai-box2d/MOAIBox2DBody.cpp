@@ -13,7 +13,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/** @name addChain
+/** @lua addChain
 	@text Create and add a set of collision edges to the body.
 	
 	@in		MOAIBox2DBody self
@@ -62,7 +62,7 @@ int MOAIBox2DBody::_addChain ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	addCircle
+/**	@lua	addCircle
 	@text	Create and add circle fixture to the body.
 	
 	@in		MOAIBox2DBody self
@@ -99,7 +99,7 @@ int MOAIBox2DBody::_addCircle ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	addEdges
+/**	@lua	addEdges
  @text	Create and add a polygon fixture to the body.
  
  @in		MOAIBox2DBody self
@@ -148,7 +148,7 @@ int MOAIBox2DBody::_addEdges ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	addPolygon
+/**	@lua	addPolygon
 	@text	Create and add a polygon fixture to the body.
 	
 	@in		MOAIBox2DBody self
@@ -195,7 +195,7 @@ int MOAIBox2DBody::_addPolygon ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	addRect
+/**	@lua	addRect
 	@text	Create and add a rect fixture to the body.
 	
 	@in		MOAIBox2DBody self
@@ -243,7 +243,7 @@ int MOAIBox2DBody::_addRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	applyAngularImpulse
+/**	@lua	applyAngularImpulse
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DBody self
@@ -268,7 +268,7 @@ int MOAIBox2DBody::_applyAngularImpulse ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	applyForce
+/**	@lua	applyForce
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DBody self
@@ -304,7 +304,7 @@ int MOAIBox2DBody::_applyForce ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	applyLinearImpulse
+/**	@lua	applyLinearImpulse
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DBody self
@@ -339,7 +339,7 @@ int MOAIBox2DBody::_applyLinearImpulse ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	applyTorque
+/**	@lua	applyTorque
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DBody self
@@ -365,7 +365,7 @@ int MOAIBox2DBody::_applyTorque ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	destroy
+/**	@lua	destroy
 	@text	Schedule body for destruction.
 	
 	@in		MOAIBox2DBody self
@@ -386,7 +386,7 @@ int MOAIBox2DBody::_destroy ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getAngle
+/**	@lua	getAngle
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DBody self
@@ -406,7 +406,7 @@ int MOAIBox2DBody::_getAngle ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getAngularVelocity
+/**	@lua	getAngularVelocity
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DBody self
@@ -426,7 +426,7 @@ int MOAIBox2DBody::_getAngularVelocity ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getInertia
+/**	@lua	getInertia
 	@text   See Box2D documentation.
 
 	@in		MOAIBox2DBody self
@@ -449,7 +449,7 @@ int MOAIBox2DBody::_getInertia ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getGravityScale
+/**	@lua	getGravityScale
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DBody self
@@ -471,7 +471,7 @@ int MOAIBox2DBody::_getGravityScale ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getLinearVelocity
+/**	@lua	getLinearVelocity
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DBody self
@@ -495,7 +495,7 @@ int MOAIBox2DBody::_getLinearVelocity ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getLocalCenter
+/**	@lua	getLocalCenter
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DBody self
@@ -519,7 +519,7 @@ int MOAIBox2DBody::_getLocalCenter ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getMass
+/**	@lua	getMass
 	@text   See Box2D documentation.
 
 	@in		MOAIBox2DBody self
@@ -538,7 +538,7 @@ int MOAIBox2DBody::_getMass ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getPosition
+/**	@lua	getPosition
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DBody self
@@ -562,7 +562,7 @@ int MOAIBox2DBody::_getPosition ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getWorldCenter
+/**	@lua	getWorldCenter
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DBody self
@@ -586,7 +586,7 @@ int MOAIBox2DBody::_getWorldCenter ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	isActive
+/**	@lua	isActive
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DBody self
@@ -607,7 +607,7 @@ int MOAIBox2DBody::_isActive ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	isAwake
+/**	@lua	isAwake
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DBody self
@@ -628,7 +628,7 @@ int MOAIBox2DBody::_isAwake ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	isBullet
+/**	@lua	isBullet
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DBody self
@@ -649,7 +649,7 @@ int MOAIBox2DBody::_isBullet ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	isFixedRotation
+/**	@lua	isFixedRotation
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DBody self
@@ -670,7 +670,7 @@ int MOAIBox2DBody::_isFixedRotation ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	resetMassData
+/**	@lua	resetMassData
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DBody self
@@ -690,7 +690,7 @@ int MOAIBox2DBody::_resetMassData ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setActive
+/**	@lua	setActive
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DBody self
@@ -712,7 +712,7 @@ int MOAIBox2DBody::_setActive ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setAngularDamping
+/**	@lua	setAngularDamping
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DBody self
@@ -734,7 +734,7 @@ int MOAIBox2DBody::_setAngularDamping ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setAngularVelocity
+/**	@lua	setAngularVelocity
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DBody self
@@ -756,7 +756,7 @@ int MOAIBox2DBody::_setAngularVelocity ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setAwake
+/**	@lua	setAwake
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DBody self
@@ -777,31 +777,8 @@ int MOAIBox2DBody::_setAwake ( lua_State* L ) {
 	return 0;
 }
 
-
 //----------------------------------------------------------------//
-/**	@name	setGravityScale
-	@text	See Box2D documentation.
-	
-	@in		MOAIBox2DBody self
-	@opt	number scale		Default value is 1.
-	@out	nil
-*/
-int MOAIBox2DBody::_setGravityScale ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
-	
-	if ( !self->mBody ) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DBody_MissingInstance );
-		return 0;
-	}
-	
-	float scale = state.GetValue < float >( 2, 1.0f );
-	self->mBody->SetGravityScale ( scale );
-	
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@name	setBullet
+/**	@lua	setBullet
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DBody self
@@ -823,7 +800,7 @@ int MOAIBox2DBody::_setBullet ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setFixedRotation
+/**	@lua	setFixedRotation
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DBody self
@@ -845,7 +822,29 @@ int MOAIBox2DBody::_setFixedRotation ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setLinearDamping
+/**	@lua	setGravityScale
+	@text	See Box2D documentation.
+	
+	@in		MOAIBox2DBody self
+	@opt	number gravityScale.
+	@out	nil
+*/
+int MOAIBox2DBody::_setGravityScale ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIBox2DBody, "UN" );
+
+	if ( !self->mBody ) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DBody_MissingInstance );
+		return 0;
+	}
+
+	float scale = state.GetValue < float >( 2, 0.0f );
+	self->mBody->SetGravityScale ( scale );
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@lua	setLinearDamping
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DBody self
@@ -867,7 +866,7 @@ int MOAIBox2DBody::_setLinearDamping ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setLinearVelocity
+/**	@lua	setLinearVelocity
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DBody self
@@ -894,7 +893,7 @@ int MOAIBox2DBody::_setLinearVelocity ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setMassData
+/**	@lua	setMassData
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DBody self
@@ -932,7 +931,7 @@ int MOAIBox2DBody::_setMassData ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	setTransform
+/**	@lua	setTransform
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DBody self
@@ -968,7 +967,7 @@ int MOAIBox2DBody::_setTransform ( lua_State* L ) {
 
 
 //----------------------------------------------------------------//
-/**	@name	setType
+/**	@lua	setType
 	@text	See Box2D documentation.
 	
 	@in		MOAIBox2DBody self
@@ -1088,7 +1087,6 @@ void MOAIBox2DBody::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setAngularDamping",		_setAngularDamping },
 		{ "setAngularVelocity",		_setAngularVelocity },
 		{ "setAwake",				_setAwake },
-		{ "setGravityScale",				_setGravityScale },
 		{ "setBullet",				_setBullet },
 		{ "setFixedRotation",		_setFixedRotation },
 		{ "setGravityScale",		_setGravityScale },

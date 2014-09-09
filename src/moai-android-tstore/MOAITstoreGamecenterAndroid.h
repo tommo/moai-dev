@@ -4,14 +4,12 @@
 #ifndef	MOAITSTOREGAMECENTERANDROID_H
 #define	MOAITSTOREGAMECENTERANDROID_H
 
-#ifndef DISABLE_TSTOREGAMECENTER
-
 #include <moai-core/headers.h>
 
 //================================================================//
 // MOAITstoreGamecenterAndroid
 //================================================================//
-/**	@name	MOAITstoreGamecenterAndroid
+/**	@lua	MOAITstoreGamecenterAndroid
 */
 class MOAITstoreGamecenterAndroid :
 	public MOAIGlobalClass < MOAITstoreGamecenterAndroid, MOAILuaObject > {
@@ -65,7 +63,5 @@ public:
 	void	AKUNotifyUserInfoResponse		( cc8* jsonData );
 	void	RegisterLuaClass				( MOAILuaState& state );
 };
-
-#endif  //DISABLE_TSTOREGAMECENTER
 
 #endif  //MOAITSTOREGAMECENTERANDROID_H

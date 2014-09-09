@@ -124,20 +124,6 @@
 	LockingQueue < InputEvent > * inputQueue = NULL;
 
 //================================================================//
-// JNI set up
-//================================================================//
-
-	JavaVM* jvm;
-
-	//----------------------------------------------------------------//
-	int JNI_OnLoad ( JavaVM* vm, void* reserved ) {
-
-		jvm = vm;
-
-		return JNI_VERSION_1_4;
-	}
-
-//================================================================//
 // Miscellaneous JNI Functions
 //================================================================//
 
@@ -253,6 +239,7 @@
 		MOAIKeyboardAndroid::Affirm ();
 		REGISTER_LUA_CLASS ( MOAIKeyboardAndroid );
 
+		/*
 		#ifndef DISABLE_ADCOLONY
 			MOAIAdColonyAndroid::Affirm ();
 			REGISTER_LUA_CLASS ( MOAIAdColonyAndroid );
@@ -312,6 +299,7 @@
 			MOAIGooglePlayServicesAndroid::Affirm ();
 			REGISTER_LUA_CLASS ( MOAIGooglePlayServicesAndroid );
 		#endif
+		*/
 
 		inputQueue = new LockingQueue < InputEvent > ();
 	}
@@ -347,11 +335,7 @@
 	//----------------------------------------------------------------//
 	extern "C" void Java_com_ziplinegames_moai_Moai_AKUPause ( JNIEnv* env, jclass obj, jboolean paused ) {
 
-		if (paused) {
-			AKUModulesPause ();
-		} else {
-			AKUModulesResume ();
-		}
+		AKUModulesPause ( paused );
 	}
 
 	//----------------------------------------------------------------//

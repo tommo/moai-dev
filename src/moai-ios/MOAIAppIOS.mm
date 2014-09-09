@@ -20,7 +20,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@name	getDirectoryInDomain
+/**	@lua	getDirectoryInDomain
 	@text	Search the platform's internal directory structure for 
 			a special directory as defined by the platform.
  
@@ -61,7 +61,7 @@ int MOAIAppIOS::_getDirectoryInDomain ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getInterfaceOrientation
+/**	@lua	getInterfaceOrientation
  @text	Get the current orientation of the user interface
  
  @in	nil
@@ -128,7 +128,7 @@ int MOAIAppIOS::_getIPAddress ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	getUTCTime
+/**	@lua	getUTCTime
  @text	Get the current UTC time in seconds
  
  @in	nil
@@ -144,7 +144,7 @@ int MOAIAppIOS::_getUTCTime ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@name	sendMail
+/**	@lua	sendMail
  @text	Send a mail with the passed in default values
  
  @in	string recipient
@@ -197,7 +197,7 @@ int MOAIAppIOS::_setListener ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/** @name _takeCamera
+/** @lua _takeCamera
 	@text Allows to pick a photo from the CameraRoll or from the Camera
 	@in function	callback
 	@in NSUInteger	input camera source
@@ -260,6 +260,17 @@ void MOAIAppIOS::callTakeCameraLuaCallback (NSString *imagePath) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIAppIOS::DidBecomeActive () {
+
+	MOAILuaRef& callback = this->mListeners [ DID_BECOME_ACTIVE ];
+	
+	if ( callback ) {
+		MOAIScopedLuaState state = callback.GetSelf ();
+		state.DebugCall ( 0, 0 );
+	}
+}
+
+//----------------------------------------------------------------//
 MOAIAppIOS::MOAIAppIOS () {
 
 	RTTI_SINGLE ( MOAILuaObject )
@@ -276,6 +287,27 @@ MOAIAppIOS::~MOAIAppIOS () {
 
 	//[ this->mMailDelegate release ];
 	[ this->mTakeCameraListener release];
+}
+
+//----------------------------------------------------------------//
+void MOAIAppIOS::OnGlobalsFinalize () {
+
+	[ this->mReachabilityListener stopListener ];
+	[ this->mReachabilityListener release ];
+	this->mReachabilityListener = nil;
+}
+
+//----------------------------------------------------------------//
+void MOAIAppIOS::OpenUrl ( NSURL* url, NSString* sourceApplication ) {
+
+	MOAILuaRef& callback = this->mListeners [ OPEN_URL ];
+
+	if ( callback ) {
+		MOAIScopedLuaState state = callback.GetSelf ();
+		[[ url absoluteString ] toLua:state ];
+		[ sourceApplication toLua:state ];
+		state.DebugCall ( 2, 0 );
+	}
 }
 
 //----------------------------------------------------------------//
@@ -310,27 +342,9 @@ void MOAIAppIOS::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIAppIOS::DidBecomeActive () {
+void MOAIAppIOS::UpdateReachability () {
 
-	MOAILuaRef& callback = this->mListeners [ DID_BECOME_ACTIVE ];
-	
-	if ( callback ) {
-		MOAIScopedLuaState state = callback.GetSelf ();
-		state.DebugCall ( 0, 0 );
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIAppIOS::OpenUrl ( NSURL* url, NSString* sourceApplication ) {
-
-	MOAILuaRef& callback = this->mListeners [ OPEN_URL ];
-
-	if ( callback ) {
-		MOAIScopedLuaState state = callback.GetSelf ();
-		[[ url absoluteString ] toLua:state ];
-		[ sourceApplication toLua:state ];
-		state.DebugCall ( 2, 0 );
-	}
+	[ this->mReachabilityListener updateMoaiEnvironment ];
 }
 
 //----------------------------------------------------------------//

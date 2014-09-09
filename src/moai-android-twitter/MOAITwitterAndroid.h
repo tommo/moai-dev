@@ -4,14 +4,12 @@
 #ifndef	MOAITWITTERANDROID_H
 #define	MOAITWITTERANDROID_H
 
-#ifndef DISABLE_TWITTER
-
 #include <moai-core/headers.h>
 
 //================================================================//
 // MOAITwitterAndroid
 //================================================================//
-/**	@name	MOAITwitterAndroid
+/**	@lua	MOAITwitterAndroid
 	@text	Wrapper for Twitter integration on Android devices.
 			Twitter provides social integration for sharing on
 			www.twitter.com.
@@ -61,7 +59,5 @@ public:
 	void 	NotifyTweetComplete	        ( int code );
 	void	RegisterLuaClass		    ( MOAILuaState& state );
 };
-
-#endif  //DISABLE_TWITTER
 
 #endif  //MOAITWITTER_H
