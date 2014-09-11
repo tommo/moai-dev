@@ -732,7 +732,7 @@ void MOAILuaRuntime::ForceGarbageCollection () {
 		size_t c0 = this->mObjectCount;
 		
 		lua_gc ( L, LUA_GCCOLLECT, 0 );
-		lua_gc ( L, LUA_GCCOLLECT, 0 );
+		// lua_gc ( L, LUA_GCCOLLECT, 0 );
 		
 		size_t b1 = this->mTotalBytes;
 		size_t c1 = this->mObjectCount;

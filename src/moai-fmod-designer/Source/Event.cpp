@@ -94,7 +94,7 @@ bool Event::IsValid() const
         assert( !m_rawSound );
 
         // This is a lazy setting of the cached ID
-        if( (int)m_pInternalData == kINVALID_EVENT_INDEX &&
+        if( getInternalId() == kINVALID_EVENT_INDEX &&
             m_eventName.length() > 0 &&
             s_pFMODEventSystem )             
         {            
@@ -130,7 +130,7 @@ bool Event::IsValid() const
             HANDLE_FMOD_ERROR( result );     
         }        
 
-        return  ( (int)m_pInternalData != kINVALID_EVENT_INDEX );
+        return  ( getInternalId() != kINVALID_EVENT_INDEX );
     }
     else
     {

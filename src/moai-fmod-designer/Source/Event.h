@@ -38,6 +38,10 @@ namespace FMODDesigner
         bool operator==( const Event& rhs ) const { return m_eventName == rhs.m_eventName; }
         bool operator!=( const Event& rhs ) const { return m_eventName != rhs.m_eventName; }
 
+        int getInternalId() const {
+            return (int)(long)m_pInternalData;
+        }
+
     private:    
         void _SetSoundID() const;    
 

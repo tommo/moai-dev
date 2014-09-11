@@ -690,7 +690,7 @@ void MOAITextLabel::Draw ( int subPrimID, float lod ) {
 	UNUSED ( subPrimID );
 	
 	if ( !this->IsVisible ( lod )) return;
-	if ( this->IsClear ()) return;
+	// if ( this->IsClear ()) return;
 	
 	if ( this->mReveal ) {
 		
@@ -728,7 +728,7 @@ void MOAITextLabel::DrawDebug ( int subPrimID, float lod ) {
 	UNUSED ( lod );
 
 	if ( !this->IsVisible ( lod )) return;
-	if ( this->IsClear ()) return;
+	// if ( this->IsClear ()) return;
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	MOAIDebugLines& debugLines = MOAIDebugLines::Get ();

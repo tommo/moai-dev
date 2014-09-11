@@ -2121,7 +2121,7 @@ bool EventManager::_PassesRetriggerTest( ZLVec3D vSourcePosition, const EventPro
         {
             FMOD_RESULT result;
             FMOD::Event* pEvent = NULL;
-            result = s_pFMODEventSystem->getEventBySystemID( (int)soundEvent.m_pInternalData, FMOD_EVENT_INFOONLY, &pEvent ); 
+            result = s_pFMODEventSystem->getEventBySystemID( soundEvent.getInternalId(), FMOD_EVENT_INFOONLY, &pEvent ); 
             if( result == FMOD_OK )
             {
                 FMOD_RESULT result = FMOD_OK;
@@ -2300,7 +2300,7 @@ EventInstance* EventManager::_PlayEvent( const Event& soundEvent, bool loops, co
                     }
                     else
                     {
-                        result = s_pFMODEventSystem->getEventBySystemID( (int)soundEvent.m_pInternalData, FMOD_EVENT_DEFAULT | FMOD_EVENT_NONBLOCKING, &pEvent ); 
+                        result = s_pFMODEventSystem->getEventBySystemID( soundEvent.getInternalId(), FMOD_EVENT_DEFAULT | FMOD_EVENT_NONBLOCKING, &pEvent ); 
                     }
 
                     if( result == FMOD_OK )
@@ -2406,7 +2406,7 @@ bool EventManager::UnloadEvent(const Event& soundEvent, bool blockOnUnload) cons
             {
                 //unload the sound
                 FMOD::Event* pEvent = NULL;
-                result = s_pFMODEventSystem->getEventBySystemID( (int)soundEvent.m_pInternalData, FMOD_EVENT_INFOONLY, &pEvent );
+                result = s_pFMODEventSystem->getEventBySystemID( soundEvent.getInternalId(), FMOD_EVENT_INFOONLY, &pEvent );
                 if( result == FMOD_OK )
                 {
                     FMOD::EventGroup* pGroup = NULL;
@@ -2450,7 +2450,7 @@ u32 EventManager::GetNumInstances(const Event& soundEvent)
             }
             else
             {
-                result = s_pFMODEventSystem->getEventBySystemID( (int)soundEvent.m_pInternalData, FMOD_EVENT_INFOONLY, &pEvent );                
+                result = s_pFMODEventSystem->getEventBySystemID( soundEvent.getInternalId(), FMOD_EVENT_INFOONLY, &pEvent );                
             }
 
             if(result == FMOD_OK && pEvent)

@@ -9,7 +9,7 @@
 # osx_schemes="libmoai-osx libmoai-osx-3rdparty libmoai-osx-fmod-ex libmoai-osx-luaext libmoai-osx-untz libmoai-osx-zl-core libmoai-osx-zl-vfs "
 osx_schemes="libmoai-osx libmoai-osx-sim libmoai-osx-3rdparty-core libmoai-osx-3rdparty-crypto libmoai-osx-3rdparty-curl libmoai-osx-luaext libmoai-osx-zl-core libmoai-osx-zl-vfs libmoai-osx-fmod-ex libmoai-osx-fmod-designer libmoai-osx-box2d libmoai-osx-http-client"
 osx_sdks=( "macosx" )
-osx_architectures_macosx=( "i386" )
+osx_architectures_macosx=( "i386" "x86_64" )
 
 # ios_schemes="libmoai-ios libmoai-ios-3rdparty libmoai-ios-facebook libmoai-ios-fmod-ex libmoai-ios-luaext libmoai-ios-tapjoy libmoai-ios-untz libmoai-ios-zl-core libmoai-ios-zl-vfs libmoai-ios-zl-crypto"
 ios_schemes="libmoai-ios libmoai-ios-sim libmoai-ios-3rdparty-core libmoai-ios-3rdparty-curl libmoai-ios-3rdparty-crypto libmoai-ios-luaext libmoai-ios-fmod-ex libmoai-ios-fmod-designer libmoai-ios-zl-core libmoai-ios-zl-vfs libmoai-ios-zl-crypto  libmoai-ios-box2d libmoai-ios-http-client libmoai-ios-crittercism libmoai-ios-billing libmoai-ios-gamecenter" # libmoai-ios-twitter libmoai-ios-tapjoy
@@ -130,19 +130,19 @@ for platform in $platforms; do
 		done
 	done
 
-	for config in $configurations; do
-		for sdk in $sdks; do
-			eval architectures=\$${platform}_architectures_$sdk
-			for arch in $architectures; do
-				rm -rf "$basedir/$platform/$config/$arch"
-				mkdir -p "$basedir/$platform/$config/$arch"
-				for scheme in $schemes; do
-					if !  xcrun -sdk $sdk lipo -thin $arch -output "$basedir/$platform/$config/$arch/$scheme.a" "$basedir/$platform/$config/universal/$scheme.a"; then
-						echo >&2 "lipo failed, giving up."
-						exit 1
-					fi
-				done
-			done
-		done
-	done
+	# for config in $configurations; do
+	# 	for sdk in $sdks; do
+	# 		eval architectures=\$${platform}_architectures_$sdk
+	# 		for arch in $architectures; do
+	# 			rm -rf "$basedir/$platform/$config/$arch"
+	# 			mkdir -p "$basedir/$platform/$config/$arch"
+	# 			for scheme in $schemes; do
+	# 				if !  xcrun -sdk $sdk lipo -thin $arch -output "$basedir/$platform/$config/$arch/$scheme.a" "$basedir/$platform/$config/universal/$scheme.a"; then
+	# 					echo >&2 "lipo failed, giving up."
+	# 					exit 1
+	# 				fi
+	# 			done
+	# 		done
+	# 	done
+	# done
 done

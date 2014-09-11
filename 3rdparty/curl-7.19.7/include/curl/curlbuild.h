@@ -557,6 +557,13 @@
    Error Compilation_aborted_Unknown_non_configure_build_target
 #endif
 
+/* The size of `long', as computed by sizeof. */
+#ifdef __LP64__
+#define CURL_SIZEOF_LONG 8
+#else
+#define CURL_SIZEOF_LONG 4
+#endif
+
 /* CURL_PULL_SYS_TYPES_H is defined above when inclusion of header file  */
 /* sys/types.h is required here to properly make type definitions below. */
 #ifdef CURL_PULL_SYS_TYPES_H

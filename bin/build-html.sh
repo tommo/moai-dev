@@ -24,7 +24,7 @@ mkdir build
 cd build
 cmake \
 -DEMSCRIPTEN_ROOT_PATH=${EMSCRIPTEN_HOME} \
--DCMAKE_TOOLCHAIN_FILE=${EMSCRIPTEN_HOME}/cmake/Platform/Emscripten.cmake \
+-DCMAKE_TOOLCHAIN_FILE=${EMSCRIPTEN_HOME}/cmake/Modules/Platform/Emscripten.cmake \
 -DBUILD_HTML=TRUE \
 -DMOAI_BOX2D=TRUE \
 -DMOAI_CHIPMUNK=FALSE \
@@ -43,7 +43,7 @@ cmake \
 -DMOAI_SFMT=FALSE \
 -DMOAI_VORBIS=FALSE \
 -DMOAI_HTTP_CLIENT=FALSE \
--DMOAI_UNTZ=TRUE \
+-DMOAI_UNTZ=FALSE \
 ../
 if [[ $? -ne 0 ]]; then
     exit 1

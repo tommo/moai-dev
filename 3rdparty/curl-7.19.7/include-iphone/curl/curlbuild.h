@@ -154,11 +154,18 @@
 #endif
 
 /* The size of `long', as computed by sizeof. */
-/*#define CURL_SIZEOF_LONG 4*/
+// /*#define CURL_SIZEOF_LONG 4*/
+// #ifdef __i386__
+// #define CURL_SIZEOF_LONG 8
+// #else
+// #define CURL_SIZEOF_LONG 8
+// #endif
+
+/* The size of `long', as computed by sizeof. */
 #ifdef __i386__
 #define CURL_SIZEOF_LONG 8
 #else
-#define CURL_SIZEOF_LONG 8
+#define CURL_SIZEOF_LONG 4
 #endif
 
 /* Integral data type used for curl_socklen_t. */

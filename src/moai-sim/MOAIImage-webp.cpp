@@ -76,7 +76,7 @@ void MOAIImage::LoadWebP ( ZLStream& stream, u32 transform ) {
 
 
 	// override the image settings
-	this->mPixelFormat = USPixel::TRUECOLOR;
+	this->mPixelFormat = ZLPixel::TRUECOLOR;
 	this->mColorFormat = imgColorFormat;
 	
 	this->Alloc ();
