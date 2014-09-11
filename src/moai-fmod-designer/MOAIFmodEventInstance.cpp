@@ -481,6 +481,48 @@ int MOAIFmodEventInstance::_getMeasureFraction ( lua_State* L ) {
 	return 0;
 }
 
+
+int MOAIFmodEventInstance::_setSubChannelTime ( lua_State* L ) {
+    MOAI_LUA_SETUP ( MOAIFmodEventInstance, "UNN" )
+    
+    FMODDesigner::EventInstance* pInstance = *( self->mEventHandle );
+    if ( pInstance ) {
+        u32 idx = state.GetValue < u32 > ( 2, 0 );
+        u32 pos = state.GetValue < float > ( 3, 0 ) * 1000;
+        pInstance->SetSubChannelPosition( idx, pos );
+        return 0;
+    } 
+    
+    return 0;
+}
+
+ 
+//----------------------------------------------------------------//
+/** @lua   getDuration
+    @text   Returns time within the Event, or if useSubsoundTime, will return the time
+           within the *the first subsound only*
+    
+    @in     MOAIFmodEventInstance self    
+    @opt   boolean               useSubsoundTime   If true, will return the time within the first subsound only (Default: false)
+
+    @out   number                time              Time within the Event
+*/
+int MOAIFmodEventInstance::_getDuration ( lua_State* L ) {
+    MOAI_LUA_SETUP ( MOAIFmodEventInstance, "U" )
+    
+    FMODDesigner::EventInstance* pInstance = *( self->mEventHandle );
+    if ( pInstance ) {
+
+        bool bUseSubsoundTime = state.GetValue < bool > ( 2, false );
+        float fDuration = pInstance->GetDuration ( bUseSubsoundTime );
+        lua_pushnumber ( L, fDuration );
+
+        return 1;
+    } 
+    
+    return 0;
+}
+
 //================================================================//
 // MOAIFmodEventInstance
 //================================================================//
@@ -520,6 +562,7 @@ void MOAIFmodEventInstance::RegisterLuaFuncs ( MOAILuaState& state ) {
         { "setPitch",               _setPitch },
         { "getVolume",              _getVolume },
         { "getPitch",               _getPitch },
+        { "getDuration",            _getDuration },
 
         { "getParameter",           _getParameter },
         { "setParameter",           _setParameter },
@@ -536,6 +579,7 @@ void MOAIFmodEventInstance::RegisterLuaFuncs ( MOAILuaState& state ) {
         { "getTempo",               _getTempo },
         { "getBeatFraction",        _getBeatFraction },
         { "getMeasureFraction",     _getMeasureFraction },
+        { "setSubChannelTime",      _setSubChannelTime },
 
 		{ NULL, NULL }
 	};
