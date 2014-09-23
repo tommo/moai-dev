@@ -50,7 +50,7 @@ int MOAIDeserializer::_initObject ( lua_State* L ) {
 	int memberTableIdx = 3;
 	int initTableIdx = 4;
 
-	if ( state.CheckParams ( 1, "UUS**T")) {
+	if ( state.CheckParams ( 1, "UUS**T", false )) {
 		memberTableIdx = 5;
 		initTableIdx = 6;
 	}

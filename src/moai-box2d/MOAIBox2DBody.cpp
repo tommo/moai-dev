@@ -669,6 +669,31 @@ int MOAIBox2DBody::_isFixedRotation ( lua_State* L ) {
 	return 1;
 }
 
+
+
+//----------------------------------------------------------------//
+/**	@lua	isSleepingAllowed
+	@text	See Box2D documentation.
+	
+	@in		MOAIBox2DBody self
+	@opt	boolean allowed		Default value is true.
+	@out	nil
+*/
+int MOAIBox2DBody::_isSleepingAllowed ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
+	
+	if ( !self->mBody ) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DBody_MissingInstance );
+		return 0;
+	}
+	
+	bool isSleepingAllowed = self->mBody->IsSleepingAllowed ();
+	lua_pushboolean ( state, isSleepingAllowed );
+	
+	return 1;
+}
+
+
 //----------------------------------------------------------------//
 /**	@lua	resetMassData
 	@text	See Box2D documentation.
@@ -930,6 +955,30 @@ int MOAIBox2DBody::_setMassData ( lua_State* L ) {
 	return 0;
 }
 
+
+//----------------------------------------------------------------//
+/**	@lua	setSleepingAllowed
+	@text	See Box2D documentation.
+	
+	@in		MOAIBox2DBody self
+	@opt	boolean allowed		Default value is true.
+	@out	nil
+*/
+int MOAIBox2DBody::_setSleepingAllowed ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
+	
+	if ( !self->mBody ) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DBody_MissingInstance );
+		return 0;
+	}
+	
+	bool allowed = state.GetValue < bool >( 2, true );
+	self->mBody->SetSleepingAllowed ( allowed );
+	
+	return 0;
+}
+
+
 //----------------------------------------------------------------//
 /**	@lua	setTransform
 	@text	See Box2D documentation.
@@ -1082,6 +1131,7 @@ void MOAIBox2DBody::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "isAwake",				_isAwake },
 		{ "isBullet",				_isBullet },
 		{ "isFixedRotation",		_isFixedRotation },
+		{ "isSleepingAllowed",		_isSleepingAllowed },
 		{ "resetMassData",			_resetMassData },
 		{ "setActive",				_setActive },
 		{ "setAngularDamping",		_setAngularDamping },
@@ -1093,6 +1143,7 @@ void MOAIBox2DBody::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setLinearDamping",		_setLinearDamping },
 		{ "setLinearVelocity",		_setLinearVelocity },
 		{ "setMassData",			_setMassData },
+		{ "setSleepingAllowed",			_setSleepingAllowed },
 		{ "setTransform",			_setTransform },
 		{ "setType",				_setType },
 		{ NULL, NULL }

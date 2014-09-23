@@ -19,7 +19,7 @@
 
 cd `dirname $0`/..
 cd cmake
-rm -rf build
+# rm -rf build
 mkdir build
 cd build
 cmake \

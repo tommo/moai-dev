@@ -417,7 +417,10 @@ void MOAIParticleSystem::Draw ( int subPrimID, float lod ) {
 		AKUParticleSprite& sprite = this->mSprites [ idx ];
 		gfxDevice.SetPenColor ( sprite.mRed, sprite.mGreen, sprite.mBlue, sprite.mAlpha );
 		
-		spriteMtx.ScRoTr ( sprite.mXScl, sprite.mYScl, 1.0f, 0.0f, 0.0f, sprite.mZRot * ( float )D2R, sprite.mXLoc, sprite.mYLoc, 0.0f );
+		spriteMtx.ScRoTr (
+			sprite.mXScl, sprite.mYScl, sprite.mZScl,
+			sprite.mXRot* ( float )D2R, sprite.mYRot* ( float )D2R, sprite.mZRot * ( float )D2R,
+			sprite.mXLoc, sprite.mYLoc, sprite.mZLoc );
 		
 		drawingMtx = this->GetLocalToWorldMtx ();
 		drawingMtx.Prepend ( spriteMtx );

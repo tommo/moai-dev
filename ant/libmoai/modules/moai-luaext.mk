@@ -32,6 +32,8 @@
 	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/luasocket-2.0.2-embed/luasocketscripts.c
 	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/luasql-2.2.0/src/luasql.c
 	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/luasql-2.2.0/src/ls_sqlite3.c
+	LOCAL_SRC_FILES 	+= $(MOAI_SDK_HOME)/3rdparty/lpeg-0.10.2/lpeg.c
+	
 	LOCAL_SRC_FILES   += $(wildcard $(MOAI_SDK_HOME)/src/moai-luaext/*.cpp) 
 
 	include $(BUILD_STATIC_LIBRARY)
