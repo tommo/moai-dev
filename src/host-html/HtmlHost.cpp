@@ -167,11 +167,11 @@ void RefreshContext () {
 
 	AKUAppInitialize ();
 	AKUModulesAppInitialize ();
+	// AKUModulesCustomAppInitialize ();
 
 	AKUCreateContext ();
-
-    AKUModulesContextInitialize ();
-	AKUModulesRunLuaAPIWrapper ();
+	AKUModulesContextInitialize ();
+	// AKUModulesCustomContextInitialize ();
 	
 	AKUSetInputConfigurationName ( "AKUGlut" );
 
@@ -189,5 +189,8 @@ void RefreshContext () {
 	AKUSetFunc_ExitFullscreenMode ( _AKUExitFullscreenModeFunc );
 	AKUSetFunc_OpenWindow ( _AKUOpenWindowFunc );
 
-	//AKUModulesParseArgs ( argc, argv );
+	// AKUModulesCustomRunBefore ();
+	// AKUModulesParseArgs ( argc, argv );
+	// AKUModulesCustomRunAfter ();
+	
 }

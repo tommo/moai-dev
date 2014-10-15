@@ -14,11 +14,19 @@
 	#endif
 
 	#ifndef AKU_WITH_FMOD_DESIGNER
-		#define AKU_WITH_FMOD_DESIGNER 1
+		#ifdef MOAI_OS_HTML
+			#define AKU_WITH_FMOD_DESIGNER 0
+		#else
+			#define AKU_WITH_FMOD_DESIGNER 1
+		#endif
 	#endif
 
 	#ifndef AKU_WITH_FMOD_EX
-		#define AKU_WITH_FMOD_EX 0
+		#ifdef MOAI_OS_HTML
+			#define AKU_WITH_FMOD_EX 0
+		#else
+			#define AKU_WITH_FMOD_EX 1
+		#endif
 	#endif
 
 	#ifndef AKU_WITH_HARNESS
@@ -50,7 +58,11 @@
 	#endif
 
 	#ifndef AKU_WITH_UNTZ
-		#define AKU_WITH_UNTZ 0
+		#ifdef MOAI_OS_HTML
+			#define AKU_WITH_UNTZ 1
+		#else
+			#define AKU_WITH_UNTZ 0
+		#endif
 	#endif
 
 	#ifndef AKU_WITH_UTIL

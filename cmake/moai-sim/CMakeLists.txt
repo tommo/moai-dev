@@ -50,6 +50,7 @@ if (MOAI_JPG)
 endif (MOAI_JPG)
 
   target_link_libraries (moai-sim webp)
+  target_link_libraries (moai-sim tess2)
 
 if (MOAI_BOX2D)
  target_link_libraries ( moai-sim moai-box2d)

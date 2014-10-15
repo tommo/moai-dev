@@ -270,10 +270,6 @@ void zl_init () {
 	ZLVfsFileSystem::Get ().Init ();
 
 	ZLVfsFile* file;
-
-	file = new ZLVfsFile ();
-	file->SetFile ( stderr );
-	zl_stderr = ( ZLFILE* )file;
 	
 	file = new ZLVfsFile ();
 	file->SetFile ( stdin );
@@ -282,6 +278,10 @@ void zl_init () {
 	file = new ZLVfsFile ();
 	file->SetFile ( stdout );
 	zl_stdout = ( ZLFILE* )file;
+
+	file = new ZLVfsFile ();
+	file->SetFile ( stderr );
+	zl_stderr = ( ZLFILE* )file;
 }
 
 //----------------------------------------------------------------//

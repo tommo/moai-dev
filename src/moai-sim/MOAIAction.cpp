@@ -10,7 +10,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@lua	addChild
+/**	@name	addChild
 	@text	Attaches a child action for updating.
 
 	@in		MOAIAction self
@@ -31,7 +31,7 @@ int MOAIAction::_addChild ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@lua	attach
+/**	@name	attach
 	@text	Attaches a child to a parent action. The child will receive
 			updates from the parent only if the parent is in the action tree.
 
@@ -50,7 +50,7 @@ int MOAIAction::_attach ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@lua	clear
+/**	@name	clear
 	@text	Removes all child actions.
 
 	@in		MOAIAction self
@@ -66,7 +66,7 @@ int MOAIAction::_clear ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@lua	detach
+/**	@name	detach
 	@text	Detaches an action from its parent (if any) thereby removing
 			it from the action tree. Same effect as calling stop ().
 
@@ -83,11 +83,11 @@ int MOAIAction::_detach ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@lua	isActive
+/**	@name	isActive
 	@text	Checks to see if an action is currently in the action tree.
 
 	@in		MOAIAction self
-	@out	boolean isActive
+	@out	bool isActive
 */
 int MOAIAction::_isActive ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAction, "U" );
@@ -97,12 +97,12 @@ int MOAIAction::_isActive ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@lua	isBusy
+/**	@name	isBusy
 	@text	Checks to see if an action is currently busy. An action is
 			'busy' only if it is 'active' and not 'done.'
 
 	@in		MOAIAction self
-	@out	boolean isBusy
+	@out	bool isBusy
 */
 int MOAIAction::_isBusy ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAction, "U" );
@@ -112,12 +112,12 @@ int MOAIAction::_isBusy ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@lua	isDone
+/**	@name	isDone
 	@text	Checks to see if an action is 'done.' Definition of 'done'
 			is up to individual action implementations.
 
 	@in		MOAIAction self
-	@out	boolean isDone
+	@out	bool isDone
 */
 int MOAIAction::_isDone ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAction, "U" );
@@ -127,26 +127,12 @@ int MOAIAction::_isDone ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@lua	isPaused
-	@text	Checks to see if an action is 'paused.'
- 
-	@in		MOAIAction self
-	@out	bool isPaused
-*/
-int MOAIAction::_isPaused ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIAction, "U" );
-	
-	lua_pushboolean ( state, self->IsPaused ());
-	return 1;
-}
-
-//----------------------------------------------------------------//
-/**	@lua	pause
+/**	@name	pause
 	@text	Leaves the action in the action tree but prevents it from
 			receiving updates. Call pause ( false ) or start () to unpause.
 
 	@in		MOAIAction self
-	@opt	boolean pause			Default value is 'true.'
+	@opt	bool pause			Default value is 'true.'
 	@out	nil
 */
 int MOAIAction::_pause ( lua_State* L ) {
@@ -165,7 +151,7 @@ int MOAIAction::_setAutoStop ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@lua	start
+/**	@name	start
 	@text	Adds the action to a parent action or the root of the action tree.
 
 	@in		MOAIAction self
@@ -189,7 +175,7 @@ int MOAIAction::_start ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@lua	stop
+/**	@name	stop
 	@text	Removed the action from its parent action; action will
 			stop being updated.
 
@@ -207,7 +193,7 @@ int MOAIAction::_stop ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@lua	throttle
+/**	@name	throttle
 	@text	Sets the actions throttle. Throttle is a scalar on time.
 			Is is passed to the action's children.
 	
@@ -269,8 +255,7 @@ void MOAIAction::Attach ( MOAIAction* parent ) {
 	if ( parent ) {
 		// TODO: there are some edge cases that may lead to the action
 		// getting two updates in a frame or missing an update. additional
-		// state may need to be introduced to handle this. the TODO is
-		// to investigate the edge cases and (possibly) provide a fix.
+		// state may need to be introduced to handle this.
 		parent->mChildren.PushBack ( this->mLink );
 		this->mParent = parent;
 	}
@@ -319,12 +304,6 @@ bool MOAIAction::IsCurrent () {
 bool MOAIAction::IsDone () {
 
 	return ( this->mAutoStop && ( this->mChildren.Count () == 0 ));
-}
-
-//----------------------------------------------------------------//
-bool MOAIAction::IsPaused () {
-	// TODO: better to do this with a state?
-	return this->mIsPaused || (this->mParent && this->mParent->IsPaused ());
 }
 
 //----------------------------------------------------------------//
@@ -407,7 +386,6 @@ void MOAIAction::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "isActive",				_isActive },
 		{ "isBusy",					_isBusy },
 		{ "isDone",					_isDone },
-		{ "isPaused",			_isPaused },
 		{ "pause",					_pause },
 		{ "setAutoStop",			_setAutoStop },
 		{ "start",					_start },
@@ -426,8 +404,8 @@ void MOAIAction::Update ( float step, u32 pass, bool checkPass ) {
 
 	bool profilingEnabled = actionMgr.GetProfilingEnabled ();
 
-	if ( this->IsPaused () || this->IsBlocked ()) {
-		if ( this->mNew ) { 		//avoid edge case that a new-created-paused action cannot receive further update
+	if ( this->mIsPaused || this->IsBlocked ()){
+		if ( this->mNew ) { 		//avoid edge case that a new-created-paused action cannot receive further updates
 			step = 0.0f;
 			checkPass = false;
 			this->mPass = 0;
@@ -450,8 +428,10 @@ void MOAIAction::Update ( float step, u32 pass, bool checkPass ) {
 	}
 	
 	if (( checkPass == false ) || ( pass == this->mPass )) {
+		
 		actionMgr.SetCurrentAction ( this );
 		actionMgr.SetDefaultParent ( 0 );
+		
 		this->OnUpdate ( step );
 	}
 

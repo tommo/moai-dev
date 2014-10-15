@@ -12,6 +12,11 @@ if ( BUILD_LINUX )
   set( PLATFORM_INCLUDE "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/include-linux" "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/include/"  )
 endif ( BUILD_LINUX)
 
+if ( BUILD_HTML )
+  set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DOPENSSL_SYSNAME_LINUX"  )
+  set( PLATFORM_INCLUDE "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/include-linux" "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/include/"  )
+endif ( BUILD_HTML)
+
 if ( BUILD_WINDOWS )
   set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DOPENSSL_SYSNAME_WIN32 "  )
   if (MSVC)
@@ -38,6 +43,8 @@ if ( BUILD_OSX )
   set ( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DOPENSSL_SYSNAME_MACOSX "  )
   set( PLATFORM_INCLUDE "${MOAI_ROOT}/3rdparty/openssl-1.0.0d/include/" )
 endif ( BUILD_OSX )
+
+
 
 set ( SSL_INCLUDES 
   ${PLATFORM_INCLUDE}

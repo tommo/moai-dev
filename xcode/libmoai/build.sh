@@ -7,12 +7,12 @@
 #----------------------------------------------------------------#
 
 # osx_schemes="libmoai-osx libmoai-osx-3rdparty libmoai-osx-fmod-ex libmoai-osx-luaext libmoai-osx-untz libmoai-osx-zl-core libmoai-osx-zl-vfs "
-osx_schemes="libmoai-osx libmoai-osx-sim libmoai-osx-3rdparty-core libmoai-osx-3rdparty-crypto libmoai-osx-3rdparty-curl libmoai-osx-luaext libmoai-osx-zl-core libmoai-osx-zl-vfs libmoai-osx-fmod-ex libmoai-osx-fmod-designer libmoai-osx-box2d libmoai-osx-http-client"
+osx_schemes="libmoai-osx libmoai-osx-sim libmoai-osx-3rdparty-core libmoai-osx-3rdparty-crypto libmoai-osx-3rdparty-curl libmoai-osx-luaext libmoai-osx-zl-core libmoai-osx-zl-vfs libmoai-osx-fmod-ex libmoai-osx-fmod-designer libmoai-osx-box2d libmoai-osx-http-client libmoai-osx-untz libmoai-osx-crypto libmoai-osx-zl-crypto"
 osx_sdks=( "macosx" )
 osx_architectures_macosx=( "i386" "x86_64" )
 
 # ios_schemes="libmoai-ios libmoai-ios-3rdparty libmoai-ios-facebook libmoai-ios-fmod-ex libmoai-ios-luaext libmoai-ios-tapjoy libmoai-ios-untz libmoai-ios-zl-core libmoai-ios-zl-vfs libmoai-ios-zl-crypto"
-ios_schemes="libmoai-ios libmoai-ios-sim libmoai-ios-3rdparty-core libmoai-ios-3rdparty-curl libmoai-ios-3rdparty-crypto libmoai-ios-luaext libmoai-ios-fmod-ex libmoai-ios-fmod-designer libmoai-ios-zl-core libmoai-ios-zl-vfs libmoai-ios-zl-crypto  libmoai-ios-box2d libmoai-ios-http-client libmoai-ios-crittercism libmoai-ios-billing libmoai-ios-gamecenter" # libmoai-ios-twitter libmoai-ios-tapjoy
+ios_schemes="libmoai-ios libmoai-ios-sim libmoai-ios-3rdparty-core libmoai-ios-3rdparty-curl libmoai-ios-3rdparty-crypto libmoai-ios-luaext libmoai-ios-fmod-ex libmoai-ios-fmod-designer libmoai-ios-zl-core libmoai-ios-zl-vfs libmoai-ios-zl-crypto  libmoai-ios-box2d libmoai-ios-http-client libmoai-ios-crittercism libmoai-ios-billing libmoai-ios-gamecenter libmoai-ios-untz libmoai-ios-crypto"
 ios_sdks="iphoneos"  #iphonesimulator
 ios_architectures_iphonesimulator="i386"
 ios_architectures_iphoneos="armv7"

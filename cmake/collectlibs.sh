@@ -1,0 +1,27 @@
+rm -rf libraries
+mkdir libraries
+cp build/host-modules/libhost-modules.a libraries/
+cp build/moai-untz/libmoai-untz.a libraries/
+cp build/third-party/untz-html/libuntz.a libraries/
+cp build/moai-sim/libmoai-sim.a libraries/
+cp build/moai-box2d/libmoai-box2d.a libraries/
+cp build/moai-sim/libmoai-sim.a libraries/
+cp build/moai-box2d/libmoai-box2d.a libraries/
+cp build/third-party/contrib/libcontrib.a libraries/
+cp build/third-party/freetype/libfreetype.a libraries/
+cp build/third-party/png/libpng.a libraries/
+cp build/third-party/webp/libwebp.a libraries/
+cp build/third-party/tess2/libtess2.a libraries/
+cp build/third-party/box2d/libbox2d.a libraries/
+cp build/moai-util/libmoai-util.a libraries/
+cp build/third-party/sfmt/libsfmt.a libraries/
+cp build/third-party/jansson/libjansson.a libraries/
+cp build/moai-crypto/libmoai-crypto.a libraries/
+cp build/moai-core/libmoai-core.a libraries/
+cp build/third-party/lua/libliblua-static.a libraries/
+cp build/third-party/tinyxml/libtinyxml.a libraries/
+cp build/zlcore/libzlcore.a libraries/
+cp build/third-party/crypto/libcrypto.a libraries/
+cp build/zlcore/zlvfs/libzlvfs.a libraries/
+cp build/third-party/tlsf/libtlsf.a libraries/
+cp build/third-party/zlib/libzlib.a libraries/

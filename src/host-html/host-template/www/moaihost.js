@@ -134,18 +134,18 @@ RomCache.prototype.dbCacheRemotePackage = function(db, packageName, packageData,
 };
 
 /**
- 	Load Json
- 	then Read Rom 
- 	then wait for FS
- 	then install Files
+  Load Json
+  then Read Rom 
+  then wait for FS
+  then install Files
  */
 
 /**
   Grabs filesystem metadata json from the given url
 */
 function LoadFileSystemJson(fsJsonUrl) {
-  	var d = D.defer();
- 	var xhr = new XMLHttpRequest();
+    var d = D.defer();
+  var xhr = new XMLHttpRequest();
     xhr.open('GET', fsJsonUrl, true);
     xhr.responseType = "json";
     xhr.onload = function(event) {
@@ -153,7 +153,7 @@ function LoadFileSystemJson(fsJsonUrl) {
         d.resolve(packageInfo);
     };
     xhr.onerror = function(event) {
-    	d.reject("Failed to download "+fsJsonUrl+":"+xhr.statusText);
+      d.reject("Failed to download "+fsJsonUrl+":"+xhr.statusText);
     };
     xhr.send(null);
     return d.promise;
@@ -163,8 +163,8 @@ function LoadFileSystemJson(fsJsonUrl) {
   Grabs the filesystem data blob from the given url
 */
 function LoadRemoteFileSystemData(romPackageUrl, progress) {
-	var d = D.defer();
-	var xhr = new XMLHttpRequest();
+  var d = D.defer();
+  var xhr = new XMLHttpRequest();
     xhr.open('GET', romPackageUrl, true);
     xhr.responseType = 'arraybuffer';
     xhr.onload = function(event) {
@@ -172,10 +172,10 @@ function LoadRemoteFileSystemData(romPackageUrl, progress) {
         d.resolve(packageData);
     };
     xhr.onprogress = function(event) {
-    	progress(event.loaded, event.total);
+      progress(event.loaded, event.total);
     }
     xhr.onerror = function(event) {
-    	d.reject("Failed to download FS data"+romPackageUrl+":"+xhr.statusText);
+      d.reject("Failed to download FS data"+romPackageUrl+":"+xhr.statusText);
     };
     xhr.send(null);
     return d.promise;
@@ -284,58 +284,71 @@ var MoaiJS = (function() {
 
 
 function MoaiJS(canvas, total_memory, onTitleChange, onStatusChange, onError, onResolutionChange ) {
-	this.canvas = canvas;
-	this.onTitleChange = onTitleChange;
-	this.onStatusChange = onStatusChange;
-	this.onError = onError;
-	this.onResolutionChange = onResolutionChange;
-	this.emscripten = null;
-	this.total_memory = total_memory;
-	this.loadedFileSystem = null;
+  this.canvas = canvas;
+  this.onTitleChange = onTitleChange;
+  this.onStatusChange = onStatusChange;
+  this.onError = onError;
+  this.onResolutionChange = onResolutionChange;
+  this.emscripten = null;
+  this.total_memory = total_memory;
+  this.loadedFileSystem = null;
 
     console.log("MoaiJS Init");
 }
 
 MoaiJS.prototype.initEmscripten = function() {
-	if (this.emscripten) return;
+  if (this.emscripten) return;
     var Opts = { //our required emscripten settings
-    		canvas: this.canvas,
-    		setStatus: this.onStatusChange,
-    		printErr: this.onError,
-    		noExitRuntime: true,
-    		totalDependencies: 0,
-    		TOTAL_MEMORY: this.total_memory
-    	};
-	console.log("MoaiJS Emscripten Init");
-	this.emscripten = window.CreateMoaiRuntime(Opts);
+        canvas: this.canvas,
+        setStatus: this.onStatusChange,
+        printErr: this.onError,
+        noExitRuntime: true,
+        totalDependencies: 0,
+        TOTAL_MEMORY: this.total_memory
+      };
+  console.log("MoaiJS Emscripten Init");
+  this.emscripten = window.CreateMoaiRuntime(Opts);
 
-	//bring our emscripten host functions into the normal javascript world
-	var Module = this.emscripten;
-	this.RefreshContext = Module.cwrap('RefreshContext','number',null);
-	this.AKURunString = Module.cwrap('AKURunString','number',['string']);
-	this.AKURunScript = Module.cwrap('AKURunScript','number',['string']);
-	this.AKUSetWorkingDirectory = Module.cwrap('AKUSetWorkingDirectory','number',['string']);
-	this.AKUGetSimStep = Module.cwrap('AKUGetSimStep','number',null);
-	this.AKUEnqueueKeyboardShiftEvent = Module.cwrap('AKUEnqueueKeyboardShiftEvent','number',['number','number','number']);
-	this.onPaint = Module.cwrap('onPaint','number',null);
-	this.onReshape = Module.cwrap('onReshape','number',['number','number']);
-	this.onTimer = Module.cwrap('onTimer','number',null);
-	this.onMouseButton = Module.cwrap('onMouseButton', 'number',['number','number']);
-	this.onMouseMove = Module.cwrap('onMouseMove', 'number',['number','number']);
-	this.onKeyDown = Module.cwrap('onKeyDown', 'number',['number']);
-	this.onKeyUp = Module.cwrap('onKeyUp','number',['number']);
+  //bring our emscripten host functions into the normal javascript world
+  var Module = this.emscripten;
+  this.RefreshContext = Module.cwrap('RefreshContext','number',null);
+  // this.AKURunString = Module.cwrap('AKURunString','number',['string']);
+  // this.AKURunScript = Module.cwrap('AKURunScript','number',['string']);
+  this.AKULoadFuncFromString = Module.cwrap('AKULoadFuncFromString','number',['string']);
+  this.AKULoadFuncFromFile = Module.cwrap('AKULoadFuncFromFile','number',['string']);
+  this.AKUCallFunc = Module.cwrap('AKUCallFunc','number',null);
+  this.AKUSetWorkingDirectory = Module.cwrap('AKUSetWorkingDirectory','number',['string']);
+  this.AKUGetSimStep = Module.cwrap('AKUGetSimStep','number',null);
+  this.AKUEnqueueKeyboardShiftEvent = Module.cwrap('AKUEnqueueKeyboardShiftEvent','number',['number','number','number']);
+  this.onPaint = Module.cwrap('onPaint','number',null);
+  this.onReshape = Module.cwrap('onReshape','number',['number','number']);
+  this.onTimer = Module.cwrap('onTimer','number',null);
+  this.onMouseButton = Module.cwrap('onMouseButton', 'number',['number','number']);
+  this.onMouseMove = Module.cwrap('onMouseMove', 'number',['number','number']);
+  this.onKeyDown = Module.cwrap('onKeyDown', 'number',['number']);
+  this.onKeyUp = Module.cwrap('onKeyUp','number',['number']);
 
-	//callbacks
-	this.emscripten.SetOpenWindowFunc(this.OpenWindowFunc.bind(this));
+  //callbacks
+  this.emscripten.SetOpenWindowFunc(this.OpenWindowFunc.bind(this));
     this.emscripten.SetSaveFunc(this.SaveFile.bind(this));
+
+  this.AKURunScript = function( filename ){
+    this.AKULoadFuncFromFile( filename );
+    this.AKUCallFunc();
+  };
+
+  this.AKURunString = function( text ){
+    this.AKULoadFuncFromString( text );
+    this.AKUCallFunc();
+  };  
 }
 
 MoaiJS.prototype.loadFileSystem = function(romUrl) {
    var that = this;
    function makeProgress(prefix) {
-		return function(done,total) {
-	   		that.onStatusChange(prefix+": "+done+"/"+total);
-		}
+    return function(done,total) {
+        that.onStatusChange(prefix+": "+done+"/"+total);
+    }
   };
   this.initEmscripten(); 
   console.log("MoaiJS Load Filesystem");
@@ -343,30 +356,31 @@ MoaiJS.prototype.loadFileSystem = function(romUrl) {
 }
 
 MoaiJS.prototype.run = function(mainLua, romUrl) {
-	var that = this;
-	if (!this.loadedFileSystem) {
-		if (!romUrl) {
-			console.log("No file system specified or loaded");
-			return;
-		}
-		this.loadFileSystem(romUrl);
-	}
-
-	this.loadedFileSystem.then(function(){
-	   console.log("MoaiJS Filesystem Loaded");	
-  	   that.emscripten.run();   
-  	   that.runhost(mainLua);
-  	}).rethrow();
+  var that = this;
+  if (!this.loadedFileSystem) {
+    if (!romUrl) {
+      console.log("No file system specified or loaded");
+      return;
+    }
+    this.loadFileSystem(romUrl);
+  }
+  this.emscripten.postRun = function() {
+     that.runhost(mainLua);
+  };
+  this.loadedFileSystem.then(function(){
+     console.log("MoaiJS Filesystem Loaded"); 
+       that.emscripten.run();   
+    }).rethrow();
 }
 
 
 MoaiJS.prototype.renderloop = function() {
-	this.onPaint();
-	this.emscripten.requestAnimationFrame(this.renderloop.bind(this));
+  this.onPaint();
+  this.emscripten.requestAnimationFrame(this.renderloop.bind(this));
 }
 
 MoaiJS.prototype.updateloop = function() {
-	this.onTimer();
+  this.onTimer();
 }
 
 MoaiJS.prototype.mousedown = function(e) {
@@ -378,8 +392,8 @@ MoaiJS.prototype.mouseup = function(e) {
 }
 
 MoaiJS.prototype.mousemove = function(e) {
-	
-	var can = this.canvas;
+  
+  var can = this.canvas;
     var canX = e.offsetX || e.layerX; 
     var canY = e.offsetY || e.layerY;
     this.onMouseMove(Math.floor(canX*this.canvasScale),Math.floor(canY*this.canvasScale));
@@ -396,9 +410,9 @@ var getASCIIKey= function(event) {
       if (48 <= keycode && keycode <= 57)
         return keycode; // numeric  TODO handle shift?
       if (65 <= keycode && keycode <= 90)
-	return event['shiftKey'] ? keycode : keycode + 32;
+  return event['shiftKey'] ? keycode : keycode + 32;
       if (106 <= keycode && keycode <= 111)
-	return keycode - 106 + 42; // *,+-./  TODO handle shift?
+  return keycode - 106 + 42; // *,+-./  TODO handle shift?
 
       switch (keycode) {
         case 27: // escape
@@ -428,130 +442,130 @@ var getASCIIKey= function(event) {
 
 
 MoaiJS.prototype.keydown = function(e) {
-	if (e.keycode == 16) {
-		this.AKUEnqueueKeyboardShiftEvent(0,0,1); //device, keyboard, true
-	} else {
-		var key = getASCIIKey(e);
-		this.onKeyDown(key?key:e.keyCode);
-	}
-	e.preventDefault();
+  if (e.keycode == 16) {
+    this.AKUEnqueueKeyboardShiftEvent(0,0,1); //device, keyboard, true
+  } else {
+    var key = getASCIIKey(e);
+    this.onKeyDown(key?key:e.keyCode);
+  }
+  e.preventDefault();
 
-	if (e.keyCode == 8) {
+  if (e.keyCode == 8) {
         return false; //eat backspace !
     }
 }
 
 MoaiJS.prototype.keyup = function(e) {
-	if (e.keyCode == 16) {
-		this.AKUEnqueueKeyboardShiftEvent(0,0,0); //device, keyboard, false
-	} else {
-		var key = getASCIIKey(e);
-		this.onKeyUp(key?key:e.keyCode);
-	}
-	e.preventDefault();
+  if (e.keyCode == 16) {
+    this.AKUEnqueueKeyboardShiftEvent(0,0,0); //device, keyboard, false
+  } else {
+    var key = getASCIIKey(e);
+    this.onKeyUp(key?key:e.keyCode);
+  }
+  e.preventDefault();
 }
 
 MoaiJS.prototype.keypress = function(e) {
-	if (e.keyCode == 8) {
-		return false;
-	}
+  if (e.keyCode == 8) {
+    return false;
+  }
 }
 
 
 MoaiJS.prototype.OpenWindowFunc = function(title,width,height) {
-	var canvas = this.canvas;
-	if (this.onTitleChange) { 
-		this.onTitleChange(title); 
-	}
-	if (this.onResolutionChange) {
-		this.onResolutionChange(width,height)
-	}
-	this.canvas.style.display = "block";
-	canvas.width = width;
-	canvas.height = height;
-	this.canvasScale = canvas.width/$(canvas).width();
+  var canvas = this.canvas;
+  if (this.onTitleChange) { 
+    this.onTitleChange(title); 
+  }
+  if (this.onResolutionChange) {
+    this.onResolutionChange(width,height)
+  }
+  this.canvas.style.display = "block";
+  canvas.width = width;
+  canvas.height = height;
+  this.canvasScale = canvas.width/$(canvas).width();
 
-	canvas.focus();
+  canvas.focus();
 
-	//hook mouse
-	canvas.addEventListener("mousedown",this.mousedown.bind(this),false);
-	canvas.addEventListener("mouseup",this.mouseup.bind(this),false);
-	canvas.addEventListener("mousemove",this.mousemove.bind(this),false);
+  //hook mouse
+  canvas.addEventListener("mousedown",this.mousedown.bind(this),false);
+  canvas.addEventListener("mouseup",this.mouseup.bind(this),false);
+  canvas.addEventListener("mousemove",this.mousemove.bind(this),false);
 
-	//grab focus on hover
-	canvas.addEventListener("mouseover",function() { canvas.focus(); },false);
-	canvas.addEventListener("mouseout",(function() { canvas.blur(); this.mouseup(); }).bind(this),false);
+  //grab focus on hover
+  canvas.addEventListener("mouseover",function() { canvas.focus(); },false);
+  canvas.addEventListener("mouseout",(function() { canvas.blur(); this.mouseup(); }).bind(this),false);
 
-	//grab keys
-	canvas.addEventListener("keydown",this.keydown.bind(this),false);
-	canvas.addEventListener("keyup",this.keyup.bind(this),false);
+  //grab keys
+  canvas.addEventListener("keydown",this.keydown.bind(this),false);
+  canvas.addEventListener("keyup",this.keyup.bind(this),false);
 
-	canvas.addEventListener("keypress",this.keypress.bind(this), false);
+  canvas.addEventListener("keypress",this.keypress.bind(this), false);
 
 
-	//now start rendering and updationg
-	this.startUpdates();
-	this.emscripten.requestAnimationFrame(this.renderloop.bind(this));
+  //now start rendering and updationg
+  this.startUpdates();
+  this.emscripten.requestAnimationFrame(this.renderloop.bind(this));
 
-	window.addEventListener("resize", resizeThrottler, false);
+  window.addEventListener("resize", resizeThrottler, false);
 
-	  var resizeTimeout;
-	  function resizeThrottler() {
-		// ignore resize events as long as an actualResizeHandler execution is in the queue
-		if ( !resizeTimeout ) {
-		  resizeTimeout = setTimeout(function() {
-		    resizeTimeout = null;
-		    resizeHandler();
-		 
-		   // The actualResizeHandler will execute at a rate of 15fps
-		   }, 66);
-		}
-	  }
-	  var that = this;
-	  function resizeHandler() {
-		that.canvasScale = canvas.width/$(canvas).width();
-	  }
+    var resizeTimeout;
+    function resizeThrottler() {
+    // ignore resize events as long as an actualResizeHandler execution is in the queue
+    if ( !resizeTimeout ) {
+      resizeTimeout = setTimeout(function() {
+        resizeTimeout = null;
+        resizeHandler();
+     
+       // The actualResizeHandler will execute at a rate of 15fps
+       }, 66);
+    }
+    }
+    var that = this;
+    function resizeHandler() {
+    that.canvasScale = canvas.width/$(canvas).width();
+    }
 
-	return canvas;
+  return canvas;
 };
 
 MoaiJS.prototype.startUpdates = function() {
-	var step = this.AKUGetSimStep() || ((1000/60)/1000)
-	if (this.moaiInterval) {
-		window.clearInterval(this.moaiInterval);
-	}
-	this.moaiInterval = window.setInterval( this.updateloop.bind(this), step*1000);
+  var step = this.AKUGetSimStep() || ((1000/60)/1000)
+  if (this.moaiInterval) {
+    window.clearInterval(this.moaiInterval);
+  }
+  this.moaiInterval = window.setInterval( this.updateloop.bind(this), step*1000);
 }
 
 MoaiJS.prototype.stopUpdates = function() {
-	if (this.moaiInterval) {
-		window.clearInterval(this.moaiInterval);
-	}
-	this.moaiInterval = null;
+  if (this.moaiInterval) {
+    window.clearInterval(this.moaiInterval);
+  }
+  this.moaiInterval = null;
 }
 
 MoaiJS.prototype.pause = function() {
-	this.stopUpdates();
+  this.stopUpdates();
 }
 
 MoaiJS.prototype.unpause = function() {
-	this.startUpdates();
+  this.startUpdates();
 }
 
 MoaiJS.prototype.runhost = function(mainLua) {
-	console.log("runhost called");
-	console.log("restoring save state");
-	this.restoreDocumentDirectory();
-	console.log("refreshing context");
-	this.RefreshContext();
-	console.log("setting working directory");
-	this.AKUSetWorkingDirectory('/');
-	console.log("setting up canvas");
-	this.AKURunString('MOAIEnvironment.horizontalResolution = '+this.canvas.width);
-	this.AKURunString('MOAIEnvironment.verticalResolution = '+this.canvas.height);
-	var main = mainLua || 'main.lua'
-	console.log("launching "+main);
-	this.AKURunScript(main);
+  console.log("runhost called");
+  console.log("restoring save state");
+  this.restoreDocumentDirectory();
+  console.log("refreshing context");
+  this.RefreshContext();
+  console.log("setting working directory");
+  this.AKUSetWorkingDirectory('/');
+  console.log("setting up canvas");
+  this.AKURunString('MOAIEnvironment.horizontalResolution = '+this.canvas.width);
+  this.AKURunString('MOAIEnvironment.verticalResolution = '+this.canvas.height);
+  var main = mainLua || 'main.lua'
+  console.log("launching "+main);
+  this.AKURunScript(main);
 }
 
 //Courtesy of Mozilla
@@ -594,7 +608,7 @@ function base64DecToArr (sBase64) {
 }
 
 function dataUriToArr(sDataUri) {
-	return base64DecToArr(sDataUri.split(',')[1]);
+  return base64DecToArr(sDataUri.split(',')[1]);
 }
 
 
@@ -603,30 +617,30 @@ MoaiJS.prototype.restoreDocumentDirectory = function() {
    if (!docsjson) return;
    var docs = JSON.parse(docsjson);
    for (var path in docs ) {
-   	  //restore each file
-   	  var data =  dataUriToArr(docs[path]);
-   	  this.emscripten._RestoreFile(path,data);
- 	}
+      //restore each file
+      var data =  dataUriToArr(docs[path]);
+      this.emscripten._RestoreFile(path,data);
+  }
 }
 
 MoaiJS.prototype.saveToDocumentDirectory = function(path,filedata) {
-	var docsjson = localStorage.getItem('moai-docs');
-	if (!docsjson) docsjson="{}";
-	var docs = JSON.parse(docsjson);
-	docs[path] = filedata;
-	localStorage.setItem('moai-docs',JSON.stringify(docs));
+  var docsjson = localStorage.getItem('moai-docs');
+  if (!docsjson) docsjson="{}";
+  var docs = JSON.parse(docsjson);
+  docs[path] = filedata;
+  localStorage.setItem('moai-docs',JSON.stringify(docs));
 }
 
 MoaiJS.prototype.SaveFile = function(path,data) {
-	//get data as arraybuffer
-	var dataArray = (data.buffer)? data : new Uint8Array(data);
-	var dataBlob = new Blob([dataArray],{'type':'application/octet-stream'});
-	var reader = new FileReader();
-	var that = this;
-	reader.onload =function(event) {
-		that.saveToDocumentDirectory(path,event.target.result);
-	};
-	reader.readAsDataURL(dataBlob);
+  //get data as arraybuffer
+  var dataArray = (data.buffer)? data : new Uint8Array(data);
+  var dataBlob = new Blob([dataArray],{'type':'application/octet-stream'});
+  var reader = new FileReader();
+  var that = this;
+  reader.onload =function(event) {
+    that.saveToDocumentDirectory(path,event.target.result);
+  };
+  reader.readAsDataURL(dataBlob);
 };
 
 return MoaiJS
@@ -635,8 +649,8 @@ return MoaiJS
 //assume Jquery
 
 function MoaiPlayer(element) {
-	var el = $(element)
-	var template = '<div class="moai-window"> \
+  var el = $(element)
+  var template = '<div class="moai-window"> \
                          <div class="moai-header"> \
                             <span class="moai-title">MOAI</span><span class="moai-status">Loading..</span> \
                              <div style="clear:both"></div> \
@@ -654,54 +668,54 @@ function MoaiPlayer(element) {
     el.html(template);
 
 
-	var titleEl = el.find(".moai-title").first();
-	var statusEl = el.find(".moai-status").first();
-	var canvasEl = el.find(".moai-canvas").first();
-	var canvasWrapperEl = el.find(".moai-canvas-wrapper").first();
-	//get settings
-	this.url = el.attr('data-url') || 'moaiapp.rom';
-	this.script = el.attr('data-script') || 'main.lua';
-	var ram = parseInt(el.attr('data-ram') || "48" ,10);
-	var title = el.attr('data-title') || 'Moai Player';
+  var titleEl = el.find(".moai-title").first();
+  var statusEl = el.find(".moai-status").first();
+  var canvasEl = el.find(".moai-canvas").first();
+  var canvasWrapperEl = el.find(".moai-canvas-wrapper").first();
+  //get settings
+  this.url = el.attr('data-url') || 'moaiapp.rom';
+  this.script = el.attr('data-script') || 'main.lua';
+  var ram = parseInt(el.attr('data-ram') || "48" ,10);
+  var title = el.attr('data-title') || 'Moai Player';
 
 
 
-	function onTitleChange(title) {
-		titleEl.html(title);
-	}
+  function onTitleChange(title) {
+    titleEl.html(title);
+  }
 
-	function onStatusChange(status) {
-		statusEl.html(status);
-	}
+  function onStatusChange(status) {
+    statusEl.html(status);
+  }
 
-	function onResolutionChange(width, height) {
-		console.log("width",width,"height",height,"portrait",(height > width));
-		el.find('.moai-canvas-wrapper').first().toggleClass("portrait", (height > width));
-	}
+  function onResolutionChange(width, height) {
+    console.log("width",width,"height",height,"portrait",(height > width));
+    el.find('.moai-canvas-wrapper').first().toggleClass("portrait", (height > width));
+  }
 
-	function onError(err) {
-		console.log("ERROR: ",err);
-	}
+  function onError(err) {
+    console.log("ERROR: ",err);
+  }
 
-	onTitleChange(title);
-	this.moai = new MoaiJS(canvasEl[0],ram*1024*1024,onTitleChange,onStatusChange,onError, onResolutionChange);
+  onTitleChange(title);
+  this.moai = new MoaiJS(canvasEl[0],ram*1024*1024,onTitleChange,onStatusChange,onError, onResolutionChange);
 }
 
 MoaiPlayer.prototype.run = function() {
-	this.moai.run(this.script, this.url);	
+  this.moai.run(this.script, this.url); 
 }
 
 MoaiPlayer.prototype.stop = function() {
-	//TODO unhook events and free up moai host ram
-	this.moai = null;
+  //TODO unhook events and free up moai host ram
+  this.moai = null;
 }
 
 MoaiPlayer.prototype.pause = function() {
-	
+  
 }
 
 MoaiPlayer.prototype.unpause = function() {
-	
+  
 }
 
 

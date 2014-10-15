@@ -29,7 +29,7 @@ cmake \
 -DMOAI_BOX2D=TRUE \
 -DMOAI_CHIPMUNK=FALSE \
 -DMOAI_CURL=FALSE \
--DMOAI_CRYPTO=FALSE \
+-DMOAI_CRYPTO=TRUE \
 -DMOAI_EXPAT=FALSE \
 -DMOAI_FREETYPE=TRUE \
 -DMOAI_JSON=TRUE \
@@ -40,16 +40,16 @@ cmake \
 -DMOAI_SQLITE3=FALSE \
 -DMOAI_TINYXML=TRUE \
 -DMOAI_PNG=TRUE \
--DMOAI_SFMT=FALSE \
+-DMOAI_SFMT=TRUE \
 -DMOAI_VORBIS=FALSE \
 -DMOAI_HTTP_CLIENT=FALSE \
--DMOAI_UNTZ=FALSE \
+-DMOAI_UNTZ=TRUE \
 ../
 if [[ $? -ne 0 ]]; then
     exit 1
 fi
 
-make host-html-template
+make host-html-template -j4
 if [[ $? -ne 0 ]]; then
   exit 1
 fi
