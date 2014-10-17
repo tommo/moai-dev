@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug-Lua-5.1|Win32">
+      <Configuration>Debug-Lua-5.1</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release-Lua-5.1|Win32">
+      <Configuration>Release-Lua-5.1</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{F7B25D3C-0505-4679-A2E5-E63C0BFC4547}</ProjectGuid>
+    <RootNamespace>libwebp</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Lua-5.1|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release-Lua-5.1|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Lua-5.1|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release-Lua-5.1|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>..\bin\$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release-Lua-5.1|Win32'">
+    <OutDir>..\bin\$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>..\bin\$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Lua-5.1|Win32'">
+    <OutDir>..\bin\$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug-Lua-5.1|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release-Lua-5.1|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\3rdparty\libwebp-0.3.1\src\dec\alpha.c" />
+    <ClCompile Include="..\..\3rdparty\libwebp-0.3.1\src\dec\buffer.c" />
+    <ClCompile Include="..\..\3rdparty\libwebp-0.3.1\src\dec\frame.c" />
+    <ClCompile Include="..\..\3rdparty\libwebp-0.3.1\src\dec\idec.c" />
+    <ClCompile Include="..\..\3rdparty\libwebp-0.3.1\src\dec\io.c" />
+    <ClCompile Include="..\..\3rdparty\libwebp-0.3.1\src\dec\layer.c" />
+    <ClCompile Include="..\..\3rdparty\libwebp-0.3.1\src\dec\quant.c" />
+    <ClCompile Include="..\..\3rdparty\libwebp-0.3.1\src\dec\tree.c" />
+    <ClCompile Include="..\..\3rdparty\libwebp-0.3.1\src\dec\vp8.c" />
+    <ClCompile Include="..\..\3rdparty\libwebp-0.3.1\src\dec\vp8l.c" />
+    <ClCompile Include="..\..\3rdparty\libwebp-0.3.1\src\dec\webp.c" />
+    <ClCompile Include="..\..\3rdparty\libwebp-0.3.1\src\dsp\cpu.c" />
+    <ClCompile Include="..\..\3rdparty\libwebp-0.3.1\src\dsp\dec.c" />
+    <ClCompile Include="..\..\3rdparty\libwebp-0.3.1\src\dsp\dec_neon.c" />
+    <ClCompile Include="..\..\3rdparty\libwebp-0.3.1\src\dsp\dec_sse2.c" />
+    <ClCompile Include="..\..\3rdparty\libwebp-0.3.1\src\dsp\enc.c" />
+    <ClCompile Include="..\..\3rdparty\libwebp-0.3.1\src\dsp\enc_neon.c" />
+    <ClCompile Include="..\..\3rdparty\libwebp-0.3.1\src\dsp\enc_sse2.c" />
+    <ClCompile Include="..\..\3rdparty\libwebp-0.3.1\src\dsp\lossless.c" />
+    <ClCompile Include="..\..\3rdparty\libwebp-0.3.1\src\dsp\upsampling.c" />
+    <ClCompile Include="..\..\3rdparty\libwebp-0.3.1\src\dsp\upsampling_neon.c" />
+    <ClCompile Include="..\..\3rdparty\libwebp-0.3.1\src\dsp\upsampling_sse2.c" />
+    <ClCompile Include="..\..\3rdparty\libwebp-0.3.1\src\dsp\yuv.c" />
+    <ClCompile Include="..\..\3rdparty\libwebp-0.3.1\src\utils\bit_reader.c" />
+    <ClCompile Include="..\..\3rdparty\libwebp-0.3.1\src\utils\bit_writer.c" />
+    <ClCompile Include="..\..\3rdparty\libwebp-0.3.1\src\utils\color_cache.c" />
+    <ClCompile Include="..\..\3rdparty\libwebp-0.3.1\src\utils\filters.c" />
+    <ClCompile Include="..\..\3rdparty\libwebp-0.3.1\src\utils\huffman.c" />
+    <ClCompile Include="..\..\3rdparty\libwebp-0.3.1\src\utils\huffman_encode.c" />
+    <ClCompile Include="..\..\3rdparty\libwebp-0.3.1\src\utils\quant_levels.c" />
+    <ClCompile Include="..\..\3rdparty\libwebp-0.3.1\src\utils\quant_levels_dec.c" />
+    <ClCompile Include="..\..\3rdparty\libwebp-0.3.1\src\utils\rescaler.c" />
+    <ClCompile Include="..\..\3rdparty\libwebp-0.3.1\src\utils\thread.c" />
+    <ClCompile Include="..\..\3rdparty\libwebp-0.3.1\src\utils\utils.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\3rdparty\libwebp-0.3.1\src\dec\decode_vp8.h" />
+    <ClInclude Include="..\..\3rdparty\libwebp-0.3.1\src\dec\vp8i.h" />
+    <ClInclude Include="..\..\3rdparty\libwebp-0.3.1\src\dec\vp8li.h" />
+    <ClInclude Include="..\..\3rdparty\libwebp-0.3.1\src\dec\webpi.h" />
+    <ClInclude Include="..\..\3rdparty\libwebp-0.3.1\src\dsp\dsp.h" />
+    <ClInclude Include="..\..\3rdparty\libwebp-0.3.1\src\dsp\lossless.h" />
+    <ClInclude Include="..\..\3rdparty\libwebp-0.3.1\src\dsp\yuv.h" />
+    <ClInclude Include="..\..\3rdparty\libwebp-0.3.1\src\utils\bit_reader.h" />
+    <ClInclude Include="..\..\3rdparty\libwebp-0.3.1\src\utils\bit_writer.h" />
+    <ClInclude Include="..\..\3rdparty\libwebp-0.3.1\src\utils\color_cache.h" />
+    <ClInclude Include="..\..\3rdparty\libwebp-0.3.1\src\utils\filters.h" />
+    <ClInclude Include="..\..\3rdparty\libwebp-0.3.1\src\utils\huffman.h" />
+    <ClInclude Include="..\..\3rdparty\libwebp-0.3.1\src\utils\huffman_encode.h" />
+    <ClInclude Include="..\..\3rdparty\libwebp-0.3.1\src\utils\quant_levels.h" />
+    <ClInclude Include="..\..\3rdparty\libwebp-0.3.1\src\utils\quant_levels_dec.h" />
+    <ClInclude Include="..\..\3rdparty\libwebp-0.3.1\src\utils\rescaler.h" />
+    <ClInclude Include="..\..\3rdparty\libwebp-0.3.1\src\utils\thread.h" />
+    <ClInclude Include="..\..\3rdparty\libwebp-0.3.1\src\utils\utils.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

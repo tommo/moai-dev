@@ -19,6 +19,9 @@
     <Filter Include="luasocket-embed">
       <UniqueIdentifier>{3d9da368-fe8a-43e2-afc3-f54337c5a576}</UniqueIdentifier>
     </Filter>
+    <Filter Include="lepg">
+      <UniqueIdentifier>{7aeefee6-3948-496d-a2a6-b770471e77b9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\3rdparty\luasocket-2.0.2\src\auxiliar.c">
@@ -60,9 +63,6 @@
     <ClCompile Include="..\..\3rdparty\luasocket-2.0.2\src\wsocket.c">
       <Filter>luasocket</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\3rdparty\luacrypto-0.2.0\src\lcrypto.c">
-      <Filter>luacrypto</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\3rdparty\luacurl-1.2.1\luacurl.c">
       <Filter>luacurl</Filter>
     </ClCompile>
@@ -80,6 +80,10 @@
     </ClCompile>
     <ClCompile Include="..\..\3rdparty\luasocket-2.0.2-embed\luasocketscripts.c">
       <Filter>luasocket-embed</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\3rdparty\luacrypto-0.3.2\src\lcrypto.c" />
+    <ClCompile Include="..\..\3rdparty\lpeg-0.10.2\lpeg.c">
+      <Filter>lepg</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -139,6 +143,9 @@
     </ClInclude>
     <ClInclude Include="..\..\3rdparty\luasocket-2.0.2-embed\luasocketscripts.h">
       <Filter>luasocket-embed</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\3rdparty\lpeg-0.10.2\lpeg.h">
+      <Filter>lepg</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

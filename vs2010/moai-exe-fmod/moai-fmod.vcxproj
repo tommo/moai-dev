@@ -323,8 +323,8 @@
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
     </ProjectReference>
     <Link>
-      <AdditionalDependencies>fmodexL_vc.lib;fmod_event_netL.lib;sdl.lib;moai-lib-box2d.lib;moai-lib-chipmunk.lib;moai-lib-core.lib;moai-lib-fmod-designer.lib;moai-lib-harness.lib;moai-lib-luaext.lib;moai-lib-http-client.lib;moai-lib-http-server.lib;moai-lib-sim.lib;moai-lib-util.lib;dsound.lib;strmiids.lib;advapi32.lib;comctl32.lib;oleaut32.lib;rpcrt4.lib;winmm.lib;wldap32.lib;ws2_32.lib;wsock32.lib;iphlpapi.lib;psapi.lib;imm32.lib;version.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\bin\$(Platform)\$(Configuration)\;..\..\3rdparty\freeglut-2.8.1\include;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>fmodexL_vc.lib;fmod_event_netL.lib;sdl.lib;moai-lib-box2d.lib;moai-lib-chipmunk.lib;moai-lib-core.lib;moai-lib-fmod-designer.lib;moai-lib-fmod-ex.lib;moai-lib-harness.lib;moai-lib-luaext.lib;moai-lib-http-client.lib;moai-lib-http-server.lib;moai-lib-sim.lib;moai-lib-util.lib;moai-lib-crypto.lib;dsound.lib;strmiids.lib;advapi32.lib;comctl32.lib;oleaut32.lib;rpcrt4.lib;winmm.lib;wldap32.lib;ws2_32.lib;wsock32.lib;iphlpapi.lib;psapi.lib;imm32.lib;version.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>J:\dev\fmod\win\fmoddesignerapi\api\lib;J:\dev\fmod\win\api\lib;..\bin\$(Platform)\$(Configuration)\;..\..\3rdparty\freeglut-2.8.1\include;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
@@ -692,12 +692,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\host-modules\aku_modules.cpp" />
+    <ClCompile Include="..\..\src\host-modules\aku_modules_util.cpp" />
     <ClCompile Include="..\..\src\host-sdl\SDLHost.cpp" />
     <ClCompile Include="..\..\src\host-sdl\SDLHostMain.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\host-modules\aku_modules.h" />
     <ClInclude Include="..\..\src\host-modules\aku_modules_config.h" />
+    <ClInclude Include="..\..\src\host-modules\aku_modules_util.h" />
     <ClInclude Include="..\..\src\host-sdl\SDLHost.h" />
   </ItemGroup>
   <ItemGroup>
@@ -710,8 +712,24 @@
     <ProjectReference Include="..\moai-lib-core\moai-lib-core.vcxproj">
       <Project>{aa2bd0be-d174-4f8f-a7f7-b924128fed00}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\moai-lib-crypto\moai-lib-crypto.vcxproj">
+      <Project>{3d08214f-0052-406e-b7c3-a91cbd11f26d}</Project>
+      <Private>true</Private>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
     <ProjectReference Include="..\moai-lib-fmod-designer\moai-lib-fmod-designer.vcxproj">
       <Project>{7b02e245-7904-4daa-ad0c-2c9ce881f35b}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\moai-lib-fmod-ex\moai-lib-fmod-ex.vcxproj">
+      <Project>{e91c1ec3-9421-41f1-95c8-77e4f796f6e9}</Project>
+      <Private>true</Private>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
     <ProjectReference Include="..\moai-lib-http-client\moai-lib-http-client.vcxproj">
       <Project>{caf76e4c-0b1b-424d-b36e-ba0d974a7a0c}</Project>

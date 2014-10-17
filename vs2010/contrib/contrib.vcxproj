@@ -50,6 +50,14 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\3rdparty\contrib\moai_utf8.c" />
+    <ClCompile Include="..\..\3rdparty\contrib\moai_whirlpool.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\3rdparty\contrib\moai_utf8.h" />
+    <ClInclude Include="..\..\3rdparty\contrib\moai_whirlpool.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{562B9EEF-2A2E-46E1-8A28-550C86CDF9F6}</ProjectGuid>
     <RootNamespace>contrib</RootNamespace>
@@ -504,14 +512,6 @@
       </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\3rdparty\contrib\utf8.c" />
-    <ClCompile Include="..\..\3rdparty\contrib\whirlpool.c" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\3rdparty\contrib\utf8.h" />
-    <ClInclude Include="..\..\3rdparty\contrib\whirlpool.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

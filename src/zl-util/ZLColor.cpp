@@ -492,9 +492,9 @@ void ZLColor::GammaCorrection ( void* colors, Format format, u32 nColors, float 
 			for ( u32 i = 0; i < nColors; ++i ) {
 				color = *( u32* )colors;
 				alpha = ( color >> 0x18 ) & 0xFF;
-				u8 r = (u8)(255. * pow((( color >> 0x00 ) & 0xFF ) / 255., gammaCorrection));
-				u8 g = (u8)(255. * pow((( color >> 0x08 ) & 0xFF ) / 255., gammaCorrection));
-				u8 b = (u8)(255. * pow((( color >> 0x10 ) & 0xFF ) / 255., gammaCorrection));
+				u8 r = (u8)(255. * (float)pow((float)(( color >> 0x00 ) & 0xFF ) / 255.f, (float)gammaCorrection));
+				u8 g = (u8)(255. * (float)pow((float)(( color >> 0x08 ) & 0xFF ) / 255.f, (float)gammaCorrection));
+				u8 b = (u8)(255. * (float)pow((float)(( color >> 0x10 ) & 0xFF ) / 255.f, (float)gammaCorrection));
 								 
 				*( u32* )colors =
 					(r << 0x00 ) +

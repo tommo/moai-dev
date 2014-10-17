@@ -15,6 +15,11 @@
 #include <zl-util/ZLMemStream.h>
 #include <zl-util/ZLZip.h>
 
+#ifdef _MSC_VER
+#define va_copy(d,s) ((d) = (s))
+#else
+#endif
+
 //================================================================//
 // STLString
 //================================================================//

@@ -304,7 +304,7 @@
     </ClCompile>
     <Lib>
       <AdditionalOptions>/LTCG %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalDependencies>contrib.lib;expat.lib;jansson.lib;libcrypto.lib;libjpg.lib;libpng.lib;libssl.lib;sfmt.lib;sqlite.lib;tinyxml.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>contrib.lib;expat.lib;jansson.lib;libcrypto.lib;libjpg.lib;libpng.lib;libssl.lib;sfmt.lib;sqlite.lib;tinyxml.lib;libwebp.lib;libtess2.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>..\bin\$(Platform)\$(Configuration)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
     </Lib>
@@ -724,12 +724,6 @@
     <ClInclude Include="..\..\src\zl-util\ZLHashWriter.h" />
     <ClInclude Include="..\..\src\zl-util\ZLHashWriterAdler32.h" />
     <ClInclude Include="..\..\src\zl-util\ZLHashWriterCRC32.h" />
-    <ClInclude Include="..\..\src\zl-util\ZLHashWriterMD5.h" />
-    <ClInclude Include="..\..\src\zl-util\ZLHashWriterSHA1.h" />
-    <ClInclude Include="..\..\src\zl-util\ZLHashWriterSHA224.h" />
-    <ClInclude Include="..\..\src\zl-util\ZLHashWriterSHA256.h" />
-    <ClInclude Include="..\..\src\zl-util\ZLHashWriterSHA384.h" />
-    <ClInclude Include="..\..\src\zl-util\ZLHashWriterSHA512.h" />
     <ClInclude Include="..\..\src\zl-util\ZLHashWriterWhirlpool.h" />
     <ClInclude Include="..\..\src\zl-util\ZLZip.h" />
     <ClInclude Include="..\..\src\zl-util\ZLZipFile.h" />
@@ -791,12 +785,6 @@
     <ClCompile Include="..\..\src\zl-util\ZLHashWriter.cpp" />
     <ClCompile Include="..\..\src\zl-util\ZLHashWriterAdler32.cpp" />
     <ClCompile Include="..\..\src\zl-util\ZLHashWriterCRC32.cpp" />
-    <ClCompile Include="..\..\src\zl-util\ZLHashWriterMD5.cpp" />
-    <ClCompile Include="..\..\src\zl-util\ZLHashWriterSHA1.cpp" />
-    <ClCompile Include="..\..\src\zl-util\ZLHashWriterSHA224.cpp" />
-    <ClCompile Include="..\..\src\zl-util\ZLHashWriterSHA256.cpp" />
-    <ClCompile Include="..\..\src\zl-util\ZLHashWriterSHA384.cpp" />
-    <ClCompile Include="..\..\src\zl-util\ZLHashWriterSHA512.cpp" />
     <ClCompile Include="..\..\src\zl-util\ZLHashWriterWhirlpool.cpp" />
     <ClCompile Include="..\..\src\zl-util\ZLZip.cpp" />
     <ClCompile Include="..\..\src\zl-util\ZLZipFile.cpp" />
@@ -844,6 +832,22 @@
     <ProjectReference Include="..\libssl\libssl.vcxproj">
       <Project>{d0f1c892-57f4-4758-a2ee-bfb58db20987}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="..\libtess2\libtess2.vcxproj">
+      <Project>{71639d6b-6b3f-4f8b-89b2-8b774965dd2a}</Project>
+      <Private>true</Private>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="..\libwebp\libwebp.vcxproj">
+      <Project>{f7b25d3c-0505-4679-a2e5-e63c0bfc4547}</Project>
+      <Private>true</Private>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
     <ProjectReference Include="..\sfmt\sfmt.vcxproj">
       <Project>{1dc6bd91-b45f-442a-ae6c-88ab5dcf0ce2}</Project>

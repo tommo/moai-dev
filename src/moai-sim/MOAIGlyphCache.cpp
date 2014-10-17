@@ -5,7 +5,7 @@
 #include <contrib/moai_utf8.h>
 #include <moai-sim/MOAIGlyphCache.h>
 #include <moai-sim/MOAIImage.h>
-
+#include <moai-sim/MOAIFont.h>
 //================================================================//
 // MOAIGlyphCache
 //================================================================//

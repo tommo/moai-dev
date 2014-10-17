@@ -255,24 +255,6 @@
     <ClInclude Include="..\..\src\zl-util\ZLHashWriterCRC32.h">
       <Filter>stream\hash</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\zl-util\ZLHashWriterMD5.h">
-      <Filter>stream\hash</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\zl-util\ZLHashWriterSHA1.h">
-      <Filter>stream\hash</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\zl-util\ZLHashWriterSHA224.h">
-      <Filter>stream\hash</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\zl-util\ZLHashWriterSHA256.h">
-      <Filter>stream\hash</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\zl-util\ZLHashWriterSHA384.h">
-      <Filter>stream\hash</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\zl-util\ZLHashWriterSHA512.h">
-      <Filter>stream\hash</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\zl-util\ZLHashWriterWhirlpool.h">
       <Filter>stream\hash</Filter>
     </ClInclude>
@@ -446,24 +428,6 @@
       <Filter>stream\hash</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\zl-util\ZLHashWriterCRC32.cpp">
-      <Filter>stream\hash</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\zl-util\ZLHashWriterMD5.cpp">
-      <Filter>stream\hash</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\zl-util\ZLHashWriterSHA1.cpp">
-      <Filter>stream\hash</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\zl-util\ZLHashWriterSHA224.cpp">
-      <Filter>stream\hash</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\zl-util\ZLHashWriterSHA256.cpp">
-      <Filter>stream\hash</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\zl-util\ZLHashWriterSHA384.cpp">
-      <Filter>stream\hash</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\zl-util\ZLHashWriterSHA512.cpp">
       <Filter>stream\hash</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\zl-util\ZLHashWriterWhirlpool.cpp">

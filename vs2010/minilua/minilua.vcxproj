@@ -625,7 +625,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\3rdparty\LuaJIT-2.0.1\src\host\minilua.c" />
+    <ClCompile Include="..\..\3rdparty\LuaJIT-2.0.3\src\host\minilua.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

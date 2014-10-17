@@ -4,6 +4,10 @@
 #ifndef	MOAIFONTREADER_H
 #define	MOAIFONTREADER_H
 
+#ifdef _MSC_VER
+#undef ERROR
+#endif
+
 class MOAIImage;
 class MOAIKernVec;
 
