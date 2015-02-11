@@ -6,54 +6,77 @@
 #include <tesselator.h>
 #include <signal.h>
 #include <setjmp.h>
+#include <zl-vfs/assert.h>
 
 //================================================================//
 // SafeTesselator
 //================================================================//
 
-
-typedef void SIG_PROC_t( int sig );
-typedef SIG_PROC_t *SIG_PROC_p_t;
-static jmp_buf* sEnv = 0;
+const ZLVec3D SafeTesselator::sNormal = ZLVec3D ( 0.0f, 0.0f, 1.0f );
 
 //----------------------------------------------------------------//
-void AbortHandler( int signum ) {
-	if ( sEnv && ( signum == SIGABRT )) {
-		longjmp ( *sEnv, 1 );
-	}
-	exit ( 0 );
-}
+void SafeTesselator::GetTriangles ( MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer ) {
 
-//------------------------------------------------------------------//
-SafeTesselator::SafeTesselator()
-{
-	mTess = tessNewTess ( 0 );
-}
+	ZLMemStream idxStream;
+	ZLMemStream vtxStream;
 
-//------------------------------------------------------------------//
-SafeTesselator::~SafeTesselator()
-{
-	tessDeleteTess ( mTess );
-}
-
-//------------------------------------------------------------------//
-int SafeTesselator::Tesselate ( int windingRule, int elementType, int polySize, int vertexSize, const TESSreal *normal ) {
-
-	SIG_PROC_p_t initial_handler = signal ( SIGABRT, AbortHandler );
-	int err = 0;
+	const int* elems = tessGetElements ( this->mTess );
+	const int nelems = tessGetElementCount ( this->mTess );
 	
-	sEnv = ( jmp_buf* )calloc ( 1, sizeof ( jmp_buf ));
-	if ( setjmp ( *sEnv )) {
-		err = 1;
+	for ( int i = 0; i < nelems; ++i ) {
+		const int* tri = &elems [ i * 3 ];
+		
+		idxStream.Write < u32 >( tri [ 0 ]);
+		idxStream.Write < u32 >( tri [ 1 ]);
+		idxStream.Write < u32 >( tri [ 2 ]);
+	}
+
+	const float* verts = tessGetVertices ( this->mTess );
+	const int nverts = tessGetVertexCount ( this->mTess );
+	
+	for ( int i = 0; i < nverts; ++i ) {
+		const ZLVec2D& vert = (( const ZLVec2D* )verts )[ i ];
+		
+		vtxStream.Write < float >( vert.mX );
+		vtxStream.Write < float >( vert.mY );
+		vtxStream.Write < float >( 0.0f );
+		vtxStream.Write < u32 >( 0xffffffff );
 	}
 	
+	idxStream.Seek ( 0, SEEK_SET );
+	vtxStream.Seek ( 0, SEEK_SET );
+	
+	idxBuffer.CopyFromStream ( idxStream, 4 );
+	
+	vtxBuffer.Clear ();
+	vtxBuffer.Reserve ( vtxStream.GetLength ());
+	vtxBuffer.WriteStream ( vtxStream );
+}
+
+//------------------------------------------------------------------//
+void SafeTesselator::Reset () {
+	tessDeleteTess ( this->mTess );
+	this->mTess = tessNewTess ( 0 );
+}
+
+//------------------------------------------------------------------//
+SafeTesselator::SafeTesselator () {
+	this->mTess = tessNewTess ( 0 );
+}
+
+//------------------------------------------------------------------//
+SafeTesselator::~SafeTesselator () {
+	tessDeleteTess ( this->mTess );
+}
+
+//------------------------------------------------------------------//
+int SafeTesselator::Tesselate ( int windingRule, int elementType, int polySize, int vertexSize, const TESSreal* normal ) {
+
+	int err = zl_begin_assert_env ();
 	if ( err == 0 ) {
-		tessTesselate ( this->mTess, windingRule, elementType, polySize, vertexSize, normal );
+		tessTesselate ( this->mTess, windingRule, elementType, polySize, vertexSize, normal ? normal : ( const TESSreal* )&sNormal );
 	}
-	
-	signal ( SIGABRT, initial_handler );
-	free ( sEnv );
-	
+	zl_end_assert_env ();
 	return err;
 }
 

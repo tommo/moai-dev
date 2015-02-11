@@ -197,6 +197,14 @@ void MOAIGfxQuad2D::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, flo
 }
 
 //----------------------------------------------------------------//
+bool MOAIGfxQuad2D::Inside ( u32 idx, ZLVec3D vec, float pad ) {
+	UNUSED ( idx );
+	UNUSED ( pad );
+
+	return this->TestHit ( this->mQuad.mModelQuad, this->mQuad.mUVQuad, vec.mX, vec.mY );
+}
+
+//----------------------------------------------------------------//
 ZLBox MOAIGfxQuad2D::GetItemBounds ( u32 idx ) {
 	UNUSED ( idx );
 	ZLBox bounds;
@@ -212,7 +220,7 @@ MOAIGfxQuad2D::MOAIGfxQuad2D () {
 		RTTI_EXTEND ( MOAIDeck )
 	RTTI_END
 	
-	this->SetContentMask ( MOAIProp::CAN_DRAW );
+	//this->SetContentMask ( MOAIProp::CAN_DRAW );
 	
 	// set up rects to draw a unit tile centered at the origin
 	this->mQuad.SetVerts ( -0.5f, -0.5f, 0.5f, 0.5f );

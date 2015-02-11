@@ -1,7 +1,7 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef DISABLE_TAPJOY
+#if AKU_WITH_ANDROID_TAPJOY
 
 #include "moai-core/pch.h"
 #include "moai-sim/pch.h"
@@ -114,14 +114,14 @@ void MOAITapjoyAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-extern "C" void Java_com_ziplinegames_moai_MoaiTapjoy_AKUInvokeListener ( JNIEnv* env, jclass obj, jint eventID ) {
+extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiTapjoy_AKUInvokeListener ( JNIEnv* env, jclass obj, jint eventID ) {
 
 	ZLLog::LogF ( ZLLog::CONSOLE, "Java_com_ziplinegames_moai_MoaiTapjoy_AKUInvokeListener\n" );
 	MOAITapjoyAndroid::Get ().InvokeListener (( u32 )eventID );
 }
 
 //----------------------------------------------------------------//
-extern "C" void Java_com_ziplinegames_moai_MoaiTapjoy_AKUInvokeListenerWithCode ( JNIEnv* env, jclass obj, jint eventID, jint code ) {
+extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiTapjoy_AKUInvokeListenerWithCode ( JNIEnv* env, jclass obj, jint eventID, jint code ) {
 
 	ZLLog::LogF ( ZLLog::CONSOLE, "Java_com_ziplinegames_moai_MoaiTapjoy_AKUInvokeListenerWithCode\n" );
 	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();

@@ -15,10 +15,6 @@
 	#ifndef MOAI_WITH_BOX2D
 		#define MOAI_WITH_BOX2D 1
 	#endif
-
-	#ifndef MOAI_WITH_CHIPMUNK
-		#define MOAI_WITH_CHIPMUNK 0
-	#endif
 	
 	#ifndef MOAI_WITH_EXPAT
 		#define MOAI_WITH_EXPAT 1
@@ -70,6 +66,10 @@
 	
 	#ifndef MOAI_WITH_LIBPNG
 		#define MOAI_WITH_LIBPNG 1
+	#endif
+
+	#ifndef MOAI_WITH_LIBPVR
+		#define MOAI_WITH_LIBPVR 1
 	#endif
 
 	#ifndef MOAI_WITH_LIBWEBP

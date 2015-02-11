@@ -5,45 +5,54 @@ require ( 'string' )
 
 local osx = MOAIEnvironment.osBrand == 'OSX'
 
-			arrayToSet					= nil
-			compile						= nil
-			copy						= nil
-			copyFiles					= nil
-			dofileWithEnvironment		= nil
-			escape						= nil
-local		exec						= nil
-			getFilenameFromPath			= nil
-			getFilenameExt				= nil
-			getFolderFromPath			= nil
-			hash						= nil
-			hashDirectory				= nil
-			hashFile					= nil
-			isMember					= nil
-			isSysPath					= nil
-			iterateCommandLine			= nil
-			iterateFiles				= nil
-			joinTables					= nil
-			listDirectories				= nil
-			listFiles					= nil
-local		makeDlcResourceSig			= nil
-			makeStoreEntryFunc			= nil
-			move						= nil
-			onEntryCompile				= nil
-			onEntryCopy					= nil
-			onEntryStore				= nil
-			pack						= nil
-			package						= nil
-			powerIter					= nil
-			pruneEmptyDirs				= nil
-			quantize					= nil
-			readFileAll					= nil
-			replaceInFile				= nil
-			replaceInFiles				= nil
-			saveTable					= nil
-			scanFiles					= nil
-			tokenize					= nil
-			wrap						= nil
-			zip							= nil
+			arrayToSet						= nil
+			compile							= nil
+			copy							= nil
+			copyFiles						= nil
+			dofileWithEnvironment			= nil
+			escape							= nil
+local		exec							= nil
+			getAbsoluteDirPath				= nil
+			getFilenameFromPath				= nil
+			getFilenameExt					= nil
+			getFolderFromPath				= nil
+			hash							= nil
+			hashDirectory					= nil
+			hashFile						= nil
+			isAbsPath						= nil
+			isMember						= nil
+			isSysPath						= nil
+			iterateCommandLine				= nil
+			iterateFiles					= nil
+			iterateFilesAbsPath				= nil
+local  		iterateFilesImplementation		= nil
+			joinTables						= nil
+			listDirectories					= nil
+			listFiles						= nil
+local		makeDlcResourceSig				= nil
+			makeExecutable = nil
+			makeStoreEntryFunc				= nil
+			mergeTables						= nil
+			move							= nil
+			onEntryCompile					= nil
+			onEntryCopy						= nil
+			onEntryStore					= nil
+			pack							= nil
+			package							= nil
+			powerIter						= nil
+			printTable						= nil
+			pruneEmptyDirs					= nil
+			quantize						= nil
+			readFileAll						= nil
+			replaceInFile					= nil
+			replaceInFiles					= nil
+			saveTable						= nil
+			scanFiles						= nil
+			tokens							= nil
+			tokenize						= nil
+			trim							= nil
+			wrap							= nil
+			zip								= nil
 
 ----------------------------------------------------------------
 arrayToSet = function ( array )
@@ -121,6 +130,16 @@ exec = function ( cmd, path1, path2 )
 	cmd = string.format ( cmd, path1, path2 )
 	print ( cmd )
 	os.execute ( cmd )
+end
+
+----------------------------------------------------------------
+getAbsoluteDirPath = function ( path, base )
+
+	if base and not ( string.match ( path, '^/' ) or string.match ( path, '^\\' )) then
+		path = base .. path
+	end
+
+	return MOAIFileSystem.getAbsoluteDirectoryPath ( path )
 end
 
 ----------------------------------------------------------------
@@ -209,6 +228,12 @@ hashFile = function ( filename )
 end
 
 ----------------------------------------------------------------
+isAbsPath = function ( path )
+
+	return ( path [ 1 ] ~= 0x5C ) or ( path [ 1 ] ~= 0x2F ) -- hex codes for '/' and '\'
+end
+
+----------------------------------------------------------------
 isMember = function ( array, str )
 
 	if array then
@@ -246,11 +271,11 @@ iterateCommandLine = function ( arg )
 
 		for i, v in iter do
 		
-			local escape = string.match ( v, '^%-%-(%w+)' )
+			local escape = string.match ( v, '^%-%-([%w-]+)' )
 		
 			if escape then
 				currentEscape = escape
-				coroutine.yield ( lastEscape, nil, iter )
+				coroutine.yield ( currentEscape, nil, iter )
 			else
 				local escapeStr = string.match ( v, '^%-(%a+)' )
 		
@@ -282,29 +307,57 @@ end
 ----------------------------------------------------------------
 iterateFiles = function ( path, fileFilter, recurse )
 
+	return iterateFilesImplementation ( path, fileFilter, false, recurse )
+end
+
+----------------------------------------------------------------
+iterateFilesAbsPath = function ( path, fileFilter )
+
+	return iterateFilesImplementation ( path, fileFilter, true, recurse )
+end
+
+----------------------------------------------------------------
+iterateFilesImplementation = function ( path, fileFilter, absPath, recurse )
+
 	recurse = recurse or true
+
+	path = MOAIFileSystem.getAbsoluteDirectoryPath ( path )
+	local prefix = absPath and path or ''
+	
+	local match = function () return true end
+	
+	if type ( fileFilter ) == 'string' then
+		match = function ( filename ) return string.find ( filename, fileFilter ) end
+	end
+	
+	if type ( fileFilter ) == 'table' then
+		match = function ( filename )
+			for i, p in ipairs ( fileFilter ) do
+				if string.find ( filename, p ) then return true end
+			end
+		end
+	end
 	
 	local doRecurse
 	doRecurse = function ( dirname )
-		
-		local files = MOAIFileSystem.listFiles ( dirname ) or {}
+
+		local files = MOAIFileSystem.listFiles ( path .. dirname ) or {}
 		for i, filename in ipairs ( files ) do
-			local match = ( fileFilter == nil ) and true or string.find ( filename, fileFilter )
-			if match then
-				coroutine.yield ( string.format ( '%s/%s', dirname, filename ))
+			if match ( filename ) then
+				coroutine.yield ( string.format ( '%s%s%s', prefix, dirname, filename ))
 			end
 		end
 		
 		if recurse then
-			local dirs = MOAIFileSystem.listDirectories ( dirname ) or {}
+			local dirs = MOAIFileSystem.listDirectories ( path .. dirname ) or {}
 			for i, subdir in ipairs ( dirs ) do
-				doRecurse ( string.format ( '%s/%s', dirname, subdir ) )
+				doRecurse ( string.format ( '%s%s/', dirname, subdir ))
 			end
 		end
 	end
 	
 	local co = coroutine.create ( function ()
-		doRecurse ( path )
+		doRecurse ( '' )
 	end )
 	
 	return function ()
@@ -364,6 +417,27 @@ listFiles = function ( path, ... )
 end
 
 ----------------------------------------------------------------
+loadFileAsString = function ( filename )
+	
+	local str
+	
+	local fp = io.open ( filename, 'r' )
+	if fp then
+		str = fp:read ( "*all" )
+		fp:close ()
+	end
+	
+	return str
+end
+----------------------------------------------------------------
+makeExecutable = function ( path )
+	if MOAIEnvironment.osBrand ~= 'Windows' then
+		os.execute("chmod a+x "..path)
+	end
+end 
+
+
+----------------------------------------------------------------
 makeDlcResourceSig = function ( path, md5 )
 	
 	local path = string.gsub ( path, '[\\/]', '.' )
@@ -386,6 +460,18 @@ makeStoreEntryFunc = function ( packingList )
 	end
 
 	return func
+end
+
+----------------------------------------------------------------
+mergeTables = function ( t1, t2 )
+
+	t1 = t1 or {}
+	if t2 then
+		for k, v in pairs ( t2 ) do
+			t1 [ k ] = v
+		end
+	end
+	return t1
 end
 
 ----------------------------------------------------------------
@@ -467,6 +553,22 @@ powerIter = function ( iter, state, var )
 end
 
 ----------------------------------------------------------------
+printTable = function ( t, d )
+
+	local depth = d or 0
+	local indent = ""
+	for i = 1, depth do indent = indent .. "> " end
+	for i, item in pairs ( t ) do
+
+		io.write ( indent )
+		print ( i, item )
+		if type ( item ) == "table" then
+			printTable ( item, depth + 1 )
+		end
+	end
+end
+
+----------------------------------------------------------------
 pruneEmptyDirectories = function ( dir )
 
 	local totalFiles = 0
@@ -531,8 +633,9 @@ replaceInFile = function ( filename, commands )
 	local dirty = false
  
 	for find, replace in pairs ( commands ) do
-		str = string.gsub ( str, find, replace )
-		dirty = true
+		local n
+		str, n = string.gsub ( str, find, replace )
+		dirty = dirty or n > 0
 	end
 
 	if dirty == true then
@@ -572,7 +675,7 @@ saveTable = function ( filename, table, raw )
 	
 	local bytes = MOAISerializer.serializeToString ( table )
 	
-	if COMPILE and not raw then
+	if not raw then
 		bytes = string.dump ( loadstring ( bytes, '' )) -- compile to lua bytecode
 	end
 	
@@ -615,6 +718,79 @@ tokenize = function ( str, sep )
 	local pattern = str.format ( "([^%s]+)", sep )
 	str:gsub ( pattern, function ( c ) fields [ #fields + 1 ] = c end )
 	return fields
+end
+
+----------------------------------------------------------------
+tokens = function ( s, patterns )
+
+	if type ( patterns ) == 'string' then
+		patterns = { patterns }
+	end
+
+	local start, finish, id
+
+	local nextCapture = function ()
+	
+		if s and start == nil then
+	
+			for i, pattern in ipairs ( patterns ) do
+			
+				local ts, tf = string.find ( s, pattern )
+				if ts and (( start == nil ) or ( ts < start )) then
+					start, finish = ts, tf
+					id = i
+				end
+		
+				if start == 1 then break end
+			end
+		end
+		
+		if start then
+			if start > 1 then
+				local result = string.sub ( s, 1, start - 1 )
+				s = string.sub ( s, start )
+			
+				finish = finish - start + 1
+				start = 1
+			
+				return result
+			end
+
+			local result = string.sub ( s, 1, finish )
+			s = string.sub ( s, finish + 1 )
+			start, finish = nil, nil
+			return result, id
+		end
+		
+		local result = s
+		s = nil
+		return result
+	end
+	
+	return nextCapture
+end
+
+----------------------------------------------------------------
+function trim ( str, p1, p2 )
+
+	local wsp = '[%s]*'
+
+	p1 = p1 or wsp
+	p2 = p2 or wsp
+
+	local s, f
+	
+	if p1 ~= '' then
+		s, f = string.find ( str, '^' .. p1 )
+		if s then str = string.sub ( str, f + 1 ) end
+	end
+	
+	if p2 ~= '' then
+		s, f = string.find ( str, p2 .. '$' )
+		if s then str = string.sub ( str, 1, s - 1 ) end
+	end
+	
+	return str
 end
 
 ----------------------------------------------------------------

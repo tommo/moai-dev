@@ -141,7 +141,7 @@ void MOAIMesh::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, float xS
 		// TODO: use gfxDevice to cache buffers
 		if ( this->mIndexBuffer ) {
 			if ( this->mIndexBuffer->Bind ()) {
-				zglDrawElements ( this->mPrimType, this->mIndexBuffer->GetIndexCount (), ZGL_TYPE_UNSIGNED_INT, 0 );
+				this->mIndexBuffer->Draw ( this->mPrimType );
 				this->mIndexBuffer->Unbind ();
 			}
 		}
@@ -175,7 +175,6 @@ MOAIMesh::MOAIMesh () :
 		RTTI_EXTEND ( MOAIDeck )
 	RTTI_END
 	
-	this->SetContentMask ( MOAIProp::CAN_DRAW );
 	this->mDefaultShaderID = MOAIShaderMgr::MESH_SHADER;
 }
 

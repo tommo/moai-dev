@@ -273,13 +273,26 @@ ZLBox MOAIGfxQuadDeck2D::GetItemBounds ( u32 idx ) {
 }
 
 //----------------------------------------------------------------//
+bool MOAIGfxQuadDeck2D::Inside ( u32 idx, ZLVec3D vec, float pad ) {
+	UNUSED ( pad );
+
+	u32 size = this->mQuads.Size ();
+	if ( size ) {
+		idx = ( idx - 1 ) % size;
+		const MOAIQuadBrush& quadBrush = this->mQuads [ idx ];
+		return this->TestHit ( quadBrush.mModelQuad, quadBrush.mUVQuad, vec.mX, vec.mY );
+	}
+	return false;
+}
+
+//----------------------------------------------------------------//
 MOAIGfxQuadDeck2D::MOAIGfxQuadDeck2D () {
 
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIDeck )
 	RTTI_END
 	
-	this->SetContentMask ( MOAIProp::CAN_DRAW );
+	//this->SetContentMask ( MOAIProp::CAN_DRAW );
 }
 
 //----------------------------------------------------------------//

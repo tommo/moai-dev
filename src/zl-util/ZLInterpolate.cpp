@@ -6,9 +6,6 @@
 #include <zl-util/ZLTrig.h>
 #include <zl-util/ZLInterpolate.h>
 
-#ifndef PI
-#define PI 3.1415926545
-#endif
 //----------------------------------------------------------------//
 // t ^ 4
 static float _pow ( float t ) {
@@ -46,14 +43,11 @@ static float _pow_soft ( float t ) {
 // ZLInterpolate
 //================================================================//
 
-inline float _ABS( float a ) {
-	if( a >= 0.0f ) return a;
-	return -a;
-}
-
 //----------------------------------------------------------------//
 float ZLInterpolate::Curve ( u32 mode, float t ) {
-	float t2;
+	
+	float p, s;
+	
 	switch ( mode ) {
 
 		//................................................................
@@ -170,50 +164,154 @@ float ZLInterpolate::Curve ( u32 mode, float t ) {
 		
 			return Curve ( kSoftSmooth, _pow ( t ));
 
-		case kBackIn:
-			return t * t * (2.70158 * t - 1.70158);
-
-		case kBackOut:
-			return 1 + (--t) * t * (2.70158 * t + 1.70158);
+		//................................................................
+		case kSineEaseIn:
 			
-		case kBackSmooth:
-			if( t < 0.5 ) {
-				return t * t * (7 * t - 2.5) * 2;
-			} else {
-				return 1 + (--t) * t * 2 * (7 * t + 2.5);
-			}
-
-		case kElasticIn:			 
-	    return t * t * t * t * sin( t * PI * 4.5 );
+			return sinf ( t * M_PI_2 );
+		
+		//................................................................
+		case kSineEaseOut:
 			
-		case kElasticOut:
+			return 1.0f - cosf ( t * M_PI_2 );
+
+		//................................................................
+		case kSineSmooth:
+			
+			return 0.5f - 0.5f * cosf ( t * M_PI );
+
+		//................................................................
+		case kCircEaseIn:
+			
 			t = t - 1.0f;
-			return 1 - t * t * t * t * cos( t * PI * 4.5 );
-		
-		case kElasticSmooth:			
-			if( t < 0.45 ) {
-				t2 = t * t;
-				return 8 * t2 * t2 * sin( t * PI * 9 );
-			} else if( t < 0.55 ) {
-				return 0.5 + 0.75 * sin( t * PI * 4 );
-			} else {
-				t2 = (t - 1) * (t - 1);
-				return 1 - 8 * t2 * t2 * sin( t * PI * 9 );
-			}
+			return sqrtf ( 1.0f - t * t );
 
+		//................................................................
+		case kCircEaseOut:
+			
+			return 1.0f - sqrtf ( 1.0f - t * t );
+
+		//................................................................
+		case kCircSmooth:
+			
+			if ( t < 0.5f ) {
+				t = t * 2.0f;
+				return 0.5f - 0.5f * sqrtf ( 1.0f - t * t );
+			}
+			t = t * 2.0f - 2.0f;
+			return 0.5f + 0.5f * sqrtf ( 1.0f - t * t );
+			
+		//................................................................
 		case kBounceIn:
-			return pow( 2, 6 * (t - 1) ) * _ABS( sin( t * PI * 3.5 ) );
 			
+			if ( t < (1.0f / 2.75f) ) {
+				return 7.5625f * t * t;
+			}
+			else if ( t < (2.0f / 2.75f) ) {
+				t = t - 1.5f / 2.75f;
+				return 7.5625f * t * t + 0.75f;
+			}
+			else if ( t < (2.5f / 2.75f) ) {
+				t = t - 2.25f / 2.75f;
+				return 7.5625f * t * t + 0.9375f;
+			}
+			else {
+				t = t - 2.625 / 2.75f;
+				return 7.5625f * t * t + 0.984375f;
+			}
+			return 0.0f;
+
+		//................................................................
 		case kBounceOut:
-			return 1 - pow( 2, -6 * t ) * _ABS( cos( t * PI * 3.5 ) );
-		
-		case kBounceSmooth:
-			if( t < 0.5 ) {
-				return 8 * pow( 2, 8 * (t - 1) ) * _ABS( sin( t * PI * 7 ) );
-			} else {
-				return 1 - 8 * pow( 2, -8 * t ) * _ABS( sin( t * PI * 7 ) );
-			}		
 			
+			return 1.0f - Curve ( kBounceIn, 1.0f - t );
+
+		//................................................................
+		case kBounceSmooth:
+			
+			if ( t < 0.5f ) {
+				return 0.5f * Curve ( kBounceOut, t * 2.0f );
+			}
+			else {
+				return 0.5f + 0.5f * Curve ( kBounceIn, 2.0f * t - 1.f );
+			}
+			
+		//................................................................
+		case kElasticIn:
+			
+			if ( t == 0.0f ) {
+				return 0.0f;
+			}
+			
+			if ( t == 1.0f ) {
+				return 1.0f;
+			}
+			
+			p = 0.3f;
+			s = 0.25f * p;
+			return 1.0f + powf ( 2.0f, -10.f * t ) * sinf ( (t - s) * (2.0f * M_PI) / p );
+
+		//................................................................
+		case kElasticOut:
+			
+			if ( t == 0.0f ) {
+				return 0.0f;
+			}
+			
+			if ( t == 1.0f ) {
+				return 1.0f;
+			}
+			
+			p = 0.3f;
+			s = 0.25f * p;
+			t = t - 1.0f;
+			return -powf ( 2.0f, 10.f * t ) * sinf ( (t - s) * (2.0f * M_PI) / p );
+
+		//................................................................
+		case kElasticSmooth:
+			
+			if ( t == 0.0f ) {
+				return 0.0f;
+			}
+			
+			if ( t == 1.0f ) {
+				return 1.0f;
+			}
+			
+			t = 2.0f * t;
+			p = 0.3f * 1.5f;
+			s = 0.25f * p;
+			
+			if ( t < 1.0f ) {
+				t = t - 1.0f;
+				return -0.5f * ( powf ( 2.0f, 10.f * t ) * sinf ( (t - s) * (2.0f * M_PI) / p ) );
+			}
+			t = t - 1.0f;
+			return 1.0f + 0.5f * ( powf ( 2.0f, -10.f * t ) * sinf ( (t - s) * (2.0f * M_PI) / p ) );
+
+		//................................................................
+		case kBackEaseIn:
+			
+			s = 1.70158f;
+			t = t - 1.0f;
+			return t * t * ( (s + 1.0f) * t + s ) + 1.0f;
+			
+		//................................................................
+		case kBackEaseOut:
+			
+			s = 1.70158f;
+			return t * t * ( (s + 1.0f) * t - s );
+			
+		//................................................................
+		case kBackSmooth:
+			
+			s = 1.70158f * 1.525f;
+			t = 2.0f * t;
+			if ( t < 1 ) {
+				return 0.5f * ( t * t * ((s + 1.0f) * t - s) );
+			}
+			t = t - 2.0f;
+			return 1.0f + 0.5f * (t * t * ((s + 1.0f) * t + s));
+
 	}
 	return 0.0f;
 }

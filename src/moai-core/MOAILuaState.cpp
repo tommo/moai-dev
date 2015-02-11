@@ -101,6 +101,16 @@ bool MOAILuaState::CheckParams ( int idx, cc8* format, bool verbose ) {
 			case '*':
 			case '.':
 				break;
+			
+			// any non-nil type
+			case '@':
+				if ( type == LUA_TNIL ) return false; // TODO: log a message
+				break;
+			
+			// nil
+			case '-':
+				if ( type != LUA_TNIL ) expected = LUA_TNIL;
+				break;
 		}
 		
 		if ( expected != LUA_TNONE ) {
@@ -167,15 +177,14 @@ void MOAILuaState::CopyToTop ( int idx ) {
 int MOAILuaState::DebugCall ( int nArgs, int nResults ) {
 	
 	int errIdx = this->AbsIndex ( -( nArgs + 1 ));
-	
+
 	MOAILuaRuntime::Get ().PushTraceback ( *this );
 	lua_insert ( this->mState, errIdx );
 
 	int status = lua_pcall ( this->mState, nArgs, nResults, errIdx );
 
 	if ( status ) {
-		lua_settop ( this->mState, errIdx - 1 );
-		this->PrintErrors( ZLLog::CONSOLE, status );
+		this->PrintErrors ( ZLLog::CONSOLE, status );
 	}
 	else {
 		lua_remove ( this->mState, errIdx );
@@ -184,13 +193,17 @@ int MOAILuaState::DebugCall ( int nArgs, int nResults ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAILuaState::Decode ( int idx, ZLStreamReader& reader ) {
+bool MOAILuaState::Decode ( int idx, ZLStreamAdapter& reader ) {
 
 	if ( !this->IsType ( idx, LUA_TSTRING )) return false;
 
 	size_t len;
 	void* buffer = ( void* )lua_tolstring ( this->mState, idx, &len );
-	if ( !len ) return false;
+	
+	if ( !len ) {
+		lua_pushstring ( this->mState, "" );
+		return true;
+	}
 	
 	ZLByteStream cryptStream;
 	cryptStream.SetBuffer ( buffer, len );
@@ -198,7 +211,7 @@ bool MOAILuaState::Decode ( int idx, ZLStreamReader& reader ) {
 	
 	ZLMemStream plainStream;
 	
-	reader.Open ( cryptStream );
+	reader.Open ( &cryptStream );
 	plainStream.WriteStream ( reader );
 	reader.Close ();
 	
@@ -226,17 +239,21 @@ bool MOAILuaState::Deflate ( int idx, int level, int windowBits ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAILuaState::Encode ( int idx, ZLStreamWriter& writer ) {
+bool MOAILuaState::Encode ( int idx, ZLStreamAdapter& writer ) {
 
 	if ( !this->IsType ( idx, LUA_TSTRING )) return false;
 
 	size_t len;
 	cc8* buffer = lua_tolstring ( this->mState, idx, &len );
-	if ( !len ) return false;
+	
+	if ( !len ) {
+		lua_pushstring ( this->mState, "" );
+		return true;
+	}
 	
 	ZLMemStream stream;
 	
-	writer.Open ( stream );
+	writer.Open ( &stream );
 	writer.WriteBytes ( buffer, len );
 	writer.Close ();
 	
@@ -423,6 +440,59 @@ bool MOAILuaState::GetSubfieldWithType ( int idx, cc8* format, int type, ... ) {
 }
 
 //----------------------------------------------------------------//
+int MOAILuaState::GetLuaThreadStatus ( int idx ) {
+
+	if ( lua_type ( this->mState, idx ) != LUA_TTHREAD ) return THREAD_UNKNOWN;
+	return this->GetLuaThreadStatus ( lua_tothread ( this->mState, idx ));
+}
+
+//----------------------------------------------------------------//
+int MOAILuaState::GetLuaThreadStatus ( lua_State* thread ) {
+
+	lua_pushthread ( this->mState );
+	lua_State* running = lua_tothread ( this->mState, -1 );
+	lua_pop ( this->mState, 1 );
+
+	if ( thread == running ) return THREAD_RUNNING;
+
+	switch ( lua_status ( thread )) {
+	
+		case LUA_YIELD:
+			return THREAD_SUSPENDED;
+
+		case 0: {
+			lua_Debug ar;
+			if ( lua_getstack ( thread, 0, &ar ) > 0 ) {
+				return THREAD_NORMAL;
+			}
+			else if ( lua_gettop ( thread ) == 0 ) {
+				return THREAD_DEAD;
+			}
+			else {
+				return THREAD_SUSPENDED;
+			}
+		}
+		default:  // some error occured
+			return THREAD_ERROR;
+	}
+	
+	return THREAD_UNKNOWN;
+}
+
+//----------------------------------------------------------------//
+cc8* MOAILuaState::GetLuaThreadStatusName ( int status ) {
+
+	switch ( status ) {
+		case THREAD_DEAD:		return "dead";
+		case THREAD_ERROR:		return "error";
+		case THREAD_NORMAL:		return "normal";
+		case THREAD_RUNNING:	return "running";
+		case THREAD_SUSPENDED:	return "suspended";
+	}
+	return "unknown";
+}
+
+//----------------------------------------------------------------//
 cc8* MOAILuaState::GetLuaTypeName ( int type ) {
 
 	switch ( type ) {
@@ -436,7 +506,7 @@ cc8* MOAILuaState::GetLuaTypeName ( int type ) {
 		case LUA_TTABLE:			return "table";
 		case LUA_TFUNCTION:			return "function";
 		case LUA_TUSERDATA:			return "userdata";
-		case LUA_TTHREAD:			return "coroutine";
+		case LUA_TTHREAD:			return "thread";
 	}
 	return "unknown";
 }
@@ -563,6 +633,12 @@ STLString MOAILuaState::GetStackTrace ( cc8* title, int level ) {
 	
 	out.append ( "\n" );
 	return out;
+}
+
+//----------------------------------------------------------------//
+size_t MOAILuaState::GetTableSize ( int idx ) {
+
+	return lua_objlen ( this->mState, idx );
 }
 
 //----------------------------------------------------------------//
@@ -799,14 +875,14 @@ bool MOAILuaState::HasKeys ( int idx ) {
 //----------------------------------------------------------------//
 bool MOAILuaState::HexDecode ( int idx ) {
 
-	ZLHexReader hex;
+	ZLHexAdapter hex;
 	return this->Decode ( idx, hex );
 }
 
 //----------------------------------------------------------------//
 bool MOAILuaState::HexEncode ( int idx ) {
 
-	ZLHexWriter hex;
+	ZLHexAdapter hex;
 	return this->Encode ( idx, hex );
 }
 
@@ -854,6 +930,20 @@ bool MOAILuaState::IsType ( int idx, cc8* name, int type ) {
 void MOAILuaState::LoadLibs () {
 
 	luaL_openlibs ( this->mState );
+}
+
+//----------------------------------------------------------------//
+MOAILuaState::MOAILuaState () :
+	mState ( 0 ) {
+}
+
+//----------------------------------------------------------------//
+MOAILuaState::MOAILuaState ( lua_State* state ) :
+	mState ( state ) {
+}
+
+//----------------------------------------------------------------//
+MOAILuaState::~MOAILuaState () {
 }
 
 //----------------------------------------------------------------//
@@ -1143,20 +1233,6 @@ bool MOAILuaState::TableItrNext ( int itr ) {
 		return true;
 	}
 	return false;
-}
-
-//----------------------------------------------------------------//
-MOAILuaState::MOAILuaState () :
-	mState ( 0 ) {
-}
-
-//----------------------------------------------------------------//
-MOAILuaState::MOAILuaState ( lua_State* state ) :
-	mState ( state ) {
-}
-
-//----------------------------------------------------------------//
-MOAILuaState::~MOAILuaState () {
 }
 
 //----------------------------------------------------------------//

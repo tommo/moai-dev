@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxResourceMgr.h>
 #include <moai-sim/MOAIVertexBuffer.h>
 #include <moai-sim/MOAIVertexFormat.h>
 #include <moai-sim/MOAIVertexFormatMgr.h>
@@ -97,7 +98,7 @@ int	MOAIVertexBuffer::_reserveVerts ( lua_State* L ) {
 int MOAIVertexBuffer::_reset ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVertexBuffer, "U" )
 	
-	self->mStream.SetBuffer ( self->mBuffer, self->mBuffer.Size ());
+	self->SetBuffer ( self->mBuffer, self->mBuffer.Size ());
 	
 	return 0;
 }
@@ -138,7 +139,7 @@ int MOAIVertexBuffer::_writeColor32 ( lua_State* L ) {
 	float a = state.GetValue < float >( 5, 1.0f );
 	
 	u32 color = ZLColor::PackRGBA ( r, g, b, a );
-	self->mStream.Write < u32 >( color );
+	self->Write < u32 >( color );
 	
 	return 0;
 }
@@ -155,8 +156,8 @@ void MOAIVertexBuffer::Bless () {
 	
 	const MOAIVertexFormat* format = this->GetFormat ();
 	if ( format ) {
-		format->ComputeBounds ( this->mBuffer, this->mStream.GetLength (), this->mBounds );
-		this->mVertexCount = ( u32 )( this->mStream.GetLength () / format->GetVertexSize ());
+		format->ComputeBounds ( this->mBuffer, this->GetLength (), this->mBounds );
+		this->mVertexCount = ( u32 )( this->GetLength () / format->GetVertexSize ());
 	}
 	
 	this->mIsDirty = this->mUseVBOs;
@@ -168,6 +169,8 @@ void MOAIVertexBuffer::Clear () {
 	this->Reserve ( 0 );
 	this->ReserveVBOs ( 0 );
 	this->mFormat.Set ( *this, 0 );
+	
+	this->Destroy ();
 }
 
 //----------------------------------------------------------------//
@@ -179,15 +182,9 @@ const MOAIVertexFormat* MOAIVertexBuffer::GetFormat () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIVertexBuffer::IsRenewable () {
+u32 MOAIVertexBuffer::GetLoadingPolicy () {
 
-	return true;
-}
-
-//----------------------------------------------------------------//
-bool MOAIVertexBuffer::IsValid () {
-
-	return this->mIsValid;
+	return MOAIGfxResource::LOADING_POLICY_CPU_GPU_BIND;
 }
 
 //----------------------------------------------------------------//
@@ -197,7 +194,6 @@ MOAIVertexBuffer::MOAIVertexBuffer () :
 	mCurrentVBO ( 0 ),
 	mHint ( ZGL_BUFFER_USAGE_STATIC_DRAW ),
 	mIsDirty ( false ),
-	mIsValid ( false ),
 	mUseVBOs ( false ) {
 	
 	RTTI_BEGIN
@@ -205,7 +201,6 @@ MOAIVertexBuffer::MOAIVertexBuffer () :
 		RTTI_EXTEND ( MOAIStream )
 	RTTI_END
 	
-	this->SetZLStream ( &this->mStream );
 	this->mBounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
 }
 
@@ -216,7 +211,16 @@ MOAIVertexBuffer::~MOAIVertexBuffer () {
 }
 
 //----------------------------------------------------------------//
-void MOAIVertexBuffer::OnBind () {
+bool MOAIVertexBuffer::OnCPUCreate () {
+	return true;
+}
+
+//----------------------------------------------------------------//
+void MOAIVertexBuffer::OnCPUDestroy () {
+}
+
+//----------------------------------------------------------------//
+void MOAIVertexBuffer::OnGPUBind () {
 
 	if ( this->mUseVBOs ) {
 		
@@ -232,7 +236,7 @@ void MOAIVertexBuffer::OnBind () {
 			
 			zglBindBuffer ( ZGL_BUFFER_TARGET_ARRAY, vbo.mVBO );
 			void* buffer = zglMapBuffer ( ZGL_BUFFER_TARGET_ARRAY );
-			memcpy ( buffer, this->mBuffer, this->mStream.GetLength ());
+			memcpy ( buffer, this->mBuffer, this->GetLength ());
 			zglUnmapBuffer ( ZGL_BUFFER_TARGET_ARRAY );
 			zglBindBuffer ( ZGL_BUFFER_TARGET_ARRAY, 0 );
 			
@@ -251,13 +255,9 @@ void MOAIVertexBuffer::OnBind () {
 }
 
 //----------------------------------------------------------------//
-void MOAIVertexBuffer::OnClear () {
+bool MOAIVertexBuffer::OnGPUCreate () {
 
-	this->Clear ();
-}
-
-//----------------------------------------------------------------//
-void MOAIVertexBuffer::OnCreate () {
+	bool isValid = false;
 
 	if ( this->mUseVBOs ) {
 
@@ -275,7 +275,7 @@ void MOAIVertexBuffer::OnCreate () {
 				if ( vbo.mVBO ) {
 				
 					zglBindBuffer ( ZGL_BUFFER_TARGET_ARRAY, vbo.mVBO );
-					zglBufferData ( ZGL_BUFFER_TARGET_ARRAY, this->mStream.GetLength (), 0, this->mHint );
+					zglBufferData ( ZGL_BUFFER_TARGET_ARRAY, this->GetLength (), 0, this->mHint );
 					format->Bind ( 0 );
 					count++;
 				}
@@ -285,46 +285,37 @@ void MOAIVertexBuffer::OnCreate () {
 				format->Unbind ();
 			}
 		}
-		
-		this->mIsValid = count == this->mVBOs.Size ();
+		isValid = count == this->mVBOs.Size ();
 	}
 	else {
 		const MOAIVertexFormat* format = this->GetFormat ();
-		this->mIsValid = ( format && this->mStream.GetLength ());
+		isValid = ( format && this->GetLength ());
 	}
+	
+	return isValid;
 }
 
 //----------------------------------------------------------------//
-void MOAIVertexBuffer::OnDestroy () {
+void MOAIVertexBuffer::OnGPUDestroy () {
 
 	for ( u32 i = 0; i < this->mVBOs.Size (); ++i ) {
 		MOAIVbo& vbo = this->mVBOs [ i ];
-
-		if ( vbo.mVBO ) {
-			zglDeleteBuffer ( vbo.mVBO );
-			vbo.mVBO = 0;
-		}
+		MOAIGfxResourceMgr::Get ().PushDeleter ( MOAIGfxDeleter::DELETE_BUFFER, vbo.mVBO );
+		vbo.mVBO = 0;
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIVertexBuffer::OnInvalidate () {
+void MOAIVertexBuffer::OnGPULost () {
 
 	for ( u32 i = 0; i < this->mVBOs.Size (); ++i ) {
 		MOAIVbo& vbo = this->mVBOs [ i ];
-
-		if ( vbo.mVBO ) {
-			vbo.mVBO = 0;
-		}
+		vbo.mVBO = 0;
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIVertexBuffer::OnLoad () {
-}
-
-//----------------------------------------------------------------//
-void MOAIVertexBuffer::OnUnbind () {
+void MOAIVertexBuffer::OnGPUUnbind () {
 
 	if ( this->mUseVBOs ) {
 		zglBindVertexArray ( 0 );
@@ -366,9 +357,8 @@ void MOAIVertexBuffer::RegisterLuaFuncs ( MOAILuaState& state ) {
 void MOAIVertexBuffer::Reserve ( u32 size ) {
 
 	this->mBuffer.Init ( size );
-	this->mStream.SetBuffer ( this->mBuffer, size );
-	
-	this->Load ();
+	this->SetBuffer ( this->mBuffer, size );
+	this->DoCPUAffirm ();
 }
 
 //----------------------------------------------------------------//
@@ -406,8 +396,8 @@ void MOAIVertexBuffer::SerializeIn ( MOAILuaState& state, MOAIDeserializer& seri
 		this->Reserve ( bufferSize );
 		dataBuffer.Read ( this->mBuffer.Data (), bufferSize );
 		
-		this->mStream.SetLength ( bufferSize );
-		this->mStream.Seek ( bufferSize, SEEK_SET );
+		this->SetLength ( bufferSize );
+		this->Seek ( bufferSize, SEEK_SET );
 	}
 	lua_pop ( state, 1 );
 }
@@ -416,7 +406,7 @@ void MOAIVertexBuffer::SerializeIn ( MOAILuaState& state, MOAIDeserializer& seri
 void MOAIVertexBuffer::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 	UNUSED ( serializer );
 
-	size_t size = this->mStream.GetLength ();
+	size_t size = this->GetLength ();
 	
 	MOAIDataBuffer dataBuffer;
 	dataBuffer.Load ( this->mBuffer.Data (), size );

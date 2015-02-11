@@ -669,31 +669,6 @@ int MOAIBox2DBody::_isFixedRotation ( lua_State* L ) {
 	return 1;
 }
 
-
-
-//----------------------------------------------------------------//
-/**	@lua	isSleepingAllowed
-	@text	See Box2D documentation.
-	
-	@in		MOAIBox2DBody self
-	@opt	boolean allowed		Default value is true.
-	@out	nil
-*/
-int MOAIBox2DBody::_isSleepingAllowed ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
-	
-	if ( !self->mBody ) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DBody_MissingInstance );
-		return 0;
-	}
-	
-	bool isSleepingAllowed = self->mBody->IsSleepingAllowed ();
-	lua_pushboolean ( state, isSleepingAllowed );
-	
-	return 1;
-}
-
-
 //----------------------------------------------------------------//
 /**	@lua	resetMassData
 	@text	See Box2D documentation.
@@ -955,30 +930,6 @@ int MOAIBox2DBody::_setMassData ( lua_State* L ) {
 	return 0;
 }
 
-
-//----------------------------------------------------------------//
-/**	@lua	setSleepingAllowed
-	@text	See Box2D documentation.
-	
-	@in		MOAIBox2DBody self
-	@opt	boolean allowed		Default value is true.
-	@out	nil
-*/
-int MOAIBox2DBody::_setSleepingAllowed ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIBox2DBody, "U" )
-	
-	if ( !self->mBody ) {
-		MOAILog ( state, MOAILogMessages::MOAIBox2DBody_MissingInstance );
-		return 0;
-	}
-	
-	bool allowed = state.GetValue < bool >( 2, true );
-	self->mBody->SetSleepingAllowed ( allowed );
-	
-	return 0;
-}
-
-
 //----------------------------------------------------------------//
 /**	@lua	setTransform
 	@text	See Box2D documentation.
@@ -1047,6 +998,40 @@ int MOAIBox2DBody::_setType ( lua_State* L ) {
 //================================================================//
 // MOAIBox2DBody
 //================================================================//
+
+//----------------------------------------------------------------//
+bool MOAIBox2DBody::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
+	// TODO: these values may need to be cached for performance reasons
+	if ( MOAITransform::MOAITransformAttr::Check ( attrID )) {
+		const b2Transform & xform = mBody->GetTransform();
+		
+		switch ( UNPACK_ATTR ( attrID )) {
+			case MOAITransform::ATTR_X_LOC: {
+				float x = attrOp.Apply ( xform.p.x, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT ) * this->GetUnitsToMeters ();
+				mBody->SetTransform ( b2Vec2( x, xform.p.y), xform.q.GetAngle() );
+				return true;
+			}
+				
+			case MOAITransform::ATTR_Y_LOC: {
+				float y = attrOp.Apply ( xform.p.y, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT ) * this->GetUnitsToMeters ();
+				mBody->SetTransform ( b2Vec2( xform.p.x, y ), xform.q.GetAngle() );
+				return true;
+			}
+				
+			case MOAITransform::ATTR_Z_ROT: {
+				float angle = attrOp.Apply ( xform.q.GetAngle(), op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT );
+				mBody->SetTransform ( xform.p,  ( float )((angle * D2R) + M_PI_4 ));
+				return true;
+			}
+		}
+	}
+	return MOAITransformBase::ApplyAttrOp (attrID, attrOp, op );
+}
+
+//----------------------------------------------------------------//
+void MOAIBox2DBody::BuildLocalToWorldMtx ( ZLAffine3D& localToWorldMtx ) {
+	UNUSED ( localToWorldMtx );
+}
 
 //----------------------------------------------------------------//
 void MOAIBox2DBody::Destroy () {
@@ -1131,7 +1116,6 @@ void MOAIBox2DBody::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "isAwake",				_isAwake },
 		{ "isBullet",				_isBullet },
 		{ "isFixedRotation",		_isFixedRotation },
-		{ "isSleepingAllowed",		_isSleepingAllowed },
 		{ "resetMassData",			_resetMassData },
 		{ "setActive",				_setActive },
 		{ "setAngularDamping",		_setAngularDamping },
@@ -1143,44 +1127,12 @@ void MOAIBox2DBody::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setLinearDamping",		_setLinearDamping },
 		{ "setLinearVelocity",		_setLinearVelocity },
 		{ "setMassData",			_setMassData },
-		{ "setSleepingAllowed",			_setSleepingAllowed },
 		{ "setTransform",			_setTransform },
 		{ "setType",				_setType },
 		{ NULL, NULL }
 	};
 	
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-bool MOAIBox2DBody::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
-	// TODO: these values may need to be cached for performance reasons
-	if ( MOAITransform::MOAITransformAttr::Check ( attrID )) {
-		const b2Transform & xform = mBody->GetTransform();
-		
-		switch ( UNPACK_ATTR ( attrID )) {
-			case MOAITransform::ATTR_X_LOC: {
-				float x = attrOp.Apply ( xform.p.x, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT ) * this->GetUnitsToMeters ();
-				mBody->SetTransform ( b2Vec2( x, xform.p.y), xform.q.GetAngle() );
-				return true;
-			}
-
-			case MOAITransform::ATTR_Y_LOC: {
-				float y = attrOp.Apply ( xform.p.y, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT ) * this->GetUnitsToMeters ();
-				mBody->SetTransform ( b2Vec2( xform.p.x, y ), xform.q.GetAngle() );
-				return true;	
-			}
-
-			case MOAITransform::ATTR_Z_ROT: {
-				float angle = attrOp.Apply ( xform.q.GetAngle() * (float)R2D, op, MOAIAttrOp::ATTR_READ_WRITE, MOAIAttrOp::ATTR_TYPE_FLOAT );
-				mBody->SetTransform ( xform.p, ( angle )*(float)D2R );
-				return true;	
-			}
-
-
-		}
-	}
-	return MOAITransformBase::ApplyAttrOp (attrID, attrOp, op );
 }
 
 //----------------------------------------------------------------//

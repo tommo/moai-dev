@@ -45,21 +45,20 @@ protected:
 
 	//----------------------------------------------------------------//
 	virtual void			OnGlobalsFinalize			();
-	virtual void			OnGlobalsRestore			();
-	virtual void			OnGlobalsRetire				();
 							MOAIGlobalClassBase			();
 	virtual					~MOAIGlobalClassBase		();
 };
 
 //================================================================//
-// MOAIGlobalPair
+// MOAIGlobalPairBase
 //================================================================//
 class MOAIGlobalPair {
-private:
+protected:
 	friend class MOAIGlobals;
 
-	MOAIGlobalClassBase*		mGlobal;
-	void*						mPtr;
+	MOAIGlobalClassBase*		mGlobalBase;
+	void*						mGlobal;
+	void*						mProxy;
 	bool						mIsValid;
 };
 
@@ -70,7 +69,6 @@ class MOAIGlobals {
 private:
 
 	friend class MOAIGlobalsMgr;
-	friend class MOAIGlobalClassFinalizer;
 
 	enum {
 		CHUNK_SIZE = 32,
@@ -79,8 +77,6 @@ private:
 	ZLLeanArray < MOAIGlobalPair >	mGlobals;
 
 	//----------------------------------------------------------------//
-	void		Restore				();
-	void		Retire				();
 				MOAIGlobals			();
 				~MOAIGlobals		();
 
@@ -95,25 +91,36 @@ public:
 		if ( this->mGlobals.Size () <= id ) {
 
 			MOAIGlobalPair pair;
-			pair.mGlobal	= 0;
-			pair.mPtr		= 0;
-			pair.mIsValid	= false;
+			pair.mGlobalBase	= 0;
+			pair.mGlobal		= 0;
+			pair.mProxy			= 0;
+			pair.mIsValid		= false;
 			
 			this->mGlobals.Grow ( id, CHUNK_SIZE, pair );
 		}
 		
-		if ( !this->mGlobals [ id ].mPtr ) {
+		if ( !this->mGlobals [ id ].mGlobal ) {
+		
+			// NOTE: other (new) globals may be accessed in the constructor, particularly
+			// if a Lua binding is created via LuaRetain. this may trigger a reallocation
+			// of the globals array, which will invalidate pointers and references. for this
+			// reason, we need to get 'pair' *after* the constructor.
+		
 			TYPE* global = new TYPE;
-			this->mGlobals [ id ].mGlobal		= global;
-			this->mGlobals [ id ].mPtr			= global;
-			this->mGlobals [ id ].mIsValid		= true;
+			
+			MOAIGlobalPair& pair = this->mGlobals [ id ];
+			
+			pair.mGlobalBase	= global;
+			pair.mGlobal		= global;
+			pair.mProxy			= 0;
+			pair.mIsValid		= true;
 		}
 		
 		if ( !this->mGlobals [ id ].mIsValid ) {
 			return 0;
 		}
 		
-		return ( TYPE* )this->mGlobals [ id ].mPtr;
+		return ( TYPE* )this->mGlobals [ id ].mGlobal;
 	}
 	
 	//----------------------------------------------------------------//
@@ -122,8 +129,9 @@ public:
 		
 		u32 id = MOAIGlobalID < TYPE >::GetID ();
 		if ( id < this->mGlobals.Size ()) {
-			if ( this->mGlobals [ id ].mIsValid ) {
-				return ( TYPE* )this->mGlobals [ id ].mPtr;
+			MOAIGlobalPair& pair = this->mGlobals [ id ];
+			if ( pair.mIsValid ) {
+				return ( TYPE* )( pair.mProxy ? pair.mProxy : pair.mGlobal );
 			}
 		}
 		return 0;
@@ -139,6 +147,16 @@ public:
 			return this->mGlobals [ id ].mIsValid;
 		}
 		return false;
+	}
+	
+	//----------------------------------------------------------------//
+	template < typename TYPE >
+	void ProxyGlobal ( TYPE& proxy ) {
+		
+		u32 id = MOAIGlobalID < TYPE >::GetID ();
+		if ( id < this->mGlobals.Size ()) {
+			this->mGlobals [ id ].mProxy	= &proxy;
+		}
 	}
 };
 
@@ -179,7 +197,7 @@ public:
 */
 template < typename TYPE, typename SUPER = RTTIBase >
 class MOAIGlobalClass :
-	public MOAIGlobalClassBase,
+	public virtual MOAIGlobalClassBase,
 	public virtual SUPER {
 public:
 	
@@ -203,6 +221,12 @@ public:
 	inline static bool IsValid () {
 		assert ( MOAIGlobalsMgr::Get ());
 		return MOAIGlobalsMgr::Get ()->IsValid < TYPE >();
+	}
+	
+	//----------------------------------------------------------------//
+	inline static void Proxy ( TYPE& proxy ) {
+		assert ( MOAIGlobalsMgr::Get ());
+		MOAIGlobalsMgr::Get ()->ProxyGlobal < TYPE >( proxy );
 	}
 };
 

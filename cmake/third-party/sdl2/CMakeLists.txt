@@ -898,6 +898,13 @@ elseif(APPLE)
     set(SDL_FRAMEWORK_AUDIOUNIT 1)
   endif()
 
+  if(SDL_TIMERS)
+    set(SDL_TIMER_UNIX 1)
+    file(GLOB TIMER_SOURCES ${SDL2_SOURCE_DIR}/src/timer/unix/*.c)
+    set(SOURCE_FILES ${SOURCE_FILES} ${TIMER_SOURCES})
+    set(HAVE_SDL_TIMERS TRUE)
+  endif(SDL_TIMERS)
+
   if(SDL_JOYSTICK)
     set(SDL_JOYSTICK_IOKIT 1)
     file(GLOB JOYSTICK_SOURCES ${SDL2_SOURCE_DIR}/src/joystick/darwin/*.c)
@@ -1173,12 +1180,16 @@ if(SDL_STATIC)
   # libraries - do we need to consider this?
   set(_INSTALL_LIBS "SDL2-static" ${_INSTALL_LIBS})
   target_link_libraries(SDL2-static ${EXTRA_LIBS} ${EXTRA_LDFLAGS})
-  target_include_directories(SDL2-static PUBLIC ${SDL2_BINARY_DIR}/include ${SDL2_SOURCE_DIR}/include)
+  set (SDL_PUBLIC_INCLUDES  ${SDL2_BINARY_DIR}/include ${SDL2_SOURCE_DIR}/include)
+  target_include_directories(SDL2-static PUBLIC 
+    "$<BUILD_INTERFACE:${SDL_PUBLIC_INCLUDES}>"
+    "$<INSTALL_INTERFACE:$<INSTALL_PREFIX>/include/SDL2>"
+  )
   set_target_properties( SDL2-static PROPERTIES FOLDER Third-Party )
 endif(SDL_STATIC)
 
 ##### Installation targets #####
-install(TARGETS ${_INSTALL_LIBS}
+install(TARGETS ${_INSTALL_LIBS} EXPORT libmoai
   LIBRARY DESTINATION "lib${LIB_SUFFIX}"
   ARCHIVE DESTINATION "lib${LIB_SUFFIX}")
 

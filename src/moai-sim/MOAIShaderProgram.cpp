@@ -5,6 +5,7 @@
 #include <moai-sim/MOAIColor.h>
 #include <moai-sim/MOAIEaseDriver.h>
 #include <moai-sim/MOAIGfxDevice.h>
+#include <moai-sim/MOAIGfxResourceMgr.h>
 #include <moai-sim/MOAIShaderProgram.h>
 #include <moai-sim/MOAITransformBase.h>
 
@@ -210,6 +211,19 @@ int MOAIShaderProgram::_setVertexAttribute ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIShaderProgram::Clear () {
+
+	this->mVertexShaderSource.clear ();
+	this->mFragmentShaderSource.clear ();
+
+	this->mAttributeMap.clear ();
+	this->mUniforms.Clear ();
+	this->mGlobals.Clear ();
+	
+	this->Destroy ();
+}
+
+//----------------------------------------------------------------//
 void MOAIShaderProgram::ClearUniform ( u32 idx ) {
 
 	if ( idx < this->mUniforms.Size ()) {
@@ -260,6 +274,10 @@ void MOAIShaderProgram::DeclareUniform ( u32 idx, cc8* name, u32 type ) {
 		MOAIShaderUniform& uniform = this->mUniforms [ idx ];
 		uniform.mName = name;
 		uniform.SetType ( type );
+		
+		MOAIShaderUniformBuffer& uniformDefault = this->mUniformDefaults [ idx ];
+		uniformDefault.SetType ( type );
+		uniformDefault.Default ();
 	}
 }
 
@@ -268,7 +286,7 @@ void MOAIShaderProgram::DeclareUniform ( u32 idx, cc8* name, u32 type, float val
 
 	if ( idx < this->mUniforms.Size ()) {
 		this->DeclareUniform ( idx, name, type );
-		this->mUniforms [ idx ].SetValue ( value );
+		this->mUniformDefaults [ idx ].SetValue ( value );
 	}
 }
 
@@ -277,20 +295,14 @@ void MOAIShaderProgram::DeclareUniform ( u32 idx, cc8* name, u32 type, int value
 
 	if ( idx < this->mUniforms.Size ()) {
 		this->DeclareUniform ( idx, name, type );
-		this->mUniforms [ idx ].SetValue ( value );
+		this->mUniformDefaults [ idx ].SetValue ( value );
 	}
 }
 
 //----------------------------------------------------------------//
-bool MOAIShaderProgram::IsRenewable () {
+u32 MOAIShaderProgram::GetLoadingPolicy () {
 
-	return true;
-}
-
-//----------------------------------------------------------------//
-bool MOAIShaderProgram::IsValid () {
-
-	return ( this->mProgram != 0 );
+	return MOAIGfxResource::LOADING_POLICY_CPU_GPU_BIND;
 }
 
 //----------------------------------------------------------------//
@@ -319,7 +331,17 @@ MOAIShaderProgram::~MOAIShaderProgram () {
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderProgram::OnBind () {
+bool MOAIShaderProgram::OnCPUCreate () {
+
+	return true;
+}
+
+//----------------------------------------------------------------//
+void MOAIShaderProgram::OnCPUDestroy () {
+}
+
+//----------------------------------------------------------------//
+void MOAIShaderProgram::OnGPUBind () {
 
 	// use shader program.
 	zglUseProgram ( this->mProgram );
@@ -331,18 +353,7 @@ void MOAIShaderProgram::OnBind () {
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderProgram::OnClear () {
-
-	this->mVertexShaderSource.clear ();
-	this->mFragmentShaderSource.clear ();
-
-	this->mAttributeMap.clear ();
-	this->mUniforms.Clear ();
-	this->mGlobals.Clear ();
-}
-
-//----------------------------------------------------------------//
-void MOAIShaderProgram::OnCreate () {
+bool MOAIShaderProgram::OnGPUCreate () {
 
 	this->mVertexShader = this->CompileShader ( ZGL_SHADER_TYPE_VERTEX, this->mVertexShaderSource );
 	this->mFragmentShader = this->CompileShader ( ZGL_SHADER_TYPE_FRAGMENT, this->mFragmentShaderSource );
@@ -350,7 +361,7 @@ void MOAIShaderProgram::OnCreate () {
 
 	if ( !( this->mVertexShader && this->mFragmentShader && this->mProgram )) {
 		this->Clear ();
-		return;
+		return false;
 	}
 
 	zglAttachShader ( this->mProgram, this->mVertexShader );
@@ -372,7 +383,7 @@ void MOAIShaderProgram::OnCreate () {
 	if ( status == 0 ) {
 		this->PrintProgramLog ( this->mProgram );
 		this->Clear ();
-		return;
+		return false;
 	}
 
 	// get the uniform locations and clear out the names (no longer needed)
@@ -392,29 +403,25 @@ void MOAIShaderProgram::OnCreate () {
 
 	//AJV TODO - does the attribute map ever need to be cleared?
 	//this->mAttributeMap.clear ();
+	
+	return true;
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderProgram::OnDestroy () {
+void MOAIShaderProgram::OnGPUDestroy () {
 
-	if ( this->mVertexShader ) {
-		MOAIGfxDevice::Get ().PushDeleter ( MOAIGfxDeleter::DELETE_SHADER, this->mVertexShader );
-		this->mVertexShader = 0;
-	}
+	MOAIGfxResourceMgr::Get ().PushDeleter ( MOAIGfxDeleter::DELETE_SHADER, this->mVertexShader );
+	this->mVertexShader = 0;
 
-	if ( this->mFragmentShader ) {
-		MOAIGfxDevice::Get ().PushDeleter ( MOAIGfxDeleter::DELETE_SHADER, this->mFragmentShader );
-		this->mFragmentShader = 0;
-	}
+	MOAIGfxResourceMgr::Get ().PushDeleter ( MOAIGfxDeleter::DELETE_SHADER, this->mFragmentShader );
+	this->mFragmentShader = 0;
 
-	if ( this->mProgram ) {
-		MOAIGfxDevice::Get ().PushDeleter ( MOAIGfxDeleter::DELETE_SHADER, this->mProgram );
-		this->mProgram = 0;
-	}
+	MOAIGfxResourceMgr::Get ().PushDeleter ( MOAIGfxDeleter::DELETE_SHADER, this->mProgram );
+	this->mProgram = 0;
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderProgram::OnInvalidate () {
+void MOAIShaderProgram::OnGPULost () {
 
 	this->mVertexShader = 0;
 	this->mFragmentShader = 0;
@@ -422,11 +429,7 @@ void MOAIShaderProgram::OnInvalidate () {
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderProgram::OnLoad () {
-}
-
-//----------------------------------------------------------------//
-void MOAIShaderProgram::OnUnbind () {
+void MOAIShaderProgram::OnGPUUnbind () {
 }
 
 //----------------------------------------------------------------//
@@ -511,6 +514,7 @@ void MOAIShaderProgram::ReserveGlobals ( u32 nGlobals ) {
 void MOAIShaderProgram::ReserveUniforms ( u32 nUniforms ) {
 
 	this->mUniforms.Init ( nUniforms );
+	this->mUniformDefaults.Init ( nUniforms );
 }
 
 //----------------------------------------------------------------//
@@ -526,7 +530,7 @@ void MOAIShaderProgram::SetSource ( cc8* vshSource, cc8* fshSource ) {
 	if ( vshSource && fshSource ) {
 		this->mVertexShaderSource = vshSource;
 		this->mFragmentShaderSource = fshSource;
-		this->Load ();
+		this->DoCPUAffirm ();
 	}
 }
 

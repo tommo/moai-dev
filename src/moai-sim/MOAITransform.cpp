@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moai-sim/MOAITransform.h>
+#include <moai-sim/MOAISim.h>
 
 //================================================================//
 // local
@@ -188,36 +189,6 @@ int	MOAITransform::_getScl ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@lua	modelToWorld
-	@text	Transform a point in model space to world space.
-	
-	@in		MOAITransform self
-	@opt	number x			Default value is 0.
-	@opt	number y			Default value is 0.
-	@opt	number z			Default value is 0.
-	@out	number x
-	@out	number y
-	@out	number z
-*/
-int MOAITransform::_modelToWorld ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITransform, "U" )
-
-	ZLVec3D loc;
-	loc.mX = state.GetValue < float >( 2, 0.0f );
-	loc.mY = state.GetValue < float >( 3, 0.0f );
-	loc.mZ = state.GetValue < float >( 4, 0.0f );
-
-	ZLAffine3D modelToWorld = self->GetLocalToWorldMtx ();
-	modelToWorld.Transform ( loc );
-
-	lua_pushnumber ( state, loc.mX );
-	lua_pushnumber ( state, loc.mY );
-	lua_pushnumber ( state, loc.mZ );
-
-	return 3;
-}
-
-//----------------------------------------------------------------//
 /**	@lua	move
 	@text	Animate the transform by applying a delta. Creates and returns
 			a MOAIEaseDriver initialized to apply the delta.
@@ -262,7 +233,7 @@ int MOAITransform::_move ( lua_State* L ) {
 		);
 		
 		action->SetSpan ( delay );
-		action->Start ();
+		action->Start ( MOAISim::Get ().GetActionMgr ());
 		action->PushLuaUserdata ( state );
 		
 		return 1;
@@ -318,7 +289,7 @@ int MOAITransform::_moveLoc ( lua_State* L ) {
 		);
 		
 		action->SetSpan ( delay );
-		action->Start ();
+		action->Start ( MOAISim::Get ().GetActionMgr ());
 		action->PushLuaUserdata ( state );
 
 		return 1;
@@ -365,7 +336,7 @@ int MOAITransform::_movePiv ( lua_State* L ) {
 		);
 		
 		action->SetSpan ( delay );
-		action->Start ();
+		action->Start ( MOAISim::Get ().GetActionMgr ());
 		action->PushLuaUserdata ( state );
 
 		return 1;
@@ -412,7 +383,7 @@ int MOAITransform::_moveRot ( lua_State* L ) {
 		);
 		
 		action->SetSpan ( delay );
-		action->Start ();
+		action->Start ( MOAISim::Get ().GetActionMgr ());
 		action->PushLuaUserdata ( state );
 
 		return 1;
@@ -459,7 +430,7 @@ int MOAITransform::_moveScl ( lua_State* L ) {
 		);
 		
 		action->SetSpan ( delay );
-		action->Start ();
+		action->Start ( MOAISim::Get ().GetActionMgr ());
 		action->PushLuaUserdata ( state );
 
 		return 1;
@@ -519,7 +490,7 @@ int MOAITransform::_seek ( lua_State* L ) {
 		);
 		
 		action->SetSpan ( delay );
-		action->Start ();
+		action->Start ( MOAISim::Get ().GetActionMgr ());
 		action->PushLuaUserdata ( state );
 
 		return 1;
@@ -573,7 +544,7 @@ int MOAITransform::_seekLoc ( lua_State* L ) {
 		);
 		
 		action->SetSpan ( delay );
-		action->Start ();
+		action->Start ( MOAISim::Get ().GetActionMgr ());
 		action->PushLuaUserdata ( state );
 
 		return 1;
@@ -621,7 +592,7 @@ int MOAITransform::_seekPiv ( lua_State* L ) {
 		);
 		
 		action->SetSpan ( delay );
-		action->Start ();
+		action->Start ( MOAISim::Get ().GetActionMgr ());
 		action->PushLuaUserdata ( state );
 
 		return 1;
@@ -669,7 +640,7 @@ int MOAITransform::_seekRot ( lua_State* L ) {
 		);
 		
 		action->SetSpan ( delay );
-		action->Start ();
+		action->Start ( MOAISim::Get ().GetActionMgr ());
 		action->PushLuaUserdata ( state );
 
 		return 1;
@@ -717,7 +688,7 @@ int MOAITransform::_seekScl ( lua_State* L ) {
 		);
 		
 		action->SetSpan ( delay );
-		action->Start ();
+		action->Start ( MOAISim::Get ().GetActionMgr ());
 		action->PushLuaUserdata ( state );
 
 		return 1;
@@ -752,26 +723,6 @@ int MOAITransform::_setLoc ( lua_State* L ) {
 	
 	self->SetLoc ( loc );
 	self->ScheduleUpdate ();
-	
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@lua	setParent
-	@text	This method has been deprecated. Use MOAINode setAttrLink instead.
-	
-	@in		MOAITransform self
-	@opt	MOAINode parent		Default value is nil.
-	@out	nil
-*/
-int MOAITransform::_setParent ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITransform, "U" )
-
-	MOAINode* parent = state.GetLuaObject < MOAINode >( 2, true );
-	
-	self->SetAttrLink ( PACK_ATTR ( MOAITransform, INHERIT_TRANSFORM ), parent, PACK_ATTR ( MOAITransformBase, TRANSFORM_TRAIT ));
-	
-	//MOAILog ( state, MOAILogMessages::MOAI_FunctionDeprecated_S, "setParent" );
 	
 	return 0;
 }
@@ -905,36 +856,6 @@ int MOAITransform::_setShearByZ ( lua_State* L ) {
 	return 0;
 }
 
-//----------------------------------------------------------------//
-/**	@lua	worldToModel
-	@text	Transform a point in world space to model space.
-	
-	@in		MOAITransform self
-	@opt	number x			Default value is 0.
-	@opt	number y			Default value is 0.
-	@opt	number z			Default value is 0.
-	@out	number x
-	@out	number y
-	@out	number z
-*/
-int MOAITransform::_worldToModel ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAITransform, "U" )
-
-	ZLVec3D loc;
-	loc.mX = state.GetValue < float >( 2, 0.0f );
-	loc.mY = state.GetValue < float >( 3, 0.0f );
-	loc.mZ = state.GetValue < float >( 4, 0.0f );
-
-	ZLAffine3D worldToModel = self->GetWorldToLocalMtx ();
-	worldToModel.Transform ( loc );
-
-	lua_pushnumber ( state, loc.mX );
-	lua_pushnumber ( state, loc.mY );
-	lua_pushnumber ( state, loc.mZ );
-
-	return 3;
-}
-
 //================================================================//
 // MOAITransform
 //================================================================//
@@ -1027,24 +948,6 @@ void MOAITransform::BuildLocalToWorldMtx ( ZLAffine3D& localToWorldMtx ) {
 	shear.Shear ( this->mShearYX, this->mShearZX, this->mShearXY, this->mShearZY, this->mShearXZ, this->mShearYZ );
 	localToWorldMtx.Prepend ( shear );
 	
-	const ZLAffine3D* inherit = this->GetLinkedValue < ZLAffine3D* >( MOAITransformAttr::Pack ( INHERIT_TRANSFORM ), 0 );
-	if ( inherit ) {
-		localToWorldMtx.Append ( *inherit );
-	}
-	else {
-	
-		inherit = this->GetLinkedValue < ZLAffine3D* >( MOAITransformAttr::Pack ( INHERIT_LOC ), 0 );
-		if ( inherit ) {
-			
-			ZLVec3D loc = this->mLoc;
-			inherit->Transform ( loc );
-			
-			localToWorldMtx.m [ ZLAffine3D::C3_R0 ] = loc.mX;
-			localToWorldMtx.m [ ZLAffine3D::C3_R1 ] = loc.mY;
-			localToWorldMtx.m [ ZLAffine3D::C3_R2 ] = loc.mZ;
-		}
-	}
-	
 	if (( this->mPiv.mX != 0.0f ) || ( this->mPiv.mY != 0.0f ) || ( this->mPiv.mZ != 0.0f )) {
 		
 		ZLAffine3D pivot;
@@ -1105,18 +1008,6 @@ ZLAffine3D MOAITransform::GetBillboardMtx ( const ZLAffine3D& faceCameraMtx ) co
 }
 
 //----------------------------------------------------------------//
-const ZLAffine3D& MOAITransform::GetLocalToWorldMtx () const {
-
-	return this->mLocalToWorldMtx;
-}
-
-//----------------------------------------------------------------//
-const ZLAffine3D& MOAITransform::GetWorldToLocalMtx () const {
-
-	return this->mWorldToLocalMtx;
-}
-
-//----------------------------------------------------------------//
 MOAITransform::MOAITransform () :
 	mShearYX ( 0.0f ),
 	mShearZX ( 0.0f ),
@@ -1139,13 +1030,6 @@ MOAITransform::~MOAITransform () {
 }
 
 //----------------------------------------------------------------//
-void MOAITransform::OnDepNodeUpdate () {
-	
-	this->BuildLocalToWorldMtx ( this->mLocalToWorldMtx );
-	this->mWorldToLocalMtx.Inverse ( this->mLocalToWorldMtx );
-}
-
-//----------------------------------------------------------------//
 void MOAITransform::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	MOAITransformBase::RegisterLuaClass ( state );
@@ -1164,9 +1048,6 @@ void MOAITransform::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "ATTR_Z_SCL",			MOAITransformAttr::Pack ( ATTR_Z_SCL ));
 	state.SetField ( -1, "ATTR_ROTATE_QUAT",	MOAITransformAttr::Pack ( ATTR_ROTATE_QUAT ));
 	state.SetField ( -1, "ATTR_TRANSLATE",		MOAITransformAttr::Pack ( ATTR_TRANSLATE ));
-	
-	state.SetField ( -1, "INHERIT_LOC",			MOAITransformAttr::Pack ( INHERIT_LOC ));
-	state.SetField ( -1, "INHERIT_TRANSFORM",	MOAITransformAttr::Pack ( INHERIT_TRANSFORM ));
 }
 
 //----------------------------------------------------------------//
@@ -1183,7 +1064,6 @@ void MOAITransform::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "getPiv",				_getPiv },
 		{ "getRot",				_getRot },
 		{ "getScl",				_getScl },
-		{ "modelToWorld",		_modelToWorld },
 		{ "move",				_move },
 		{ "moveLoc",			_moveLoc },
 		{ "movePiv",			_movePiv },
@@ -1191,7 +1071,6 @@ void MOAITransform::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "moveScl",			_moveScl },
 		{ "seek",				_seek },
 		{ "seekLoc",			_seekLoc },
-		{ "setParent",			_setParent },
 		{ "seekPiv",			_seekPiv },
 		{ "seekRot",			_seekRot },
 		{ "seekScl",			_seekScl },
@@ -1202,7 +1081,6 @@ void MOAITransform::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setShearByX",		_setShearByX },
 		{ "setShearByY",		_setShearByY },
 		{ "setShearByZ",		_setShearByZ },
-		{ "worldToModel",		_worldToModel },
 		{ NULL, NULL }
 	};
 	

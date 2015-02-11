@@ -1,7 +1,7 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef DISABLE_PLAYSERVICES
+#if AKU_WITH_ANDROID_PLAYSERVICES
 
 #include "moai-core/pch.h"
 #include "moai-sim/pch.h"
@@ -287,7 +287,7 @@ void MOAIGooglePlayServicesAndroid::RegisterLuaClass ( MOAILuaState& state ) {
 // AKU Callbacks
 
 //----------------------------------------------------------------//
-extern "C" void Java_com_ziplinegames_moai_MoaiGooglePlayServices_AKUNotifyConnectionComplete ( JNIEnv* env, jclass obj ) {
+extern "C" JNIEXPORT void JNICALL Java_com_ziplinegames_moai_MoaiGooglePlayServices_AKUNotifyConnectionComplete ( JNIEnv* env, jclass obj ) {
 
 	MOAIGooglePlayServicesAndroid::Get ().NotifyConnectionComplete ();
 }

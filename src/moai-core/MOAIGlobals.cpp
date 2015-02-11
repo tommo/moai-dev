@@ -6,19 +6,11 @@
 #include <moai-core/MOAIGlobals.h>
 
 //================================================================//
-// MOAIGlobalClassFinalizer
+// MOAIGlobalClassBase
 //================================================================//
 
 //----------------------------------------------------------------//
 void MOAIGlobalClassBase::OnGlobalsFinalize () {
-}
-
-//----------------------------------------------------------------//
-void MOAIGlobalClassBase::OnGlobalsRestore () {
-}
-
-//----------------------------------------------------------------//
-void MOAIGlobalClassBase::OnGlobalsRetire () {
 }
 
 //----------------------------------------------------------------//
@@ -41,41 +33,29 @@ MOAIGlobals::MOAIGlobals () {
 MOAIGlobals::~MOAIGlobals () {
 
 	size_t total = this->mGlobals.Size ();
+	
+	// finalize everything
 	for ( size_t i = 1; i <= total; ++i ) {
 		MOAIGlobalPair& pair = this->mGlobals [ total - i ];
-		MOAIGlobalClassBase* global = pair.mGlobal;
-
-		pair.mIsValid = false;
+		MOAIGlobalClassBase* global = pair.mGlobalBase;
 
 		if ( global ) {
 			global->OnGlobalsFinalize ();
-			delete global;
 		}
 	}
-}
-
-//----------------------------------------------------------------//
-void MOAIGlobals::Restore () {
-
-	size_t total = this->mGlobals.Size ();
-	for ( size_t i = 0; i < total; ++i ) {
-		MOAIGlobalPair& pair = this->mGlobals [ i ];
-		MOAIGlobalClassBase* global = pair.mGlobal;
-		if ( global ) {
-			global->OnGlobalsRestore ();
-		}
+	
+	// marke everything as invalid
+	for ( size_t i = 1; i <= total; ++i ) {
+		this->mGlobals [ total - i ].mIsValid = false;
 	}
-}
 
-//----------------------------------------------------------------//
-void MOAIGlobals::Retire () {
-
-	size_t total = this->mGlobals.Size ();
+	// and officially delete everything
 	for ( size_t i = 1; i <= total; ++i ) {
 		MOAIGlobalPair& pair = this->mGlobals [ total - i ];
-		MOAIGlobalClassBase* global = pair.mGlobal;
+		MOAIGlobalClassBase* global = pair.mGlobalBase;
+
 		if ( global ) {
-			global->OnGlobalsRetire ();
+			delete global;
 		}
 	}
 }

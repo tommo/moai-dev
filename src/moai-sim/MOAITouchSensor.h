@@ -86,6 +86,7 @@ private:
 	float				mTapTime;
 
 	//----------------------------------------------------------------//
+	static int		_countTouches			( lua_State* L );
 	static int		_down					( lua_State* L );
 	static int		_getActiveTouches		( lua_State* L );
 	static int		_getCenterLoc			( lua_State* L );
@@ -118,14 +119,14 @@ public:
 	DECL_LUA_FACTORY ( MOAITouchSensor )
 
 	//----------------------------------------------------------------//
-					MOAITouchSensor			();
-					~MOAITouchSensor		();
-	void			ParseEvent				( ZLStream& eventStream );
-	void			RegisterLuaClass		( MOAILuaState& state );
-	void			RegisterLuaFuncs		( MOAILuaState& state );
-	void			Reset					();
-	static void		WriteEvent				( ZLStream& eventStream, u32 touchID, bool down, float x, float y, float time );
-	static void		WriteEventCancel		( ZLStream& eventStream );
+	static void			EnqueueTouchEvent			( MOAIInputQueue& queue, u8 deviceID, u8 sensorID, u32 touchID, bool down, float x, float y );
+	static void			EnqueueTouchEventCancel		( MOAIInputQueue& queue, u8 deviceID, u8 sensorID );
+						MOAITouchSensor				();
+						~MOAITouchSensor			();
+	void				ParseEvent					( ZLStream& eventStream );
+	void				RegisterLuaClass			( MOAILuaState& state );
+	void				RegisterLuaFuncs			( MOAILuaState& state );
+	void				Reset						();
 };
 
 #endif

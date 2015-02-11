@@ -186,7 +186,7 @@ void MOAIGridDeck2D::DrawIndex ( u32 idx, float xOff, float yOff, float zOff, fl
 			ZLVec2D loc = grid.GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER );
 			loc.Scale ( xScl, yScl );
 			
-			this->mDeck->Draw ( idx, this->mRemapper, loc.mX + xOff, loc.mY + yOff, zOff, tileWidth, tileHeight, 1.0f );
+			this->mDeck->Draw ( MOAIDeckRemapper::Remap ( this->mRemapper, idx ), loc.mX + xOff, loc.mY + yOff, zOff, tileWidth, tileHeight, 1.0f );
 		}
 	}
 }
@@ -231,7 +231,7 @@ MOAIGridDeck2D::MOAIGridDeck2D () {
 		RTTI_EXTEND ( MOAIDeck )
 	RTTI_END
 	
-	this->SetContentMask ( MOAIProp::CAN_DRAW );
+	//this->SetContentMask ( MOAIProp::CAN_DRAW );
 	this->mMaxBounds.Init ( 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f );
 }
 

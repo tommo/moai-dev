@@ -4,6 +4,7 @@
 #include "pch.h"
 #include <float.h>
 #include <moai-sim/MOAIDeck.h>
+#include <moai-sim/MOAIDeckRemapper.h>
 #include <moai-sim/MOAIGfxDevice.h>
 #include <moai-sim/MOAIParticleState.h>
 #include <moai-sim/MOAIParticleSystem.h>
@@ -217,6 +218,21 @@ int MOAIParticleSystem::_reserveStates ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@name	setDrawOrder
+	@text	Set draw order of sprites in particle system
+ 
+	@in		MOAIParticleSystem self
+	@in     number  order		MOAIParticleSystem.ORDER_NORMAL or MOAIParticleSystem.ORDER_REVERSE
+	@out	nil
+*/
+int MOAIParticleSystem::_setDrawOrder ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIParticleSystem, "U" )
+
+	self->mDrawOrder = state.GetValue < u32 >( 2, ORDER_NORMAL );
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	setComputeBounds
 	@text	Set the a flag controlling whether the particle system
 			re-computes its bounds every frame.
@@ -232,22 +248,6 @@ int MOAIParticleSystem::_setComputeBounds ( lua_State* L ) {
 	return 0;
 }
 
-
- 
-//----------------------------------------------------------------//
-/**	@name	setReversedDrawOrder
-	@text	Set the a flag controlling whether draw earlier sprites first
-	
-	@in		MOAIParticleSystem self
-	@opt	boolean reversedDrawOrder		Default value is false.
-	@out	nil
-*/
-int MOAIParticleSystem::_setReversedDrawOrder ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIParticleSystem, "U" )
-
-	self->mReversedDrawOrder = state.GetValue < bool >( 2, false );
-	return 0;
-}
 
 //----------------------------------------------------------------//
 
@@ -379,15 +379,8 @@ void MOAIParticleSystem::Draw ( int subPrimID, float lod ) {
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	
-	if ( this->mUVTransform ) {
-		ZLAffine3D uvMtx = this->mUVTransform->GetLocalToWorldMtx ();
-		gfxDevice.SetUVTransform ( uvMtx );
-	}
-	else {
-		gfxDevice.SetUVTransform ();
-	}
-	
 	this->LoadGfxState ();
+	this->LoadUVTransform ();
 
 	ZLAffine3D drawingMtx;
 	ZLAffine3D spriteMtx;
@@ -401,7 +394,7 @@ void MOAIParticleSystem::Draw ( int subPrimID, float lod ) {
 	}
 	
 	int k, step;
-	if ( this->mReversedDrawOrder ) {
+	if ( this->mDrawOrder == ORDER_NORMAL ) {
 		k = total - 1;
 		step = -1;
 	} else {
@@ -427,7 +420,7 @@ void MOAIParticleSystem::Draw ( int subPrimID, float lod ) {
 		
 		gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, drawingMtx );
 		
-		this->mDeck->Draw ( this->mIndex + ( u32 )sprite.mGfxID, this->mRemapper );
+		this->mDeck->Draw ( MOAIDeckRemapper::Remap ( this->mRemapper, this->mIndex + ( u32 )sprite.mGfxID ));
 	}
 }
 
@@ -475,11 +468,11 @@ MOAIParticleSystem::MOAIParticleSystem () :
 	mParticleSize ( 0 ),
 	mCapParticles ( false ),
 	mCapSprites ( false ),
-	mReversedDrawOrder ( false ),
 	mHead ( 0 ),
 	mTail ( 0 ),
 	mFree ( 0 ),
 	mSpriteTop ( 0 ),
+	mDrawOrder ( ORDER_NORMAL ),
 	mComputeBounds ( false ) {
 	
 	RTTI_BEGIN
@@ -490,8 +483,6 @@ MOAIParticleSystem::MOAIParticleSystem () :
 	// prop's index is *added* to particle's index;
 	// should be initialized to 0 instead of 1
 	this->mIndex = 0;
-	
-	this->SetMask ( MOAIProp::CAN_DRAW | MOAIProp::CAN_DRAW_DEBUG );
 }
 
 //----------------------------------------------------------------//
@@ -511,7 +502,7 @@ u32 MOAIParticleSystem::OnGetModelBounds ( ZLBox& bounds ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleSystem::OnUpdate ( float step ) {
+void MOAIParticleSystem::OnUpdate ( double step ) {
 
 	// clear out the sprites
 	this->mSpriteTop = 0;
@@ -660,7 +651,7 @@ bool MOAIParticleSystem::PushSprite ( const AKUParticleSprite& sprite ) {
 		this->mSprites [ idx ] = sprite;
 		
 		// TODO: need to take rotation into account
-		ZLBox bounds = this->mDeck->GetBounds ( sprite.mGfxID, this->mRemapper );
+		ZLBox bounds = this->mDeck->GetBounds ( MOAIDeckRemapper::Remap ( this->mRemapper, sprite.mGfxID ));
 		
 		ZLVec3D offset ( sprite.mXLoc, sprite.mYLoc, 0.0f );
 		ZLVec3D scale ( sprite.mXScl, sprite.mYScl, 0.0f );
@@ -689,6 +680,9 @@ void MOAIParticleSystem::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAIGraphicsProp::RegisterLuaClass ( state );
 	MOAIAction::RegisterLuaClass ( state );
+
+	state.SetField ( -1, "ORDER_NORMAL",	( u32 )ORDER_NORMAL );
+	state.SetField ( -1, "ORDER_REVERSE",	( u32 )ORDER_REVERSE );
 }
 
 //----------------------------------------------------------------//
@@ -708,8 +702,8 @@ void MOAIParticleSystem::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "reserveParticles",	_reserveParticles },
 		{ "reserveSprites",		_reserveSprites },
 		{ "reserveStates",		_reserveStates },
+		{ "setDrawOrder",		_setDrawOrder },
 		{ "setComputeBounds",	_setComputeBounds },
-		{ "setReversedDrawOrder",	_setReversedDrawOrder },
 		{ "setSpriteColor",		_setSpriteColor },
 		{ "setSpriteDeckIdx",	_setSpriteDeckIdx },
 		{ "setState",			_setState },

@@ -134,6 +134,20 @@ MOAIClearableView::~MOAIClearableView () {
 }
 
 //----------------------------------------------------------------//
+bool MOAIClearableView::IsOpaque () const {
+
+	ZLColorVec clearColor;
+		
+	if ( this->mClearColorNode ) {
+		clearColor = this->mClearColorNode->GetColorTrait ();
+	}
+	else {
+		clearColor.SetRGBA ( this->mClearColor );
+	}
+	return clearColor.IsOpaque ();
+}
+
+//----------------------------------------------------------------//
 void MOAIClearableView::RegisterLuaClass ( MOAILuaState& state ) {
 	UNUSED ( state );
 }
@@ -204,12 +218,16 @@ int MOAIFrameBuffer::_grabNextFrame ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFrameBuffer, "U" )
 
 	MOAIImage* image = state.GetLuaObject < MOAIImage >( 2, true );
-	if ( image ) {
-		self->mFrameImage = image;
+	
+	self->mFrameImage.Set ( *self, image );
+	self->mGrabNextFrame = self->mFrameImage != 0;
+	
+	if ( self->mGrabNextFrame ) {
+		self->mOnFrameFinish.SetRef ( *self, state, 3 );
 	}
-
-	self->mOnFrameFinish.SetRef ( *self, state, 3 );
-	self->mGrabNextFrame = true;
+	else{
+		self->mOnFrameFinish.Clear ();
+	}
 
 	return 0;
 }
@@ -297,6 +315,8 @@ MOAIFrameBuffer::MOAIFrameBuffer () :
 
 //----------------------------------------------------------------//
 MOAIFrameBuffer::~MOAIFrameBuffer () {
+
+	this->mFrameImage.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//
@@ -342,7 +362,6 @@ void MOAIFrameBuffer::Render () {
 	}
 
 	gfxDevice.Flush ();
-	gfxDevice.ProcessDeleters ();
 
 	if ( this->mGrabNextFrame ) {
 
@@ -352,7 +371,8 @@ void MOAIFrameBuffer::Render () {
 		if ( this->mOnFrameFinish ) {
 			MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 			if ( this->mOnFrameFinish.PushRef ( state )) {
-				state.DebugCall ( 0, 0 );
+				this->mFrameImage.PushRef ( state );
+				state.DebugCall ( 1, 0 );
 			}
 		}
 	}

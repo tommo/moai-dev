@@ -91,6 +91,7 @@ private:
 	static int		_addPrismaticJoint			( lua_State* L );
 	static int		_addPulleyJoint				( lua_State* L );
 	static int		_addRevoluteJoint			( lua_State* L );
+	static int		_addRevoluteJointLocal		( lua_State* L );
 	static int		_addRopeJoint				( lua_State* L );
 	static int		_addWeldJoint				( lua_State* L );
 	static int		_addWheelJoint				( lua_State* L );
@@ -143,7 +144,7 @@ public:
 	bool			IsLocked				();
 					MOAIBox2DWorld			();
 					~MOAIBox2DWorld			();
-	void			OnUpdate				( float step );
+	void			OnUpdate				( double step );
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 	void			Render					();

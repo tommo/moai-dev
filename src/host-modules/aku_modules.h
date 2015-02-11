@@ -7,12 +7,18 @@
 #include <host-modules/aku_modules_config.h>
 #include <host-modules/aku_modules_util.h>
 
-#if AKU_WITH_BOX2D
-	#include <moai-box2d/host.h>
+#include <moai-core/host.h>
+
+#if AKU_WITH_APPLE
+	#include <moai-apple/host.h>
 #endif
 
-#if AKU_WITH_CHIPMUNK
-	#include <moai-chipmunk/host.h>
+#if AKU_WITH_AUDIO_SAMPLER
+	#include <moai-audio-sampler/host.h>
+#endif
+
+#if AKU_WITH_BOX2D
+	#include <moai-box2d/host.h>
 #endif
 
 #if AKU_WITH_CRYPTO
@@ -43,12 +49,12 @@
 	#include <moai-luaext/host.h>
 #endif
 
-#if AKU_WITH_SIM
-	#include <moai-sim/host.h>
+#if AKU_WITH_SDL
+	#include <moai-sdl/host.h>
 #endif
 
-#if AKU_WITH_TEST
-	#include <moai-test/host.h>
+#if AKU_WITH_SIM
+	#include <moai-sim/host.h>
 #endif
 
 #if AKU_WITH_UNTZ

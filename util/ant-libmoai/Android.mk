@@ -19,7 +19,7 @@
 
 	rwildcard=$(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2)$(filter $(subst *,%,$2),$d))
 
-	LOCAL_MODULE 		:= moai
+	LOCAL_MODULE 		:= @LIB_NAME@
 	LOCAL_ARM_MODE 		:= $(MY_ARM_MODE)
 	LOCAL_LDLIBS 		:= -llog -lGLESv1_CM -lGLESv2
 	LOCAL_CFLAGS		:=
@@ -30,6 +30,7 @@
 # core
 #================================================================#
 
+	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/src/zl-vfs
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/src
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/src/config-default
@@ -57,9 +58,9 @@
 
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/contrib
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/expat-2.0.1/amiga
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/expat-2.0.1/lib
-	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/expat-2.0.1/xmlwf
+	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/expat-2.1.0/amiga
+	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/expat-2.1.0/lib
+	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/expat-2.1.0/xmlwf
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/jansson-2.1/src
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/lua-5.1.3/src
 	MY_HEADER_SEARCH_PATHS += $(MOAI_SDK_HOME)/3rdparty/ooid-0.99
@@ -93,6 +94,7 @@
 	
 	LOCAL_SRC_FILES 	+= src/jni.cpp
 	LOCAL_SRC_FILES 	+= $(wildcard $(MOAI_SDK_HOME)src/host-modules/*.cpp)
+	LOCAL_SRC_FILES 	+= $(wildcard $(MOAI_SDK_HOME)src/moai-android-chartboost/*.cpp)
 	LOCAL_SRC_FILES 	+= src/aku_plugins.cpp
 
 	LOCAL_STATIC_LIBRARIES := @STATIC_LIBRARIES@

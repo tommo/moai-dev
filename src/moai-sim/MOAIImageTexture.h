@@ -24,7 +24,6 @@ private:
 	enum {
 		VALID,
 		INVALID,
-		INVALID_REGION,
 	};
 
 	u32			mStatus;
@@ -34,12 +33,9 @@ private:
 	static int		_updateRegion			( lua_State* L );
 
 	//----------------------------------------------------------------//
-	bool			IsRenewable				();
-	bool			IsValid					();
-	void			OnClear					();
-	void			OnCreate				();
-	void			OnLoad					();
-	// void			OnInvalidate		();
+	void			OnGPUBind				();
+	bool			OnGPUCreate				();
+	void			OnImageStatusChanged	( bool isOK );
 
 public:
 	

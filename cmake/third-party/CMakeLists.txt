@@ -8,8 +8,12 @@ if (MSVC)
   set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W0")
 endif (MSVC)
 
+if (BUILD_ANDROID)
+  add_subdirectory(android)
+endif(BUILD_ANDROID)
+
+
 add_subdirectory ( box2d )
-add_subdirectory ( chipmunk )
 add_subdirectory ( contrib )
 add_subdirectory ( crypto )
 add_subdirectory ( curl )
@@ -26,6 +30,7 @@ add_subdirectory ( tess2 )
 
 set (LUA_HEADERS "")
 set (LUA_LIB "")
+set (LUA_LIB_DIR "")
 #Lua or LuaJit?
 if (MOAI_LUAJIT)
 #	if ( BUILD_IOS )#
@@ -37,6 +42,7 @@ else()
 endif (MOAI_LUAJIT)
 set (LUA_HEADERS ${LUA_HEADERS} PARENT_SCOPE)
 set (LUA_LIB ${LUA_LIB} PARENT_SCOPE)
+set (LUA_LIB_DIR ${LUA_LIB_DIR} PARENT_SCOPE)
 
 add_subdirectory ( luaext )
 add_subdirectory ( mongoose )
@@ -45,19 +51,20 @@ add_subdirectory ( png )
 add_subdirectory ( sfmt )
 add_subdirectory ( sqlite3 )
 add_subdirectory ( ssl )
+add_subdirectory ( tess )
 add_subdirectory ( tinyxml )
 add_subdirectory ( tlsf )
 add_subdirectory ( vorbis )
+add_subdirectory ( webp )
 add_subdirectory ( zlib )
 
 #SDL is for pc only
 if (BUILD_LINUX OR BUILD_OSX OR BUILD_WINDOWS)
   set(DIRECTX OFF CACHE BOOL "SDL DirectX")
   set (SDL_SHARED OFF)
-  
   add_subdirectory(sdl2)
   if (BUILD_LINUX OR BUILD_WINDOWS)
-  add_subdirectory ( freeglut )
+    set(X11_SHARED OFF CACHE BOOL "ENABLE X11_SHARED") 
   endif (BUILD_LINUX OR BUILD_WINDOWS)
   add_subdirectory ( glew )
 endif (BUILD_LINUX OR BUILD_OSX OR BUILD_WINDOWS)

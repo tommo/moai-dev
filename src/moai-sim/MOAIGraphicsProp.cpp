@@ -26,6 +26,23 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+/**	@name	getScissorRect
+	@text	Retrieve the prop's scissor rect.
+	
+	@in		MOAIProp self
+	@out	MOAIScissorRect scissorRect 	Or nil if none exists.
+*/
+int MOAIGraphicsProp::_getScissorRect ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGraphicsProp, "U" )
+	
+	if ( self->mScissorRect ) {
+		self->mScissorRect->PushLuaUserdata ( state );
+		return 1;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	getTexture
 	@text	Returns the texture.
 	
@@ -243,7 +260,7 @@ int MOAIGraphicsProp::_setParent ( lua_State* L ) {
 	MOAINode* parent = state.GetLuaObject < MOAINode >( 2, true );
 	
 	self->SetAttrLink ( PACK_ATTR ( MOAIColor, INHERIT_COLOR ), parent, PACK_ATTR ( MOAIColor, COLOR_TRAIT ));
-	self->SetAttrLink ( PACK_ATTR ( MOAITransform, INHERIT_TRANSFORM ), parent, PACK_ATTR ( MOAITransformBase, TRANSFORM_TRAIT ));
+	self->SetAttrLink ( PACK_ATTR ( MOAITransformBase, INHERIT_TRANSFORM ), parent, PACK_ATTR ( MOAITransformBase, TRANSFORM_TRAIT ));
 	self->SetAttrLink ( PACK_ATTR ( MOAIGraphicsProp, INHERIT_VISIBLE ), parent, PACK_ATTR ( MOAIGraphicsProp, ATTR_VISIBLE ));
 	
 	//MOAILog ( state, MOAILogMessages::MOAI_FunctionDeprecated_S, "setParent" );
@@ -349,6 +366,12 @@ int MOAIGraphicsProp::_setVisible ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+u32 MOAIGraphicsProp::AffirmInterfaceMask ( MOAIPartition& partition ) {
+
+	return partition.AffirmInterfaceMask < MOAIGraphicsProp >();
+}
+
+//----------------------------------------------------------------//
 bool MOAIGraphicsProp::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 
 	if ( MOAIGraphicsPropAttr::Check ( attrID )) {
@@ -384,13 +407,14 @@ void MOAIGraphicsProp::Draw ( int subPrimID, float lod ) {
 	if ( !this->mDeck ) return;
 
 	this->LoadGfxState ();
-	this->LoadTransforms ();
+	this->LoadVertexTransform ();
+	this->LoadUVTransform ();
 	
 	if ( this->mGrid ) {
 		this->DrawGrid ( subPrimID );
 	}
 	else {
-		this->mDeck->Draw ( this->mIndex, this->mRemapper );
+		this->mDeck->Draw ( MOAIDeckRemapper::Remap ( this->mRemapper, this->mIndex ));
 	}
 }
 
@@ -407,9 +431,27 @@ void MOAIGraphicsProp::DrawDebug ( int subPrimID, float lod ) {
 	
 	draw.Bind ();
 	
-	this->LoadTransforms ();
+	this->LoadVertexTransform ();
 	
 	gfxDevice.SetVertexMtxMode ( MOAIGfxDevice::VTX_STAGE_MODEL, MOAIGfxDevice::VTX_STAGE_PROJ );
+	
+	if ( debugLines.Bind ( MOAIDebugLines::PROP_MODEL_AXIS )) {
+		
+		ZLBox bounds;
+		u32 status = this->OnGetModelBounds ( bounds );
+		if ( status == BOUNDS_OK ) {
+			draw.DrawBoxAxis ( bounds );
+		}
+	}
+	
+	if ( debugLines.Bind ( MOAIDebugLines::PROP_MODEL_DIAGONALS )) {
+		
+		ZLBox bounds;
+		u32 status = this->OnGetModelBounds ( bounds );
+		if ( status == BOUNDS_OK ) {
+			draw.DrawBoxDiagonals ( bounds );
+		}
+	}
 	
 	if ( debugLines.Bind ( MOAIDebugLines::PROP_MODEL_BOUNDS )) {
 		
@@ -569,12 +611,6 @@ ZLMatrix4x4 MOAIGraphicsProp::GetWorldDrawingMtx () {
 }
 
 //----------------------------------------------------------------//
-MOAIGraphicsProp* MOAIGraphicsProp::GetGraphicsProp () {
-
-	return this;
-}
-
-//----------------------------------------------------------------//
 bool MOAIGraphicsProp::IsVisible () {
 	return (( this->mFlags & FLAGS_LOCAL_VISIBLE ) && ( this->mFlags & FLAGS_VISIBLE ));
 }
@@ -625,12 +661,10 @@ void MOAIGraphicsProp::LoadGfxState () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGraphicsProp::LoadTransforms () {
+void MOAIGraphicsProp::LoadUVTransform () {
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	
-	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, this->GetWorldDrawingMtx ());
-
 	if ( this->mUVTransform ) {
 		ZLAffine3D uvMtx = this->mUVTransform->GetLocalToWorldMtx ();
 		gfxDevice.SetUVTransform ( uvMtx );
@@ -638,6 +672,13 @@ void MOAIGraphicsProp::LoadTransforms () {
 	else {
 		gfxDevice.SetUVTransform ();
 	}
+}
+
+//----------------------------------------------------------------//
+void MOAIGraphicsProp::LoadVertexTransform () {
+
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	gfxDevice.SetVertexTransform ( MOAIGfxDevice::VTX_WORLD_TRANSFORM, this->GetWorldDrawingMtx ());
 }
 
 //----------------------------------------------------------------//
@@ -657,7 +698,7 @@ MOAIGraphicsProp::MOAIGraphicsProp () :
 	RTTI_END
 	
 	this->mFlags = DEFAULT_FLAGS;
-	this->SetMask ( MOAIProp::CAN_DRAW | MOAIProp::CAN_DRAW_DEBUG );
+	//this->SetMask ( MOAIProp::CAN_DRAW | MOAIProp::CAN_DRAW_DEBUG );
 }
 
 //----------------------------------------------------------------//
@@ -744,6 +785,7 @@ void MOAIGraphicsProp::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAIColor::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
+		{ "getScissorRect",		_getScissorRect },
 		{ "getTexture",			_getTexture },
 		{ "isVisible",			_isVisible },
 		{ "setBillboard",		_setBillboard },

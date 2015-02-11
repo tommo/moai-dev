@@ -15,20 +15,18 @@ project ( curl )
   endif ( MOAI_OPENSSL )
 
 
-  
   if (BUILD_LINUX)
       set ( CURL_INCLUDES 
         "${MOAI_ROOT}/3rdparty/curl-7.19.7/include/" 
-        "${CMAKE_CURRENT_SOURCE_DIR}/curl/"
-	     	"${CMAKE_CURRENT_SOURCE_DIR}"
        )
+      set ( RUN_CURL_CONFIGURE true )
   endif (BUILD_LINUX)
 
 
   if (BUILD_WINDOWS)
       set ( CURL_INCLUDES 
         "${MOAI_ROOT}/3rdparty/curl-7.19.7/include/" 
-        "${CMAKE_CURRENT_SOURCE_DIR}/curl/"
+     
       )
   endif (BUILD_WINDOWS)
   
@@ -57,6 +55,47 @@ project ( curl )
        )
   endif (BUILD_IOS)
 
+  set (CURL_HEADERS "")
+  if (RUN_CURL_CONFIGURE)
+
+      
+      set (SSL_PARAMS "--without-ssl")
+
+      if (MOAI_OPENSSL)
+         get_target_property(SSLDIR ssl ARCHIVE_OUTPUT_DIRECTORY )
+         
+         set(SSL_PARAMS "--with-ssl=$<TARGET_FILE_DIR:ssl> --with-ca-path=/etc/ssl/certs/")
+      endif (MOAI_OPENSSL)
+
+      add_custom_command(OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/config.status"
+                       COMMAND "/bin/sh"
+                       "${MOAI_ROOT}/3rdparty/curl-7.19.7/configure"
+                       "--no-create" "--disable-shared" "--disable-optimize" ${SSL_PARAMS} "--disable-ldap"
+                       "--without-libidn" "--without-libssh2" 
+                       "CC=${CMAKE_C_COMPILER}"
+                       "CFLAGS=${CMAKE_C_FLAGS} -DZL_REPLACE_H"
+                       DEPENDS ssl
+                       WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
+                      )
+      
+
+      add_custom_command(OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/include/curl/curlbuild.h"
+                                "${CMAKE_CURRENT_BINARY_DIR}/include/curl/curl_config.h"
+                        COMMAND "${CMAKE_CURRENT_BINARY_DIR}/config.status"
+                       "--header=include/curl/curlbuild.h"
+                       "--header=include/curl/curl_config.h:lib/curl_config.h.in"
+                       DEPENDS "${CMAKE_CURRENT_BINARY_DIR}/config.status"
+                       WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}")
+
+    
+
+    set ( CURL_INCLUDES
+          "${CMAKE_CURRENT_BINARY_DIR}/include/curl"
+          "${CMAKE_CURRENT_BINARY_DIR}/include" ${CURL_INCLUDES} )
+
+    set ( CURL_HEADERS "${CMAKE_CURRENT_BINARY_DIR}/include/curl/curl_config.h"
+                       "${CMAKE_CURRENT_BINARY_DIR}/include/curl/curlbuild.h")
+  endif (RUN_CURL_CONFIGURE)
 
 
 
@@ -143,8 +182,8 @@ project ( curl )
 
 
  
-  add_library(curl STATIC ${CURL_SOURCES})
-  target_include_directories (curl PUBLIC ${CURL_INCLUDES})
+  add_library(curl STATIC ${CURL_SOURCES} ${CURL_HEADERS})
+  target_include_directories (curl PUBLIC "$<BUILD_INTERFACE:${CURL_INCLUDES}>" PRIVATE "${CMAKE_CURRENT_BINARY_DIR}")
   target_link_libraries( curl zlib )
   set_target_properties( curl PROPERTIES FOLDER Third-Party )
 
@@ -159,3 +198,5 @@ project ( curl )
   if (BUILD_WINDOWS)
     target_link_libraries( curl ws2_32 )
   endif (BUILD_WINDOWS)
+
+  install(TARGETS curl EXPORT libmoai ARCHIVE DESTINATION lib)

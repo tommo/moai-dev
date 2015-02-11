@@ -4,6 +4,7 @@
 #ifndef	MOAILUAOBJECT_H
 #define	MOAILUAOBJECT_H
 
+#include <moai-core/MOAIGlobals.h>
 #include <moai-core/MOAILuaRef.h>
 #include <moai-core/MOAIObject.h>
 
@@ -33,9 +34,7 @@ protected:
 	static int				_getClassName		( lua_State* L );
 	static int				_getMemberTable		( lua_State* L );
 	static int				_getRefTable		( lua_State* L );
-	static int				_index				( lua_State* L );
 	static int				_pin				( lua_State* L );
-	static int				_newindex			( lua_State* L );
 	static int				_serializeIn		( lua_State* L );
 	static int				_serializeOut		( lua_State* L );
 	static int				_setFinalizer		( lua_State* L );
@@ -45,12 +44,12 @@ protected:
 	static int				_unpin				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void					MakeLuaBinding		( MOAILuaState& state );
-	void					OnRelease			( u32 refCount );
-	bool					PushMemberTable		( MOAILuaState& state );
-	bool					PushRefTable		( MOAILuaState& state );
-	void					SetInterfaceTable	( MOAILuaState& state, int idx );
-	void					SetMemberTable		( MOAILuaState& state, int idx );
+	static int				InjectAndCall			( lua_CFunction func, MOAILuaObject* self, lua_State* L );
+	void					MakeLuaBinding			( MOAILuaState& state );
+	void					OnRelease				( u32 refCount );
+	bool					PushRefTable			( MOAILuaState& state );
+	void					SetInterfaceTable		( MOAILuaState& state, int idx );
+	void					SetMemberTable			( MOAILuaState& state, int idx );
 
 public:
 
@@ -64,7 +63,6 @@ public:
 	//----------------------------------------------------------------//
 	void					BindToLua					( MOAILuaState& state );
 	virtual MOAILuaClass*	GetLuaClass					();
-	//cc8*					GetLuaClassName				();
 	MOAIScopedLuaState		GetSelf						();
 	void					GetRef						( MOAILuaRef& ref );
 	bool					IsBound						();
@@ -77,12 +75,21 @@ public:
 	void					PrintTracking				();
 	void					PushLuaClassTable			( MOAILuaState& state );
 	bool					PushLuaUserdata				( MOAILuaState& state );
+	bool					PushMemberTable			( MOAILuaState& state );
 	virtual void			RegisterLuaClass			( MOAILuaState& state );
 	virtual void			RegisterLuaFuncs			( MOAILuaState& state );
-	static void             ReportLeaks					( FILE *f, bool clearAfter );
 	virtual	void			SerializeIn					( MOAILuaState& state, MOAIDeserializer& serializer );
 	virtual	void			SerializeOut				( MOAILuaState& state, MOAISerializer& serializer );
 	bool					WasCollected				();
+	
+	//----------------------------------------------------------------//
+	template < typename TYPE, lua_CFunction FUNC >
+	static int WrapInstanceFuncAsGlobal ( lua_State* L ) {
+	
+		TYPE* type = MOAIGlobalsMgr::Get ()->GetGlobal < TYPE >();
+		assert ( type );
+		return InjectAndCall ( FUNC, type, L );
+	}
 };
 
 #endif

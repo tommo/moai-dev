@@ -3,7 +3,6 @@
 
 #include "pch.h"
 #include <contrib/moai_utf8.h>
-#include <moai-sim/MOAIGlyphCacheBase.h>
 #include <moai-sim/MOAIFont.h>
 #include <moai-sim/MOAIFontReader.h>
 #include <moai-sim/MOAIGfxDevice.h>
@@ -126,7 +125,8 @@ int	MOAIFont::_loadFromBMFont ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFont, "US" )
 	
 	cc8* filename	= state.GetValue < cc8* >( 2, "" );
-	
+	self->Init ( filename );
+
 	// Check if there are preloaded textures
 	MOAITexture** preloadedTextures = 0;
 	u16 numPreloadedTextures = ( u16 )lua_objlen ( state, 3 );
@@ -592,9 +592,10 @@ void MOAIFont::ProcessGlyphs () {
 		if ( !pendingGlyphs ) continue;
 		
 		if ( !fontIsOpen ) {
-			this->mReader->OpenFontFile ( this->mFilename );
-			fontIsOpen = true;
+			fontIsOpen = this->mReader->OpenFontFile ( this->mFilename ) == MOAIFontReader::OK;
 		}
+
+		if ( !fontIsOpen ) return;		
 		
 		// get the face metrics
 		fontReader->SelectFace ( glyphSet.mSize );
@@ -638,17 +639,17 @@ void MOAIFont::RebuildKerning () {
 	if ( !this->mReader ) return;
 	if ( !this->mGlyphSets.size ()) return;
 	
-	this->mReader->OpenFontFile ( this->mFilename );
-	
-	if ( this->mReader->HasKerning ()) {
-	
-		MOAIFont::GlyphSetsIt glyphSetsIt = this->mGlyphSets.begin ();
-		for ( ; glyphSetsIt != this->mGlyphSets.end (); ++glyphSetsIt ) {
-			MOAIGlyphSet& glyphSet = glyphSetsIt->second;
-			this->RebuildKerning ( glyphSet );
+	if ( this->mReader->OpenFontFile ( this->mFilename ) == MOAIFontReader::OK ) {
+		if ( this->mReader->HasKerning ()) {
+		
+			MOAIFont::GlyphSetsIt glyphSetsIt = this->mGlyphSets.begin ();
+			for ( ; glyphSetsIt != this->mGlyphSets.end (); ++glyphSetsIt ) {
+				MOAIGlyphSet& glyphSet = glyphSetsIt->second;
+				this->RebuildKerning ( glyphSet );
+			}
 		}
+		this->mReader->CloseFontFile ();
 	}
-	this->mReader->CloseFontFile ();
 }
 
 //----------------------------------------------------------------//
@@ -658,12 +659,11 @@ void MOAIFont::RebuildKerning ( float size ) {
 	if ( !this->mReader->HasKerning ()) return;
 	if ( !this->mGlyphSets.contains ( size )) return;
 	
-	this->mReader->OpenFontFile ( this->mFilename );
-	
-	MOAIGlyphSet& glyphSet = this->mGlyphSets [ size ];
-	this->RebuildKerning ( glyphSet );
-	
-	this->mReader->CloseFontFile ();
+	if ( this->mReader->OpenFontFile ( this->mFilename ) == MOAIFontReader::OK ) {
+		MOAIGlyphSet& glyphSet = this->mGlyphSets [ size ];
+		this->RebuildKerning ( glyphSet );
+		this->mReader->CloseFontFile ();
+	}
 }
 
 //----------------------------------------------------------------//

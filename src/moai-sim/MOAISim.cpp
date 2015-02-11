@@ -2,10 +2,8 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIActionMgr.h>
 #include <moai-sim/MOAIDebugLines.h>
 #include <moai-sim/MOAIGfxDevice.h>
-#include <moai-sim/MOAIInputMgr.h>
 #include <moai-sim/MOAINodeMgr.h>
 #include <moai-sim/MOAIProp.h>
 #include <moai-sim/MOAISim.h>
@@ -133,6 +131,24 @@ int MOAISim::_framesToTime ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAISim::_getActionMgr ( lua_State* L ) {
+
+	MOAILuaState state ( L );
+	MOAISim::Get ().GetActionMgr ().PushLuaUserdata ( state );
+	return 1;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAISim::_getInputMgr ( lua_State* L ) {
+
+	MOAILuaState state ( L );
+	MOAISim::Get ().GetInputMgr ().PushLuaUserdata ( state );
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	getDeviceTime
 	@text	Gets the raw device clock. This is a replacement for Lua's os.time ().
 
@@ -216,9 +232,9 @@ int MOAISim::_getMemoryUsage ( lua_State* L ) {
 	total += count;
 
 	// This is informational only (i.e. don't double count with the previous field).
-	// It doesn't actually seem to represent the real usage of lua, but maybe
-	// someone is interested.
-	lua_pushnumber ( L, lua_gc ( L, LUA_GCCOUNTB, 0 ) / divisor );
+	// see: http://pgl.yoyo.org/luai/i/lua_gc
+	int luabytes = lua_gc ( L, LUA_GCCOUNT, 0 ) * 1024 + lua_gc ( L, LUA_GCCOUNTB, 0 );
+	lua_pushnumber ( L, luabytes / divisor  );
 	lua_setfield ( L, -2, "_luagc_count" );
 	
 	count = MOAIGfxDevice::Get ().GetTextureMemoryUsage ();
@@ -649,10 +665,21 @@ MOAISim::MOAISim () :
 	}
 	
 	this->mFrameTime = ZLDeviceTime::GetTimeInSeconds ();
+	
+	this->mInputMgr.Set ( *this, new MOAIInputQueue ());
+	this->mActionMgr.Set ( *this, new MOAIActionTree ());
+	this->mActionTree.Set ( *this, new MOAIActionTree ());
+	
+	this->mInputMgr->Start ( *this->mActionTree );
+	this->mActionMgr->Start ( *this->mActionTree );
 }
 
 //----------------------------------------------------------------//
 MOAISim::~MOAISim () {
+
+	this->mInputMgr.Set ( *this, 0 );
+	this->mActionMgr.Set ( *this, 0 );
+	this->mActionTree.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//
@@ -682,14 +709,6 @@ double MOAISim::MeasureFrameRate () {
 //----------------------------------------------------------------//
 void MOAISim::OnGlobalsFinalize () {
 	this->SendFinalizeEvent ();
-}
-
-//----------------------------------------------------------------//
-void MOAISim::OnGlobalsRestore () {
-}
-
-//----------------------------------------------------------------//
-void MOAISim::OnGlobalsRetire () {
 }
 
 //----------------------------------------------------------------//
@@ -736,6 +755,8 @@ void MOAISim::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "exitFullscreenMode",			_exitFullscreenMode },
 		{ "forceGC",					_forceGC },
 		{ "framesToTime",				_framesToTime },
+		{ "getActionMgr",				_getActionMgr },
+		{ "getInputMgr",				_getInputMgr },
 		{ "getDeviceTime",				_getDeviceTime },
 		{ "getElapsedTime",				_getElapsedTime },
 		{ "getListener",				&MOAIGlobalEventSource::_getListener < MOAISim > },
@@ -779,7 +800,7 @@ void MOAISim::Resume () {
 	if ( this->mLoopState == PAUSED ) {
 	
 		double skip = ZLDeviceTime::GetTimeInSeconds () - this->mPauseTime;
-		MOAIInputMgr::Get ().FlushEvents ( skip );
+		MOAISim::Get ().GetInputMgr ().FlushEvents ( skip );
 	
 		this->SendResumeEvent();
 		this->mLoopState = START;
@@ -836,17 +857,21 @@ double MOAISim::StepSim ( double step, u32 multiplier ) {
 		
 		lua_gc ( state, LUA_GCSTOP, 0 );
 		
-		MOAIInputMgr::Get ().Update ( step );
-		MOAIActionMgr::Get ().Update (( float )step );		
+		this->mActionTree->Update ( step );
 		MOAINodeMgr::Get ().Update ();
 		
 		this->mSimTime += step;
 		this->mStepCount++;
 		
 		if ( this->mGCActive ) {
+		
+			// empty the userdata cache
+			MOAILuaRuntime::Get ().PurgeUserdataCache ();
+		
 			// crank the garbage collector
 			lua_gc ( state, LUA_GCSTEP, this->mGCStep );
 		}
+		
 	}
 
 	return ZLDeviceTime::GetTimeInSeconds () - time;

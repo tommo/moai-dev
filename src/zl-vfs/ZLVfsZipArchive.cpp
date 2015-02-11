@@ -69,6 +69,9 @@ int ZLVfsZipArchiveHeader::FindAndRead ( FILE* file, size_t* offset ) {
 				fread ( &this->mCDAddr, 4, 1, file );
 				fread ( &this->mCommentLength, 2, 1, file );
 				
+				this->mDataOffset = ( cursor + i ) - ( this->mCDSize + this->mCDAddr ); // saved for use in loading the entry files
+				this->mCDAddr += this->mDataOffset;
+
 				return 0;
 			}
 		}
@@ -96,7 +99,7 @@ void ZLVfsZipArchiveHeader::Write ( FILE* file ) {
 //================================================================//
 	
 //----------------------------------------------------------------//
-int ZLVfsZipEntryHeader::Read ( FILE* file ) {
+int ZLVfsZipEntryHeader::Read ( FILE* file, u32 dataOffset ) {
 	
 	fread ( &this->mSignature, 4, 1, file );
 	
@@ -119,6 +122,8 @@ int ZLVfsZipEntryHeader::Read ( FILE* file ) {
 	fread ( &this->mExternalAttributes, 4, 1, file );
 	fread ( &this->mFileHeaderAddr, 4, 1, file );
 	
+	this->mFileHeaderAddr += dataOffset;
+
 	return 0;
 }
 
@@ -444,7 +449,7 @@ int ZLVfsZipArchive::Open ( const char* filename ) {
 	// parse in the entries
 	for ( i = 0; i < header.mTotalEntries; ++i ) {
 	
-		result = entryHeader.Read ( file );
+		result = entryHeader.Read ( file, header.mDataOffset );
 		if ( result ) goto error;
 		
 		if (( entryHeader.mNameLength + 1 ) > nameBufferSize ) {
@@ -551,7 +556,7 @@ int ZLVfsZipArchive::StripTimestamps ( const char* infilename, const char* outfi
 	for ( int i = 0; i < header.mTotalEntries; ++i ) {
 	
 		ZLVfsZipEntryHeader entryHeader;
-		entryHeader.Read ( infile );
+		entryHeader.Read ( infile, header.mDataOffset);
 		fseek ( infile, entryHeader.mNameLength + entryHeader.mExtraFieldLength + entryHeader.mCommentLength, SEEK_CUR );
 		size_t resumeAddr = ftell ( infile );
 		fseek ( infile, entryHeader.mFileHeaderAddr, SEEK_SET );
@@ -591,7 +596,7 @@ int ZLVfsZipArchive::StripTimestamps ( const char* infilename, const char* outfi
 	for ( int i = 0; i < header.mTotalEntries; ++i ) {	
 
 		ZLVfsZipEntryHeader entryHeader;
-		entryHeader.Read ( infile );
+		entryHeader.Read ( infile, header.mDataOffset );
 
 		entryHeader.mFileHeaderAddr = fileHeaderAddrTable [ i ];
 		entryHeader.mLastModDate = 0;

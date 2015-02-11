@@ -5,33 +5,30 @@
 #define ZLBASE64WRITER_H
 
 #include <zl-util/ZLBase64Encoder.h>
-#include <zl-util/ZLStreamWriter.h>
+#include <zl-util/ZLStreamAdapter.h>
 
 //================================================================//
 // ZLBase64Writer
 //================================================================//
 class ZLBase64Writer :
-	public ZLStreamWriter {
+	public ZLStreamAdapter {
 private:
-
-	ZLStream*			mOutputStream;			// compressed output stream
-	size_t				mCursor;				// cursor in the input stream
 	
 	ZLBase64Encoder		mEncoder;
 	u8					mPlainBlock [ ZLBase64Encoder::PLAIN_BLOCK_SIZE ];
 
+	//----------------------------------------------------------------//
+	void				OnClose					();
+	bool				OnOpen					();
+	size_t				WriteBytes				( const void* buffer, size_t size );
+
 public:
 
 	//----------------------------------------------------------------//
-	void				Close					();
+	static size_t		EstimateEncodedLength	( size_t plainLength );
 	u32					GetCaps					();
-	size_t				GetCursor				();
-	static size_t		GetEncodedLength		( size_t plainLength );
-	size_t				GetLength				();
-	bool				Open					( ZLStream& stream );
 						ZLBase64Writer			();
 						~ZLBase64Writer			();
-	size_t				WriteBytes				( const void* buffer, size_t size );
 };
 
 #endif

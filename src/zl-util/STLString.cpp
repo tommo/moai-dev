@@ -10,8 +10,7 @@
 #include <zl-util/ZLBase64Reader.h>
 #include <zl-util/ZLBase64Writer.h>
 #include <zl-util/ZLByteStream.h>
-#include <zl-util/ZLHexReader.h>
-#include <zl-util/ZLHexWriter.h>
+#include <zl-util/ZLHexAdapter.h>
 #include <zl-util/ZLMemStream.h>
 #include <zl-util/ZLZip.h>
 
@@ -25,6 +24,18 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+STLString& STLString::assign ( cc8* str ) {
+
+	if ( str ) {
+		this->string::assign ( str );
+	}
+	else {
+		this->clear ();
+	}
+	return *this;
+}
+
+//----------------------------------------------------------------//
 void STLString::base_64_decode ( void* buffer, size_t len ) {
 
 	ZLBase64Reader base64;
@@ -35,7 +46,7 @@ void STLString::base_64_decode ( void* buffer, size_t len ) {
 // returns an approx. len no smaller than actual decoded size
 size_t STLString::base_64_decode_len () {
 
-	return ZLBase64Reader::GetDecodedLength ( this->size ());
+	return ZLBase64Reader::EstimateDecodedLength ( this->size ());
 }
 
 //----------------------------------------------------------------//
@@ -49,7 +60,7 @@ void STLString::base_64_encode ( const void* buffer, size_t len ) {
 // returns an approx. len no smaller than actual encoded size
 size_t STLString::base_64_encode_len () {
 
-	return ZLBase64Writer::GetEncodedLength ( this->size ());
+	return ZLBase64Writer::EstimateEncodedLength ( this->size ());
 }
 
 //----------------------------------------------------------------//
@@ -92,7 +103,7 @@ STLString STLString::clip_to_front ( size_t last ) {
 //----------------------------------------------------------------//
 void STLString::hex_decode ( void* buffer, size_t len ) {
 
-	ZLHexReader hex;
+	ZLHexAdapter hex;
 	zl_decode ( hex, buffer, len );
 }
 
@@ -100,13 +111,13 @@ void STLString::hex_decode ( void* buffer, size_t len ) {
 // returns an approx. len no smaller than actual decoded size
 size_t STLString::hex_decode_len () {
 
-	return ZLHexReader::GetDecodedLength ( this->size ());
+	return ZLHexAdapter::EstimateDecodedLength ( this->size ());
 }
 
 //----------------------------------------------------------------//
 void STLString::hex_encode ( const void* buffer, size_t len ) {
 	
-	ZLHexWriter hex;
+	ZLHexAdapter hex;
 	zl_encode ( hex, buffer, len );
 }
 
@@ -114,13 +125,13 @@ void STLString::hex_encode ( const void* buffer, size_t len ) {
 // returns an approx. len no smaller than actual encoded size
 size_t STLString::hex_encode_len () {
 
-	return ZLHexWriter::GetEncodedLength ( this->size ());
+	return ZLHexAdapter::EstimateEncodedLength ( this->size ());
 }
 
 //----------------------------------------------------------------//
 u8 STLString::hex_to_byte ( u32 c ) {
 
-	return ZLHexReader::HexToByte ( c );
+	return ZLHexAdapter::HexToByte ( c );
 }
 
 //----------------------------------------------------------------//
@@ -134,7 +145,7 @@ void STLString::replace_char ( cc8 match, cc8 sub ) {
 }
 
 //----------------------------------------------------------------//
-void STLString::tokenize ( STLArray < STLString > & tokens, const STLString& delimiters ) {
+size_t STLString::tokenize ( STLArray < STLString > & tokens, const STLString& delimiters ) const {
 
 	STLString::size_type lastPos = this->find_first_not_of ( delimiters, 0 );
 	STLString::size_type pos = this->find_first_of ( delimiters, lastPos );
@@ -144,6 +155,13 @@ void STLString::tokenize ( STLArray < STLString > & tokens, const STLString& del
 		lastPos = this->find_first_not_of ( delimiters, pos );
 		pos = this->find_first_of ( delimiters, lastPos );
 	}
+	return tokens.size ();
+}
+
+//----------------------------------------------------------------//
+size_t STLString::tokenize ( const STLString& str, STLArray < STLString >& tokens, const STLString& delimiters ) {
+
+	return str.tokenize ( tokens, delimiters );
 }
 
 //----------------------------------------------------------------//
@@ -264,27 +282,27 @@ size_t STLString::zip_inflate ( void* buffer, size_t len ) {
 }
 
 //----------------------------------------------------------------//
-void STLString::zl_decode ( ZLStreamReader& reader, void* buffer, size_t len ) {
+void STLString::zl_decode ( ZLStreamAdapter& reader, void* buffer, size_t len ) {
 
 	ZLByteStream byteStream;
 	
 	byteStream.SetBuffer (( void* )this->str (), this->size ());
 	byteStream.SetLength ( this->size ());
 	
-	reader.Open ( byteStream );
+	reader.Open ( &byteStream );
 	reader.ReadBytes ( buffer, len );
 	reader.Close ();
 }
 
 //----------------------------------------------------------------//
-void STLString::zl_encode ( ZLStreamWriter& writer, const void* buffer, size_t len ) {
+void STLString::zl_encode ( ZLStreamAdapter& writer, const void* buffer, size_t len ) {
 
 	( *this ) = "";
 	if ( !len ) return;
 	
 	ZLMemStream memStream;
 	
-	writer.Open ( memStream );
+	writer.Open ( &memStream );
 	writer.WriteBytes ( buffer, len );
 	writer.Close ();
 	
@@ -293,7 +311,6 @@ void STLString::zl_encode ( ZLStreamWriter& writer, const void* buffer, size_t l
 }
 
 //----------------------------------------------------------------//
-
 STLString::STLString ( int value, int radix ) {
 
 	const char *format;

@@ -12,12 +12,25 @@
 
 	//----------------------------------------------------------------//
 	extern void		AKUModulesIosAppFinalize			();
-	extern void		AKUModulesIosAppInitialze			();
+	extern void		AKUModulesIosAppInitialize			();
 	extern void		AKUModulesIosContextInitialize		();
 	extern void		AKUModulesIosPause					( bool pause );
 	extern void		AKUModulesIosUpdate					();
 
 #endif
+
+#if AKU_WITH_ANDROID
+
+	//----------------------------------------------------------------//
+	extern void		AKUModulesAndroidAppFinalize			();
+	extern void		AKUModulesAndroidAppInitialize			();
+	extern void		AKUModulesAndroidContextInitialize		();
+	extern void		AKUModulesAndroidPause					( bool pause );
+	extern void		AKUModulesAndroidUpdate					();
+
+#endif
+
+
 
 #if AKU_WITH_PLUGINS
 
@@ -37,12 +50,16 @@
 //----------------------------------------------------------------//
 void AKUModulesAppFinalize () {
 
-	#if AKU_WITH_BOX2D
-		AKUBox2DAppFinalize ();
+    #if AKU_WITH_APPLE
+		AKUAppleAppFinalize ();
 	#endif
 
-	#if AKU_WITH_CHIPMUNK
-		AKUChipmunkAppFinalize ();
+    #if AKU_WITH_AUDIO_SAMPLER
+		AKUAudioSamplerAppFinalize ();
+	#endif
+
+	#if AKU_WITH_BOX2D
+		AKUBox2DAppFinalize ();
 	#endif
 
 	#if AKU_WITH_CRYPTO
@@ -73,12 +90,12 @@ void AKUModulesAppFinalize () {
 		AKULuaExtAppFinalize ();
 	#endif
 
-	#if AKU_WITH_SIM
-		AKUSimAppFinalize ();
+	#if AKU_WITH_SDL
+		AKUSdlAppFinalize ();
 	#endif
 
-	#if AKU_WITH_TEST
-		AKUTestAppFinalize ();
+	#if AKU_WITH_SIM
+		AKUSimAppFinalize ();
 	#endif
 
 	#if AKU_WITH_UNTZ
@@ -93,6 +110,10 @@ void AKUModulesAppFinalize () {
 		AKUModulesIosAppFinalize ();
 	#endif
 	
+	#if AKU_WITH_ANDROID
+		AKUModulesAndroidAppFinalize ();
+	#endif
+	
 	#if AKU_WITH_PLUGINS
 		AKUPluginsAppFinalize ();
 	#endif
@@ -101,12 +122,16 @@ void AKUModulesAppFinalize () {
 //----------------------------------------------------------------//
 void AKUModulesAppInitialize () {
 
-	#if AKU_WITH_BOX2D
-		AKUBox2DAppInitialize ();
+    #if AKU_WITH_APPLE
+		AKUAppleAppInitialize ();
 	#endif
 
-	#if AKU_WITH_CHIPMUNK
-		AKUChipmunkAppInitialize ();
+    #if AKU_WITH_AUDIO_SAMPLER
+		AKUAudioSamplerAppInitialize ();
+	#endif
+
+	#if AKU_WITH_BOX2D
+		AKUBox2DAppInitialize ();
 	#endif
 
 	#if AKU_WITH_CRYPTO
@@ -137,12 +162,12 @@ void AKUModulesAppInitialize () {
 		AKULuaExtAppInitialize ();
 	#endif
 
-	#if AKU_WITH_SIM
-		AKUSimAppInitialize ();
+	#if AKU_WITH_SDL
+		AKUSdlAppInitialize ();
 	#endif
 
-	#if AKU_WITH_TEST
-		AKUTestAppInitialize ();
+	#if AKU_WITH_SIM
+		AKUSimAppInitialize ();
 	#endif
 
 	#if AKU_WITH_UNTZ
@@ -156,6 +181,10 @@ void AKUModulesAppInitialize () {
 	#if AKU_WITH_IOS
 		AKUModulesIosAppInitialize ();
 	#endif
+	
+	#if AKU_WITH_ANDROID
+		AKUModulesAndroidAppInitialize ();
+	#endif
 
 	#if AKU_WITH_PLUGINS
 		AKUPluginsAppInitialize ();
@@ -165,12 +194,16 @@ void AKUModulesAppInitialize () {
 //----------------------------------------------------------------//
 void AKUModulesContextInitialize () {
 
-	#if AKU_WITH_BOX2D
-		AKUBox2DContextInitialize ();
+    #if AKU_WITH_APPLE
+		AKUAppleContextInitialize ();
 	#endif
 
-	#if AKU_WITH_CHIPMUNK
-		AKUChipmunkContextInitialize ();
+    #if AKU_WITH_AUDIO_SAMPLER
+		AKUAudioSamplerContextInitialize ();
+	#endif
+
+	#if AKU_WITH_BOX2D
+		AKUBox2DContextInitialize ();
 	#endif
 
 	#if AKU_WITH_CRYPTO
@@ -201,12 +234,12 @@ void AKUModulesContextInitialize () {
 		AKULuaExtContextInitialize ();
 	#endif
 
-	#if AKU_WITH_SIM
-		AKUSimContextInitialize ();
+	#if AKU_WITH_SDL
+		AKUSdlContextInitialize ();
 	#endif
 
-	#if AKU_WITH_TEST
-		AKUTestContextInitialize ();
+	#if AKU_WITH_SIM
+		AKUSimContextInitialize ();
 	#endif
 
 	#if AKU_WITH_UNTZ
@@ -219,6 +252,10 @@ void AKUModulesContextInitialize () {
 	
 	#if AKU_WITH_IOS
 		AKUModulesIosContextInitialize ();
+	#endif
+	
+	#if AKU_WITH_ANDROID
+		AKUModulesAndroidContextInitialize ();
 	#endif
 	
 	#if AKU_WITH_PLUGINS
@@ -239,6 +276,10 @@ void AKUModulesPause ( bool pause ) {
 	
 	#if AKU_WITH_IOS
 		AKUModulesIosPause ( pause );
+	#endif
+	
+	#if AKU_WITH_ANDROID
+		AKUModulesAndroidPause ( pause );
 	#endif
 	
 	#if AKU_WITH_PLUGINS
@@ -271,6 +312,10 @@ void AKUModulesUpdate () {
 	
 	#if AKU_WITH_IOS
 		AKUModulesIosUpdate ();
+	#endif
+	
+	#if AKU_WITH_ANDROID
+		AKUModulesAndroidUpdate ();
 	#endif
 	
 	#if AKU_WITH_PLUGINS

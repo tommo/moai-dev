@@ -10,9 +10,6 @@
 //================================================================//
 class MOAIQuadBrush {
 private:
-
-	ZLVec2D mVtx [ 4 ];
-	ZLVec2D mUV [ 4 ];
 	
 	//----------------------------------------------------------------//
 	static inline void WriteVertex ( MOAIGfxDevice& gfxDevice, const ZLVec2D& vtx, const ZLVec2D& uv ) {
@@ -24,6 +21,9 @@ private:
 
 public:
 
+	ZLQuad	mModelQuad;
+	ZLQuad	mUVQuad;
+
 	//----------------------------------------------------------------//
 	static void			BindVertexFormat	( MOAIGfxDevice& gfxDevice );
 	void				Draw				();
@@ -31,7 +31,8 @@ public:
 	void				Draw				( float xOff, float yOff, float zOff, float xScale, float yScale );
 	void				Draw				( float xOff, float yOff, float zOff, float xScale, float yScale, float uOff, float vOff, float uScale, float vScale );
 	ZLRect				GetUVBounds			();
-	ZLRect				GetVtxBounds		();	
+	bool				GetUVForCartesian	( u32 triangleID, float x, float y, ZLVec2D& uv );
+	ZLRect				GetVtxBounds		();
 	void				ScaleUVs			( float xScale, float yScale );
 	void				ScaleVerts			( float xScale, float yScale );
 	void				SetUVs				( const ZLRect& rect );

@@ -84,7 +84,7 @@ int MOAIFmodExChannel::_moveVolume ( lua_State* L ) {
 	action->SetLink ( 0, self, MOAIFmodExChannelAttr::Pack ( ATTR_VOLUME ), delta, mode );
 
 	action->SetSpan ( length );
-	action->Start ();
+	action->Start ( MOAISim::Get ().GetActionMgr ());
 	action->PushLuaUserdata ( state );
 
 	return 1;
@@ -136,7 +136,7 @@ int MOAIFmodExChannel::_seekVolume ( lua_State* L ) {
 	action->SetLink ( 0, self, MOAIFmodExChannelAttr::Pack ( ATTR_VOLUME ), target - self->mVolume, mode );
 
 	action->SetSpan ( length );
-	action->Start ();
+	action->Start ( MOAISim::Get ().GetActionMgr ());
 	action->PushLuaUserdata ( state );
 
 	return 1;

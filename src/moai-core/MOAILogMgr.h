@@ -12,6 +12,11 @@
 	type* self = MOAILogMgr::Get ().LuaSetup < type >( state, str );	\
 	if ( !self ) return 0;
 
+#define MOAI_LUA_SETUP_SINGLE(type,str)										\
+	MOAILuaState state ( L );												\
+	type* self = MOAILogMgr::Get ().LuaSetupSingle < type >( state, str );	\
+	if ( !self ) return 0;
+
 //================================================================//
 // MOAILogMessage
 //================================================================//
@@ -34,6 +39,7 @@ class MOAILogMessage {
 	@const LOG_ERROR
 	@const LOG_WARNING
 	@const LOG_STATUS
+	@const LOG_DEBUG
 */
 class MOAILogMgr :
 	public MOAIGlobalClass < MOAILogMgr, MOAILuaObject > {
@@ -65,6 +71,7 @@ public:
 		LOG_ERROR,
 		LOG_WARNING,
 		LOG_STATUS,
+		LOG_DEBUG,
 	};
 	
 	GET ( FILE*, File, mFile )
@@ -85,11 +92,20 @@ public:
 	template < typename TYPE >
 	TYPE* LuaSetup ( MOAILuaState& state, cc8* typeStr ) {
 	
-		if ( this->mTypeCheckLuaParams ) {
+		if ( this->mTypeCheckLuaParams && typeStr ) {
 			if ( !state.CheckParams ( 1, typeStr, true )) return 0;
 		}
-		TYPE* self = state.GetLuaObject < TYPE >( 1, true );
-		return self;
+		return state.GetLuaObject < TYPE >( 1, true );
+	}
+	
+	//----------------------------------------------------------------//
+	template < typename TYPE >
+	TYPE* LuaSetupSingle ( MOAILuaState& state, cc8* typeStr ) {
+	
+		if ( this->mTypeCheckLuaParams && typeStr ) {
+			if ( !state.CheckParams ( 1, typeStr, true )) return 0;
+		}
+		return MOAIGlobalsMgr::Get ()->GetGlobal < TYPE >();
 	}
 };
 

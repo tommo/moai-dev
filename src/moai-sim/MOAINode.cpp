@@ -5,6 +5,7 @@
 #include <moai-sim/MOAIEaseDriver.h>
 #include <moai-sim/MOAINode.h>
 #include <moai-sim/MOAINodeMgr.h>
+#include <moai-sim/MOAISim.h>
 
 // TODO: remove when setParent is removed
 #include <moai-sim/MOAIProp.h>
@@ -196,7 +197,7 @@ int MOAINode::_moveAttr ( lua_State* L ) {
 	
 		action->SetLink ( 0, self, attrID, value, mode );
 		action->SetSpan ( length );
-		action->Start ();
+		action->Start ( MOAISim::Get ().GetActionMgr ());
 		action->PushLuaUserdata ( state );
 
 		return 1;
@@ -256,7 +257,7 @@ int MOAINode::_seekAttr ( lua_State* L ) {
 		action->SetLink ( 0, self, attrID, value - getter.GetValue ( 0.0f ), mode );
 		
 		action->SetSpan ( delay );
-		action->Start ();
+		action->Start ( MOAISim::Get ().GetActionMgr ());
 		action->PushLuaUserdata ( state );
 
 		return 1;
@@ -460,12 +461,9 @@ void MOAINode::DepNodeUpdate () {
 		this->mState = STATE_UPDATING;
 		this->PullAttributes ();
 
-		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-		if ( this->PushListenerAndSelf ( EVENT_UPDATE, state )) {
-			state.DebugCall ( 1, 0 );
-		}
-
+		InvokeListenerWithSelf ( EVENT_NODE_PRE_UPDATE );
 		this->OnDepNodeUpdate ();
+		InvokeListenerWithSelf ( EVENT_NODE_POST_UPDATE );
 	}
 	this->mState = STATE_ACTIVE;
 }
@@ -554,7 +552,7 @@ MOAINode::~MOAINode () {
 		delete link;
 	}
 
-	if ( this->mState != STATE_IDLE ) {
+	if (( this->mState != STATE_IDLE ) && ( MOAINodeMgr::IsValid ())) {
 		MOAINodeMgr::Get ().Remove ( *this );
 	}
 }
@@ -600,7 +598,10 @@ void MOAINode::RegisterLuaClass ( MOAILuaState& state ) {
 
 	MOAIInstanceEventSource::RegisterLuaClass ( state );
 
-	state.SetField ( -1, "EVENT_UPDATE", ( u32 )EVENT_UPDATE );
+	state.SetField ( -1, "EVENT_UPDATE",		( u32 )EVENT_NODE_PRE_UPDATE ); // TODO: deprecate
+	
+	state.SetField ( -1, "EVENT_NODE_PRE_UPDATE",	( u32 )EVENT_NODE_PRE_UPDATE );
+	state.SetField ( -1, "EVENT_NODE_POST_UPDATE",	( u32 )EVENT_NODE_POST_UPDATE );
 }
 
 //----------------------------------------------------------------//

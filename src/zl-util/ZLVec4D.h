@@ -17,12 +17,29 @@ public:
 	TYPE	mW;
 
 	//----------------------------------------------------------------//
+	void Init ( TYPE x, TYPE y, TYPE z, TYPE w ) {
+		mX = x;
+		mY = y;
+		mZ = z;
+		mW = w;
+	}
+
+	//----------------------------------------------------------------//
 	void Lerp ( const ZLMetaVec4D& vec, TYPE time ) {
 
 		this->mX = this->mX + (( vec.mX - this->mX ) * time );
 		this->mY = this->mY + (( vec.mY - this->mY ) * time );
 		this->mZ = this->mZ + (( vec.mZ - this->mZ ) * time );
 		this->mW = this->mW + (( vec.mW - this->mW ) * time );
+	}
+
+	//----------------------------------------------------------------//
+	void Scale ( TYPE s ) {
+	
+		this->mX *= s;
+		this->mY *= s;
+		this->mZ *= s;
+		this->mW *= s;
 	}
 
 	//----------------------------------------------------------------//

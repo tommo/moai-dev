@@ -3,13 +3,13 @@
 
 #include "pch.h"
 
-#import <moai-ios/MOAIAppIOS.h>
-#import <moai-ios/NSData+MOAILib.h>
-#import <moai-ios/NSDate+MOAILib.h>
-#import <moai-ios/NSDictionary+MOAILib.h>
-#import <moai-ios/NSError+MOAILib.h>
-#import <moai-ios/NSString+MOAILib.h>
+#import <moai-apple/NSData+MOAILib.h>
+#import <moai-apple/NSDate+MOAILib.h>
+#import <moai-apple/NSDictionary+MOAILib.h>
+#import <moai-apple/NSError+MOAILib.h>
+#import <moai-apple/NSString+MOAILib.h>
 
+#import <moai-ios/MOAIAppIOS.h>
 #import <moai-ios/MOAITakeCameraListener.h>
 
 #import <ifaddrs.h>
@@ -18,6 +18,49 @@
 //================================================================//
 // lua
 //================================================================//
+
+//----------------------------------------------------------------//
+/**	@lua	canOpenURL
+ @text	Return true if iOS will handle the passed URL.
+ 
+ @in	string url
+ @out	boolean
+ */
+int MOAIAppIOS::_canOpenURL ( lua_State* L ) {
+
+	MOAILuaState state ( L );
+
+	cc8* url = state.GetValue < cc8* >( 1, "" );
+
+	if ( url && url [ 0 ] != '\0' ) {
+		NSString *requestString = [NSString stringWithCString:url encoding:NSUTF8StringEncoding];
+		NSURL * myURL = [[NSURL alloc] initWithString:[requestString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+		lua_pushboolean (state, [[ UIApplication sharedApplication ]
+								 canOpenURL:myURL]);
+		[myURL release];
+		return 1;
+	}
+
+	lua_pushnil( state );
+
+	return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@name	getAvailableStorage
+	@text	Get the available storage size in mb on the system
+ 
+	@out	long size
+ */
+int MOAIAppIOS::_getAvailableStorage ( lua_State* L ) {
+	MOAILuaState state ( L );
+	
+	NSDictionary *atDict = [[ NSFileManager defaultManager ] attributesOfFileSystemForPath:NSHomeDirectory () error:NULL ];
+	unsigned long long freeSize = [[ atDict objectForKey:NSFileSystemFreeSize ] unsignedLongLongValue ] / 1024;
+	lua_pushnumber ( state, freeSize);
+
+	return 1;
+}
 
 //----------------------------------------------------------------//
 /**	@lua	getDirectoryInDomain
@@ -71,7 +114,7 @@ int MOAIAppIOS::_getInterfaceOrientation ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
 
-	UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+	UIInterfaceOrientation orientation = [ UIApplication sharedApplication ].statusBarOrientation;
 
 	lua_pushnumber ( state, orientation );
 
@@ -79,6 +122,7 @@ int MOAIAppIOS::_getInterfaceOrientation ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
 int MOAIAppIOS::_getIPAddress ( lua_State* L ) {
 
 	MOAILuaState state ( L );
@@ -144,6 +188,67 @@ int MOAIAppIOS::_getUTCTime ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	openURL
+	@text	Open the native device web browser at the specified URL.
+ 
+	@in		string url
+	@out	nil
+*/
+int MOAIAppIOS::_openURL ( lua_State* L ) {
+	
+	MOAILuaState state ( L );
+	
+	cc8* url = state.GetValue < cc8* >( 1, "" );
+	
+	if ( url && url [ 0 ] != '\0' ) {
+		NSString *requestString = [NSString stringWithCString:url encoding:NSUTF8StringEncoding];
+		NSURL * myURL = [[NSURL alloc] initWithString:[requestString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+		[[ UIApplication sharedApplication ] openURL:myURL];
+		
+		[myURL release];
+	}
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@lua	openURLWithParams
+	@text	Open the native device web browser at the specified URL
+			with the specified list of query string parameters.
+ 
+	@in		string url
+	@in		table params
+	@out	nil
+*/
+int MOAIAppIOS::_openURLWithParams ( lua_State* L ) {
+	
+	MOAILuaState state ( L );
+	
+	NSString* baseURL = [[ NSString alloc ] initWithLua: state stackIndex: 1 ];
+	NSMutableDictionary* params = [[ NSMutableDictionary alloc ] initWithCapacity:5 ];
+	[ params initWithLua: state stackIndex: 2 ];
+	
+	if ( baseURL == NULL || params == NULL ) return 0;
+	
+	NSURL* parsedURL = [ NSURL URLWithString: baseURL ];
+	NSString* urlQueryPrefix = parsedURL.query ? @"&" : @"?";
+	
+	NSMutableArray* paramPairs = [ NSMutableArray array ];
+	for ( NSString* key in [ params keyEnumerator ] ) {
+		
+		NSString* escapedValue = ( NSString* )CFURLCreateStringByAddingPercentEscapes( NULL, ( CFStringRef )[ params objectForKey: key ], NULL, ( CFStringRef )@"!*'();:@&=+$,/?%#[]", kCFStringEncodingUTF8 );
+		[ paramPairs addObject:[ NSString stringWithFormat: @"%@=%@", key, escapedValue ]];
+		[ escapedValue release ];
+	}
+	
+	NSString* urlQuery = [ paramPairs componentsJoinedByString: @"&" ];
+		
+	[[ UIApplication sharedApplication ] openURL:[ NSURL URLWithString:[ NSString stringWithFormat: @"%@%@%@", baseURL, urlQueryPrefix, urlQuery ]]];	
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	sendMail
  @text	Send a mail with the passed in default values
  
@@ -182,21 +287,6 @@ int MOAIAppIOS::_sendMail ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-int MOAIAppIOS::_setListener ( lua_State* L ) {
-	
-	MOAILuaState state ( L );
-	
-	u32 idx = state.GetValue < u32 >( 1, TOTAL );
-	
-	if ( idx < TOTAL ) {
-		
-		MOAIAppIOS::Get ().mListeners [ idx ].SetRef ( state, 2 );
-	}
-	
-	return 0;
-}
-
-//----------------------------------------------------------------//
 /** @lua _takeCamera
 	@text Allows to pick a photo from the CameraRoll or from the Camera
 	@in function	callback
@@ -205,9 +295,7 @@ int MOAIAppIOS::_setListener ( lua_State* L ) {
 	@in int			if device is an ipad y coordinate of Popover
 	@in int			if device is an ipad width coordinate of Popover
 	@in int			if device is an ipad height coordinate of Popover
-
  */
- 
 int MOAIAppIOS::_takeCamera( lua_State* L ) {
 	
 	int x, y, width, height = 0;
@@ -259,31 +347,40 @@ void MOAIAppIOS::callTakeCameraLuaCallback (NSString *imagePath) {
 // MOAIAppIOS
 //================================================================//
 
-//----------------------------------------------------------------//
-void MOAIAppIOS::DidBecomeActive () {
+ //----------------------------------------------------------------//
+// Since iOS 8.0 both [[UIScreen mainScreen] bounds/applicationFrame] are interface oriented.
+// Before iOS 8.0, only the portrait "bounds" where returned.
+// The function below ensure Portrait bounds are returned.
+CGRect MOAIAppIOS::GetScreenBoundsFromCurrentOrientation ( const CGRect& bounds ) {
 
-	MOAILuaRef& callback = this->mListeners [ DID_BECOME_ACTIVE ];
-	
-	if ( callback ) {
-		MOAIScopedLuaState state = callback.GetSelf ();
-		state.DebugCall ( 0, 0 );
+	bool lessThaniOS8 = MOAIAppIOS::IsSystemVersionLessThan ( @"8.0" );
+	if ( lessThaniOS8 || UIInterfaceOrientationIsPortrait ([ UIApplication sharedApplication ].statusBarOrientation )) {
+		return bounds;
 	}
+	return CGRectMake ( bounds.origin.y, bounds.origin.x, bounds.size.height, bounds.size.width );
+}
+
+//----------------------------------------------------------------//
+BOOL MOAIAppIOS::IsSystemVersionLessThan ( NSString* version ) {
+
+	return ([[[ UIDevice currentDevice ] systemVersion ] compare:version options:NSNumericSearch ] == NSOrderedAscending );
 }
 
 //----------------------------------------------------------------//
 MOAIAppIOS::MOAIAppIOS () {
 
-	RTTI_SINGLE ( MOAILuaObject )
-	
-	this->mReachabilityListener = [ MOAIReachabilityListener alloc ];
-	[ this->mReachabilityListener startListener ];
+	RTTI_SINGLE ( MOAIGlobalEventSource )
 
 	//this->mMailDelegate = [ MoaiMailComposeDelegate alloc ];
-	this->mTakeCameraListener = [MOAITakeCameraListener alloc];
+	this->mTakeCameraListener = [ MOAITakeCameraListener alloc ];
+	
+	this->RegisterNotificationListeners ();
 }
 
 //----------------------------------------------------------------//
 MOAIAppIOS::~MOAIAppIOS () {
+
+	RemoveNotificationListeners ();
 
 	//[ this->mMailDelegate release ];
 	[ this->mTakeCameraListener release];
@@ -291,19 +388,13 @@ MOAIAppIOS::~MOAIAppIOS () {
 
 //----------------------------------------------------------------//
 void MOAIAppIOS::OnGlobalsFinalize () {
-
-	[ this->mReachabilityListener stopListener ];
-	[ this->mReachabilityListener release ];
-	this->mReachabilityListener = nil;
 }
 
 //----------------------------------------------------------------//
 void MOAIAppIOS::OpenUrl ( NSURL* url, NSString* sourceApplication ) {
 
-	MOAILuaRef& callback = this->mListeners [ OPEN_URL ];
-
-	if ( callback ) {
-		MOAIScopedLuaState state = callback.GetSelf ();
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	if ( this->PushListener ( OPEN_URL, state )) {
 		[[ url absoluteString ] toLua:state ];
 		[ sourceApplication toLua:state ];
 		state.DebugCall ( 2, 0 );
@@ -313,14 +404,17 @@ void MOAIAppIOS::OpenUrl ( NSURL* url, NSString* sourceApplication ) {
 //----------------------------------------------------------------//
 void MOAIAppIOS::RegisterLuaClass ( MOAILuaState& state ) {
 
-	state.SetField ( -1, "DID_BECOME_ACTIVE",	( u32 )DID_BECOME_ACTIVE );
-	state.SetField ( -1, "OPEN_URL",			( u32 )OPEN_URL );
-	state.SetField ( -1, "WILL_RESIGN_ACTIVE",	( u32 )WILL_RESIGN_ACTIVE );
-	state.SetField ( -1, "WILL_TERMINATE",		( u32 )WILL_TERMINATE );
+	state.SetField ( -1, "DID_BECOME_ACTIVE",			( u32 )DID_BECOME_ACTIVE );
+	state.SetField ( -1, "DID_ENTER_BACKGROUND",		( u32 )DID_ENTER_BACKGROUND );
+	state.SetField ( -1, "DID_RECIEVE_MEMORY_WARNING",	( u32 )DID_RECIEVE_MEMORY_WARNING );
+	state.SetField ( -1, "OPEN_URL",					( u32 )OPEN_URL );
+	state.SetField ( -1, "WILL_ENTER_FOREGROUND",		( u32 )WILL_ENTER_FOREGROUND );
+	state.SetField ( -1, "WILL_RESIGN_ACTIVE",			( u32 )WILL_RESIGN_ACTIVE );
+	state.SetField ( -1, "WILL_TERMINATE",				( u32 )WILL_TERMINATE );
 	
-	state.SetField ( -1, "DOMAIN_DOCUMENTS",	( u32 )DOMAIN_DOCUMENTS );
-	state.SetField ( -1, "DOMAIN_APP_SUPPORT",	( u32 )DOMAIN_APP_SUPPORT );
-	state.SetField ( -1, "DOMAIN_CACHES",		( u32 )DOMAIN_CACHES );
+	state.SetField ( -1, "DOMAIN_DOCUMENTS",			( u32 )DOMAIN_DOCUMENTS );
+	state.SetField ( -1, "DOMAIN_APP_SUPPORT",			( u32 )DOMAIN_APP_SUPPORT );
+	state.SetField ( -1, "DOMAIN_CACHES",				( u32 )DOMAIN_CACHES );
 	
 	state.SetField ( -1, "INTERFACE_ORIENTATION_PORTRAIT",				( u32 )INTERFACE_ORIENTATION_PORTRAIT );
 	state.SetField ( -1, "INTERFACE_ORIENTATION_PORTRAIT_UPSIDE_DOWN",	( u32 )INTERFACE_ORIENTATION_PORTRAIT_UPSIDE_DOWN );
@@ -328,12 +422,17 @@ void MOAIAppIOS::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "INTERFACE_ORIENTATION_LANDSCAPE_RIGHT",		( u32 )INTERFACE_ORIENTATION_LANDSCAPE_RIGHT );
 
 	luaL_Reg regTable [] = {
+		{ "canOpenURL",					_canOpenURL },
+		{ "getAvailableStorage",		_getAvailableStorage },
 		{ "getDirectoryInDomain",		_getDirectoryInDomain },
 		{ "getInterfaceOrientation",	_getInterfaceOrientation },
 		{ "getIPAddress",				_getIPAddress },
+		{ "getListener",				&MOAIGlobalEventSource::_getListener < MOAIAppIOS > },
 		{ "getUTCTime",					_getUTCTime },
+		{ "openURL",					_openURL },
+		{ "openURLWithParams",			_openURLWithParams },
 		{ "sendMail",					_sendMail },
-		{ "setListener",				_setListener },
+		{ "setListener",				&MOAIGlobalEventSource::_setListener < MOAIAppIOS > },
 		{ "takeCamera",					_takeCamera },
 		{ NULL, NULL }
 	};
@@ -342,31 +441,48 @@ void MOAIAppIOS::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIAppIOS::UpdateReachability () {
+void MOAIAppIOS::RegisterNotificationListeners () {
 
-	[ this->mReachabilityListener updateMoaiEnvironment ];
-}
+	this->mNotificationListenerMap [ "UIApplicationDidBecomeActiveNotification" ] = DID_BECOME_ACTIVE;
+	this->mNotificationListenerMap [ "UIApplicationDidEnterBackgroundNotification" ] = DID_ENTER_BACKGROUND;
+	this->mNotificationListenerMap [ "UIApplicationDidReceiveMemoryWarningNotification" ] = DID_RECIEVE_MEMORY_WARNING;
+	this->mNotificationListenerMap [ "UIApplicationWillEnterForegroundNotification" ] = WILL_ENTER_FOREGROUND;
+	this->mNotificationListenerMap [ "UIApplicationWillResignActiveNotification" ] = WILL_RESIGN_ACTIVE;
+	this->mNotificationListenerMap [ "UIApplicationWillTerminateNotification" ] = WILL_TERMINATE;
 
-//----------------------------------------------------------------//
-void MOAIAppIOS::WillResignActive () {
-
-	MOAILuaRef& callback = this->mListeners [ WILL_RESIGN_ACTIVE ];
+	NotificationListenerMapIt notificationIt = this->mNotificationListenerMap.begin ();
+	for ( ; notificationIt != this->mNotificationListenerMap.end (); ++notificationIt ) {
+		NSString* observerName = [ NSString stringWithUTF8String:notificationIt->first ];
+		u32 eventID = notificationIt->second;
 	
-	if ( callback ) {
-		MOAIScopedLuaState state = callback.GetSelf ();
-		state.DebugCall ( 0, 0 );
+		id observer = [[ NSNotificationCenter defaultCenter ]
+			addObserverForName:observerName
+			object:[ UIApplication sharedApplication ]
+			queue:nil
+			usingBlock:^( NSNotification* notification ) {
+				NSLog ( @"%@", notification.name );
+				this->InvokeListener ( eventID );
+				
+				if ( eventID == WILL_TERMINATE ) {
+					AKUAppFinalize ();
+				}
+			}
+		];
+		
+		if ( observer ) {
+			this->mNotificationObservers.push_back ( observer );
+		}
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIAppIOS::WillTerminate () {
+void MOAIAppIOS::RemoveNotificationListeners () {
 
-	MOAILuaRef& callback = this->mListeners [ WILL_TERMINATE ];
-	
-	if ( callback ) {
-		MOAIScopedLuaState state = callback.GetSelf ();
-		state.DebugCall ( 0, 0 );
+	NotificationObserverIt observerIt = this->mNotificationObservers.begin ();
+	for ( ; observerIt != this->mNotificationObservers.end (); ++observerIt ) {
+		[[ NSNotificationCenter defaultCenter ] removeObserver:*observerIt ];
 	}
+	this->mNotificationObservers.clear ();
 }
 
 //================================================================//

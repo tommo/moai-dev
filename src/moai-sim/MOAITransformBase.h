@@ -33,6 +33,11 @@ protected:
 	static int	_getWorldLoc	( lua_State* L );
 	static int	_getWorldRot	( lua_State* L );
 	static int	_getWorldScl	( lua_State* L );
+	static int	_modelToWorld	( lua_State* L );
+	static int	_modelToWorldVec	( lua_State* L );
+	static int	_setParent		( lua_State* L );
+	static int	_worldToModel	( lua_State* L );
+	static int	_worldToModelVec	( lua_State* L );
 
 public:
 	
@@ -51,6 +56,9 @@ public:
 		
 		TRANSFORM_TRAIT,
 		
+		INHERIT_LOC,
+		INHERIT_TRANSFORM,
+		
 		TOTAL_ATTR,
 	};
 	
@@ -58,12 +66,14 @@ public:
 	
 	//----------------------------------------------------------------//
 	bool					ApplyAttrOp					( u32 attrID, MOAIAttrOp& attrOp, u32 op );
+	virtual void			BuildLocalToWorldMtx		( ZLAffine3D& localToWorldMtx ) = 0;
 	const ZLAffine3D&		GetLocalToWorldMtx			() const;
 	const ZLAffine3D*		GetLocTrait					() const;
 	const ZLAffine3D*		GetTransformTrait			() const;
 	const ZLAffine3D&		GetWorldToLocalMtx			() const;
 							MOAITransformBase			();
 							~MOAITransformBase			();
+	void					OnDepNodeUpdate				();
 	void					RegisterLuaClass			( MOAILuaState& state );
 	void					RegisterLuaFuncs			( MOAILuaState& state );
 };

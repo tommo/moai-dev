@@ -7,7 +7,7 @@
 #include <moai-sim/pch.h>
 
 #include <moai-sim/MOAIAction.h>
-#include <moai-sim/MOAIActionMgr.h>
+#include <moai-sim/MOAIActionTree.h>
 #include <moai-sim/MOAIAnim.h>
 #include <moai-sim/MOAIAnimCurve.h>
 #include <moai-sim/MOAIAnimCurveBase.h>
@@ -20,7 +20,7 @@
 #include <moai-sim/MOAICamera.h>
 #include <moai-sim/MOAICameraAnchor2D.h>
 #include <moai-sim/MOAICameraFitter2D.h>
-#include <moai-sim/MOAICollisionFacet.h>
+#include <moai-sim/MOAICollisionProp.h>
 #include <moai-sim/MOAICollisionShape.h>
 #include <moai-sim/MOAICollisionWorld.h>
 #include <moai-sim/MOAIColor.h>
@@ -30,7 +30,6 @@
 #include <moai-sim/MOAIDeck.h>
 #include <moai-sim/MOAIDeckRemapper.h>
 #include <moai-sim/MOAIDraw.h>
-#include <moai-sim/MOAIEnvironment.h>
 #include <moai-sim/MOAIEaseDriver.h>
 #include <moai-sim/MOAIEaseType.h>
 #include <moai-sim/MOAIFrameBuffer.h>
@@ -39,6 +38,7 @@
 #include <moai-sim/MOAIGfxQuad2D.h>
 #include <moai-sim/MOAIGfxQuadDeck2D.h>
 #include <moai-sim/MOAIGfxQuadListDeck2D.h>
+#include <moai-sim/MOAIGfxResourceMgr.h>
 #include <moai-sim/MOAIGraphicsProp.h>
 #include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAIGridDeck2D.h>
@@ -46,15 +46,20 @@
 #include <moai-sim/MOAIGridPathGraph.h>
 #include <moai-sim/MOAIGridSpace.h>
 #include <moai-sim/MOAIImage.h>
+#include <moai-sim/MOAIImageFormat.h>
+#include <moai-sim/MOAIImageFormatMgr.h>
 #include <moai-sim/MOAIImageTexture.h>
 #include <moai-sim/MOAIIndexBuffer.h>
 #include <moai-sim/MOAIInputDevice.h>
-#include <moai-sim/MOAIInputMgr.h>
+#include <moai-sim/MOAIInputQueue.h>
 #include <moai-sim/MOAIJoystickSensor.h>
+#include <moai-sim/MOAIKeyCode.h>
+#include <moai-sim/MOAIKeyCodeEnum.h>
 #include <moai-sim/MOAIKeyboardSensor.h>
 #include <moai-sim/MOAILayer.h>
 #include <moai-sim/MOAILayoutFrame.h>
 #include <moai-sim/MOAILocationSensor.h>
+#include <moai-sim/MOAIMatrix.h>
 #include <moai-sim/MOAIMesh.h>
 #include <moai-sim/MOAIMotionSensor.h>
 #include <moai-sim/MOAIMultiTexture.h>
@@ -88,8 +93,8 @@
 //#include <moai-sim/MOAIProfilerReportBox.h>
 //#include <moai-sim/MOAIProfilerScope.h>
 #include <moai-sim/MOAIProp.h>
-#include <moai-sim/MOAIPvrHeader.h>
 #include <moai-sim/MOAIQuadBrush.h>
+#include <moai-sim/MOAIRegion.h>
 #include <moai-sim/MOAIRenderable.h>
 #include <moai-sim/MOAIRenderMgr.h>
 #include <moai-sim/MOAIScissorRect.h>
@@ -118,6 +123,7 @@
 #include <moai-sim/MOAIVectorPoly.h>
 #include <moai-sim/MOAIVectorPoly.h>
 #include <moai-sim/MOAIVectorRect.h>
+#include <moai-sim/MOAIVectorSensor.h>
 #include <moai-sim/MOAIVectorShape.h>
 #include <moai-sim/MOAIVectorStyle.h>
 #include <moai-sim/MOAIVectorTesselator.h>

@@ -11,15 +11,18 @@
 #include <zl-util/STLList.h>
 #include <zl-util/STLMap.h>
 #include <zl-util/STLSet.h>
+#include <zl-util/STLSort.h>
 #include <zl-util/STLString.h>
 
 #include <zl-util/ZLAdapterInfo.h>
 #include <zl-util/ZLAccessors.h>
 #include <zl-util/ZLAffine2D.h>
+#include <zl-util/ZLBarycentric.h>
 #include <zl-util/ZLBase64Encoder.h>
 #include <zl-util/ZLBase64Reader.h>
 #include <zl-util/ZLBase64Writer.h>
 #include <zl-util/ZLBinarySearch.h>
+#include <zl-util/ZLBitBuffer.h>
 #include <zl-util/ZLBox.h>
 #include <zl-util/ZLByteStream.h>
 #include <zl-util/ZLCgt.h>
@@ -41,9 +44,8 @@
 #include <zl-util/ZLHashWriterAdler32.h>
 #include <zl-util/ZLHashWriterCRC32.h>
 #include <zl-util/ZLHashWriterWhirlpool.h>
+#include <zl-util/ZLHexAdapter.h>
 #include <zl-util/ZLHexDump.h>
-#include <zl-util/ZLHexReader.h>
-#include <zl-util/ZLHexWriter.h>
 #include <zl-util/ZLInterpolate.h>
 #include <zl-util/ZLIntersect.h>
 #include <zl-util/ZLLeanArray.h>
@@ -73,8 +75,7 @@
 #include <zl-util/ZLRect.h>
 #include <zl-util/ZLRhombus.h>
 #include <zl-util/ZLStream.h>
-#include <zl-util/ZLStreamReader.h>
-#include <zl-util/ZLStreamWriter.h>
+#include <zl-util/ZLStreamAdapter.h>
 #include <zl-util/ZLSurface2D.h>
 #include <zl-util/ZLSyntaxNode.h>
 #include <zl-util/ZLSyntaxScanner.h>
@@ -89,5 +90,7 @@
 #include <zl-util/ZLXmlReader.h>
 #include <zl-util/ZLZip.h>
 #include <zl-util/ZLZipFile.h>
+
+#include <zl-util/zl_socket.h>
 
 #endif

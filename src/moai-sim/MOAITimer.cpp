@@ -498,6 +498,7 @@ void MOAITimer::OnLoop () {
 
 //----------------------------------------------------------------//
 void MOAITimer::OnStart () {
+	MOAIAction::OnStart ();
 
 	if( this->mDirection > 0.0f ) {
 		this->mTime = this->mStartTime;
@@ -512,9 +513,9 @@ void MOAITimer::OnStart () {
 }
 
 //----------------------------------------------------------------//
-void MOAITimer::OnUpdate ( float step ) {
+void MOAITimer::OnUpdate ( double step ) {
 
-	this->DoStep ( step );
+	this->DoStep (( float )step ); // TODO: change everything to doubles
 }
 
 //----------------------------------------------------------------//

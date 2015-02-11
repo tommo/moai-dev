@@ -7,6 +7,7 @@
 #include <moai-sim/MOAIFrameBufferTexture.h>
 #include <moai-sim/MOAIGfxDevice.h>
 #include <moai-sim/MOAIGfxResource.h>
+#include <moai-sim/MOAIGfxResourceMgr.h>
 #include <moai-sim/MOAIMultiTexture.h>
 #include <moai-sim/MOAIShader.h>
 #include <moai-sim/MOAIShaderMgr.h>
@@ -16,41 +17,6 @@
 #include <moai-sim/MOAIVertexFormat.h>
 #include <moai-sim/MOAIVertexFormatMgr.h>
 #include <moai-sim/MOAIViewport.h>
-
-//================================================================//
-// MOAIGfxDeleter
-//================================================================//
-
-//----------------------------------------------------------------//
-void MOAIGfxDeleter::Delete () {
-
-	switch ( this->mType ) {
-		
-		case DELETE_BUFFER:
-			zglDeleteBuffer ( this->mResourceID );
-			break;
-		
-		case DELETE_FRAMEBUFFER:
-			zglDeleteFramebuffer ( this->mResourceID );
-			break;
-		
-		case DELETE_PROGRAM:
-			zglDeleteProgram ( this->mResourceID );
-			break;
-		
-		case DELETE_SHADER:
-			zglDeleteShader ( this->mResourceID );
-			break;
-		
-		case DELETE_TEXTURE:
-			zglDeleteTexture ( this->mResourceID );
-			break;
-		
-		case DELETE_RENDERBUFFER:
-			zglDeleteRenderbuffer ( this->mResourceID );
-			break;
-	}
-}
 
 //================================================================//
 // local
@@ -188,7 +154,6 @@ int MOAIGfxDevice::_setPenWidth ( lua_State* L ) {
 	@out	nil
 */
 int MOAIGfxDevice::_setPointSize ( lua_State* L ) {
-
 	MOAILuaState state ( L );
 
 	float size = state.GetValue < float >( 1, 1.0f );
@@ -204,11 +169,7 @@ int MOAIGfxDevice::_setPointSize ( lua_State* L ) {
  */
 // TODO: rename this to something more descriptive?
 int MOAIGfxDevice::_release ( lua_State* L ) {
-
-	MOAILuaState state ( L );
-
-	MOAIGfxDevice::Get ().ProcessDeleters ();
-	zglFlush ();
+	UNUSED ( L );
 	return 0;
 }
 
@@ -239,8 +200,6 @@ void MOAIGfxDevice::BeginPrim ( u32 primType ) {
 void MOAIGfxDevice::Clear () {
 
 	this->mDefaultTexture.Set ( *this, 0 );
-
-	this->ProcessDeleters ();
 
 	if ( this->mBuffer ) {
 		free ( this->mBuffer );
@@ -279,6 +238,8 @@ void MOAIGfxDevice::DetectContext () {
 
 	this->mHasContext = true;
 	
+	zglBegin ();
+	
 	zglInitialize ();
 	
 	this->mIsProgrammable = zglGetCap ( ZGL_CAPS_IS_PROGRAMMABLE ) == 1;
@@ -290,10 +251,21 @@ void MOAIGfxDevice::DetectContext () {
 	
 	this->mMaxTextureSize = zglGetCap ( ZGL_CAPS_MAX_TEXTURE_SIZE );
 
-	this->mDeleterStack.Reset ();
-	this->ResetResources ();
+	MOAIGfxResourceMgr::Get ().RenewResources ();
 	
 	this->mDefaultBuffer->DetectGLFrameBufferID ();
+	
+	zglEnd ();
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::DetectFramebuffer () {
+	
+	zglBegin ();
+	
+	this->mDefaultBuffer->DetectGLFrameBufferID ();
+	
+	zglEnd ();
 }
 
 //----------------------------------------------------------------//
@@ -536,9 +508,10 @@ void MOAIGfxDevice::GpuMultMatrix ( const ZLMatrix4x4& mtx ) const {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::InsertGfxResource ( MOAIGfxResource& resource ) {
-
-	this->mResources.PushBack ( resource.mLink );
+bool MOAIGfxDevice::IsOpaque () const {
+	
+	assert ( this->mDefaultBuffer );
+	return this->mDefaultBuffer->IsOpaque ();
 }
 
 //----------------------------------------------------------------//
@@ -566,11 +539,11 @@ MOAIGfxDevice::MOAIGfxDevice () :
 	mCpuUVTransform ( false ),
 	mHasContext ( false ),
 	mIsFramebufferSupported ( 0 ),
-#if defined ( MOAI_OS_NACL ) || defined ( MOAI_OS_IPHONE ) || defined ( MOAI_OS_ANDROID ) || defined ( EMSCRIPTEN )
-	mIsOpenGLES ( true ),
-#else
-	mIsOpenGLES ( false ),
-#endif
+	#if defined ( MOAI_OS_NACL ) || defined ( MOAI_OS_IPHONE ) || defined ( MOAI_OS_ANDROID ) || defined ( EMSCRIPTEN )
+		mIsOpenGLES ( true ),
+	#else
+		mIsOpenGLES ( false ),
+	#endif
 	mIsProgrammable ( false ),
 	mMajorVersion ( 0 ),
 	mMaxPrims ( 0 ),
@@ -621,33 +594,26 @@ MOAIGfxDevice::MOAIGfxDevice () :
 MOAIGfxDevice::~MOAIGfxDevice () {
 
 	this->mDefaultBuffer.Set ( *this, 0 );
+	
+	// this->ProcessDeleters (); // TODO: same issue as OnGlobalsFinalize
 	this->Clear ();
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxDevice::ProcessDeleters () {
+void MOAIGfxDevice::OnGlobalsFinalize () {
 
-	u32 top = this->mDeleterStack.GetTop ();
-	for ( u32 i = 0; i < top; ++i ) {
-		MOAIGfxDeleter& deleter = this->mDeleterStack [ i ];
-		deleter.Delete ();
-	}
-	this->mDeleterStack.Reset ();
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxDevice::PushDeleter ( u32 type, u32 id ) {
-
-	MOAIGfxDeleter deleter;
-	deleter.mType = type;
-	deleter.mResourceID = id;
-	
-	this->mDeleterStack.Push ( deleter );
-	this->ProcessDeleters ();
+	// TODO: do we care about releasing resources on shutdown?
+	// commented out for now.
+	//this->ReleaseResources ();
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxDevice::RegisterLuaClass ( MOAILuaState& state ) {
+
+	state.SetField ( -1, "LOADING_POLICY_CPU_GPU_ASAP",			( u32 )MOAIGfxResource::LOADING_POLICY_CPU_GPU_ASAP );
+	state.SetField ( -1, "LOADING_POLICY_CPU_ASAP_GPU_NEXT",	( u32 )MOAIGfxResource::LOADING_POLICY_CPU_ASAP_GPU_NEXT );
+	state.SetField ( -1, "LOADING_POLICY_CPU_ASAP_GPU_BIND",	( u32 )MOAIGfxResource::LOADING_POLICY_CPU_ASAP_GPU_BIND );
+	state.SetField ( -1, "LOADING_POLICY_CPU_GPU_BIND",			( u32 )MOAIGfxResource::LOADING_POLICY_CPU_GPU_BIND );
 
 	state.SetField ( -1, "EVENT_RESIZE", ( u32 )EVENT_RESIZE );
 
@@ -667,30 +633,6 @@ void MOAIGfxDevice::RegisterLuaClass ( MOAILuaState& state ) {
 	};
 
 	luaL_register( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxDevice::ReleaseResources () {
-
-	ResourceIt resourceIt = this->mResources.Head ();
-	for ( ; resourceIt; resourceIt = resourceIt->Next ()) {
-		resourceIt->Data ()->Destroy ();
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxDevice::RemoveGfxResource ( MOAIGfxResource& resource ) {
-
-	this->mResources.Remove ( resource.mLink );
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxDevice::RenewResources () {
-
-	ResourceIt resourceIt = this->mResources.Head ();
-	for ( ; resourceIt; resourceIt = resourceIt->Next ()) {
-		resourceIt->Data ()->Load ();
-	}
 }
 
 //----------------------------------------------------------------//
@@ -720,16 +662,6 @@ void MOAIGfxDevice::Reserve ( u32 size ) {
 //----------------------------------------------------------------//
 void MOAIGfxDevice::ResetDrawCount () {
 	this->mDrawCount = 0;
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxDevice::ResetResources () {
-
-	ResourceIt resourceIt = this->mResources.Head ();
-	for ( ; resourceIt; resourceIt = resourceIt->Next ()) {
-		resourceIt->Data ()->Invalidate ();
-		resourceIt->Data ()->Load ();
-	}
 }
 
 //----------------------------------------------------------------//
@@ -1051,6 +983,8 @@ void MOAIGfxDevice::SetScissorRect () {
 void MOAIGfxDevice::SetScissorRect ( ZLRect rect ) {
 	
 	rect.Bless ();
+	this->mViewRect.Clip ( rect );
+
 	ZLRect& current = this->mScissorRect;
 	
 	if (	( current.mXMin != rect.mXMin ) ||
@@ -1067,6 +1001,9 @@ void MOAIGfxDevice::SetScissorRect ( ZLRect rect ) {
 		
 		u32 w = ( u32 )( deviceRect.Width () + 0.5f );
 		u32 h = ( u32 )( deviceRect.Height () + 0.5f );
+
+		w = h == 0 ? 0 : w;
+		h = w == 0 ? 0 : h;
 		
 		zglScissor ( x, y, w, h );
 		this->mScissorRect = rect;
@@ -1177,10 +1114,6 @@ bool MOAIGfxDevice::SetTexture ( u32 textureUnit, MOAITextureBase* texture ) {
 		return false;
 	}
 	
-	if ( texture->mState == MOAIGfxResource::STATE_PRELOAD ) {
-		return this->SetTexture ( textureUnit, this->mDefaultTexture );
-	}
-	
 	if ( this->mTextureUnits [ textureUnit ] == texture ) return true;
 	
 	this->Flush ();
@@ -1193,8 +1126,12 @@ bool MOAIGfxDevice::SetTexture ( u32 textureUnit, MOAITextureBase* texture ) {
 		}
 	#endif
 	
+	if ( !texture->Bind ()) {
+		return this->SetTexture ( textureUnit, this->mDefaultTexture );
+	}
+	
 	this->mTextureUnits [ textureUnit ] = texture;
-	return texture->Bind ();
+	return true;
 }
 
 //----------------------------------------------------------------//
@@ -1360,19 +1297,6 @@ void MOAIGfxDevice::SetViewRect ( ZLRect rect ) {
 	
 	this->mViewRect = rect;
 	this->mShaderDirty = true;
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxDevice::SoftReleaseResources ( u32 age ) {
-
-	ResourceIt resourceIt = this->mResources.Head ();
-	for ( ; resourceIt; resourceIt = resourceIt->Next ()) {
-		resourceIt->Data ()->SoftRelease ( age );
-	}
-	
-	// Horrible to call this, but generally soft release is only used
-	// in response to a low memory warning and we want to free as soon as possible.
-	zglFlush ();
 }
 
 //----------------------------------------------------------------//

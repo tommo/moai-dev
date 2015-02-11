@@ -7,7 +7,7 @@
 
 #import <contrib/MOAIOpenUDID.h>
 #import <AdSupport/ASIdentifierManager.h>
-
+#import <moai-sim/MOAIGfxDevice.h>
 //================================================================//
 // aku-util
 //================================================================//
@@ -18,29 +18,19 @@ void AKUIosAppFinalize () {
 
 //----------------------------------------------------------------//
 void AKUIosAppInitialize () {
-
-	loadMoaiLib_NSArray ();
-	loadMoaiLib_NSData ();
-	loadMoaiLib_NSDate ();
-	loadMoaiLib_NSDictionary ();
-	loadMoaiLib_NSError ();
-	loadMoaiLib_NSNumber ();
-	loadMoaiLib_NSObject ();
-	loadMoaiLib_NSString ();
 }
 
 //----------------------------------------------------------------//
 void AKUIosContextInitialize () {
 
 	MOAIAppIOS::Affirm ();
-			
+	
 	// MOAI
 	REGISTER_LUA_CLASS ( MOAIAppIOS )
 	REGISTER_LUA_CLASS ( MOAIDialogIOS )
 	REGISTER_LUA_CLASS ( MOAIKeyboardIOS )
-	REGISTER_LUA_CLASS ( MOAIBrowserIOS )
-	REGISTER_LUA_CLASS ( MOAIWebViewIOS )
 	REGISTER_LUA_CLASS ( MOAINotificationsIOS )
+	REGISTER_LUA_CLASS ( MOAIWebViewIOS )
 
 	// Device properties
 	MOAIEnvironment& environment = MOAIEnvironment::Get ();
@@ -50,6 +40,7 @@ void AKUIosContextInitialize () {
 	environment.SetValue ( MOAI_ENV_appVersion,				[[[[ NSBundle mainBundle ] infoDictionary ] objectForKey:@"CFBundleShortVersionString" ] UTF8String ]);
 	environment.SetValue ( MOAI_ENV_buildVersion,			[[[[ NSBundle mainBundle ] infoDictionary ] objectForKey:@"CFBundleVersion" ] UTF8String ]);
 	environment.SetValue ( MOAI_ENV_countryCode,			[[[ NSLocale currentLocale ] objectForKey: NSLocaleCountryCode ] UTF8String ]);
+	environment.SetValue ( MOAI_ENV_devName,				[[ UIDevice currentDevice ].name UTF8String ] );
 	environment.SetValue ( MOAI_ENV_devModel,				[[ UIDevice currentDevice ].model UTF8String ] );
 	environment.SetValue ( MOAI_ENV_horizontalResolution,	[[ UIScreen mainScreen ] bounds ].size.width * [[ UIScreen mainScreen ] scale ] );	
 	environment.SetValue ( MOAI_ENV_iosRetinaDisplay,		[[ UIScreen mainScreen ] scale ] == 2.0 );
@@ -76,14 +67,6 @@ void AKUIosContextInitialize () {
 			environment.SetValue ( MOAI_ENV_iosIFA, [[[ sharedManager advertisingIdentifier ] UUIDString ] UTF8String ]);
 		}
     }
-	
-	MOAIAppIOS::Get ().UpdateReachability ();
-}
-
-//----------------------------------------------------------------//
-void AKUIosDidBecomeActive () {
-
-	MOAIAppIOS::Get ().DidBecomeActive ();
 }
 
 //----------------------------------------------------------------//
@@ -116,14 +99,3 @@ void AKUIosSetFrameBuffer ( GLuint frameBuffer ) {
 	MOAIGfxDevice::Get ().GetDefaultBuffer ()->SetGLFrameBufferID ( frameBuffer );
 }
 
-//----------------------------------------------------------------//
-void AKUIosWillResignActive () {
-
-	MOAIAppIOS::Get ().WillResignActive ();
-}
-
-//----------------------------------------------------------------//
-void AKUIosWillTerminate () {
-
-	MOAIAppIOS::Get ().WillTerminate ();
-}

@@ -39,6 +39,7 @@ private:
 	
 	static const u32 MAX_PARTICLE_REGISTERS = 256;
 	static const u32 PARTICLE_REGISTER_MASK = 0x000000ff;
+	static const u32 LIVE_REG_COUNT = 16;
 	
 	enum {
 		SPRITE_X_LOC,
@@ -61,9 +62,11 @@ private:
 	
 	enum {
 		END = 0,
+		ABS,
 		ADD,
 		AGE,
 		ANGLE_VEC,
+		COLOR,
 		COS,
 		CYCLE,
 		DIV,
@@ -77,6 +80,7 @@ private:
 		SIN,
 		SPRITE,
 		SIGN,
+		STEP,
 		SUB,
 		TAN,
 		TIME,
@@ -109,12 +113,16 @@ private:
 	STLList < Instruction > mInstructions;
 	
 	ZLLeanArray < u8 > mBytecode;
+	
 	bool mCompiled;
+	float	mLiveRegisters [ LIVE_REG_COUNT ]; // TODO: OK to let user reserve these?
 
 	//----------------------------------------------------------------//
+	static int		_abs				( lua_State* L );
 	static int		_add				( lua_State* L );
 	static int		_angleVec			( lua_State* L );
 	static int		_age				( lua_State* L );
+	static int		_color			( lua_State* L );
 	static int		_cos				( lua_State* L );
 	static int		_cycle				( lua_State* L );
 	static int		_div				( lua_State* L );
@@ -123,13 +131,16 @@ private:
 	static int		_mul				( lua_State* L );
 	static int		_norm				( lua_State* L );
 	static int		_packConst			( lua_State* L );
-	static int		_packReg			( lua_State* L );
+	static int		_packLiveReg		( lua_State* L );
+	// static int		_packReg			( lua_State* L );
 	static int		_rand				( lua_State* L );
 	static int		_randVec			( lua_State* L );
 	static int		_set				( lua_State* L );
+	static int		_setLiveReg			( lua_State* L );
 	static int		_sign				( lua_State* L );
 	static int		_sin				( lua_State* L );
 	static int		_sprite				( lua_State* L );
+	static int		_step				( lua_State* L );
 	static int		_sub				( lua_State* L );
 	static int		_tan				( lua_State* L );
 	static int		_time				( lua_State* L );
@@ -141,7 +152,7 @@ private:
 	static u64		Pack64					( u32 low, u32 hi );
 	Instruction&	PushInstruction			( u32 op, cc8* format );
 	void			PushSprite				( MOAIParticleSystem& system, float* registers );
-	void			ResetRegisters			( float* spriteRegisters, float* particleRegisters );
+	void			ResetRegisters			( float* spriteRegisters, float* particleRegisters, const MOAIParticleSystem& );
 
 public:
 	
@@ -152,9 +163,10 @@ public:
 		PARAM_TYPE_CONST			= 0x01,
 		PARAM_TYPE_PARTICLE_REG		= 0x02,
 		PARAM_TYPE_SPRITE_REG		= 0x04,
+		PARAM_TYPE_LIVE_REG		= 0x08,
 		
-		PARAM_TYPE_REG_MASK			= 0x06,
-		PARAM_TYPE_MASK				= 0x07,
+		PARAM_TYPE_REG_MASK			= 0x0E,
+		PARAM_TYPE_MASK				= 0x0F,
 	};
 	
 	//----------------------------------------------------------------//

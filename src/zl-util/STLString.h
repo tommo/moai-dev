@@ -20,8 +20,8 @@ using namespace std;
 	STLString str; \
 	STLSTRING_APPEND_VA_ARGS ( str, format, top )
 
-class ZLStreamReader;
-class ZLStreamWriter;
+class ZLStreamAdapter;
+class ZLStreamAdapter;
 
 //================================================================//
 // STLString
@@ -30,12 +30,13 @@ class STLString :
 	public string {
 	
 	//----------------------------------------------------------------//
-	void				zl_decode			( ZLStreamReader& reader, void* buffer, size_t len );
-	void				zl_encode			( ZLStreamWriter& writer, const void* buffer, size_t len );
+	void				zl_decode			( ZLStreamAdapter& reader, void* buffer, size_t len );
+	void				zl_encode			( ZLStreamAdapter& writer, const void* buffer, size_t len );
 	
 public:
 
 	//----------------------------------------------------------------//
+	STLString&			assign				( cc8* str );
 	void				base_64_decode		( void* buffer, size_t len );
 	size_t				base_64_decode_len	(); // calc the *approx* len of a plain str; safe to use for buffer allocation
 	void				base_64_encode		( const void* buffer, size_t len );
@@ -56,7 +57,8 @@ public:
 	static u8			hex_to_byte			( u32 c );
 	
 	void				replace_char		( cc8 match, cc8 sub );
-	void				tokenize			( STLArray < STLString >& tokens, const STLString& delimiters = " " );
+	size_t				tokenize			( STLArray < STLString >& tokens, const STLString& delimiters = " " ) const;
+	static size_t		tokenize			( const STLString& str, STLArray < STLString >& tokens, const STLString& delimiters = " " );
 	double				to_double			();
 	float				to_float			();
 	int					to_int				();
@@ -67,6 +69,23 @@ public:
 
 	void				zip_deflate			( const void* buffer, size_t len ); // deflate then base64 encode
 	size_t				zip_inflate			( void* buffer, size_t len ); // base64 decode then inflate
+
+	//----------------------------------------------------------------//
+	inline STLString& operator= ( cc8* rhs ) {
+		return this->assign ( rhs );
+	}
+
+	//----------------------------------------------------------------//
+	inline STLString& operator= ( const string& rhs ) {
+		this->string::assign ( rhs );
+		return *this;
+	}
+
+	//----------------------------------------------------------------//
+	inline STLString& operator= ( const STLString& rhs ) {
+		this->string::assign ( rhs );
+		return *this;
+	}
 
 	//----------------------------------------------------------------//
 	inline operator const char* () const {
@@ -93,6 +112,11 @@ public:
 
 	//----------------------------------------------------------------//
 	inline STLString ( const string& s2 ) :
+		string ( s2 ) {
+	}
+
+	//----------------------------------------------------------------//
+	inline STLString ( const STLString& s2 ) :
 		string ( s2 ) {
 	}
 

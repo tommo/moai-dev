@@ -5,7 +5,7 @@
 #define	MOAIVERTEXBUFFER_H
 
 #include <moai-sim/MOAIGfxResource.h>
-
+#include <moai-util/MOAIStream.h>
 class MOAIVertexFormat;
 
 //================================================================//
@@ -25,6 +25,7 @@ public:
 	@text	Vertex buffer class.
 */
 class MOAIVertexBuffer :
+	public ZLByteStream,
 	public MOAIGfxResource,
 	public MOAIStream {
 private:
@@ -36,7 +37,6 @@ private:
 	u32										mVertexCount;
 
 	ZLLeanArray < u8 >			mBuffer;
-	ZLByteStream				mStream;
 	ZLBox						mBounds;
 	
 	ZLLeanArray < MOAIVbo >		mVBOs;
@@ -44,7 +44,6 @@ private:
 	u32							mHint;
 	
 	bool						mIsDirty;
-	bool						mIsValid;
 	bool						mUseVBOs;
 	
 	//----------------------------------------------------------------//
@@ -58,22 +57,20 @@ private:
 	static int		_writeColor32			( lua_State* L );
 
 	//----------------------------------------------------------------//
-	bool			IsRenewable				();
-	bool			IsValid					();
-	void			OnBind					();
-	void			OnClear					();
-	void			OnCreate				();
-	void			OnDestroy				();
-	void			OnInvalidate			();
-	void			OnLoad					();
-	void			OnUnbind				();
-
+	u32				GetLoadingPolicy		();
+	bool			OnCPUCreate				();
+	void			OnCPUDestroy			();
+	void			OnGPUBind				();
+	bool			OnGPUCreate				();
+	void			OnGPUDestroy			();
+	void			OnGPULost				();
+	void			OnGPUUnbind				();
+	
 public:
 	
 	DECL_LUA_FACTORY ( MOAIVertexBuffer )
 	
 	GET ( const ZLBox&, Bounds, mBounds )
-	GET ( ZLStream&, Stream, mStream )
 	GET ( u32, VertexCount, mVertexCount )
 	
 	//----------------------------------------------------------------//

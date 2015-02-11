@@ -41,18 +41,6 @@ int MOAIImageTexture::_updateRegion ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIImageTexture::IsRenewable () {
-
-	return true;
-}
-
-//----------------------------------------------------------------//
-bool MOAIImageTexture::IsValid () {
-
-	return ( this->mGLTexID && ( this->mStatus == VALID ));
-}
-
-//----------------------------------------------------------------//
 MOAIImageTexture::MOAIImageTexture () :
 	mStatus ( INVALID ) {
 	
@@ -67,35 +55,30 @@ MOAIImageTexture::~MOAIImageTexture () {
 }
 
 //----------------------------------------------------------------//
-void MOAIImageTexture::OnClear () {
+void MOAIImageTexture::OnGPUBind () {
 
-	this->MOAIImage::Clear ();
-	MOAITextureBase::OnClear ();
+	if ( this->mStatus == INVALID ) {
+		this->UpdateTextureFromImage ( *this, this->mRegion );
+		this->mStatus = VALID;
+	}
+	MOAITextureBase::OnGPUBind ();
 }
 
 //----------------------------------------------------------------//
-void MOAIImageTexture::OnCreate () {
+bool MOAIImageTexture::OnGPUCreate () {
 
-	if ( !this->IsOK ()) return;
-	
-	if ( !this->mGLTexID ) {
-		this->CreateTextureFromImage ( *this );
-	}
-	else if ( this->mStatus != VALID ) {
-		
-		ZLIntRect rect = this->mRegion;
-		if ( this->mStatus == INVALID ) {
-			rect = this->GetRect ();
-		}
-		this->UpdateTextureFromImage ( *this, rect );
-	}
+	if ( !this->IsOK ()) return false;
 	this->mStatus = VALID;
+	return this->CreateTextureFromImage ( *this );
 }
 
 //----------------------------------------------------------------//
-void MOAIImageTexture::OnLoad () {
-}
+void MOAIImageTexture::OnImageStatusChanged	( bool isOK ) {
 
+	if ( isOK ) {
+		this->DoCPUAffirm ();
+	}
+}
 
 //----------------------------------------------------------------//
 void MOAIImageTexture::RegisterLuaClass ( MOAILuaState& state ) {
@@ -131,26 +114,22 @@ void MOAIImageTexture::SerializeOut ( MOAILuaState& state, MOAISerializer& seria
 
 //----------------------------------------------------------------//
 void MOAIImageTexture::UpdateRegion () {
-
+	
+	this->mRegion = this->GetRect ();
 	this->mStatus = INVALID;
- 	this->MOAIGfxResource::Load ();
 }
 
 //----------------------------------------------------------------//
 void MOAIImageTexture::UpdateRegion ( ZLIntRect rect ) {
 	
-	if ( this->mStatus == INVALID ) return;
-
 	rect.Bless ();
 	this->GetRect ().Clip ( rect );
-
+	
 	if ( this->mStatus == VALID ) {
 		this->mRegion = rect;
 	}
 	else {
 		this->mRegion.Grow ( rect );
 	}
-	this->mStatus = INVALID_REGION;
-	
-	this->MOAIGfxResource::Load ();
+	this->mStatus = INVALID;
 }
