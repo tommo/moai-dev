@@ -12,7 +12,7 @@ osx_sdks=( "macosx" )
 osx_architectures_macosx=( "i386" )
 
 # ios_schemes="libmoai-ios libmoai-ios-3rdparty libmoai-ios-facebook libmoai-ios-fmod-ex libmoai-ios-luaext libmoai-ios-tapjoy libmoai-ios-untz libmoai-ios-zl-core libmoai-ios-zl-vfs libmoai-ios-zl-crypto"
-ios_schemes="libmoai-ios libmoai-ios-sim libmoai-ios-3rdparty-core libmoai-ios-3rdparty-curl libmoai-ios-3rdparty-crypto libmoai-ios-luaext libmoai-ios-fmod-ex libmoai-ios-fmod-designer libmoai-ios-zl-core libmoai-ios-zl-vfs libmoai-ios-zl-crypto  libmoai-ios-box2d libmoai-ios-http-client libmoai-ios-crittercism libmoai-ios-billing libmoai-ios-gamecenter libmoai-ios-untz libmoai-ios-crypto"
+ios_schemes="libmoai-ios libmoai-ios-sim libmoai-ios-3rdparty-core libmoai-ios-3rdparty-crypto libmoai-ios-luaext libmoai-ios-apple libmoai-ios-fmod-ex libmoai-ios-fmod-designer libmoai-ios-zl-core libmoai-ios-zl-vfs libmoai-ios-zl-crypto  libmoai-ios-box2d libmoai-ios-http-client libmoai-ios-crittercism libmoai-ios-billing libmoai-ios-gamecenter libmoai-ios-untz libmoai-ios-crypto"
 ios_sdks="iphoneos"  #iphonesimulator
 ios_architectures_iphonesimulator="i386"
 ios_architectures_iphoneos="armv7"

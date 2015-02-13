@@ -438,7 +438,7 @@ enum {
         [ self openGraphicsContext ];
         [ self createBuffers ];
         
-        AKUModulesRunLuaAPIWrapper ();
+        // AKUModulesRunLuaAPIWrapper ();
         
         // start to run the moai thread immediately so it renders the view before returning from here
         // to get a chance to display a splash screen for example while the rest loads
