@@ -4,9 +4,6 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
--- Note: To run this sample you will need to enable landscape
---       orientation in the host, in MoaiVC.mm
-
 viewWidth, viewHeight = MOAIGfxDevice.getViewSize ()
 
 viewport = MOAIViewport.new ()
@@ -19,7 +16,7 @@ MOAISim.pushRenderPass ( layer )
 
 gfxQuad = MOAIGfxQuad2D.new ()
 gfxQuad:setTexture ( "moai.png" )
-gfxQuad:setRect ( -64, -64, 64, 64 )
+gfxQuad:setRect ( -640, -640, 640, 640 )
 
 prop = MOAIProp2D.new ()
 prop:setDeck ( gfxQuad )
@@ -30,6 +27,7 @@ prop:moveRot ( 360, 1.5 )
 function onResize ( width, height )
 	viewport:setSize ( width, height )
 	viewport:setScale ( width, height )
+	print ( 'RESIZED', width, height )
 end
 
 MOAIGfxDevice.setListener ( MOAIGfxDevice.EVENT_RESIZE, onResize )
