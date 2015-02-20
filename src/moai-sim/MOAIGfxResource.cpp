@@ -82,7 +82,9 @@ int MOAIGfxResource::_purge ( lua_State* L ) {
 */
 int MOAIGfxResource::_affirm ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGfxResource, "U" )
+	zglBegin();
 	self->Bind();
+	zglEnd();
 	// if( state.GetValue < bool>( 2, true ) )
 	// 	self->DoCPUAffirm();
 	// if( state.GetValue < bool>( 3, false ) )

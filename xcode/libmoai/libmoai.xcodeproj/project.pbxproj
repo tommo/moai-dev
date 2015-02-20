@@ -21341,7 +21341,7 @@
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = (
 					"-include",
 					"\"zl-vfs/zl_replace.h\"",
