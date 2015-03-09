@@ -210,6 +210,144 @@
 		03240EF413564CB0000ADC60 /* tinyxml.h in Headers */ = {isa = PBXBuildFile; fileRef = 03240BA813564CB0000ADC60 /* tinyxml.h */; };
 		03240EF513564CB0000ADC60 /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03240BA913564CB0000ADC60 /* tinyxmlerror.cpp */; };
 		03240EF613564CB0000ADC60 /* tinyxmlparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03240BAA13564CB0000ADC60 /* tinyxmlparser.cpp */; };
+		041C2A411AAD8F4D005E88B1 /* headers.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C29FC1AAD8F4D005E88B1 /* headers.h */; };
+		041C2A421AAD8F4D005E88B1 /* headers.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C29FC1AAD8F4D005E88B1 /* headers.h */; };
+		041C2A431AAD8F4D005E88B1 /* host.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C29FD1AAD8F4D005E88B1 /* host.cpp */; };
+		041C2A441AAD8F4D005E88B1 /* host.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C29FD1AAD8F4D005E88B1 /* host.cpp */; };
+		041C2A451AAD8F4D005E88B1 /* host.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C29FE1AAD8F4D005E88B1 /* host.h */; };
+		041C2A461AAD8F4D005E88B1 /* host.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C29FE1AAD8F4D005E88B1 /* host.h */; };
+		041C2A471AAD8F4D005E88B1 /* MOAISteerBehaviour.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C29FF1AAD8F4D005E88B1 /* MOAISteerBehaviour.cpp */; };
+		041C2A481AAD8F4D005E88B1 /* MOAISteerBehaviour.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C29FF1AAD8F4D005E88B1 /* MOAISteerBehaviour.cpp */; };
+		041C2A491AAD8F4D005E88B1 /* MOAISteerBehaviour.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A001AAD8F4D005E88B1 /* MOAISteerBehaviour.h */; };
+		041C2A4A1AAD8F4D005E88B1 /* MOAISteerBehaviour.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A001AAD8F4D005E88B1 /* MOAISteerBehaviour.h */; };
+		041C2A4B1AAD8F4D005E88B1 /* MOAISteerBehaviourAlignment.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C2A011AAD8F4D005E88B1 /* MOAISteerBehaviourAlignment.cpp */; };
+		041C2A4C1AAD8F4D005E88B1 /* MOAISteerBehaviourAlignment.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C2A011AAD8F4D005E88B1 /* MOAISteerBehaviourAlignment.cpp */; };
+		041C2A4D1AAD8F4D005E88B1 /* MOAISteerBehaviourAlignment.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A021AAD8F4D005E88B1 /* MOAISteerBehaviourAlignment.h */; };
+		041C2A4E1AAD8F4D005E88B1 /* MOAISteerBehaviourAlignment.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A021AAD8F4D005E88B1 /* MOAISteerBehaviourAlignment.h */; };
+		041C2A4F1AAD8F4D005E88B1 /* MOAISteerBehaviourArrive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C2A031AAD8F4D005E88B1 /* MOAISteerBehaviourArrive.cpp */; };
+		041C2A501AAD8F4D005E88B1 /* MOAISteerBehaviourArrive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C2A031AAD8F4D005E88B1 /* MOAISteerBehaviourArrive.cpp */; };
+		041C2A511AAD8F4D005E88B1 /* MOAISteerBehaviourArrive.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A041AAD8F4D005E88B1 /* MOAISteerBehaviourArrive.h */; };
+		041C2A521AAD8F4D005E88B1 /* MOAISteerBehaviourArrive.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A041AAD8F4D005E88B1 /* MOAISteerBehaviourArrive.h */; };
+		041C2A531AAD8F4D005E88B1 /* MOAISteerBehaviourCohesion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C2A051AAD8F4D005E88B1 /* MOAISteerBehaviourCohesion.cpp */; };
+		041C2A541AAD8F4D005E88B1 /* MOAISteerBehaviourCohesion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C2A051AAD8F4D005E88B1 /* MOAISteerBehaviourCohesion.cpp */; };
+		041C2A551AAD8F4D005E88B1 /* MOAISteerBehaviourCohesion.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A061AAD8F4D005E88B1 /* MOAISteerBehaviourCohesion.h */; };
+		041C2A561AAD8F4D005E88B1 /* MOAISteerBehaviourCohesion.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A061AAD8F4D005E88B1 /* MOAISteerBehaviourCohesion.h */; };
+		041C2A571AAD8F4D005E88B1 /* MOAISteerBehaviourCollisionAvoidance.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C2A071AAD8F4D005E88B1 /* MOAISteerBehaviourCollisionAvoidance.cpp */; };
+		041C2A581AAD8F4D005E88B1 /* MOAISteerBehaviourCollisionAvoidance.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C2A071AAD8F4D005E88B1 /* MOAISteerBehaviourCollisionAvoidance.cpp */; };
+		041C2A591AAD8F4D005E88B1 /* MOAISteerBehaviourCollisionAvoidance.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A081AAD8F4D005E88B1 /* MOAISteerBehaviourCollisionAvoidance.h */; };
+		041C2A5A1AAD8F4D005E88B1 /* MOAISteerBehaviourCollisionAvoidance.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A081AAD8F4D005E88B1 /* MOAISteerBehaviourCollisionAvoidance.h */; };
+		041C2A5B1AAD8F4D005E88B1 /* MOAISteerBehaviourConstant.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C2A091AAD8F4D005E88B1 /* MOAISteerBehaviourConstant.cpp */; };
+		041C2A5C1AAD8F4D005E88B1 /* MOAISteerBehaviourConstant.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C2A091AAD8F4D005E88B1 /* MOAISteerBehaviourConstant.cpp */; };
+		041C2A5D1AAD8F4D005E88B1 /* MOAISteerBehaviourConstant.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A0A1AAD8F4D005E88B1 /* MOAISteerBehaviourConstant.h */; };
+		041C2A5E1AAD8F4D005E88B1 /* MOAISteerBehaviourConstant.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A0A1AAD8F4D005E88B1 /* MOAISteerBehaviourConstant.h */; };
+		041C2A5F1AAD8F4D005E88B1 /* MOAISteerBehaviourEvade.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C2A0B1AAD8F4D005E88B1 /* MOAISteerBehaviourEvade.cpp */; };
+		041C2A601AAD8F4D005E88B1 /* MOAISteerBehaviourEvade.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C2A0B1AAD8F4D005E88B1 /* MOAISteerBehaviourEvade.cpp */; };
+		041C2A611AAD8F4D005E88B1 /* MOAISteerBehaviourEvade.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A0C1AAD8F4D005E88B1 /* MOAISteerBehaviourEvade.h */; };
+		041C2A621AAD8F4D005E88B1 /* MOAISteerBehaviourEvade.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A0C1AAD8F4D005E88B1 /* MOAISteerBehaviourEvade.h */; };
+		041C2A631AAD8F4D005E88B1 /* MOAISteerBehaviourFace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C2A0D1AAD8F4D005E88B1 /* MOAISteerBehaviourFace.cpp */; };
+		041C2A641AAD8F4D005E88B1 /* MOAISteerBehaviourFace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C2A0D1AAD8F4D005E88B1 /* MOAISteerBehaviourFace.cpp */; };
+		041C2A651AAD8F4D005E88B1 /* MOAISteerBehaviourFace.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A0E1AAD8F4D005E88B1 /* MOAISteerBehaviourFace.h */; };
+		041C2A661AAD8F4D005E88B1 /* MOAISteerBehaviourFace.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A0E1AAD8F4D005E88B1 /* MOAISteerBehaviourFace.h */; };
+		041C2A671AAD8F4D005E88B1 /* MOAISteerBehaviourFlee.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C2A0F1AAD8F4D005E88B1 /* MOAISteerBehaviourFlee.cpp */; };
+		041C2A681AAD8F4D005E88B1 /* MOAISteerBehaviourFlee.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C2A0F1AAD8F4D005E88B1 /* MOAISteerBehaviourFlee.cpp */; };
+		041C2A691AAD8F4D005E88B1 /* MOAISteerBehaviourFlee.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A101AAD8F4D005E88B1 /* MOAISteerBehaviourFlee.h */; };
+		041C2A6A1AAD8F4D005E88B1 /* MOAISteerBehaviourFlee.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A101AAD8F4D005E88B1 /* MOAISteerBehaviourFlee.h */; };
+		041C2A6B1AAD8F4D005E88B1 /* MOAISteerBehaviourGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C2A111AAD8F4D005E88B1 /* MOAISteerBehaviourGroup.cpp */; };
+		041C2A6C1AAD8F4D005E88B1 /* MOAISteerBehaviourGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C2A111AAD8F4D005E88B1 /* MOAISteerBehaviourGroup.cpp */; };
+		041C2A6D1AAD8F4D005E88B1 /* MOAISteerBehaviourGroup.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A121AAD8F4D005E88B1 /* MOAISteerBehaviourGroup.h */; };
+		041C2A6E1AAD8F4D005E88B1 /* MOAISteerBehaviourGroup.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A121AAD8F4D005E88B1 /* MOAISteerBehaviourGroup.h */; };
+		041C2A6F1AAD8F4D005E88B1 /* MOAISteerBehaviourMatchVelocity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C2A131AAD8F4D005E88B1 /* MOAISteerBehaviourMatchVelocity.cpp */; };
+		041C2A701AAD8F4D005E88B1 /* MOAISteerBehaviourMatchVelocity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C2A131AAD8F4D005E88B1 /* MOAISteerBehaviourMatchVelocity.cpp */; };
+		041C2A711AAD8F4D005E88B1 /* MOAISteerBehaviourMatchVelocity.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A141AAD8F4D005E88B1 /* MOAISteerBehaviourMatchVelocity.h */; };
+		041C2A721AAD8F4D005E88B1 /* MOAISteerBehaviourMatchVelocity.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A141AAD8F4D005E88B1 /* MOAISteerBehaviourMatchVelocity.h */; };
+		041C2A731AAD8F4D005E88B1 /* MOAISteerBehaviourPathFollow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C2A151AAD8F4D005E88B1 /* MOAISteerBehaviourPathFollow.cpp */; };
+		041C2A741AAD8F4D005E88B1 /* MOAISteerBehaviourPathFollow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C2A151AAD8F4D005E88B1 /* MOAISteerBehaviourPathFollow.cpp */; };
+		041C2A751AAD8F4D005E88B1 /* MOAISteerBehaviourPathFollow.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A161AAD8F4D005E88B1 /* MOAISteerBehaviourPathFollow.h */; };
+		041C2A761AAD8F4D005E88B1 /* MOAISteerBehaviourPathFollow.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A161AAD8F4D005E88B1 /* MOAISteerBehaviourPathFollow.h */; };
+		041C2A771AAD8F4D005E88B1 /* MOAISteerBehaviourPursue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C2A171AAD8F4D005E88B1 /* MOAISteerBehaviourPursue.cpp */; };
+		041C2A781AAD8F4D005E88B1 /* MOAISteerBehaviourPursue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C2A171AAD8F4D005E88B1 /* MOAISteerBehaviourPursue.cpp */; };
+		041C2A791AAD8F4D005E88B1 /* MOAISteerBehaviourPursue.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A181AAD8F4D005E88B1 /* MOAISteerBehaviourPursue.h */; };
+		041C2A7A1AAD8F4D005E88B1 /* MOAISteerBehaviourPursue.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A181AAD8F4D005E88B1 /* MOAISteerBehaviourPursue.h */; };
+		041C2A7B1AAD8F4D005E88B1 /* MOAISteerBehaviourRaycastObstacleAvoidance.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C2A191AAD8F4D005E88B1 /* MOAISteerBehaviourRaycastObstacleAvoidance.cpp */; };
+		041C2A7C1AAD8F4D005E88B1 /* MOAISteerBehaviourRaycastObstacleAvoidance.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C2A191AAD8F4D005E88B1 /* MOAISteerBehaviourRaycastObstacleAvoidance.cpp */; };
+		041C2A7D1AAD8F4D005E88B1 /* MOAISteerBehaviourRaycastObstacleAvoidance.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A1A1AAD8F4D005E88B1 /* MOAISteerBehaviourRaycastObstacleAvoidance.h */; };
+		041C2A7E1AAD8F4D005E88B1 /* MOAISteerBehaviourRaycastObstacleAvoidance.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A1A1AAD8F4D005E88B1 /* MOAISteerBehaviourRaycastObstacleAvoidance.h */; };
+		041C2A7F1AAD8F4D005E88B1 /* MOAISteerBehaviourReachOrientation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C2A1B1AAD8F4D005E88B1 /* MOAISteerBehaviourReachOrientation.cpp */; };
+		041C2A801AAD8F4D005E88B1 /* MOAISteerBehaviourReachOrientation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C2A1B1AAD8F4D005E88B1 /* MOAISteerBehaviourReachOrientation.cpp */; };
+		041C2A811AAD8F4D005E88B1 /* MOAISteerBehaviourReachOrientation.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A1C1AAD8F4D005E88B1 /* MOAISteerBehaviourReachOrientation.h */; };
+		041C2A821AAD8F4D005E88B1 /* MOAISteerBehaviourReachOrientation.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A1C1AAD8F4D005E88B1 /* MOAISteerBehaviourReachOrientation.h */; };
+		041C2A831AAD8F4D005E88B1 /* MOAISteerBehaviourScript.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C2A1D1AAD8F4D005E88B1 /* MOAISteerBehaviourScript.cpp */; };
+		041C2A841AAD8F4D005E88B1 /* MOAISteerBehaviourScript.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C2A1D1AAD8F4D005E88B1 /* MOAISteerBehaviourScript.cpp */; };
+		041C2A851AAD8F4D005E88B1 /* MOAISteerBehaviourScript.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A1E1AAD8F4D005E88B1 /* MOAISteerBehaviourScript.h */; };
+		041C2A861AAD8F4D005E88B1 /* MOAISteerBehaviourScript.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A1E1AAD8F4D005E88B1 /* MOAISteerBehaviourScript.h */; };
+		041C2A871AAD8F4D005E88B1 /* MOAISteerBehaviourSeek.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C2A1F1AAD8F4D005E88B1 /* MOAISteerBehaviourSeek.cpp */; };
+		041C2A881AAD8F4D005E88B1 /* MOAISteerBehaviourSeek.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C2A1F1AAD8F4D005E88B1 /* MOAISteerBehaviourSeek.cpp */; };
+		041C2A891AAD8F4D005E88B1 /* MOAISteerBehaviourSeek.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A201AAD8F4D005E88B1 /* MOAISteerBehaviourSeek.h */; };
+		041C2A8A1AAD8F4D005E88B1 /* MOAISteerBehaviourSeek.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A201AAD8F4D005E88B1 /* MOAISteerBehaviourSeek.h */; };
+		041C2A8B1AAD8F4D005E88B1 /* MOAISteerBehaviourSeparation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C2A211AAD8F4D005E88B1 /* MOAISteerBehaviourSeparation.cpp */; };
+		041C2A8C1AAD8F4D005E88B1 /* MOAISteerBehaviourSeparation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C2A211AAD8F4D005E88B1 /* MOAISteerBehaviourSeparation.cpp */; };
+		041C2A8D1AAD8F4D005E88B1 /* MOAISteerBehaviourSeparation.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A221AAD8F4D005E88B1 /* MOAISteerBehaviourSeparation.h */; };
+		041C2A8E1AAD8F4D005E88B1 /* MOAISteerBehaviourSeparation.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A221AAD8F4D005E88B1 /* MOAISteerBehaviourSeparation.h */; };
+		041C2A8F1AAD8F4D005E88B1 /* MOAISteerBehaviourWander.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C2A231AAD8F4D005E88B1 /* MOAISteerBehaviourWander.cpp */; };
+		041C2A901AAD8F4D005E88B1 /* MOAISteerBehaviourWander.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C2A231AAD8F4D005E88B1 /* MOAISteerBehaviourWander.cpp */; };
+		041C2A911AAD8F4D005E88B1 /* MOAISteerBehaviourWander.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A241AAD8F4D005E88B1 /* MOAISteerBehaviourWander.h */; };
+		041C2A921AAD8F4D005E88B1 /* MOAISteerBehaviourWander.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A241AAD8F4D005E88B1 /* MOAISteerBehaviourWander.h */; };
+		041C2A931AAD8F4D005E88B1 /* MOAISteerBox2DAABBProximity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C2A251AAD8F4D005E88B1 /* MOAISteerBox2DAABBProximity.cpp */; };
+		041C2A941AAD8F4D005E88B1 /* MOAISteerBox2DAABBProximity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C2A251AAD8F4D005E88B1 /* MOAISteerBox2DAABBProximity.cpp */; };
+		041C2A951AAD8F4D005E88B1 /* MOAISteerBox2DAABBProximity.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A261AAD8F4D005E88B1 /* MOAISteerBox2DAABBProximity.h */; };
+		041C2A961AAD8F4D005E88B1 /* MOAISteerBox2DAABBProximity.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A261AAD8F4D005E88B1 /* MOAISteerBox2DAABBProximity.h */; };
+		041C2A971AAD8F4D005E88B1 /* MOAISteerBox2DController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C2A271AAD8F4D005E88B1 /* MOAISteerBox2DController.cpp */; };
+		041C2A981AAD8F4D005E88B1 /* MOAISteerBox2DController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C2A271AAD8F4D005E88B1 /* MOAISteerBox2DController.cpp */; };
+		041C2A991AAD8F4D005E88B1 /* MOAISteerBox2DController.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A281AAD8F4D005E88B1 /* MOAISteerBox2DController.h */; };
+		041C2A9A1AAD8F4D005E88B1 /* MOAISteerBox2DController.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A281AAD8F4D005E88B1 /* MOAISteerBox2DController.h */; };
+		041C2A9B1AAD8F4D005E88B1 /* MOAISteerBox2DRadiusProximity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C2A291AAD8F4D005E88B1 /* MOAISteerBox2DRadiusProximity.cpp */; };
+		041C2A9C1AAD8F4D005E88B1 /* MOAISteerBox2DRadiusProximity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C2A291AAD8F4D005E88B1 /* MOAISteerBox2DRadiusProximity.cpp */; };
+		041C2A9D1AAD8F4D005E88B1 /* MOAISteerBox2DRadiusProximity.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A2A1AAD8F4D005E88B1 /* MOAISteerBox2DRadiusProximity.h */; };
+		041C2A9E1AAD8F4D005E88B1 /* MOAISteerBox2DRadiusProximity.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A2A1AAD8F4D005E88B1 /* MOAISteerBox2DRadiusProximity.h */; };
+		041C2A9F1AAD8F4D005E88B1 /* MOAISteerBox2DRayCast.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C2A2B1AAD8F4D005E88B1 /* MOAISteerBox2DRayCast.cpp */; };
+		041C2AA01AAD8F4D005E88B1 /* MOAISteerBox2DRayCast.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C2A2B1AAD8F4D005E88B1 /* MOAISteerBox2DRayCast.cpp */; };
+		041C2AA11AAD8F4D005E88B1 /* MOAISteerBox2DRayCast.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A2C1AAD8F4D005E88B1 /* MOAISteerBox2DRayCast.h */; };
+		041C2AA21AAD8F4D005E88B1 /* MOAISteerBox2DRayCast.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A2C1AAD8F4D005E88B1 /* MOAISteerBox2DRayCast.h */; };
+		041C2AA31AAD8F4D005E88B1 /* MOAISteerController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C2A2D1AAD8F4D005E88B1 /* MOAISteerController.cpp */; };
+		041C2AA41AAD8F4D005E88B1 /* MOAISteerController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C2A2D1AAD8F4D005E88B1 /* MOAISteerController.cpp */; };
+		041C2AA51AAD8F4D005E88B1 /* MOAISteerController.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A2E1AAD8F4D005E88B1 /* MOAISteerController.h */; };
+		041C2AA61AAD8F4D005E88B1 /* MOAISteerController.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A2E1AAD8F4D005E88B1 /* MOAISteerController.h */; };
+		041C2AA71AAD8F4D005E88B1 /* MOAISteerLimiter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C2A2F1AAD8F4D005E88B1 /* MOAISteerLimiter.cpp */; };
+		041C2AA81AAD8F4D005E88B1 /* MOAISteerLimiter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C2A2F1AAD8F4D005E88B1 /* MOAISteerLimiter.cpp */; };
+		041C2AA91AAD8F4D005E88B1 /* MOAISteerLimiter.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A301AAD8F4D005E88B1 /* MOAISteerLimiter.h */; };
+		041C2AAA1AAD8F4D005E88B1 /* MOAISteerLimiter.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A301AAD8F4D005E88B1 /* MOAISteerLimiter.h */; };
+		041C2AAB1AAD8F4D005E88B1 /* MOAISteerLinePath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C2A311AAD8F4D005E88B1 /* MOAISteerLinePath.cpp */; };
+		041C2AAC1AAD8F4D005E88B1 /* MOAISteerLinePath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C2A311AAD8F4D005E88B1 /* MOAISteerLinePath.cpp */; };
+		041C2AAD1AAD8F4D005E88B1 /* MOAISteerLinePath.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A321AAD8F4D005E88B1 /* MOAISteerLinePath.h */; };
+		041C2AAE1AAD8F4D005E88B1 /* MOAISteerLinePath.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A321AAD8F4D005E88B1 /* MOAISteerLinePath.h */; };
+		041C2AAF1AAD8F4D005E88B1 /* MOAISteerParallelSideRayConfiguration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C2A331AAD8F4D005E88B1 /* MOAISteerParallelSideRayConfiguration.cpp */; };
+		041C2AB01AAD8F4D005E88B1 /* MOAISteerParallelSideRayConfiguration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C2A331AAD8F4D005E88B1 /* MOAISteerParallelSideRayConfiguration.cpp */; };
+		041C2AB11AAD8F4D005E88B1 /* MOAISteerParallelSideRayConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A341AAD8F4D005E88B1 /* MOAISteerParallelSideRayConfiguration.h */; };
+		041C2AB21AAD8F4D005E88B1 /* MOAISteerParallelSideRayConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A341AAD8F4D005E88B1 /* MOAISteerParallelSideRayConfiguration.h */; };
+		041C2AB31AAD8F4D005E88B1 /* MOAISteerPath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C2A351AAD8F4D005E88B1 /* MOAISteerPath.cpp */; };
+		041C2AB41AAD8F4D005E88B1 /* MOAISteerPath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C2A351AAD8F4D005E88B1 /* MOAISteerPath.cpp */; };
+		041C2AB51AAD8F4D005E88B1 /* MOAISteerPath.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A361AAD8F4D005E88B1 /* MOAISteerPath.h */; };
+		041C2AB61AAD8F4D005E88B1 /* MOAISteerPath.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A361AAD8F4D005E88B1 /* MOAISteerPath.h */; };
+		041C2AB71AAD8F4D005E88B1 /* MOAISteerPropController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C2A371AAD8F4D005E88B1 /* MOAISteerPropController.cpp */; };
+		041C2AB81AAD8F4D005E88B1 /* MOAISteerPropController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C2A371AAD8F4D005E88B1 /* MOAISteerPropController.cpp */; };
+		041C2AB91AAD8F4D005E88B1 /* MOAISteerPropController.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A381AAD8F4D005E88B1 /* MOAISteerPropController.h */; };
+		041C2ABA1AAD8F4E005E88B1 /* MOAISteerPropController.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A381AAD8F4D005E88B1 /* MOAISteerPropController.h */; };
+		041C2ABB1AAD8F4E005E88B1 /* MOAISteerProximity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C2A391AAD8F4D005E88B1 /* MOAISteerProximity.cpp */; };
+		041C2ABC1AAD8F4E005E88B1 /* MOAISteerProximity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C2A391AAD8F4D005E88B1 /* MOAISteerProximity.cpp */; };
+		041C2ABD1AAD8F4E005E88B1 /* MOAISteerProximity.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A3A1AAD8F4D005E88B1 /* MOAISteerProximity.h */; };
+		041C2ABE1AAD8F4E005E88B1 /* MOAISteerProximity.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A3A1AAD8F4D005E88B1 /* MOAISteerProximity.h */; };
+		041C2ABF1AAD8F4E005E88B1 /* MOAISteerRayCast.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C2A3B1AAD8F4D005E88B1 /* MOAISteerRayCast.cpp */; };
+		041C2AC01AAD8F4E005E88B1 /* MOAISteerRayCast.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C2A3B1AAD8F4D005E88B1 /* MOAISteerRayCast.cpp */; };
+		041C2AC11AAD8F4E005E88B1 /* MOAISteerRayCast.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A3C1AAD8F4D005E88B1 /* MOAISteerRayCast.h */; };
+		041C2AC21AAD8F4E005E88B1 /* MOAISteerRayCast.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A3C1AAD8F4D005E88B1 /* MOAISteerRayCast.h */; };
+		041C2AC31AAD8F4E005E88B1 /* MOAISteerSingleRayConfiguration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C2A3D1AAD8F4D005E88B1 /* MOAISteerSingleRayConfiguration.cpp */; };
+		041C2AC41AAD8F4E005E88B1 /* MOAISteerSingleRayConfiguration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C2A3D1AAD8F4D005E88B1 /* MOAISteerSingleRayConfiguration.cpp */; };
+		041C2AC51AAD8F4E005E88B1 /* MOAISteerSingleRayConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A3E1AAD8F4D005E88B1 /* MOAISteerSingleRayConfiguration.h */; };
+		041C2AC61AAD8F4E005E88B1 /* MOAISteerSingleRayConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A3E1AAD8F4D005E88B1 /* MOAISteerSingleRayConfiguration.h */; };
+		041C2AC71AAD8F4E005E88B1 /* pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C2A3F1AAD8F4D005E88B1 /* pch.cpp */; };
+		041C2AC81AAD8F4E005E88B1 /* pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C2A3F1AAD8F4D005E88B1 /* pch.cpp */; };
+		041C2AC91AAD8F4E005E88B1 /* pch.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A401AAD8F4D005E88B1 /* pch.h */; };
+		041C2ACA1AAD8F4E005E88B1 /* pch.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A401AAD8F4D005E88B1 /* pch.h */; };
 		0443E6131A8DF2350090F317 /* MOAIGfxBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0443E6121A8DF2350090F317 /* MOAIGfxBuffer.cpp */; };
 		0443E6141A8DF2350090F317 /* MOAIGfxBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0443E6121A8DF2350090F317 /* MOAIGfxBuffer.cpp */; };
 		0443E6161A8DF2490090F317 /* MOAIGfxBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 0443E6151A8DF2490090F317 /* MOAIGfxBuffer.h */; };
@@ -5543,6 +5681,77 @@
 		0324E2BB1356485F000ADC60 /* libmoai-osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0379C5961333ECD800E89DDC /* libmoai-ios-3rdparty-core.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-3rdparty-core.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		03C2F6F4104DE130009A2D5D /* libmoai-ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		041C296C1AAD8ED7005E88B1 /* libmoai-ios-steer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-steer.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		041C29FA1AAD8EDF005E88B1 /* libmoai-osx-steer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-steer.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		041C29FC1AAD8F4D005E88B1 /* headers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = headers.h; path = "moai-steer/headers.h"; sourceTree = "<group>"; };
+		041C29FD1AAD8F4D005E88B1 /* host.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = host.cpp; path = "moai-steer/host.cpp"; sourceTree = "<group>"; };
+		041C29FE1AAD8F4D005E88B1 /* host.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = host.h; path = "moai-steer/host.h"; sourceTree = "<group>"; };
+		041C29FF1AAD8F4D005E88B1 /* MOAISteerBehaviour.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAISteerBehaviour.cpp; path = "moai-steer/MOAISteerBehaviour.cpp"; sourceTree = "<group>"; };
+		041C2A001AAD8F4D005E88B1 /* MOAISteerBehaviour.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAISteerBehaviour.h; path = "moai-steer/MOAISteerBehaviour.h"; sourceTree = "<group>"; };
+		041C2A011AAD8F4D005E88B1 /* MOAISteerBehaviourAlignment.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAISteerBehaviourAlignment.cpp; path = "moai-steer/MOAISteerBehaviourAlignment.cpp"; sourceTree = "<group>"; };
+		041C2A021AAD8F4D005E88B1 /* MOAISteerBehaviourAlignment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAISteerBehaviourAlignment.h; path = "moai-steer/MOAISteerBehaviourAlignment.h"; sourceTree = "<group>"; };
+		041C2A031AAD8F4D005E88B1 /* MOAISteerBehaviourArrive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAISteerBehaviourArrive.cpp; path = "moai-steer/MOAISteerBehaviourArrive.cpp"; sourceTree = "<group>"; };
+		041C2A041AAD8F4D005E88B1 /* MOAISteerBehaviourArrive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAISteerBehaviourArrive.h; path = "moai-steer/MOAISteerBehaviourArrive.h"; sourceTree = "<group>"; };
+		041C2A051AAD8F4D005E88B1 /* MOAISteerBehaviourCohesion.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAISteerBehaviourCohesion.cpp; path = "moai-steer/MOAISteerBehaviourCohesion.cpp"; sourceTree = "<group>"; };
+		041C2A061AAD8F4D005E88B1 /* MOAISteerBehaviourCohesion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAISteerBehaviourCohesion.h; path = "moai-steer/MOAISteerBehaviourCohesion.h"; sourceTree = "<group>"; };
+		041C2A071AAD8F4D005E88B1 /* MOAISteerBehaviourCollisionAvoidance.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAISteerBehaviourCollisionAvoidance.cpp; path = "moai-steer/MOAISteerBehaviourCollisionAvoidance.cpp"; sourceTree = "<group>"; };
+		041C2A081AAD8F4D005E88B1 /* MOAISteerBehaviourCollisionAvoidance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAISteerBehaviourCollisionAvoidance.h; path = "moai-steer/MOAISteerBehaviourCollisionAvoidance.h"; sourceTree = "<group>"; };
+		041C2A091AAD8F4D005E88B1 /* MOAISteerBehaviourConstant.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAISteerBehaviourConstant.cpp; path = "moai-steer/MOAISteerBehaviourConstant.cpp"; sourceTree = "<group>"; };
+		041C2A0A1AAD8F4D005E88B1 /* MOAISteerBehaviourConstant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAISteerBehaviourConstant.h; path = "moai-steer/MOAISteerBehaviourConstant.h"; sourceTree = "<group>"; };
+		041C2A0B1AAD8F4D005E88B1 /* MOAISteerBehaviourEvade.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAISteerBehaviourEvade.cpp; path = "moai-steer/MOAISteerBehaviourEvade.cpp"; sourceTree = "<group>"; };
+		041C2A0C1AAD8F4D005E88B1 /* MOAISteerBehaviourEvade.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAISteerBehaviourEvade.h; path = "moai-steer/MOAISteerBehaviourEvade.h"; sourceTree = "<group>"; };
+		041C2A0D1AAD8F4D005E88B1 /* MOAISteerBehaviourFace.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAISteerBehaviourFace.cpp; path = "moai-steer/MOAISteerBehaviourFace.cpp"; sourceTree = "<group>"; };
+		041C2A0E1AAD8F4D005E88B1 /* MOAISteerBehaviourFace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAISteerBehaviourFace.h; path = "moai-steer/MOAISteerBehaviourFace.h"; sourceTree = "<group>"; };
+		041C2A0F1AAD8F4D005E88B1 /* MOAISteerBehaviourFlee.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAISteerBehaviourFlee.cpp; path = "moai-steer/MOAISteerBehaviourFlee.cpp"; sourceTree = "<group>"; };
+		041C2A101AAD8F4D005E88B1 /* MOAISteerBehaviourFlee.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAISteerBehaviourFlee.h; path = "moai-steer/MOAISteerBehaviourFlee.h"; sourceTree = "<group>"; };
+		041C2A111AAD8F4D005E88B1 /* MOAISteerBehaviourGroup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAISteerBehaviourGroup.cpp; path = "moai-steer/MOAISteerBehaviourGroup.cpp"; sourceTree = "<group>"; };
+		041C2A121AAD8F4D005E88B1 /* MOAISteerBehaviourGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAISteerBehaviourGroup.h; path = "moai-steer/MOAISteerBehaviourGroup.h"; sourceTree = "<group>"; };
+		041C2A131AAD8F4D005E88B1 /* MOAISteerBehaviourMatchVelocity.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAISteerBehaviourMatchVelocity.cpp; path = "moai-steer/MOAISteerBehaviourMatchVelocity.cpp"; sourceTree = "<group>"; };
+		041C2A141AAD8F4D005E88B1 /* MOAISteerBehaviourMatchVelocity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAISteerBehaviourMatchVelocity.h; path = "moai-steer/MOAISteerBehaviourMatchVelocity.h"; sourceTree = "<group>"; };
+		041C2A151AAD8F4D005E88B1 /* MOAISteerBehaviourPathFollow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAISteerBehaviourPathFollow.cpp; path = "moai-steer/MOAISteerBehaviourPathFollow.cpp"; sourceTree = "<group>"; };
+		041C2A161AAD8F4D005E88B1 /* MOAISteerBehaviourPathFollow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAISteerBehaviourPathFollow.h; path = "moai-steer/MOAISteerBehaviourPathFollow.h"; sourceTree = "<group>"; };
+		041C2A171AAD8F4D005E88B1 /* MOAISteerBehaviourPursue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAISteerBehaviourPursue.cpp; path = "moai-steer/MOAISteerBehaviourPursue.cpp"; sourceTree = "<group>"; };
+		041C2A181AAD8F4D005E88B1 /* MOAISteerBehaviourPursue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAISteerBehaviourPursue.h; path = "moai-steer/MOAISteerBehaviourPursue.h"; sourceTree = "<group>"; };
+		041C2A191AAD8F4D005E88B1 /* MOAISteerBehaviourRaycastObstacleAvoidance.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAISteerBehaviourRaycastObstacleAvoidance.cpp; path = "moai-steer/MOAISteerBehaviourRaycastObstacleAvoidance.cpp"; sourceTree = "<group>"; };
+		041C2A1A1AAD8F4D005E88B1 /* MOAISteerBehaviourRaycastObstacleAvoidance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAISteerBehaviourRaycastObstacleAvoidance.h; path = "moai-steer/MOAISteerBehaviourRaycastObstacleAvoidance.h"; sourceTree = "<group>"; };
+		041C2A1B1AAD8F4D005E88B1 /* MOAISteerBehaviourReachOrientation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAISteerBehaviourReachOrientation.cpp; path = "moai-steer/MOAISteerBehaviourReachOrientation.cpp"; sourceTree = "<group>"; };
+		041C2A1C1AAD8F4D005E88B1 /* MOAISteerBehaviourReachOrientation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAISteerBehaviourReachOrientation.h; path = "moai-steer/MOAISteerBehaviourReachOrientation.h"; sourceTree = "<group>"; };
+		041C2A1D1AAD8F4D005E88B1 /* MOAISteerBehaviourScript.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAISteerBehaviourScript.cpp; path = "moai-steer/MOAISteerBehaviourScript.cpp"; sourceTree = "<group>"; };
+		041C2A1E1AAD8F4D005E88B1 /* MOAISteerBehaviourScript.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAISteerBehaviourScript.h; path = "moai-steer/MOAISteerBehaviourScript.h"; sourceTree = "<group>"; };
+		041C2A1F1AAD8F4D005E88B1 /* MOAISteerBehaviourSeek.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAISteerBehaviourSeek.cpp; path = "moai-steer/MOAISteerBehaviourSeek.cpp"; sourceTree = "<group>"; };
+		041C2A201AAD8F4D005E88B1 /* MOAISteerBehaviourSeek.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAISteerBehaviourSeek.h; path = "moai-steer/MOAISteerBehaviourSeek.h"; sourceTree = "<group>"; };
+		041C2A211AAD8F4D005E88B1 /* MOAISteerBehaviourSeparation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAISteerBehaviourSeparation.cpp; path = "moai-steer/MOAISteerBehaviourSeparation.cpp"; sourceTree = "<group>"; };
+		041C2A221AAD8F4D005E88B1 /* MOAISteerBehaviourSeparation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAISteerBehaviourSeparation.h; path = "moai-steer/MOAISteerBehaviourSeparation.h"; sourceTree = "<group>"; };
+		041C2A231AAD8F4D005E88B1 /* MOAISteerBehaviourWander.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAISteerBehaviourWander.cpp; path = "moai-steer/MOAISteerBehaviourWander.cpp"; sourceTree = "<group>"; };
+		041C2A241AAD8F4D005E88B1 /* MOAISteerBehaviourWander.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAISteerBehaviourWander.h; path = "moai-steer/MOAISteerBehaviourWander.h"; sourceTree = "<group>"; };
+		041C2A251AAD8F4D005E88B1 /* MOAISteerBox2DAABBProximity.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAISteerBox2DAABBProximity.cpp; path = "moai-steer/MOAISteerBox2DAABBProximity.cpp"; sourceTree = "<group>"; };
+		041C2A261AAD8F4D005E88B1 /* MOAISteerBox2DAABBProximity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAISteerBox2DAABBProximity.h; path = "moai-steer/MOAISteerBox2DAABBProximity.h"; sourceTree = "<group>"; };
+		041C2A271AAD8F4D005E88B1 /* MOAISteerBox2DController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAISteerBox2DController.cpp; path = "moai-steer/MOAISteerBox2DController.cpp"; sourceTree = "<group>"; };
+		041C2A281AAD8F4D005E88B1 /* MOAISteerBox2DController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAISteerBox2DController.h; path = "moai-steer/MOAISteerBox2DController.h"; sourceTree = "<group>"; };
+		041C2A291AAD8F4D005E88B1 /* MOAISteerBox2DRadiusProximity.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAISteerBox2DRadiusProximity.cpp; path = "moai-steer/MOAISteerBox2DRadiusProximity.cpp"; sourceTree = "<group>"; };
+		041C2A2A1AAD8F4D005E88B1 /* MOAISteerBox2DRadiusProximity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAISteerBox2DRadiusProximity.h; path = "moai-steer/MOAISteerBox2DRadiusProximity.h"; sourceTree = "<group>"; };
+		041C2A2B1AAD8F4D005E88B1 /* MOAISteerBox2DRayCast.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAISteerBox2DRayCast.cpp; path = "moai-steer/MOAISteerBox2DRayCast.cpp"; sourceTree = "<group>"; };
+		041C2A2C1AAD8F4D005E88B1 /* MOAISteerBox2DRayCast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAISteerBox2DRayCast.h; path = "moai-steer/MOAISteerBox2DRayCast.h"; sourceTree = "<group>"; };
+		041C2A2D1AAD8F4D005E88B1 /* MOAISteerController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAISteerController.cpp; path = "moai-steer/MOAISteerController.cpp"; sourceTree = "<group>"; };
+		041C2A2E1AAD8F4D005E88B1 /* MOAISteerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAISteerController.h; path = "moai-steer/MOAISteerController.h"; sourceTree = "<group>"; };
+		041C2A2F1AAD8F4D005E88B1 /* MOAISteerLimiter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAISteerLimiter.cpp; path = "moai-steer/MOAISteerLimiter.cpp"; sourceTree = "<group>"; };
+		041C2A301AAD8F4D005E88B1 /* MOAISteerLimiter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAISteerLimiter.h; path = "moai-steer/MOAISteerLimiter.h"; sourceTree = "<group>"; };
+		041C2A311AAD8F4D005E88B1 /* MOAISteerLinePath.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAISteerLinePath.cpp; path = "moai-steer/MOAISteerLinePath.cpp"; sourceTree = "<group>"; };
+		041C2A321AAD8F4D005E88B1 /* MOAISteerLinePath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAISteerLinePath.h; path = "moai-steer/MOAISteerLinePath.h"; sourceTree = "<group>"; };
+		041C2A331AAD8F4D005E88B1 /* MOAISteerParallelSideRayConfiguration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAISteerParallelSideRayConfiguration.cpp; path = "moai-steer/MOAISteerParallelSideRayConfiguration.cpp"; sourceTree = "<group>"; };
+		041C2A341AAD8F4D005E88B1 /* MOAISteerParallelSideRayConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAISteerParallelSideRayConfiguration.h; path = "moai-steer/MOAISteerParallelSideRayConfiguration.h"; sourceTree = "<group>"; };
+		041C2A351AAD8F4D005E88B1 /* MOAISteerPath.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAISteerPath.cpp; path = "moai-steer/MOAISteerPath.cpp"; sourceTree = "<group>"; };
+		041C2A361AAD8F4D005E88B1 /* MOAISteerPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAISteerPath.h; path = "moai-steer/MOAISteerPath.h"; sourceTree = "<group>"; };
+		041C2A371AAD8F4D005E88B1 /* MOAISteerPropController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAISteerPropController.cpp; path = "moai-steer/MOAISteerPropController.cpp"; sourceTree = "<group>"; };
+		041C2A381AAD8F4D005E88B1 /* MOAISteerPropController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAISteerPropController.h; path = "moai-steer/MOAISteerPropController.h"; sourceTree = "<group>"; };
+		041C2A391AAD8F4D005E88B1 /* MOAISteerProximity.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAISteerProximity.cpp; path = "moai-steer/MOAISteerProximity.cpp"; sourceTree = "<group>"; };
+		041C2A3A1AAD8F4D005E88B1 /* MOAISteerProximity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAISteerProximity.h; path = "moai-steer/MOAISteerProximity.h"; sourceTree = "<group>"; };
+		041C2A3B1AAD8F4D005E88B1 /* MOAISteerRayCast.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAISteerRayCast.cpp; path = "moai-steer/MOAISteerRayCast.cpp"; sourceTree = "<group>"; };
+		041C2A3C1AAD8F4D005E88B1 /* MOAISteerRayCast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAISteerRayCast.h; path = "moai-steer/MOAISteerRayCast.h"; sourceTree = "<group>"; };
+		041C2A3D1AAD8F4D005E88B1 /* MOAISteerSingleRayConfiguration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAISteerSingleRayConfiguration.cpp; path = "moai-steer/MOAISteerSingleRayConfiguration.cpp"; sourceTree = "<group>"; };
+		041C2A3E1AAD8F4D005E88B1 /* MOAISteerSingleRayConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAISteerSingleRayConfiguration.h; path = "moai-steer/MOAISteerSingleRayConfiguration.h"; sourceTree = "<group>"; };
+		041C2A3F1AAD8F4D005E88B1 /* pch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pch.cpp; path = "moai-steer/pch.cpp"; sourceTree = "<group>"; };
+		041C2A401AAD8F4D005E88B1 /* pch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pch.h; path = "moai-steer/pch.h"; sourceTree = "<group>"; };
 		0443E6121A8DF2350090F317 /* MOAIGfxBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIGfxBuffer.cpp; sourceTree = "<group>"; };
 		0443E6151A8DF2490090F317 /* MOAIGfxBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIGfxBuffer.h; sourceTree = "<group>"; };
 		0443E6191A8DF48C0090F317 /* lpeg.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lpeg.c; path = "../../3rdparty/lpeg-0.10.2/lpeg.c"; sourceTree = "<group>"; };
@@ -8082,6 +8291,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		041C29661AAD8ED7005E88B1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		041C29F41AAD8EDF005E88B1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		89BE6F00173AD06700DFE837 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -8865,6 +9088,7 @@
 		0324E4F113564BC7000ADC60 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				041C29FB1AAD8F10005E88B1 /* moai-steer */,
 				CDBA13101A30561B007503F3 /* config */,
 				CDBA13111A305622007503F3 /* config-default */,
 				CDA0D9F61A01AFC3002B71B6 /* moai-audio-sampler */,
@@ -8958,8 +9182,86 @@
 				CD42F3631A60A7CC001B6D72 /* libmoai-osx-sdl.a */,
 				CD257BA21A6255380057A53A /* libmoai-ios-apple.a */,
 				CD18459C1A626BD500FCCCE0 /* libmoai-osx-apple.a */,
+				041C296C1AAD8ED7005E88B1 /* libmoai-ios-steer.a */,
+				041C29FA1AAD8EDF005E88B1 /* libmoai-osx-steer.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		041C29FB1AAD8F10005E88B1 /* moai-steer */ = {
+			isa = PBXGroup;
+			children = (
+				041C29FC1AAD8F4D005E88B1 /* headers.h */,
+				041C29FD1AAD8F4D005E88B1 /* host.cpp */,
+				041C29FE1AAD8F4D005E88B1 /* host.h */,
+				041C29FF1AAD8F4D005E88B1 /* MOAISteerBehaviour.cpp */,
+				041C2A001AAD8F4D005E88B1 /* MOAISteerBehaviour.h */,
+				041C2A011AAD8F4D005E88B1 /* MOAISteerBehaviourAlignment.cpp */,
+				041C2A021AAD8F4D005E88B1 /* MOAISteerBehaviourAlignment.h */,
+				041C2A031AAD8F4D005E88B1 /* MOAISteerBehaviourArrive.cpp */,
+				041C2A041AAD8F4D005E88B1 /* MOAISteerBehaviourArrive.h */,
+				041C2A051AAD8F4D005E88B1 /* MOAISteerBehaviourCohesion.cpp */,
+				041C2A061AAD8F4D005E88B1 /* MOAISteerBehaviourCohesion.h */,
+				041C2A071AAD8F4D005E88B1 /* MOAISteerBehaviourCollisionAvoidance.cpp */,
+				041C2A081AAD8F4D005E88B1 /* MOAISteerBehaviourCollisionAvoidance.h */,
+				041C2A091AAD8F4D005E88B1 /* MOAISteerBehaviourConstant.cpp */,
+				041C2A0A1AAD8F4D005E88B1 /* MOAISteerBehaviourConstant.h */,
+				041C2A0B1AAD8F4D005E88B1 /* MOAISteerBehaviourEvade.cpp */,
+				041C2A0C1AAD8F4D005E88B1 /* MOAISteerBehaviourEvade.h */,
+				041C2A0D1AAD8F4D005E88B1 /* MOAISteerBehaviourFace.cpp */,
+				041C2A0E1AAD8F4D005E88B1 /* MOAISteerBehaviourFace.h */,
+				041C2A0F1AAD8F4D005E88B1 /* MOAISteerBehaviourFlee.cpp */,
+				041C2A101AAD8F4D005E88B1 /* MOAISteerBehaviourFlee.h */,
+				041C2A111AAD8F4D005E88B1 /* MOAISteerBehaviourGroup.cpp */,
+				041C2A121AAD8F4D005E88B1 /* MOAISteerBehaviourGroup.h */,
+				041C2A131AAD8F4D005E88B1 /* MOAISteerBehaviourMatchVelocity.cpp */,
+				041C2A141AAD8F4D005E88B1 /* MOAISteerBehaviourMatchVelocity.h */,
+				041C2A151AAD8F4D005E88B1 /* MOAISteerBehaviourPathFollow.cpp */,
+				041C2A161AAD8F4D005E88B1 /* MOAISteerBehaviourPathFollow.h */,
+				041C2A171AAD8F4D005E88B1 /* MOAISteerBehaviourPursue.cpp */,
+				041C2A181AAD8F4D005E88B1 /* MOAISteerBehaviourPursue.h */,
+				041C2A191AAD8F4D005E88B1 /* MOAISteerBehaviourRaycastObstacleAvoidance.cpp */,
+				041C2A1A1AAD8F4D005E88B1 /* MOAISteerBehaviourRaycastObstacleAvoidance.h */,
+				041C2A1B1AAD8F4D005E88B1 /* MOAISteerBehaviourReachOrientation.cpp */,
+				041C2A1C1AAD8F4D005E88B1 /* MOAISteerBehaviourReachOrientation.h */,
+				041C2A1D1AAD8F4D005E88B1 /* MOAISteerBehaviourScript.cpp */,
+				041C2A1E1AAD8F4D005E88B1 /* MOAISteerBehaviourScript.h */,
+				041C2A1F1AAD8F4D005E88B1 /* MOAISteerBehaviourSeek.cpp */,
+				041C2A201AAD8F4D005E88B1 /* MOAISteerBehaviourSeek.h */,
+				041C2A211AAD8F4D005E88B1 /* MOAISteerBehaviourSeparation.cpp */,
+				041C2A221AAD8F4D005E88B1 /* MOAISteerBehaviourSeparation.h */,
+				041C2A231AAD8F4D005E88B1 /* MOAISteerBehaviourWander.cpp */,
+				041C2A241AAD8F4D005E88B1 /* MOAISteerBehaviourWander.h */,
+				041C2A251AAD8F4D005E88B1 /* MOAISteerBox2DAABBProximity.cpp */,
+				041C2A261AAD8F4D005E88B1 /* MOAISteerBox2DAABBProximity.h */,
+				041C2A271AAD8F4D005E88B1 /* MOAISteerBox2DController.cpp */,
+				041C2A281AAD8F4D005E88B1 /* MOAISteerBox2DController.h */,
+				041C2A291AAD8F4D005E88B1 /* MOAISteerBox2DRadiusProximity.cpp */,
+				041C2A2A1AAD8F4D005E88B1 /* MOAISteerBox2DRadiusProximity.h */,
+				041C2A2B1AAD8F4D005E88B1 /* MOAISteerBox2DRayCast.cpp */,
+				041C2A2C1AAD8F4D005E88B1 /* MOAISteerBox2DRayCast.h */,
+				041C2A2D1AAD8F4D005E88B1 /* MOAISteerController.cpp */,
+				041C2A2E1AAD8F4D005E88B1 /* MOAISteerController.h */,
+				041C2A2F1AAD8F4D005E88B1 /* MOAISteerLimiter.cpp */,
+				041C2A301AAD8F4D005E88B1 /* MOAISteerLimiter.h */,
+				041C2A311AAD8F4D005E88B1 /* MOAISteerLinePath.cpp */,
+				041C2A321AAD8F4D005E88B1 /* MOAISteerLinePath.h */,
+				041C2A331AAD8F4D005E88B1 /* MOAISteerParallelSideRayConfiguration.cpp */,
+				041C2A341AAD8F4D005E88B1 /* MOAISteerParallelSideRayConfiguration.h */,
+				041C2A351AAD8F4D005E88B1 /* MOAISteerPath.cpp */,
+				041C2A361AAD8F4D005E88B1 /* MOAISteerPath.h */,
+				041C2A371AAD8F4D005E88B1 /* MOAISteerPropController.cpp */,
+				041C2A381AAD8F4D005E88B1 /* MOAISteerPropController.h */,
+				041C2A391AAD8F4D005E88B1 /* MOAISteerProximity.cpp */,
+				041C2A3A1AAD8F4D005E88B1 /* MOAISteerProximity.h */,
+				041C2A3B1AAD8F4D005E88B1 /* MOAISteerRayCast.cpp */,
+				041C2A3C1AAD8F4D005E88B1 /* MOAISteerRayCast.h */,
+				041C2A3D1AAD8F4D005E88B1 /* MOAISteerSingleRayConfiguration.cpp */,
+				041C2A3E1AAD8F4D005E88B1 /* MOAISteerSingleRayConfiguration.h */,
+				041C2A3F1AAD8F4D005E88B1 /* pch.cpp */,
+				041C2A401AAD8F4D005E88B1 /* pch.h */,
+			);
+			name = "moai-steer";
 			sourceTree = "<group>";
 		};
 		0443E6181A8DF4690090F317 /* lpeg */ = {
@@ -13433,6 +13735,90 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		041C28E01AAD8ED7005E88B1 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				041C2A791AAD8F4D005E88B1 /* MOAISteerBehaviourPursue.h in Headers */,
+				041C2A751AAD8F4D005E88B1 /* MOAISteerBehaviourPathFollow.h in Headers */,
+				041C2A9D1AAD8F4D005E88B1 /* MOAISteerBox2DRadiusProximity.h in Headers */,
+				041C2AA11AAD8F4D005E88B1 /* MOAISteerBox2DRayCast.h in Headers */,
+				041C2A4D1AAD8F4D005E88B1 /* MOAISteerBehaviourAlignment.h in Headers */,
+				041C2A451AAD8F4D005E88B1 /* host.h in Headers */,
+				041C2A8D1AAD8F4D005E88B1 /* MOAISteerBehaviourSeparation.h in Headers */,
+				041C2A891AAD8F4D005E88B1 /* MOAISteerBehaviourSeek.h in Headers */,
+				041C2ABD1AAD8F4E005E88B1 /* MOAISteerProximity.h in Headers */,
+				041C2AB91AAD8F4D005E88B1 /* MOAISteerPropController.h in Headers */,
+				041C2AA91AAD8F4D005E88B1 /* MOAISteerLimiter.h in Headers */,
+				041C2A951AAD8F4D005E88B1 /* MOAISteerBox2DAABBProximity.h in Headers */,
+				041C2AC51AAD8F4E005E88B1 /* MOAISteerSingleRayConfiguration.h in Headers */,
+				041C2A911AAD8F4D005E88B1 /* MOAISteerBehaviourWander.h in Headers */,
+				041C2AAD1AAD8F4D005E88B1 /* MOAISteerLinePath.h in Headers */,
+				041C2A711AAD8F4D005E88B1 /* MOAISteerBehaviourMatchVelocity.h in Headers */,
+				041C2A5D1AAD8F4D005E88B1 /* MOAISteerBehaviourConstant.h in Headers */,
+				041C2A811AAD8F4D005E88B1 /* MOAISteerBehaviourReachOrientation.h in Headers */,
+				041C2A651AAD8F4D005E88B1 /* MOAISteerBehaviourFace.h in Headers */,
+				041C2A551AAD8F4D005E88B1 /* MOAISteerBehaviourCohesion.h in Headers */,
+				041C2A511AAD8F4D005E88B1 /* MOAISteerBehaviourArrive.h in Headers */,
+				041C2A611AAD8F4D005E88B1 /* MOAISteerBehaviourEvade.h in Headers */,
+				041C2AC11AAD8F4E005E88B1 /* MOAISteerRayCast.h in Headers */,
+				041C2AC91AAD8F4E005E88B1 /* pch.h in Headers */,
+				041C2A491AAD8F4D005E88B1 /* MOAISteerBehaviour.h in Headers */,
+				041C2AA51AAD8F4D005E88B1 /* MOAISteerController.h in Headers */,
+				041C2A691AAD8F4D005E88B1 /* MOAISteerBehaviourFlee.h in Headers */,
+				041C2AB11AAD8F4D005E88B1 /* MOAISteerParallelSideRayConfiguration.h in Headers */,
+				041C2A591AAD8F4D005E88B1 /* MOAISteerBehaviourCollisionAvoidance.h in Headers */,
+				041C2A6D1AAD8F4D005E88B1 /* MOAISteerBehaviourGroup.h in Headers */,
+				041C2A7D1AAD8F4D005E88B1 /* MOAISteerBehaviourRaycastObstacleAvoidance.h in Headers */,
+				041C2A411AAD8F4D005E88B1 /* headers.h in Headers */,
+				041C2A851AAD8F4D005E88B1 /* MOAISteerBehaviourScript.h in Headers */,
+				041C2A991AAD8F4D005E88B1 /* MOAISteerBox2DController.h in Headers */,
+				041C2AB51AAD8F4D005E88B1 /* MOAISteerPath.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		041C296E1AAD8EDF005E88B1 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				041C2A7A1AAD8F4D005E88B1 /* MOAISteerBehaviourPursue.h in Headers */,
+				041C2A761AAD8F4D005E88B1 /* MOAISteerBehaviourPathFollow.h in Headers */,
+				041C2A9E1AAD8F4D005E88B1 /* MOAISteerBox2DRadiusProximity.h in Headers */,
+				041C2AA21AAD8F4D005E88B1 /* MOAISteerBox2DRayCast.h in Headers */,
+				041C2A4E1AAD8F4D005E88B1 /* MOAISteerBehaviourAlignment.h in Headers */,
+				041C2A461AAD8F4D005E88B1 /* host.h in Headers */,
+				041C2A8E1AAD8F4D005E88B1 /* MOAISteerBehaviourSeparation.h in Headers */,
+				041C2A8A1AAD8F4D005E88B1 /* MOAISteerBehaviourSeek.h in Headers */,
+				041C2ABE1AAD8F4E005E88B1 /* MOAISteerProximity.h in Headers */,
+				041C2ABA1AAD8F4E005E88B1 /* MOAISteerPropController.h in Headers */,
+				041C2AAA1AAD8F4D005E88B1 /* MOAISteerLimiter.h in Headers */,
+				041C2A961AAD8F4D005E88B1 /* MOAISteerBox2DAABBProximity.h in Headers */,
+				041C2AC61AAD8F4E005E88B1 /* MOAISteerSingleRayConfiguration.h in Headers */,
+				041C2A921AAD8F4D005E88B1 /* MOAISteerBehaviourWander.h in Headers */,
+				041C2AAE1AAD8F4D005E88B1 /* MOAISteerLinePath.h in Headers */,
+				041C2A721AAD8F4D005E88B1 /* MOAISteerBehaviourMatchVelocity.h in Headers */,
+				041C2A5E1AAD8F4D005E88B1 /* MOAISteerBehaviourConstant.h in Headers */,
+				041C2A821AAD8F4D005E88B1 /* MOAISteerBehaviourReachOrientation.h in Headers */,
+				041C2A661AAD8F4D005E88B1 /* MOAISteerBehaviourFace.h in Headers */,
+				041C2A561AAD8F4D005E88B1 /* MOAISteerBehaviourCohesion.h in Headers */,
+				041C2A521AAD8F4D005E88B1 /* MOAISteerBehaviourArrive.h in Headers */,
+				041C2A621AAD8F4D005E88B1 /* MOAISteerBehaviourEvade.h in Headers */,
+				041C2AC21AAD8F4E005E88B1 /* MOAISteerRayCast.h in Headers */,
+				041C2ACA1AAD8F4E005E88B1 /* pch.h in Headers */,
+				041C2A4A1AAD8F4D005E88B1 /* MOAISteerBehaviour.h in Headers */,
+				041C2AA61AAD8F4D005E88B1 /* MOAISteerController.h in Headers */,
+				041C2A6A1AAD8F4D005E88B1 /* MOAISteerBehaviourFlee.h in Headers */,
+				041C2AB21AAD8F4D005E88B1 /* MOAISteerParallelSideRayConfiguration.h in Headers */,
+				041C2A5A1AAD8F4D005E88B1 /* MOAISteerBehaviourCollisionAvoidance.h in Headers */,
+				041C2A6E1AAD8F4D005E88B1 /* MOAISteerBehaviourGroup.h in Headers */,
+				041C2A7E1AAD8F4D005E88B1 /* MOAISteerBehaviourRaycastObstacleAvoidance.h in Headers */,
+				041C2A421AAD8F4D005E88B1 /* headers.h in Headers */,
+				041C2A861AAD8F4D005E88B1 /* MOAISteerBehaviourScript.h in Headers */,
+				041C2A9A1AAD8F4D005E88B1 /* MOAISteerBox2DController.h in Headers */,
+				041C2AB61AAD8F4D005E88B1 /* MOAISteerPath.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		89BE6EF6173AD06700DFE837 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -15465,6 +15851,40 @@
 			productReference = 03C2F6F4104DE130009A2D5D /* libmoai-ios.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		041C28DF1AAD8ED7005E88B1 /* libmoai-ios-steer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 041C29671AAD8ED7005E88B1 /* Build configuration list for PBXNativeTarget "libmoai-ios-steer" */;
+			buildPhases = (
+				041C28E01AAD8ED7005E88B1 /* Headers */,
+				041C29241AAD8ED7005E88B1 /* Sources */,
+				041C29661AAD8ED7005E88B1 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "libmoai-ios-steer";
+			productName = OpenUSLS;
+			productReference = 041C296C1AAD8ED7005E88B1 /* libmoai-ios-steer.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		041C296D1AAD8EDF005E88B1 /* libmoai-osx-steer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 041C29F51AAD8EDF005E88B1 /* Build configuration list for PBXNativeTarget "libmoai-osx-steer" */;
+			buildPhases = (
+				041C296E1AAD8EDF005E88B1 /* Headers */,
+				041C29B21AAD8EDF005E88B1 /* Sources */,
+				041C29F41AAD8EDF005E88B1 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "libmoai-osx-steer";
+			productName = OpenUSLS;
+			productReference = 041C29FA1AAD8EDF005E88B1 /* libmoai-osx-steer.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		89BE6EF5173AD06700DFE837 /* libmoai-ios-sim */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 89BE6F01173AD06700DFE837 /* Build configuration list for PBXNativeTarget "libmoai-ios-sim" */;
@@ -16314,6 +16734,8 @@
 				CD6D745F17EE415D00964415 /* libmoai-osx-zl-vfs */,
 				3EDC16E519F6DD19007A7775 /* libmoai-osx-all */,
 				3EDC171119F6DE00007A7775 /* libmoai-ios-all */,
+				041C28DF1AAD8ED7005E88B1 /* libmoai-ios-steer */,
+				041C296D1AAD8EDF005E88B1 /* libmoai-osx-steer */,
 			);
 		};
 /* End PBXProject section */
@@ -16949,6 +17371,88 @@
 				89E9D7A61745223E00033CDD /* MOAIScopedLuaState.cpp in Sources */,
 				CD93078217EC473A00AED686 /* MOAILuaClass.cpp in Sources */,
 				CD93078617EC473A00AED686 /* MOAILuaRefTable.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		041C29241AAD8ED7005E88B1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				041C2AAB1AAD8F4D005E88B1 /* MOAISteerLinePath.cpp in Sources */,
+				041C2A9B1AAD8F4D005E88B1 /* MOAISteerBox2DRadiusProximity.cpp in Sources */,
+				041C2A4F1AAD8F4D005E88B1 /* MOAISteerBehaviourArrive.cpp in Sources */,
+				041C2AA71AAD8F4D005E88B1 /* MOAISteerLimiter.cpp in Sources */,
+				041C2A971AAD8F4D005E88B1 /* MOAISteerBox2DController.cpp in Sources */,
+				041C2ABF1AAD8F4E005E88B1 /* MOAISteerRayCast.cpp in Sources */,
+				041C2A531AAD8F4D005E88B1 /* MOAISteerBehaviourCohesion.cpp in Sources */,
+				041C2A731AAD8F4D005E88B1 /* MOAISteerBehaviourPathFollow.cpp in Sources */,
+				041C2A7B1AAD8F4D005E88B1 /* MOAISteerBehaviourRaycastObstacleAvoidance.cpp in Sources */,
+				041C2A8F1AAD8F4D005E88B1 /* MOAISteerBehaviourWander.cpp in Sources */,
+				041C2ABB1AAD8F4E005E88B1 /* MOAISteerProximity.cpp in Sources */,
+				041C2AAF1AAD8F4D005E88B1 /* MOAISteerParallelSideRayConfiguration.cpp in Sources */,
+				041C2A7F1AAD8F4D005E88B1 /* MOAISteerBehaviourReachOrientation.cpp in Sources */,
+				041C2A831AAD8F4D005E88B1 /* MOAISteerBehaviourScript.cpp in Sources */,
+				041C2A9F1AAD8F4D005E88B1 /* MOAISteerBox2DRayCast.cpp in Sources */,
+				041C2A771AAD8F4D005E88B1 /* MOAISteerBehaviourPursue.cpp in Sources */,
+				041C2A871AAD8F4D005E88B1 /* MOAISteerBehaviourSeek.cpp in Sources */,
+				041C2AC71AAD8F4E005E88B1 /* pch.cpp in Sources */,
+				041C2A431AAD8F4D005E88B1 /* host.cpp in Sources */,
+				041C2AC31AAD8F4E005E88B1 /* MOAISteerSingleRayConfiguration.cpp in Sources */,
+				041C2A4B1AAD8F4D005E88B1 /* MOAISteerBehaviourAlignment.cpp in Sources */,
+				041C2A471AAD8F4D005E88B1 /* MOAISteerBehaviour.cpp in Sources */,
+				041C2A671AAD8F4D005E88B1 /* MOAISteerBehaviourFlee.cpp in Sources */,
+				041C2A931AAD8F4D005E88B1 /* MOAISteerBox2DAABBProximity.cpp in Sources */,
+				041C2AB71AAD8F4D005E88B1 /* MOAISteerPropController.cpp in Sources */,
+				041C2A6F1AAD8F4D005E88B1 /* MOAISteerBehaviourMatchVelocity.cpp in Sources */,
+				041C2AA31AAD8F4D005E88B1 /* MOAISteerController.cpp in Sources */,
+				041C2A8B1AAD8F4D005E88B1 /* MOAISteerBehaviourSeparation.cpp in Sources */,
+				041C2A631AAD8F4D005E88B1 /* MOAISteerBehaviourFace.cpp in Sources */,
+				041C2A6B1AAD8F4D005E88B1 /* MOAISteerBehaviourGroup.cpp in Sources */,
+				041C2A5B1AAD8F4D005E88B1 /* MOAISteerBehaviourConstant.cpp in Sources */,
+				041C2AB31AAD8F4D005E88B1 /* MOAISteerPath.cpp in Sources */,
+				041C2A571AAD8F4D005E88B1 /* MOAISteerBehaviourCollisionAvoidance.cpp in Sources */,
+				041C2A5F1AAD8F4D005E88B1 /* MOAISteerBehaviourEvade.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		041C29B21AAD8EDF005E88B1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				041C2AAC1AAD8F4D005E88B1 /* MOAISteerLinePath.cpp in Sources */,
+				041C2A9C1AAD8F4D005E88B1 /* MOAISteerBox2DRadiusProximity.cpp in Sources */,
+				041C2A501AAD8F4D005E88B1 /* MOAISteerBehaviourArrive.cpp in Sources */,
+				041C2AA81AAD8F4D005E88B1 /* MOAISteerLimiter.cpp in Sources */,
+				041C2A981AAD8F4D005E88B1 /* MOAISteerBox2DController.cpp in Sources */,
+				041C2AC01AAD8F4E005E88B1 /* MOAISteerRayCast.cpp in Sources */,
+				041C2A541AAD8F4D005E88B1 /* MOAISteerBehaviourCohesion.cpp in Sources */,
+				041C2A741AAD8F4D005E88B1 /* MOAISteerBehaviourPathFollow.cpp in Sources */,
+				041C2A7C1AAD8F4D005E88B1 /* MOAISteerBehaviourRaycastObstacleAvoidance.cpp in Sources */,
+				041C2A901AAD8F4D005E88B1 /* MOAISteerBehaviourWander.cpp in Sources */,
+				041C2ABC1AAD8F4E005E88B1 /* MOAISteerProximity.cpp in Sources */,
+				041C2AB01AAD8F4D005E88B1 /* MOAISteerParallelSideRayConfiguration.cpp in Sources */,
+				041C2A801AAD8F4D005E88B1 /* MOAISteerBehaviourReachOrientation.cpp in Sources */,
+				041C2A841AAD8F4D005E88B1 /* MOAISteerBehaviourScript.cpp in Sources */,
+				041C2AA01AAD8F4D005E88B1 /* MOAISteerBox2DRayCast.cpp in Sources */,
+				041C2A781AAD8F4D005E88B1 /* MOAISteerBehaviourPursue.cpp in Sources */,
+				041C2A881AAD8F4D005E88B1 /* MOAISteerBehaviourSeek.cpp in Sources */,
+				041C2AC81AAD8F4E005E88B1 /* pch.cpp in Sources */,
+				041C2A441AAD8F4D005E88B1 /* host.cpp in Sources */,
+				041C2AC41AAD8F4E005E88B1 /* MOAISteerSingleRayConfiguration.cpp in Sources */,
+				041C2A4C1AAD8F4D005E88B1 /* MOAISteerBehaviourAlignment.cpp in Sources */,
+				041C2A481AAD8F4D005E88B1 /* MOAISteerBehaviour.cpp in Sources */,
+				041C2A681AAD8F4D005E88B1 /* MOAISteerBehaviourFlee.cpp in Sources */,
+				041C2A941AAD8F4D005E88B1 /* MOAISteerBox2DAABBProximity.cpp in Sources */,
+				041C2AB81AAD8F4D005E88B1 /* MOAISteerPropController.cpp in Sources */,
+				041C2A701AAD8F4D005E88B1 /* MOAISteerBehaviourMatchVelocity.cpp in Sources */,
+				041C2AA41AAD8F4D005E88B1 /* MOAISteerController.cpp in Sources */,
+				041C2A8C1AAD8F4D005E88B1 /* MOAISteerBehaviourSeparation.cpp in Sources */,
+				041C2A641AAD8F4D005E88B1 /* MOAISteerBehaviourFace.cpp in Sources */,
+				041C2A6C1AAD8F4D005E88B1 /* MOAISteerBehaviourGroup.cpp in Sources */,
+				041C2A5C1AAD8F4D005E88B1 /* MOAISteerBehaviourConstant.cpp in Sources */,
+				041C2AB41AAD8F4D005E88B1 /* MOAISteerPath.cpp in Sources */,
+				041C2A581AAD8F4D005E88B1 /* MOAISteerBehaviourCollisionAvoidance.cpp in Sources */,
+				041C2A601AAD8F4D005E88B1 /* MOAISteerBehaviourEvade.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -20111,6 +20615,274 @@
 				SDKROOT = iphoneos;
 			};
 			name = Release;
+		};
+		041C29681AAD8ED7005E88B1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				PRODUCT_NAME = "moai-ios-steer";
+				SDKROOT = iphoneos;
+				WARNING_CFLAGS = "-w";
+			};
+			name = Debug;
+		};
+		041C29691AAD8ED7005E88B1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				PRODUCT_NAME = "moai-ios-steer";
+				SDKROOT = iphoneos;
+				WARNING_CFLAGS = "-w";
+			};
+			name = Release;
+		};
+		041C296A1AAD8ED7005E88B1 /* AdHoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				PRODUCT_NAME = "moai-ios-steer";
+				SDKROOT = iphoneos;
+				WARNING_CFLAGS = "-w";
+			};
+			name = AdHoc;
+		};
+		041C296B1AAD8ED7005E88B1 /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				PRODUCT_NAME = "moai-ios-steer";
+				SDKROOT = iphoneos;
+				WARNING_CFLAGS = "-w";
+			};
+			name = Distribution;
+		};
+		041C29F61AAD8EDF005E88B1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"${inherited}",
+					MACOSX,
+					LUA_USE_MACOSX,
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_NAME = "moai-osx-steer";
+				SDKROOT = macosx;
+				WARNING_CFLAGS = "-w";
+			};
+			name = Debug;
+		};
+		041C29F71AAD8EDF005E88B1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"${inherited}",
+					MACOSX,
+					LUA_USE_MACOSX,
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_NAME = "moai-osx-steer";
+				SDKROOT = macosx;
+				WARNING_CFLAGS = "-w";
+			};
+			name = Release;
+		};
+		041C29F81AAD8EDF005E88B1 /* AdHoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"${inherited}",
+					MACOSX,
+					LUA_USE_MACOSX,
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_NAME = "moai-osx-steer";
+				SDKROOT = macosx;
+				WARNING_CFLAGS = "-w";
+			};
+			name = AdHoc;
+		};
+		041C29F91AAD8EDF005E88B1 /* Distribution */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"${inherited}",
+					MACOSX,
+					LUA_USE_MACOSX,
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = NO;
+				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
+				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
+				GCC_WARN_MISSING_PARENTHESES = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
+				GCC_WARN_PROTOTYPE_CONVERSION = NO;
+				GCC_WARN_SHADOW = NO;
+				GCC_WARN_SIGN_COMPARE = NO;
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
+				GCC_WARN_UNKNOWN_PRAGMAS = NO;
+				GCC_WARN_UNUSED_FUNCTION = NO;
+				GCC_WARN_UNUSED_LABEL = NO;
+				GCC_WARN_UNUSED_PARAMETER = NO;
+				GCC_WARN_UNUSED_VALUE = NO;
+				GCC_WARN_UNUSED_VARIABLE = NO;
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_NAME = "moai-osx-steer";
+				SDKROOT = macosx;
+				WARNING_CFLAGS = "-w";
+			};
+			name = Distribution;
 		};
 		3EDC16E619F6DD1A007A7775 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -26399,6 +27171,28 @@
 				03C2F6F7104DE131009A2D5D /* Release */,
 				E9C405C6150D999200C7AB04 /* AdHoc */,
 				E90D02C014D5E12700DD75AA /* Distribution */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		041C29671AAD8ED7005E88B1 /* Build configuration list for PBXNativeTarget "libmoai-ios-steer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				041C29681AAD8ED7005E88B1 /* Debug */,
+				041C29691AAD8ED7005E88B1 /* Release */,
+				041C296A1AAD8ED7005E88B1 /* AdHoc */,
+				041C296B1AAD8ED7005E88B1 /* Distribution */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		041C29F51AAD8EDF005E88B1 /* Build configuration list for PBXNativeTarget "libmoai-osx-steer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				041C29F61AAD8EDF005E88B1 /* Debug */,
+				041C29F71AAD8EDF005E88B1 /* Release */,
+				041C29F81AAD8EDF005E88B1 /* AdHoc */,
+				041C29F91AAD8EDF005E88B1 /* Distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
