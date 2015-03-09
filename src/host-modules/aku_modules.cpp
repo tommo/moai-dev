@@ -98,6 +98,10 @@ void AKUModulesAppFinalize () {
 		AKUSimAppFinalize ();
 	#endif
 
+	#if AKU_WITH_STEER
+		AKUSteerAppFinalize ();
+	#endif
+
 	#if AKU_WITH_UNTZ
 		AKUUntzAppFinalize ();
 	#endif
@@ -170,6 +174,10 @@ void AKUModulesAppInitialize () {
 		AKUSimAppInitialize ();
 	#endif
 
+	#if AKU_WITH_STEER
+		AKUSteerAppInitialize ();
+	#endif
+
 	#if AKU_WITH_UNTZ
 		AKUUntzAppInitialize ();
 	#endif
@@ -240,6 +248,10 @@ void AKUModulesContextInitialize () {
 
 	#if AKU_WITH_SIM
 		AKUSimContextInitialize ();
+	#endif
+
+	#if AKU_WITH_STEER
+		AKUSteerContextInitialize ();
 	#endif
 
 	#if AKU_WITH_UNTZ

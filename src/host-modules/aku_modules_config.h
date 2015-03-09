@@ -57,6 +57,10 @@
 		#define AKU_WITH_SIM 1
 	#endif
 
+	#ifndef AKU_WITH_STEER
+		#define AKU_WITH_STEER 1
+	#endif
+
 	#ifndef AKU_WITH_UNTZ
 		#ifdef MOAI_OS_HTML
 			#define AKU_WITH_UNTZ 1
