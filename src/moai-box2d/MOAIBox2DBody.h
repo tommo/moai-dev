@@ -77,6 +77,8 @@ public:
 	
 	friend class MOAIBox2DWorld;
 	
+	GET( b2Body*, Body, mBody )
+	
 	DECL_LUA_FACTORY ( MOAIBox2DBody )
 
 	//----------------------------------------------------------------//

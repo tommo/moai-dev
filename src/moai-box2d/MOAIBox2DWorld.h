@@ -129,6 +129,7 @@ public:
 	
 	GET_SET ( float, UnitsToMeters, mUnitsToMeters )
 	GET_CONST ( float, UnitsToMeters, mUnitsToMeters )
+	GET ( b2World*, World, mWorld )
 	
 	// aliases for box2D bitflags
 	static const u32 DEBUG_DRAW_SHAPES		= b2Draw::e_shapeBit;

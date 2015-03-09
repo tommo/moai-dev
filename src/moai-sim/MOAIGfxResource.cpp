@@ -82,13 +82,20 @@ int MOAIGfxResource::_purge ( lua_State* L ) {
 */
 int MOAIGfxResource::_affirm ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGfxResource, "U" )
-	zglBegin();
-	self->Bind();
-	zglEnd();
-	// if( state.GetValue < bool>( 2, true ) )
-	// 	self->DoCPUAffirm();
-	// if( state.GetValue < bool>( 3, false ) )
-	// 	self->DoGPUAffirm();
+	if ( self->mState == STATE_NEW ) {
+		self->mState = STATE_NEEDS_CPU_CREATE;
+	}
+	if ( self->mState == STATE_NEEDS_CPU_CREATE ) {
+		self->mState = self->OnCPUCreate () ? STATE_NEEDS_GPU_CREATE : STATE_ERROR;
+	}
+	// if ( self->mState == STATE_NEEDS_GPU_CREATE ) {
+	// 	zglBegin ();
+	// 	self->mState = self->OnGPUCreate () ? STATE_READY_TO_BIND : STATE_ERROR;
+	// 	if ( self->mState == STATE_READY_TO_BIND ) {
+	// 		self->OnCPUDestroy ();
+	// 	}
+	// 	zglEnd ();
+	// }
 	return 0;
 }
 
