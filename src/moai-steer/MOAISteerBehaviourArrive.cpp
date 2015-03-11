@@ -41,6 +41,7 @@ bool MOAISteerBehaviourArrive::OnCalculate ( MOAISteerAcceleration& acc, double 
 		// return MOAISteerAcceleration();
 		ZLVec3D targetVelocity ( 0.0f, 0.0f, 0.0f );
 		ZLVec3D targetAcc = targetVelocity - this->GetOwner()->GetLinearVelocity();
+		targetAcc.Scale( 1.0f / delta );
 		actualLimiter->LimitLinearAcceleration( targetAcc );
 		acc.mLinear.Init( targetAcc );
 
@@ -53,7 +54,7 @@ bool MOAISteerBehaviourArrive::OnCalculate ( MOAISteerAcceleration& acc, double 
 		targetVelocity.Scale( targetSpeed / distance ); // Optimized code for: toTarget.nor().scl(targetSpeed)
 		
 		ZLVec3D targetAcc = targetVelocity - this->GetOwner()->GetLinearVelocity();
-		targetAcc.Scale( 1.0f / this->mTimeToTarget );
+		targetAcc.Scale( 1.0f / this->mTimeToTarget / delta );
 		actualLimiter->LimitLinearAcceleration( targetAcc );
 		acc.mLinear.Init( targetAcc );
 		

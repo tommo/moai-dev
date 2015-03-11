@@ -167,6 +167,7 @@ bool MOAISteerController::IsDone() {
 void MOAISteerController::OnUpdate( double step ) {
 	this->mElapsed += step;
 	if( !this->mRootBehaviour ) return ;
+	if( step == 0.0f ) return ;
 
 	MOAISteerAcceleration acc;
 	acc.Reset();
