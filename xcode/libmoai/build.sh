@@ -116,8 +116,10 @@ for platform in $platforms; do
 	done
 
 	for config in $configurations; do
-		rm -rf "$basedir/$platform/$config/universal"
-		mkdir -p "$basedir/$platform/$config/universal"
+		if [ $task = true ]; then
+			rm -rf "$basedir/$platform/$config/universal"
+			mkdir -p "$basedir/$platform/$config/universal"
+		fi
 		for scheme in $schemes; do
 			libs=
 			for sdk in $sdks; do
