@@ -103,13 +103,14 @@ bool MOAISteerBehaviourConstant::OnCalculate ( MOAISteerAcceleration& acc, doubl
 
 	} else if( ( this->mFlags & LINEAR_VELOCITY ) != 0 ) {
 		acc.mLinear = this->mLinearVelocity - this->GetOwner()->GetLinearVelocity();
+		acc.mLinear.Scale( 1.0f/delta );
 		hasLinear = true;
 
 	} else if( ( this->mFlags & LINEAR_SPEED ) != 0 ) {
 		ZLVec3D v = this->GetOwner()->GetLinearVelocity();
 		float speed = v.Length();
 		if( speed != 0.0f ) {
-			v.SetLength( this->mLinearSpeed - speed );
+			v.SetLength( ( this->mLinearSpeed - speed ) / delta );
 		}
 		acc.mLinear = v;
 		hasLinear = true;
@@ -121,15 +122,15 @@ bool MOAISteerBehaviourConstant::OnCalculate ( MOAISteerAcceleration& acc, doubl
 		hasAngular = true;
 
 	} else if( ( this->mFlags & ANGULAR_VELOCITY ) != 0 ) {
-		acc.mAngular = this->mAngularVelocity - this->GetOwner()->GetAngularVelocity();
+		acc.mAngular = ( this->mAngularVelocity - this->GetOwner()->GetAngularVelocity() ) / delta;
 		hasAngular = true;
 				
 	} else if( ( this->mFlags & ANGULAR_SPEED ) != 0 ) {
 		float av = this->GetOwner()->GetAngularVelocity();
 		if( av >= 0 ) {
-			acc.mAngular = this->mAngularSpeed - av;
+			acc.mAngular = ( this->mAngularSpeed - av ) / delta;
 		} else {
-			acc.mAngular = - this->mAngularSpeed - av;
+			acc.mAngular = ( - this->mAngularSpeed - av ) / delta;
 		}
 		hasAngular = true;
 	}
