@@ -27,7 +27,7 @@
 //================================================================//
 class MOAIBox2DRayCastCallback :
 	public b2RayCastCallback {
-private:
+protected:
 
 	friend class MOAIBox2DWorld;
 
@@ -50,6 +50,45 @@ public:
 		m_point = point;
 		m_normal = normal;
 		return fraction;
+	}
+};
+
+//----------------------------------------------------------------//
+//MOAIBox2DRayCastCallback with lua callback support
+//----------------------------------------------------------------//
+class MOAIBox2DRayCastCallbackWithLuaCallback :
+	public MOAIBox2DRayCastCallback {
+
+private:
+	friend class MOAIBox2DWorld;
+	float mUnitsToMeters;
+
+public:
+	//----------------------------------------------------------------//
+	float32 ReportFixture ( b2Fixture* fixture, const b2Vec2& point, const b2Vec2& normal, float32 fraction ) {
+		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		MOAIBox2DFixture* moaiFixture = ( MOAIBox2DFixture* ) fixture->GetUserData ();
+		lua_pushvalue( state, -1 ); //copy the callback function
+		if( moaiFixture ) {
+			moaiFixture->PushLuaUserdata( state );
+		} else {
+			lua_pushnil( state );
+		}
+		lua_pushnumber ( state, point.x / this->mUnitsToMeters );
+		lua_pushnumber ( state, point.y / this->mUnitsToMeters );
+		lua_pushnumber ( state, normal.x );
+		lua_pushnumber ( state, normal.y );
+		state.DebugCall( 5, 1 );
+		bool foundHit = lua_toboolean( state, -1 );
+		lua_pop( state, 1 );
+		if ( foundHit ) {
+			m_fixture = fixture;
+			m_point = point;
+			m_normal = normal;
+			return 0.0f;
+		} else {
+			return - 1.0f;
+		}
 	}
 };
 
@@ -804,10 +843,13 @@ int MOAIBox2DWorld::_getLinearSleepTolerance ( lua_State* L ) {
 	@in		number p1y
 	@in		number p2x
 	@in		number p2y
+	@opt	function callback			if callback is given, raycast will invoke the callback when a hit is found, if the callback returns true, raycast will stop.
 	@out	boolean hit					true if hit, false otherwise
 	@out	MOAIBox2DFixture fixture	the fixture that was hit, or nil
 	@out	number hitpointX
 	@out	number hitpointY
+	@out	number hitnormalX
+	@out	number hitnormalY
 */
 int MOAIBox2DWorld::_getRayCast ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWorld, "U" )
@@ -819,28 +861,41 @@ int MOAIBox2DWorld::_getRayCast ( lua_State* L ) {
 	b2Vec2 p1(p1x,p1y);
 	b2Vec2 p2(p2x,p2y);
    
-	MOAIBox2DRayCastCallback callback;
-	self->mWorld->RayCast(&callback, p1, p2);
+	MOAIBox2DRayCastCallback* callback;
+	if( lua_isfunction( state, 6 ) ) {
+		callback = new MOAIBox2DRayCastCallbackWithLuaCallback;
+		(( MOAIBox2DRayCastCallbackWithLuaCallback* )callback)->mUnitsToMeters = self->mUnitsToMeters;
+		//clean stack
+		lua_pop( state, lua_gettop( state ) - 6 );
+	} else {
+		callback = new MOAIBox2DRayCastCallback;
+	}
+	self->mWorld->RayCast(callback, p1, p2);
  
-	if (NULL != callback.m_fixture) {
-		b2Vec2 hitpoint = callback.m_point;
+	if (NULL != callback->m_fixture) {
+		b2Vec2 hitpoint  = callback->m_point;
+		b2Vec2 hitnormal = callback->m_point;
 
 		lua_pushboolean ( state, true );
 		lua_pushnumber ( state, hitpoint.x / self->mUnitsToMeters );
 		lua_pushnumber ( state, hitpoint.y / self->mUnitsToMeters );
+		lua_pushnumber ( state, hitnormal.x );
+		lua_pushnumber ( state, hitnormal.y );
 
 		// Raycast hit a fixture
-		MOAIBox2DFixture* moaiFixture = ( MOAIBox2DFixture* ) callback.m_fixture->GetUserData ();
+		MOAIBox2DFixture* moaiFixture = ( MOAIBox2DFixture* ) callback->m_fixture->GetUserData ();
+		delete callback;
 		if ( moaiFixture ) {
 			moaiFixture->PushLuaUserdata ( state );
-			return 4;
 		} else {
-			return 3;
+			//push a nil value if no moaibox2dfixture found
+			lua_pushnil( state );
 		}
+		return 4;
 
 	} else {
-
 		// Raycast did not hit a fixture
+		delete callback;
 		lua_pushboolean( state, false );
 		return 1;
 	}

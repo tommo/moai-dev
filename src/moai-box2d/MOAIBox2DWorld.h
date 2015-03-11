@@ -14,6 +14,7 @@ class MOAIBox2DFixture;
 class MOAIBox2DJoint;
 class MOAIBox2DWorld;
 class MOAIBox2DRayCastCallback;
+class MOAIBox2DRayCastCallbackWithLuaCallback;
 
 //================================================================//
 // MOAIBox2DPrim
@@ -71,6 +72,7 @@ private:
 	MOAIBox2DDebugDraw*			mDebugDraw;
 	
 	MOAILuaSharedPtr < MOAIBox2DArbiter > mArbiter;
+	MOAILuaMemberRef			mOnRaycastHit;
 
 	u32		mVelocityIterations;
 	u32		mPositionIterations;
