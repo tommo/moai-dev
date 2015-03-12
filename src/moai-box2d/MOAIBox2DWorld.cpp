@@ -877,10 +877,6 @@ int MOAIBox2DWorld::_getRayCast ( lua_State* L ) {
 		b2Vec2 hitnormal = callback->m_point;
 
 		lua_pushboolean ( state, true );
-		lua_pushnumber ( state, hitpoint.x / self->mUnitsToMeters );
-		lua_pushnumber ( state, hitpoint.y / self->mUnitsToMeters );
-		lua_pushnumber ( state, hitnormal.x );
-		lua_pushnumber ( state, hitnormal.y );
 
 		// Raycast hit a fixture
 		MOAIBox2DFixture* moaiFixture = ( MOAIBox2DFixture* ) callback->m_fixture->GetUserData ();
@@ -891,7 +887,11 @@ int MOAIBox2DWorld::_getRayCast ( lua_State* L ) {
 			//push a nil value if no moaibox2dfixture found
 			lua_pushnil( state );
 		}
-		return 4;
+		lua_pushnumber ( state, hitpoint.x / self->mUnitsToMeters );
+		lua_pushnumber ( state, hitpoint.y / self->mUnitsToMeters );
+		lua_pushnumber ( state, hitnormal.x );
+		lua_pushnumber ( state, hitnormal.y );
+		return 6;
 
 	} else {
 		// Raycast did not hit a fixture
