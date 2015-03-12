@@ -4,6 +4,14 @@
 		"selected_items":
 		[
 			[
+				"units",
+				"unitsToMeters"
+			],
+			[
+				"zgl",
+				"zglBegin"
+			],
+			[
 				"FOD_TIME",
 				"FMOD_TIMEUNIT_MS"
 			],
@@ -506,48 +514,16 @@
 			[
 				"__edi",
 				"__editor_scene"
-			],
-			[
-				"current",
-				"currentClip"
-			],
-			[
-				"onMou",
-				"onMouseUp"
 			]
 		]
 	},
 	"buffers":
 	[
 		{
-			"file": "moai-sim/MOAICollisionFacet.cpp",
+			"file": "moai-sim/MOAIParticleSystem.cpp",
 			"settings":
 			{
-				"buffer_size": 5887,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "moai-sim/MOAICollisionWorld.cpp",
-			"settings":
-			{
-				"buffer_size": 15623,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/Users/tommo/Downloads/cocos2d-x-3.3beta0/extensions/GUI/CCControlExtension/CCControlHuePicker.cpp",
-			"settings":
-			{
-				"buffer_size": 6143,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "moai-sim/MOAITextLabel.cpp",
-			"settings":
-			{
-				"buffer_size": 29532,
+				"buffer_size": 20616,
 				"line_ending": "Unix"
 			}
 		},
@@ -555,76 +531,156 @@
 			"file": "moai-sim/MOAIGraphicsProp.cpp",
 			"settings":
 			{
-				"buffer_size": 25184,
+				"buffer_size": 26372,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "host-modules/aku_modules_util.cpp",
+			"file": "moai-sim/MOAIGraphicsProp.h",
 			"settings":
 			{
-				"buffer_size": 3172,
+				"buffer_size": 5573,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "host-modules/aku_modules_util.h",
+			"file": "moai-sim/MOAITransform.cpp",
 			"settings":
 			{
-				"buffer_size": 321,
+				"buffer_size": 36951,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "moai-sim/MOAINode.cpp",
+			"file": "moai-sim/MOAITransformBase.cpp",
 			"settings":
 			{
-				"buffer_size": 20351,
+				"buffer_size": 12355,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "moai-sim/MOAIProp.cpp",
+			"file": "moai-sim/MOAITransformBase.h",
 			"settings":
 			{
-				"buffer_size": 25581,
+				"buffer_size": 2184,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "moai-core/MOAILuaObject.cpp",
+			"file": "moai-sim/MOAITextStyle.cpp",
 			"settings":
 			{
-				"buffer_size": 15674,
+				"buffer_size": 8230,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "moai-core/MOAILuaObject.h",
+			"file": "zl-util/ZLIntersect.cpp",
 			"settings":
 			{
-				"buffer_size": 3159,
+				"buffer_size": 10077,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "zl-util/ZLDistance.cpp",
+			"settings":
+			{
+				"buffer_size": 2664,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "moai-sim/MOAIScriptDeck.cpp",
+			"settings":
+			{
+				"buffer_size": 5916,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "moai-sim/MOAIScriptDeck.h",
+			"settings":
+			{
+				"buffer_size": 1345,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "moai-steer/MOAISteerBox2DRayCast.cpp",
+			"settings":
+			{
+				"buffer_size": 3737,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "moai-box2d/MOAIBox2DWorld.cpp",
+			"settings":
+			{
+				"buffer_size": 41058,
 				"line_ending": "Unix"
 			}
 		}
 	],
-	"build_system": "IDE",
+	"build_system": "Packages/User/bmx.sublime-build",
 	"command_palette":
 	{
 		"height": 375.0,
 		"selected_items":
 		[
 			[
+				"che",
+				"Git: Checkout Current File"
+			],
+			[
+				"javasc",
+				"CodeFormatter: Format as Javascript Syntax"
+			],
+			[
+				"diff",
+				"Set Syntax: Diff"
+			],
+			[
 				"log",
 				"Git: Log Current File"
 			],
 			[
-				"check",
+				"checout",
 				"Git: Checkout Current File"
 			],
 			[
-				"diff",
-				"Git: Diff Current File"
+				"packa",
+				"Preferences: Browse Packages"
+			],
+			[
+				"Log",
+				"Git: Log Current File"
+			],
+			[
+				"sour",
+				"SourceTree: Open SourceTree"
+			],
+			[
+				"c++",
+				"Set Syntax: C++"
+			],
+			[
+				"checkou",
+				"Git: Checkout Current File"
+			],
+			[
+				"tab",
+				"Indentation: Convert to Tabs"
+			],
+			[
+				"pytho",
+				"Set Syntax: Python"
+			],
+			[
+				"check",
+				"Git: Checkout Current File"
 			],
 			[
 				"git log",
@@ -649,10 +705,6 @@
 			[
 				"git diff",
 				"Git: Diff Current File"
-			],
-			[
-				"tab",
-				"Indentation: Convert to Tabs"
 			],
 			[
 				"mark",
@@ -1091,7 +1143,7 @@
 				"Package Control: List Packages"
 			]
 		],
-		"width": 529.0
+		"width": 579.0
 	},
 	"console":
 	{
@@ -1108,134 +1160,134 @@
 	},
 	"file_history":
 	[
-		"/Volumes/prj/moai/jam/ld26/lua/object/Box.lua",
-		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAICoroutine.h",
-		"/Users/tommo/dev/moai-dev/src/moai-box2d/MOAIBox2DBody.cpp",
-		"/Users/tommo/unity/yaka/Assets/code/test.cs",
-		"/Users/tommo/unity/yaka/Assets/code/Startup.cs",
-		"/Users/tommo/dev/moai-dev/src/moai-core/MOAILuaRuntime.cpp",
-		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIAction.h",
-		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIProp.h",
-		"/Users/tommo/dev/moai-dev/src/moai-box2d/MOAIBox2DBody.h",
-		"/Users/tommo/dev/moai-dev/src/moai-box2d/MOAIBox2DFixture.cpp",
-		"/Users/tommo/dev/frameworks/spine-runtimes/spine-c/src/spine/Animation.c",
-		"/Users/tommo/dev/moai-dev/samples/collision/collision-basic/main.lua",
-		"/Users/tommo/dev/moai-dev/samples/physics/physics-box2d/main.lua",
-		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIActionMgr.cpp",
-		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIAction.cpp",
-		"/Volumes/prj/moai/yaka/host/ios-release/content/main.lua",
-		"/Volumes/prj/moai/yaka/host/ios-release/content/preview.lua",
-		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAICoroutine.cpp",
-		"/Users/tommo/dev/moai-dev/README.md",
-		"/Users/tommo/dev/moai-dev/src/moai-core/MOAILuaObject.cpp",
-		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIAction2.cpp",
-		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIProp.cpp",
-		"/Users/tommo/dev/moai-dev/src/moai-core/MOAICanary.h",
-		"/Users/tommo/dev/moai-dev/src/moai-core/MOAICanary.cpp",
-		"/Users/tommo/dev/moai-dev/src/moai-core/MOAILuaState-impl.h",
-		"/Users/tommo/dev/moai-dev/src/moai-core/MOAILuaObject.h",
-		"/Users/tommo/dev/moai-dev/src/moai-core/MOAIObject.cpp",
-		"/Users/tommo/dev/moai-dev/src/moai-core/MOAIObject.h",
-		"/Users/tommo/dev/moai-dev/src/moai-core/MOAIRtti.cpp",
-		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAISim.cpp",
-		"/Users/tommo/dev/moai-dev/3rdparty/lua-5.1.3/src/lualib.h",
-		"/Users/tommo/dev/moai-dev/src/moai-core/MOAILuaState.h",
-		"/Users/tommo/dev/moai-dev/src/moai-core/MOAILuaState.cpp",
-		"/Users/tommo/dev/moai-dev/3rdparty/lua-5.1.3/src/ldebug.h",
-		"/Users/tommo/dev/moai-dev/3rdparty/lua-5.1.3/src/lobject.h",
-		"/Users/tommo/dev/moai-dev/3rdparty/lua-5.1.3/src/ldebug.c",
-		"/Users/tommo/dev/moai-dev/src/moai-harness/MOAIHarness.cpp",
-		"/Users/tommo/dev/moai-dev/3rdparty/lua-5.1.3/src/ldblib.c",
-		"/Users/tommo/dev/moai-dev/3rdparty/lua-5.1.3/src/lua.h",
-		"/Users/tommo/dev/moai-dev/3rdparty/lua-5.1.3/src/lua.c",
-		"/Users/tommo/dev/moai-dev/xcode/libmoai/build_ios.sh",
-		"/Users/tommo/dev/moai-dev/xcode/libmoai/build_ios_d.sh",
-		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAINode.h",
-		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIParticleSystem.cpp",
-		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIParticleSystem.h",
-		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIGraphicsProp.cpp",
-		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAINode.cpp",
-		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAINodeMgr.cpp",
+		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIAnimCurveVec.h",
+		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIShaderProgram.cpp",
+		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIShaderProgram.h",
+		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIGfxResource.cpp",
+		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIRenderMgr.cpp",
+		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIGfxDevice.cpp",
 		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAILayer.cpp",
+		"/Volumes/prj/gii/lib/lua/mock_edit/EditorCanvas/init.lua",
+		"/Volumes/prj/gii/lib/lua/mock_edit/EditorCanvas/TransformToolHelper.lua",
+		"/Users/tommo/dev/moai-dev/src/moai-fmod-designer/MOAIFmodEventInstance.cpp",
+		"/Users/tommo/dev/moai-dev/src/moai-fmod-designer/MOAIFmodEventInstance.h",
+		"/Users/tommo/dev/moai-dev/src/moai-core/MOAIEventSource.h",
+		"/Users/tommo/dev/moai-dev/src/moai-core/MOAIEventSource.cpp",
+		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIAction.h",
+		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIAction.cpp",
+		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAITransformBase.cpp",
+		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAITransformBase.h",
+		"/Users/tommo/dev/moai-dev/src/moai-fmod-designer/Source/EventInstance.cpp",
+		"/Users/tommo/dev/moai-dev/src/moai-fmod-designer/Source/EventInstance.h",
+		"/Users/tommo/dev/moai-dev/src/moai-steer/MOAISteerBehaviourConstant.cpp",
+		"/Users/tommo/dev/moai-dev/xcode/libmoai/build.sh",
+		"/Users/tommo/dev/moai-dev/src/moai-steer/MOAISteerController.cpp",
+		"/Users/tommo/dev/moai-dev/src/moai-steer/MOAISteerBehaviourArrive.cpp",
+		"/Users/tommo/dev/moai-dev/src/moai-box2d/MOAIBox2DBody.cpp",
 		"/Users/tommo/dev/moai-dev/src/moai-box2d/MOAIBox2DWorld.h",
 		"/Users/tommo/dev/moai-dev/src/moai-box2d/MOAIBox2DWorld.cpp",
-		"/Users/tommo/dev/moai-dev/src/moai-core/host.h",
-		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAITimer.h",
-		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAITimer.cpp",
-		"/Volumes/prj/gii/packages/Mock/DebugInfo/__init__.py",
-		"/Volumes/prj/gii/lib/gii/qt/TopLevelEditor.py",
-		"/Volumes/prj/pixpil/web/index.html",
-		"/Users/tommo/dev/moai-dev/src/moai-core/host.cpp",
-		"/Users/tommo/dev/moai-dev/src/moai-ios-mixpanel/host.h",
-		"/Users/tommo/dev/moai-dev/3rdparty/lua-5.1.3/src/lobject.c",
-		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAILayer.h",
-		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAICollisionFacet.cpp",
-		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAICollisionWorld.cpp",
-		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAICollisionWorld.h",
-		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIImage.cpp",
-		"/Users/tommo/dev/moai-dev/src/moai-box2d/MOAIBox2DDebugDraw.cpp",
-		"/Users/tommo/dev/moai-dev/samples/physics/physics-box2d-motorjoint/main.lua",
-		"/Users/tommo/dev/moai-dev/samples/graphics/gl-cube-debugLines/main.lua",
-		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIFrameBuffer.cpp",
-		"/Volumes/prj/design/mdd/new/anim/psd/test.py",
-		"/Volumes/prj/design/mdd/new/anim/psd/PSDExportTest.py",
-		"/Volumes/prj/design/mdd/new/anim/animExportTest/export.py",
-		"/Volumes/prj/design/mdd/new/anim/animExportTest/goblin_anim.sprite",
-		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIFont.cpp",
-		"/Users/tommo/dev/moai-dev/samples/font/font-sdf/main.lua",
-		"/Users/tommo/dev/moai-dev/src/host-ios/Classes/LocationObserver.mm",
-		"/Users/tommo/dev/moai-dev/src/host-ios/Classes/MoaiView.mm",
-		"/Users/tommo/dev/pyqt/PyQt-mac-gpl-4.9.4/qpy/QtCore/qpycore_sip_helpers.cpp",
-		"/Users/tommo/dev/pyqt/PyQt-mac-gpl-4.9.4/QtCore/sipQtCorecmodule.cpp",
-		"/Volumes/prj/moai/bak/pongfu/data/bg.lua",
-		"/Users/tommo/dev/moai-dev/src/moai-sim/host.cpp",
-		"/Users/tommo/dev/moai-dev/src/moai-sim/host.h",
-		"/Users/tommo/dev/moai-dev/src/moai-core/MOAIDeserializer.cpp",
-		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIKeyboardSensor.cpp",
-		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAITextLabel.cpp",
-		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIParticleDistanceEmitter.cpp",
-		"/Users/tommo/dev/moai-dev/src/moai-sim/host_particles.cpp",
-		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIParticleTimedEmitter.cpp",
+		"/Users/tommo/dev/moai-dev/src/moai-steer/MOAISteerBehaviour.cpp",
+		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIGraphicsProp.cpp",
+		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIGridDeck2D.cpp",
+		"/Users/tommo/dev/moai-dev/src/moai-steer/MOAISteerBox2DController.h",
+		"/Users/tommo/dev/moai-dev/src/moai-steer/MOAISteerBox2DController.cpp",
+		"/Users/tommo/dev/moai-dev/src/moai-steer/MOAISteerBehaviourGroup.cpp",
+		"/Users/tommo/dev/moai-dev/src/moai-box2d/MOAIBox2DBody.h",
+		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIDraw.cpp",
+		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIDraw.h",
+		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIParticleEmitter.h",
+		"/Users/tommo/dev/moai-dev/src/moai-box2d/MOAIBox2DArbiter.cpp",
 		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIParticleScript.h",
 		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIParticleScript.cpp",
-		"/Users/tommo/dev/moai-dev/src/moai-sim/host_particles.h",
-		"/Users/tommo/dev/moai-dev/src/moai-util/MOAIThread_posix.cpp",
-		"/Users/tommo/dev/moai-dev/src/moai-fmod-designer/Source/EventInstance.cpp",
-		"/Users/tommo/dev/moai-dev/src/host-modules/aku_modules.cpp",
-		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAITextLabel.h",
+		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAITileDeck2D.cpp",
+		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIGridSpace.cpp",
+		"/Users/tommo/dev/moai-dev/src/moai-core/MOAILuaObject.h",
+		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIAnimCurveVec.cpp",
+		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIParticleState.cpp",
 		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIParticleEmitter.cpp",
-		"/Users/tommo/dev/moai-dev/src/moai-sim/shaders/MOAIDeck2DShader-fsh.h",
-		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIRenderMgr.cpp",
-		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIGrid.cpp",
-		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIGridSpace.h",
-		"/Users/tommo/dev/moai-dev/src/moai-fmod-designer/MOAIFmodEventInstance.cpp",
-		"/Users/tommo/dev/moai-dev/xcode/libmoai/build.sh",
-		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIPartitionResultBuffer.cpp",
-		"/Users/tommo/dev/moai-dev/src/moai-util/MOAITaskThread.cpp",
-		"/Users/tommo/dev/moai-dev/src/moai-fmod-designer/Source/EventInstance.h",
+		"/Volumes/prj/moai/eastward/game/asset/script/common/Dialog.lua",
+		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIProp.cpp",
+		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIGfxQuadDeck2D.cpp",
+		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIGfxQuad2D.cpp",
+		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIDeck.cpp",
+		"/Users/tommo/dev/moai-dev/src/moai-steer/MOAISteerBehaviourRaycastObstacleAvoidance.cpp",
+		"/Users/tommo/dev/moai-dev/src/moai-steer/MOAISteerParallelSideRayConfiguration.cpp",
+		"/Users/tommo/dev/moai-dev/src/moai-steer/MOAISteerSingleRayConfiguration.cpp",
+		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIAnimCurveBase.cpp",
+		"/Users/tommo/dev/moai-dev/src/moai-box2d/MOAIBox2DFixture.h",
+		"/Users/tommo/dev/moai-dev/src/moai-steer/host.cpp",
+		"/Users/tommo/dev/moai-dev/src/host-modules/aku_modules_config.h",
 		"/Users/tommo/dev/moai-dev/src/moai-fmod-designer/Source/EventManager.cpp",
-		"/Users/tommo/dev/moai-dev/src/moai-fmod-designer/Source/Event.h",
-		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIImage-webp.cpp",
-		"/Users/tommo/dev/moai-dev/src/lua-headers/moai.lua",
-		"/Users/tommo/dev/moai-dev/src/lua-headers/main.lua",
-		"/Users/tommo/dev/moai-dev/src/moai-fmod-designer/Source/Event.cpp",
-		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIGfxDevice.cpp",
-		"/Users/tommo/dev/moai-dev/src/moai-util/MOAIThread.cpp",
+		"/Users/tommo/dev/moai-dev/src/moai-fmod-designer/Source/EventManager.h",
+		"/Users/tommo/dev/moai-dev/src/moai-steer/host.h",
+		"/Users/tommo/dev/moai-dev/src/moai-android-adcolony/host.h",
+		"/Users/tommo/dev/moai-dev/src/moai-steer/pch.cpp",
+		"/Users/tommo/dev/moai-dev/src/moai-steer/pch.h",
+		"/Users/tommo/dev/moai-dev/src/moai-fmod-designer/Source/Common.h",
+		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIParticleDistanceEmitter.cpp",
+		"/Users/tommo/dev/moai-dev/src/zl-util/ZLFloat.h",
+		"/Users/tommo/dev/moai-dev/src/zl-util/ZLVec3D.h",
+		"/Volumes/prj/moai/proto/gang/host/extension/moai-steer/MOAISteerBox2DRadiusProximity.h",
+		"/Volumes/prj/moai/proto/gang/host/extension/moai-steer/MOAISteerBehaviourCollisionAvoidance.cpp",
+		"/Users/tommo/dev/moai-dev/src/zl-util/ZLAffine2D.h",
+		"/Users/tommo/dev/moai-dev/src/moai-core/MOAILuaState-impl.h",
+		"/Users/tommo/dev/moai-dev/src/moai-core/MOAILuaState.cpp",
+		"/Users/tommo/dev/moai-dev/src/zl-util/ZLAffine3D.h",
+		"/Volumes/prj/moai/proto/gang/host/extension/moai-steer/MOAISteerBehaviourPursue.h",
+		"/Users/tommo/dev/moai-dev/src/zl-util/ZLTrig.cpp",
+		"/Users/tommo/dev/moai-dev/src/moai-ios-mobile-app-tracker/MOAIMobileAppTrackerIOS.h",
+		"/Volumes/prj/moai/proto/gang/host/extension/moai-steer/MOAISteerParallelSideRayConfiguration.cpp",
+		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIActionTree.cpp",
+		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIActionTree.h",
+		"/Users/tommo/dev/moai-dev/src/zl-util/STLMap.h",
+		"/Users/tommo/dev/moai-dev/src/moai-core/MOAITrace.h",
+		"/Users/tommo/dev/moai-dev/src/moai-fmod-designer/MOAIFmodEventMgr.h",
+		"/Users/tommo/dev/moai-dev/src/moai-core/MOAIScopedLuaState.cpp",
+		"/Users/tommo/dev/moai-dev/src/moai-core/MOAIScopedLuaState.h",
+		"/Users/tommo/dev/moai-dev/xcode/libmoai/build_osx.sh",
+		"/Volumes/prj/moai/proto/gang/host/extension/moai-steer/MOAISteerBehaviourConstant.h",
+		"/Volumes/prj/moai/proto/gang/bin/_build/c4che/osx-debug_cache.py",
+		"/Volumes/prj/moai/proto/gang/bin/_build/c4che/osx-release_cache.py",
+		"/Users/tommo/dev/moai-dev/xcode/libmoai/build_osx副本.sh",
+		"/Volumes/prj/moai/proto/gang/host/extension/moai-steer/MOAISteerBehaviourSeparation.h",
+		"/Users/tommo/dev/moai-dev/src/moai-fmod-designer/MOAIFmodEventMgr.cpp",
+		"/Users/tommo/dev/moai-dev/src/moai-core/MOAITrace.cpp",
+		"/Users/tommo/dev/moai-dev/src/moai-core/MOAISerializer.h",
+		"/Users/tommo/dev/moai-dev/src/moai-core/MOAISerializer.cpp",
+		"/Users/tommo/dev/moai-dev/src/moai-core/MOAIRtti.cpp",
+		"/Volumes/prj/moai/proto/gang/host/extension/moai-steer/MOAISteerBox2DAABBProximity.h",
 		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIDeck.h",
-		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIQuadBrush.cpp",
-		"/Users/tommo/dev/moai-dev/src/zl-gfx/zl_gfx_opengl.cpp",
-		"/Users/tommo/dev/moai-dev/distribute/hosts/xcode/ios/Classes/MoaiView.mm",
-		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIEaseType.cpp",
-		"/Volumes/prj/moai/spell/lua/lib/debugHelper.lua",
-		"/Users/tommo/dev/moai-dev/src/moai-util/MOAIStream.cpp",
-		"/Users/tommo/dev/moai-dev/samples/util/util-filestream/main.lua",
-		"/Users/tommo/dev/moai-dev/src/moai-util/MOAITaskQueue.cpp",
-		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIPvrHeader.h",
-		"/Users/tommo/dev/moai-dev/src/moai-util/MOAIDataBuffer.cpp",
-		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIParticleEmitter.h",
-		"/Volumes/prj/moai/yaka/gamedata-list",
-		"/Users/tommo/dev/moai-dev/src/moai-util/MOAIFileSystem.h",
-		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIAnim.h"
+		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAITransform.cpp",
+		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIGfxBuffer.h",
+		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIGfxBuffer.cpp",
+		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIAttrOp.h",
+		"/Users/tommo/dev/moai-dev/src/moai-core/MOAILuaState.h",
+		"/Users/tommo/dev/moai-dev/samples/vector-shapes/main.lua",
+		"/Users/tommo/dev/moai-dev/src/moai-box2d/MOAIBox2DFixture.cpp",
+		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIScriptDeck.h",
+		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIScriptDeck.cpp",
+		"/Users/tommo/dev/moai-dev/src/moai-core/MOAILuaObject.cpp",
+		"/Users/tommo/dev/moai-dev/src/moai-core/MOAILogMgr.cpp",
+		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIRenderMgr.h",
+		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIGfxResourceMgr.h",
+		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAITextureBase.cpp",
+		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIGfxResourceMgr.cpp",
+		"/Users/tommo/Downloads/glut-3.7/progs/demos/gliq/scores.txt",
+		"/Users/tommo/dev/moai-dev/src/moai-sim/MOAIGfxResource.h",
+		"/Volumes/prj/moai/MDD/mm2bt.lua",
+		"/Volumes/prj/gii/lib/mock/asset/tools/ml2fsm.lua",
+		"/Users/tommo/dev/moai-dev/src/zl-util/ZLCurve.cpp",
+		"/Users/tommo/dev/moai-dev/src/zl-util/ZLCurve.h",
+		"/Users/tommo/dev/moai-dev/src/zl-util/ZLPolar.cpp",
+		"/Users/tommo/dev/moai-dev/src/zl-util/ZLBarycentric.h",
+		"/Users/tommo/dev/BlitzMax/mod/tommo.mod/hspline.mod/test.bmx",
+		"/Users/tommo/dev/moai-dev/src/zl-util/ZLDelegate.h",
+		"/Users/tommo/dev/moai-dev/src/zl-util/ZLIntersect.cpp",
+		"/Users/tommo/dev/moai-dev/src/zl-util/ZLMercator.cpp",
+		"/Users/tommo/dev/moai-dev/src/zl-util/ZLMercator.h",
+		"/Users/tommo/dev/moai-dev/src/zl-util/ZLUnique.h",
+		"/Users/tommo/dev/moai-dev/src/zl-util/ZLTrig.h",
+		"/Users/tommo/dev/moai-dev/src/zl-util/ZLFactory.h"
 	],
 	"find":
 	{
@@ -1246,6 +1298,9 @@
 		"height": 0.0,
 		"where_history":
 		[
+			"",
+			"/Users/tommo/dev/moai-dev/src/moai-sim/",
+			"*.cpp",
 			"",
 			"*.g",
 			"*.cpp",
@@ -1340,134 +1395,134 @@
 		"case_sensitive": false,
 		"find_history":
 		[
-			"BuildLocalToWorldMtx",
-			"mXOffset",
-			"300",
-			"R2D",
-			"<<<",
-			">>>",
-			"_isFixedRotation",
-			"addrect",
-			"stop",
-			"__gc",
-			"luajit",
-			"MOAI_WITH_LUAJIT",
-			"LUAJIT",
-			"_gc",
-			"reportGC",
-			"mReportGC",
-			"GetDefaultParent",
-			"mAutoStop",
-			"ForceDelete",
-			"mobject",
-			"luaRelease",
-			"luarelease",
-			"LuaRelease",
-			"mGCActive",
-			"mGCStep",
-			"_gc",
-			"true",
-			"collected",
-			"GetLuaObject",
-			"coroutine",
-			"CopyToTop",
-			"LUA_GLOBALSINDEX",
-			"db_errorfb",
-			"Release",
-			"ForceGarbageCollection",
-			"scheduleUpdate",
-			"ScheduleUpdate",
-			"push",
-			"DepNodeUpdate",
-			"STATE_SCHEDULED",
-			"DepNodeUpdate",
-			"ScheduleUpdate",
-			"scheduleUpdate",
-			"ScheduleUpdate",
-			"OnDepNodeUpdate",
-			"partition",
-			"setpartition",
-			"_setPartition",
-			"ExtendUpdate",
-			"DepNodeUpdate",
-			"partition",
-			"forceupdate",
-			"partition",
-			"setSleepingAllowed",
-			"FixedRotation",
-			"Transform",
-			"IsSleepingAllowed",
-			"isFixedRotation",
-			"IsSleepingAllowed",
-			"IsFixedRotation",
-			"_isSleepingAllowed",
-			"isFixedRotation",
-			"setSleepingAllowed",
-			"bullet",
-			"_setBullet",
-			"setSleepingAllowed",
-			"SleepAllowed",
-			"setBullet",
-			"_setTimeToSleep",
-			"SetAllowSleeping",
-			"sleep",
-			"setawake",
-			"setLinearSleepTolerance",
-			"sleep",
-			"rendertable",
-			"collisionworld",
-			"MOAIRenderable",
-			"world",
-			"box2d",
-			"Render",
-			"render",
-			"box2d",
-			"Render",
-			"debugdraw",
-			"debuglines",
-			"_setDebugDrawFlags",
-			"_setDebugDrawEnabled",
-			"debugdraw",
-			"MOAIBox2DDebugDraw",
-			"read_psd_obj",
-			"akurun",
-			"sdf",
-			"_sipQtConnect",
-			"sipQtConnect",
-			"_sipQtConnect",
-			"expected",
-			"verbose",
-			"CheckParams",
-			"AKULoadFuncFromString",
-			"SetTrackingGroup",
-			"LOC",
-			"ClearChildren",
-			"parent",
-			"open",
-			"_panic",
-			"PushParticle",
-			"sprite",
-			"getText",
-			"getfuncname",
-			"_trackingAlloc",
-			"trackingalloc",
-			"_trackingAlloc",
-			"LUAJIT",
-			"LUA_JIT",
-			"setSubChannelTime",
-			"_setSubChannelTime",
-			"_getDuration",
-			"name",
-			"getMeasureFraction",
-			"_getMeasureFraction",
-			"_setSubChannelTime",
-			"vec",
-			"USPixel",
-			"IsClear",
-			"isclear",
-			"(int)soundEvent.m_pInternalData",
-			"m_pInternalData",
-			"InternalData"
+			"ambient",
+			"mAmbientColor",
+			"Renew",
+			"softre",
+			"STATE_NEW",
+			"finishinit",
+			"TransformToolHelper",
+			"RTTI_EXTEND",
+			"EVENT_START",
+			"acc",
+			"mLinear",
+			"acc",
+			"linearAcc",
+			"acc",
+			"angularAcceleration",
+			"Velocity",
+			"totalWeight",
+			"blend",
+			"blended",
+			"false",
+			"raycast",
+			"shouldContinue",
+			"MOAIBox2DRayCastCallbackWithLuaCallback",
+			"normal",
+			"hitnormal",
+			"hitpoint",
+			"callback",
+			"hitpoint",
+			"lua_pushnumber",
+			"shouldContinue",
+			"point",
+			"this",
+			"mWorld",
+			"mUnitsToMeters",
+			"unitsToMeters",
+			"mUnitsToMeters",
+			"MOAIBox2DWorld",
+			"unitsToMeters",
+			"mUnitsToMeters",
+			"unit",
+			"mWorld",
+			"MOAIBox2DWorld",
+			"hitpoint",
+			"state",
+			"moaiFixture",
+			"callback",
+			"MOAIBox2DRayCastCallback",
+			"raycast",
+			"MOAIBox2DRayCastCallbackWithLuaCallback",
+			"private",
+			"b2RayCastCallback",
+			"MOAIBox2DRayCastCallback",
+			"MOAIBox2DRayCastCallbackWithLuaCallback",
+			"mOnRaycastHit",
+			"MOAIBox2DRayCastCallback",
+			"_getRayCast",
+			"raycast",
+			"delta",
+			"targetAcc",
+			"rm",
+			"delta",
+			"scale",
+			"osx_schemes",
+			"task",
+			"Limit",
+			"linearvelo",
+			"linearvelocity\\",
+			"linearvelocity",
+			"SetLinearVelocityEnabled",
+			"SIM",
+			"AKU_API",
+			"bili",
+			"cos",
+			"sin",
+			"GetRandomDistance",
+			"random",
+			"flt_max",
+			"atan2",
+			"Atan",
+			"unit",
+			"pair",
+			"mfunctr",
+			"mFuncTrace",
+			"mobj",
+			"mObjectInfoTable",
+			"stlmap",
+			"MOAIActionStackMgr",
+			"MOAIGLOBALClass",
+			"global",
+			"globalobject",
+			"b2QueryCallback",
+			"aabb",
+			"AsType",
+			"zlvec3d",
+			"raycast",
+			"FLT_MAX",
+			"max_float",
+			"reservekeys",
+			"mKeys",
+			"ZLLeanArray",
+			"vec3d",
+			"proximity",
+			"BeginContact",
+			"HandleCollision",
+			"mCollisionCategoryMask",
+			"GetVec3D",
+			"getvec",
+			"mUserdata",
+			"userdata",
+			"this",
+			"self",
+			"STATE_NEEDS_GPU_CREATE",
+			"this",
+			"DoCPUAffirm",
+			"InvokeLoader",
+			"PrepareForBind",
+			"bind",
+			"InvokeLoader",
+			"PrepareForBind",
+			"mIsDirty",
+			"UpdateTextureFromImage",
+			"CreateTextureFromImage",
+			"load",
+			"docpuaf",
+			"OnCPUCreate",
+			"DoCPUAffirm",
+			"STATE_READY_TO_BIND",
+			"mPending"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1475,6 +1530,7 @@
 		"regex": false,
 		"replace_history":
 		[
+			"MOAIGwenRenderer",
 			"ZLVec3D",
 			"ZLAff",
 			"MOAIDeckAttachmentLoader",
@@ -1601,8 +1657,7 @@
 			"getCellAddr",
 			"coordToCellAddr",
 			"$(SRCROOT)/../../../lib/",
-			"../../../lib/",
-			"~/moai-dev/3rdparty"
+			"../../../lib/"
 		],
 		"reverse": false,
 		"show_context": true,
@@ -1618,123 +1673,10 @@
 			[
 				{
 					"buffer": 0,
-					"file": "moai-sim/MOAICollisionFacet.cpp",
+					"file": "moai-sim/MOAIParticleSystem.cpp",
 					"settings":
 					{
-						"buffer_size": 5887,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								5241,
-								5241
-							]
-						],
-						"settings":
-						{
-							"color_scheme": "Packages/Color Scheme - Default/tommo.tmTheme",
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 2388.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "moai-sim/MOAICollisionWorld.cpp",
-					"settings":
-					{
-						"buffer_size": 15623,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								4610,
-								4610
-							]
-						],
-						"settings":
-						{
-							"color_scheme": "Packages/Color Scheme - Default/tommo_inactive.tmTheme",
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 2052.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "/Users/tommo/Downloads/cocos2d-x-3.3beta0/extensions/GUI/CCControlExtension/CCControlHuePicker.cpp",
-					"settings":
-					{
-						"buffer_size": 6143,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								5493,
-								5493
-							]
-						],
-						"settings":
-						{
-							"color_scheme": "Packages/Color Scheme - Default/tommo_inactive.tmTheme",
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 2380.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "moai-sim/MOAITextLabel.cpp",
-					"settings":
-					{
-						"buffer_size": 29532,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								19534,
-								19534
-							]
-						],
-						"settings":
-						{
-							"color_scheme": "Packages/Color Scheme - Default/tommo_inactive.tmTheme",
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 11496.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "moai-sim/MOAIGraphicsProp.cpp",
-					"settings":
-					{
-						"buffer_size": 25184,
+						"buffer_size": 20616,
 						"regions":
 						{
 						},
@@ -1747,12 +1689,152 @@
 						],
 						"settings":
 						{
+							"color_scheme": "Packages/Color Scheme - Default/tommo.tmTheme",
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "moai-sim/MOAIGraphicsProp.cpp",
+					"settings":
+					{
+						"buffer_size": 26372,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								20043,
+								20054
+							]
+						],
+						"settings":
+						{
+							"color_scheme": "Packages/Color Scheme - Default/tommo_inactive.tmTheme",
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 11322.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "moai-sim/MOAIGraphicsProp.h",
+					"settings":
+					{
+						"buffer_size": 5573,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5238,
+								5340
+							]
+						],
+						"settings":
+						{
+							"color_scheme": "Packages/Color Scheme - Default/tommo_inactive.tmTheme",
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 2328.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "moai-sim/MOAITransform.cpp",
+					"settings":
+					{
+						"buffer_size": 36951,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								30849,
+								30849
+							]
+						],
+						"settings":
+						{
+							"color_scheme": "Packages/Color Scheme - Default/tommo_inactive.tmTheme",
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 15896.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "moai-sim/MOAITransformBase.cpp",
+					"settings":
+					{
+						"buffer_size": 12355,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								398,
+								398
+							]
+						],
+						"settings":
+						{
 							"color_scheme": "Packages/Color Scheme - Default/tommo_inactive.tmTheme",
 							"syntax": "Packages/C++/C++.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "moai-sim/MOAITransformBase.h",
+					"settings":
+					{
+						"buffer_size": 2184,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1715,
+								1715
+							]
+						],
+						"settings":
+						{
+							"color_scheme": "Packages/Color Scheme - Default/tommo_inactive.tmTheme",
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 407.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -1760,59 +1842,32 @@
 			]
 		},
 		{
-			"selected": 3,
+			"selected": 5,
 			"sheets":
 			[
 				{
-					"buffer": 5,
-					"file": "host-modules/aku_modules_util.cpp",
-					"settings":
-					{
-						"buffer_size": 3172,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								921,
-								921
-							]
-						],
-						"settings":
-						{
-							"color_scheme": "Packages/Color Scheme - Default/tommo.tmTheme",
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
 					"buffer": 6,
-					"file": "host-modules/aku_modules_util.h",
+					"file": "moai-sim/MOAITextStyle.cpp",
 					"settings":
 					{
-						"buffer_size": 321,
+						"buffer_size": 8230,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								321
+								792,
+								792
 							]
 						],
 						"settings":
 						{
 							"color_scheme": "Packages/Color Scheme - Default/tommo_inactive.tmTheme",
-							"syntax": "Packages/C++/C++.tmLanguage"
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
-						"translation.x": 0.0,
+						"translation.x": 7.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
@@ -1820,74 +1875,18 @@
 				},
 				{
 					"buffer": 7,
-					"file": "moai-sim/MOAINode.cpp",
+					"file": "zl-util/ZLIntersect.cpp",
 					"settings":
 					{
-						"buffer_size": 20351,
+						"buffer_size": 10077,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								19644,
-								19633
-							]
-						],
-						"settings":
-						{
-							"color_scheme": "Packages/Color Scheme - Default/tommo_inactive.tmTheme",
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 11634.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 8,
-					"file": "moai-sim/MOAIProp.cpp",
-					"settings":
-					{
-						"buffer_size": 25581,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2257,
-								2257
-							]
-						],
-						"settings":
-						{
-							"color_scheme": "Packages/Color Scheme - Default/tommo_inactive.tmTheme",
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 820.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 9,
-					"file": "moai-core/MOAILuaObject.cpp",
-					"settings":
-					{
-						"buffer_size": 15674,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1048,
-								1058
+								0,
+								0
 							]
 						],
 						"settings":
@@ -1897,25 +1896,25 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 111.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
-					"buffer": 10,
-					"file": "moai-core/MOAILuaObject.h",
+					"buffer": 8,
+					"file": "zl-util/ZLDistance.cpp",
 					"settings":
 					{
-						"buffer_size": 3159,
+						"buffer_size": 2664,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								711,
-								711
+								924,
+								924
 							]
 						],
 						"settings":
@@ -1925,7 +1924,119 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 245.0,
+						"translation.y": 12.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "moai-sim/MOAIScriptDeck.cpp",
+					"settings":
+					{
+						"buffer_size": 5916,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2799,
+								2799
+							]
+						],
+						"settings":
+						{
+							"color_scheme": "Packages/Color Scheme - Default/tommo_inactive.tmTheme",
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1241.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "moai-sim/MOAIScriptDeck.h",
+					"settings":
+					{
+						"buffer_size": 1345,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								438,
+								438
+							]
+						],
+						"settings":
+						{
+							"color_scheme": "Packages/Color Scheme - Default/tommo_inactive.tmTheme",
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 11,
+					"file": "moai-steer/MOAISteerBox2DRayCast.cpp",
+					"settings":
+					{
+						"buffer_size": 3737,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1150,
+								1150
+							]
+						],
+						"settings":
+						{
+							"color_scheme": "Packages/Color Scheme - Default/tommo_inactive.tmTheme",
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 12,
+					"file": "moai-box2d/MOAIBox2DWorld.cpp",
+					"settings":
+					{
+						"buffer_size": 41058,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								29061,
+								29061
+							]
+						],
+						"settings":
+						{
+							"color_scheme": "Packages/Color Scheme - Default/tommo_inactive.tmTheme",
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 14157.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -1961,7 +2072,7 @@
 		"cols":
 		[
 			0.0,
-			0.480834960938,
+			0.531491080366,
 			1.0
 		],
 		"rows":
@@ -2006,516 +2117,516 @@
 		"selected_items":
 		[
 			[
-				"collision",
-				"src/moai-sim/MOAICollisionFacet.cpp"
+				"rendermgr",
+				"src/moai-sim/MOAIRenderMgr.cpp"
 			],
 			[
-				"textlabel",
-				"src/moai-sim/MOAITextLabel.cpp"
+				"gfxreso",
+				"src/moai-sim/MOAIGfxResource.cpp"
 			],
 			[
-				"box2dbody",
-				"src/moai-box2d/MOAIBox2DBody.cpp"
-			],
-			[
-				"box2dbo",
-				"src/moai-box2d/MOAIBox2DBody.cpp"
-			],
-			[
-				"facet",
-				"src/moai-sim/MOAICollisionFacet.cpp"
-			],
-			[
-				"moaiac",
-				"src/moai-sim/MOAIAction.cpp"
-			],
-			[
-				"luaruntim",
-				"src/moai-core/MOAILuaRuntime.cpp"
-			],
-			[
-				"luaobjec",
-				"src/moai-core/MOAILuaObject.cpp"
-			],
-			[
-				"moiactionm",
-				"src/moai-sim/MOAIActionMgr.cpp"
-			],
-			[
-				"moaicorout",
-				"src/moai-sim/MOAICoroutine.cpp"
-			],
-			[
-				"moaiaction",
-				"src/moai-sim/MOAIAction.cpp"
-			],
-			[
-				"moaluaobj",
-				"src/moai-core/MOAILuaObject.cpp"
-			],
-			[
-				"rtti",
-				"src/moai-core/MOAIRtti.cpp"
-			],
-			[
-				"luaob",
-				"src/moai-core/MOAILuaObject.cpp"
-			],
-			[
-				"moailuastatim",
-				"src/moai-core/MOAILuaState-impl.h"
-			],
-			[
-				"oaicoroutin",
-				"src/moai-sim/MOAICoroutine.cpp"
-			],
-			[
-				"luastat",
-				"src/moai-core/MOAILuaState.h"
-			],
-			[
-				"harne",
-				"src/moai-harness/MOAIHarness.cpp"
-			],
-			[
-				"moaisi",
-				"src/moai-sim/MOAISim.cpp"
-			],
-			[
-				"moailuast",
-				"src/moai-core/MOAILuaState.cpp"
-			],
-			[
-				"moailuarun",
-				"src/moai-core/MOAILuaRuntime.cpp"
-			],
-			[
-				"moaisim",
-				"src/moai-sim/MOAISim.cpp"
-			],
-			[
-				"nodemg",
-				"src/moai-sim/MOAINodeMgr.cpp"
-			],
-			[
-				"moaiprop",
-				"src/moai-sim/MOAIProp.cpp"
-			],
-			[
-				"moaino",
-				"src/moai-sim/MOAINode.cpp"
-			],
-			[
-				"moaiparticlesyst",
-				"src/moai-sim/MOAIParticleSystem.cpp"
-			],
-			[
-				"laye",
-				"src/moai-sim/MOAILayer.cpp"
-			],
-			[
-				"moanod",
-				"src/moai-sim/MOAINode.cpp"
-			],
-			[
-				"oailayer",
-				"src/moai-sim/MOAILayer.cpp"
-			],
-			[
-				"graphip",
-				"src/moai-sim/MOAIGraphicsProp.cpp"
-			],
-			[
-				"particlsys",
-				"src/moai-sim/MOAIParticleSystem.cpp"
-			],
-			[
-				"moaiact",
-				"src/moai-sim/MOAIAction.cpp"
-			],
-			[
-				"moaitimer",
-				"src/moai-sim/MOAITimer.h"
-			],
-			[
-				"box2dworl",
-				"src/moai-box2d/MOAIBox2DWorld.cpp"
-			],
-			[
-				"layer.cpp",
-				"src/moai-sim/MOAILayer.cpp"
-			],
-			[
-				"",
-				"src/moai-sim/MOAILayer.cpp"
-			],
-			[
-				"moaibox2dw",
-				"src/moai-box2d/MOAIBox2DWorld.cpp"
-			],
-			[
-				"layer",
-				"src/moai-sim/MOAILayer.cpp"
-			],
-			[
-				"debugdr",
-				"src/moai-box2d/MOAIBox2DDebugDraw.cpp"
-			],
-			[
-				"framef",
-				"src/moai-sim/MOAIFrameBuffer.cpp"
-			],
-			[
-				"moaiim",
-				"src/moai-sim/MOAIImage.cpp"
-			],
-			[
-				"keyboardse",
-				"src/moai-sim/MOAIKeyboardSensor.cpp"
-			],
-			[
-				"deser",
-				"src/moai-core/MOAIDeserializer.cpp"
-			],
-			[
-				"moaifont",
-				"src/moai-sim/MOAIFont.cpp"
-			],
-			[
-				"moai-sim/host",
-				"src/moai-sim/host.cpp"
-			],
-			[
-				"simhost.",
-				"src/moai-ios-mixpanel/host.h"
-			],
-			[
-				"coroutin",
-				"src/moai-sim/MOAICoroutine.cpp"
-			],
-			[
-				"partscrip",
-				"src/moai-sim/MOAIParticleScript.cpp"
-			],
-			[
-				"part",
-				"src/moai-sim/host_particles.cpp"
-			],
-			[
-				"particl",
-				"src/moai-sim/MOAIParticleSystem.h"
-			],
-			[
-				"moailuaru",
-				"src/moai-core/MOAILuaRuntime.cpp"
-			],
-			[
-				"particleemi",
-				"src/moai-sim/MOAIParticleEmitter.cpp"
-			],
-			[
-				"textal",
-				"src/moai-sim/MOAITextLabel.cpp"
-			],
-			[
-				"oaluarunti",
-				"src/moai-core/MOAILuaRuntime.cpp"
-			],
-			[
-				"instance",
+				"instan",
 				"src/moai-fmod-designer/Source/EventInstance.cpp"
 			],
 			[
-				"luarun",
-				"src/moai-core/MOAILuaRuntime.cpp"
-			],
-			[
-				"fsh",
-				"src/moai-sim/shaders/MOAIDeck2DShader-fsh.h"
-			],
-			[
-				"framebf",
-				"src/moai-sim/MOAIFrameBuffer.cpp"
-			],
-			[
-				"partiemit",
-				"src/moai-sim/MOAIParticleEmitter.cpp"
-			],
-			[
-				"moaiframebu",
-				"src/moai-sim/MOAIFrameBuffer.cpp"
-			],
-			[
-				"webp",
-				"src/moai-sim/MOAIImage-webp.cpp"
-			],
-			[
-				"textlab",
-				"src/moai-sim/MOAITextLabel.cpp"
-			],
-			[
-				"evema",
-				"src/moai-fmod-designer/Source/EventManager.cpp"
-			],
-			[
-				"event",
-				"src/moai-fmod-designer/Source/EventManager.cpp"
-			],
-			[
-				"util",
-				"src/host-modules/aku_modules_util.cpp"
-			],
-			[
-				"host_mo",
-				"src/host-modules/aku_modules.cpp"
-			],
-			[
-				"simhost",
-				"src/moai-sim/host.cpp"
-			],
-			[
-				"gfxdevi",
-				"src/moai-sim/MOAIGfxDevice.cpp"
-			],
-			[
-				"rendermg",
-				"src/moai-sim/MOAIRenderMgr.cpp"
-			],
-			[
-				"moailay",
-				"src/moai-sim/MOAILayer.h"
-			],
-			[
-				"framebuf",
-				"src/moai-sim/MOAIFrameBuffer.cpp"
-			],
-			[
-				"moairenderm",
-				"src/moai-sim/MOAIRenderMgr.cpp"
-			],
-			[
-				"moaigridsp",
-				"src/moai-sim/MOAIGridSpace.h"
-			],
-			[
-				"easetype",
-				"src/moai-sim/MOAIEaseType.cpp"
-			],
-			[
-				"particlesys",
-				"src/moai-sim/MOAIParticleSystem.cpp"
-			],
-			[
-				"particlesyste",
-				"src/moai-sim/MOAIParticleSystem.cpp"
-			],
-			[
-				"moaidatabuf",
-				"src/moai-util/MOAIDataBuffer.cpp"
-			],
-			[
-				"moaiani",
-				"src/moai-sim/MOAIAnim.cpp"
-			],
-			[
-				"moaifilesy",
-				"src/moai-util/MOAIFileSystem.h"
-			],
-			[
-				"seriali",
-				"src/moai-core/MOAISerializer.cpp"
-			],
-			[
-				"moaistream",
-				"src/moai-util/MOAIStream.cpp"
-			],
-			[
-				"moaidatabu",
-				"src/moai-util/MOAIDataBuffer.cpp"
-			],
-			[
-				"moaihasht",
-				"src/moai-util/MOAIHashWriter.cpp"
-			],
-			[
-				"hashwriter",
-				"src/moai-util/MOAIHashWriter.cpp"
-			],
-			[
-				"curve",
-				"src/moai-sim/MOAIAnimCurveBase.h"
-			],
-			[
-				"moaicur",
-				"src/moai-sim/MOAIAnimCurve.cpp"
-			],
-			[
-				"moaipropp",
-				"src/moai-sim/MOAIProp.cpp"
-			],
-			[
-				"fmodman",
-				"src/moai-fmod-designer/MOAIFmodEventMgr.h"
-			],
-			[
-				"transformb",
+				"transb",
 				"src/moai-sim/MOAITransformBase.cpp"
 			],
 			[
-				"moaifmod",
-				"src/moai-fmod-designer/MOAIFmodEventMgr.h"
+				"evensource",
+				"src/moai-core/MOAIEventSource.h"
 			],
 			[
-				"graphicsp",
-				"src/moai-sim/MOAIGraphicsProp.h"
+				"action",
+				"src/moai-sim/MOAIAction.cpp"
 			],
 			[
-				"graphics",
+				"fmodeve",
+				"src/moai-fmod-designer/MOAIFmodEventInstance.cpp"
+			],
+			[
+				"gprop",
 				"src/moai-sim/MOAIGraphicsProp.cpp"
 			],
 			[
-				"particle",
-				"src/moai-sim/MOAIParticleSystem.cpp"
+				"graphicpro",
+				"src/moai-sim/MOAIGraphicsProp.cpp"
 			],
 			[
-				"thread",
-				"src/moai-util/MOAITaskThread.cpp"
+				"deck",
+				"src/moai-sim/MOAIGridDeck2D.cpp"
 			],
 			[
-				"moathread",
-				"src/moai-util/MOAITaskThread.cpp"
+				"group",
+				"src/moai-steer/MOAISteerBehaviourGroup.cpp"
 			],
 			[
-				"moairuntim",
-				"src/moai-core/MOAILuaRuntime.cpp"
+				"box2dcon",
+				"src/moai-steer/MOAISteerBox2DController.cpp"
 			],
 			[
-				"moaithread",
-				"src/moai-util/MOAIThread.cpp"
+				"steer",
+				"src/moai-steer/MOAISteerBehaviour.cpp"
 			],
 			[
-				"taskque",
-				"src/moai-util/MOAITaskQueue.cpp"
+				"world",
+				"src/moai-box2d/MOAIBox2DWorld.cpp"
 			],
 			[
-				"moaithre",
-				"src/moai-util/MOAIThread.cpp"
+				"rayca",
+				"src/moai-steer/MOAISteerBox2DRayCast.cpp"
 			],
 			[
-				"moaitaskth",
-				"src/moai-util/MOAITaskThread.cpp"
+				"scripde",
+				"src/moai-sim/MOAIScriptDeck.cpp"
 			],
 			[
-				"moaitexture",
-				"src/moai-sim/MOAITexture.cpp"
+				"moaidraw",
+				"src/moai-sim/MOAIDraw.cpp"
 			],
 			[
-				"moaitexu",
-				"src/moai-sim/MOAITexture.h"
+				"box2d",
+				"src/moai-box2d/MOAIBox2DBody.cpp"
 			],
 			[
-				"datatask",
-				"src/moai-util/MOAIDataIOTask.cpp"
+				"constant",
+				"src/moai-steer/MOAISteerBehaviourConstant.cpp"
 			],
 			[
-				"luastatimpl",
+				"box2dar",
+				"src/moai-box2d/MOAIBox2DArbiter.cpp"
+			],
+			[
+				"grids",
+				"src/moai-sim/MOAIGridSpace.cpp"
+			],
+			[
+				"moaitile",
+				"src/moai-sim/MOAITileDeck2D.cpp"
+			],
+			[
+				"moaipartscrip",
+				"src/moai-sim/MOAIParticleScript.cpp"
+			],
+			[
+				"qudeck",
+				"src/moai-sim/MOAIGfxQuadDeck2D.cpp"
+			],
+			[
+				"moaigraphic",
+				"src/moai-sim/MOAIGraphicsProp.cpp"
+			],
+			[
+				"ray",
+				"src/moai-steer/MOAISteerBehaviourRaycastObstacleAvoidance.cpp"
+			],
+			[
+				"moaibox",
+				"src/moai-box2d/MOAIBox2DBody.cpp"
+			],
+			[
+				"moduleconfig",
+				"src/host-modules/aku_modules_config.h"
+			],
+			[
+				"steerhost",
+				"src/moai-steer/host.cpp"
+			],
+			[
+				"host.",
+				"src/moai-android-adcolony/host.h"
+			],
+			[
+				"oaiprop",
+				"src/moai-sim/MOAIProp.cpp"
+			],
+			[
+				"zlvec",
+				"src/zl-util/ZLVec3D.h"
+			],
+			[
+				"zlflo",
+				"src/zl-util/ZLFloat.h"
+			],
+			[
+				"quaddeck",
+				"src/moai-sim/MOAIGfxQuadDeck2D.cpp"
+			],
+			[
+				"zlve",
+				"src/zl-util/ZLVec3D.h"
+			],
+			[
+				"affin",
+				"src/zl-util/ZLAffine3D.h"
+			],
+			[
+				"moatrabo",
+				"src/moai-ios-mobile-app-tracker/MOAIMobileAppTrackerIOS.h"
+			],
+			[
+				"statip",
 				"src/moai-core/MOAILuaState-impl.h"
+			],
+			[
+				"luastate",
+				"src/moai-core/MOAIScopedLuaState.cpp"
+			],
+			[
+				"oaiworld",
+				"src/moai-box2d/MOAIBox2DWorld.cpp"
+			],
+			[
+				"zlmap",
+				"src/zl-util/STLMap.h"
+			],
+			[
+				"moaiaction",
+				"src/moai-sim/MOAIActionTree.cpp"
+			],
+			[
+				"moairtti",
+				"src/moai-core/MOAIRtti.cpp"
 			],
 			[
 				"moaideck",
 				"src/moai-sim/MOAIDeck.cpp"
 			],
 			[
-				"moafmodevent",
-				"src/moai-fmod-designer/MOAIFmodEventInstance.h"
+				"zlline",
+				"src/zl-util/ZLAffine2D.h"
 			],
 			[
-				"moaicorou",
-				"src/moai-sim/MOAICoroutine.h"
+				"float.h",
+				"src/zl-util/ZLFloat.h"
 			],
 			[
-				"moaitextu",
-				"src/moai-sim/MOAITexture.cpp"
+				"moaibuffer",
+				"src/moai-sim/MOAIGfxBuffer.cpp"
 			],
 			[
-				"fmod",
-				"src/moai-fmod-designer/MOAIFmodMicrophone.h"
+				"state",
+				"src/moai-core/MOAILuaState.h"
 			],
 			[
-				"zlstream",
-				"src/zl-util/ZLStream.cpp"
+				"moalustat",
+				"src/moai-core/MOAIScopedLuaState.cpp"
 			],
 			[
-				"hashwr",
-				"src/zl-util/ZLHashWriter.h"
+				"moaibox2dfi",
+				"src/moai-box2d/MOAIBox2DFixture.h"
 			],
 			[
-				"crypto",
-				"src/moai-crypto/MOAIHashWriterCrypto.cpp"
+				"scriptdeck",
+				"src/moai-sim/MOAIScriptDeck.h"
 			],
 			[
-				"easetyp",
-				"src/moai-sim/MOAIEaseType.h"
+				"moailuaobj",
+				"src/moai-core/MOAILuaObject.cpp"
+			],
+			[
+				"box2dbo",
+				"src/moai-box2d/MOAIBox2DBody.cpp"
+			],
+			[
+				"resource",
+				"src/moai-sim/MOAIGfxResource.cpp"
+			],
+			[
+				"texture",
+				"src/moai-sim/MOAITextureBase.cpp"
+			],
+			[
+				"gfxresou",
+				"src/moai-sim/MOAIGfxResourceMgr.cpp"
+			],
+			[
+				"oairesoumgr",
+				"src/moai-sim/MOAIGfxResourceMgr.cpp"
+			],
+			[
+				"maigfxresoumgr",
+				"src/moai-sim/MOAIGfxResourceMgr.h"
+			],
+			[
+				"resour",
+				"src/moai-sim/MOAIGfxResourceMgr.cpp"
+			],
+			[
+				"moairesourmgr",
+				"src/moai-sim/MOAIGfxResourceMgr.cpp"
+			],
+			[
+				"resourc",
+				"src/moai-sim/MOAIGfxResource.cpp"
+			],
+			[
+				"resourcemgr",
+				"src/moai-sim/MOAIGfxResourceMgr.cpp"
+			],
+			[
+				"b2",
+				"src/moai-box2d/MOAIBox2DBody.cpp"
+			],
+			[
+				"oailogmg",
+				"src/moai-core/MOAILogMgr.cpp"
+			],
+			[
+				"moaitranbas",
+				"src/moai-sim/MOAITransformBase.cpp"
+			],
+			[
+				"attrop",
+				"src/moai-sim/MOAIAttrOp.h"
+			],
+			[
+				"moaiat",
+				"src/moai-sim/MOAIAttrOp.h"
+			],
+			[
+				"log",
+				"src/moai-android/MoaiLog.java"
+			],
+			[
+				"moaitrab",
+				"src/moai-sim/MOAITransformBase.cpp"
+			],
+			[
+				"moaino",
+				"src/moai-sim/MOAINode.cpp"
+			],
+			[
+				"box2dbod",
+				"src/moai-box2d/MOAIBox2DBody.cpp"
+			],
+			[
+				"moaitranba",
+				"src/moai-sim/MOAITransformBase.cpp"
+			],
+			[
+				"box2dbos",
+				"src/moai-box2d/MOAIBox2DDistanceJoint.cpp"
+			],
+			[
+				"moaigrid",
+				"src/moai-sim/MOAIGrid.h"
+			],
+			[
+				"grisp",
+				"src/moai-sim/MOAIGridSpace.h"
+			],
+			[
+				"moaibox2d",
+				"src/moai-box2d/MOAIBox2DBody.cpp"
+			],
+			[
+				"bxo2d",
+				"src/moai-box2d/MOAIBox2DBody.cpp"
+			],
+			[
+				"tesse",
+				"src/moai-sim/MOAIVectorTesselator.cpp"
+			],
+			[
+				"buffer",
+				"src/moai-sim/MOAIGfxBuffer.cpp"
+			],
+			[
+				"moaitesse",
+				"src/moai-sim/MOAIVectorTesselator.cpp"
+			],
+			[
+				"tessl",
+				"src/moai-sim/MOAIVectorTesselator.cpp"
+			],
+			[
+				"tess",
+				"src/moai-sim/MOAIVectorTesselator.cpp"
+			],
+			[
+				"moaibox2dbody",
+				"src/moai-box2d/MOAIBox2DBody.cpp"
+			],
+			[
+				"grid",
+				"src/moai-sim/MOAIGrid.h"
+			],
+			[
+				"zlv",
+				"src/zl-util/ZLVec3D.h"
+			],
+			[
+				"moabox2dbo",
+				"src/moai-box2d/MOAIBox2DBody.cpp"
+			],
+			[
+				"body",
+				"src/moai-box2d/MOAIBox2DBody.h"
+			],
+			[
+				"moaiparticlesy",
+				"src/moai-sim/MOAIParticleSystem.h"
+			],
+			[
+				"moaitimer",
+				"src/moai-sim/MOAITimer.h"
+			],
+			[
+				"oaide",
+				"src/moai-sim/MOAIDeck.cpp"
+			],
+			[
+				"moaitransfba",
+				"src/moai-sim/MOAITransformBase.cpp"
+			],
+			[
+				"zlvec3",
+				"src/zl-util/ZLVec3D.h"
+			],
+			[
+				"luastatim",
+				"src/moai-core/MOAILuaState-impl.h"
 			],
 			[
 				"timer",
 				"src/moai-sim/MOAITimer.h"
 			],
 			[
-				"moaicore",
-				"src/moai-sim/MOAICoroutine.cpp"
+				"moaipartiss",
+				"src/moai-sim/MOAIParticleSystem.cpp"
 			],
 			[
-				"camera",
-				"src/moai-sim/MOAICamera.cpp"
+				"box2do",
+				"src/moai-box2d/MOAIBox2DBody.h"
 			],
 			[
-				"pvr",
-				"src/moai-sim/MOAIPvrHeader.h"
+				"moaitran",
+				"src/moai-sim/MOAITransform.h"
 			],
 			[
-				"pin",
-				"src/moai-sim/MOAIPinTransform.cpp"
+				"moaitrabase",
+				"src/moai-sim/MOAITransformBase.cpp"
 			],
 			[
-				"graphprop",
-				"src/moai-sim/MOAIGraphicsProp.cpp"
-			],
-			[
-				"prop.c",
-				"src/moai-sim/MOAIProp.cpp"
-			],
-			[
-				"graphicpop",
-				"src/moai-sim/MOAIGraphicsProp.h"
-			],
-			[
-				"gfxdev",
-				"src/moai-sim/MOAIGfxDevice.cpp"
-			],
-			[
-				"quadbru",
-				"src/moai-sim/MOAIQuadBrush.cpp"
-			],
-			[
-				"moaitras",
+				"moaitrn",
 				"src/moai-sim/MOAITransform.cpp"
 			],
 			[
-				"graphicsprop",
+				"partition",
+				"src/moai-sim/MOAIPartition.cpp"
+			],
+			[
+				"moaibox2dprim",
+				"src/moai-box2d/MOAIBox2DPrismaticJoint.cpp"
+			],
+			[
+				"oaibox2d",
+				"src/moai-box2d/MOAIBox2DBody.h"
+			],
+			[
+				"moabox2d",
+				"src/moai-box2d/MOAIBox2DBody.cpp"
+			],
+			[
+				"moaipartit",
+				"src/moai-sim/MOAIPartition.cpp"
+			],
+			[
+				"oaiboxwd",
+				"src/moai-box2d/MOAIBox2DWorld.cpp"
+			],
+			[
+				"pathfind",
+				"src/moai-sim/MOAIPathFinder.cpp"
+			],
+			[
+				"moaipathfin",
+				"src/moai-sim/MOAIPathFinder.cpp"
+			],
+			[
+				"moaipathgr",
+				"src/moai-sim/MOAIGridPathGraph.cpp"
+			],
+			[
+				"moaipathfi",
+				"src/moai-sim/MOAIPathFinder.cpp"
+			],
+			[
+				"moaipari",
+				"src/moai-sim/MOAIPartition.cpp"
+			],
+			[
+				"transform",
+				"src/moai-sim/MOAITransform.cpp"
+			],
+			[
+				"moaiprop",
+				"src/moai-sim/MOAIProp.cpp"
+			],
+			[
+				"moaigrids",
+				"src/moai-sim/MOAIGridSpace.h"
+			],
+			[
+				"scrde",
+				"src/moai-sim/MOAIScriptDeck.cpp"
+			],
+			[
+				"scripnod",
+				"src/moai-sim/MOAIScriptNode.cpp"
+			],
+			[
+				"simhost.cpp",
+				"src/moai-sim/host.cpp"
+			],
+			[
+				"host",
+				"src/moai-android-twitter/host.cpp"
+			],
+			[
+				"moaiscrno",
+				"src/moai-sim/MOAIScriptNode.cpp"
+			],
+			[
+				"moailuaob",
+				"src/moai-core/MOAILuaObject.h"
+			],
+			[
+				"particlesystem",
+				"src/moai-sim/MOAIParticleSystem.cpp"
+			],
+			[
+				"moaiframebu",
+				"src/moai-sim/MOAIFrameBuffer.cpp"
+			],
+			[
+				"graphics",
 				"src/moai-sim/MOAIGraphicsProp.cpp"
 			],
 			[
-				"moagraphprop",
+				"particlesyste",
+				"src/moai-sim/MOAIParticleSystem.cpp"
+			],
+			[
+				"moaigraph",
 				"src/moai-sim/MOAIGraphicsProp.cpp"
 			],
 			[
-				"moaimesh",
-				"src/moai-sim/MOAIMesh.cpp"
+				"graphiprop",
+				"src/moai-sim/MOAIGraphicsProp.cpp"
 			],
 			[
-				"luastateim",
-				"src/moai-core/MOAILuaState-impl.h"
+				"moaiframe",
+				"src/moai-sim/MOAIFrameBuffer.cpp"
+			],
+			[
+				"affine",
+				"src/zl-util/ZLAffine3D.h"
+			],
+			[
+				"moaimatrix",
+				"src/moai-sim/MOAIMatrix.h"
 			]
 		],
 		"width": 0.0
@@ -2526,12 +2637,24 @@
 		"selected_items":
 		[
 			[
-				"spel",
-				"/Users/tommo/prj/moai/spell/lua/spell.sublime-project"
+				"gwen",
+				"/Volumes/prj/moai/etc/gwen/gwen-moai.sublime-project"
+			],
+			[
+				"gnag",
+				"/Volumes/prj/moai/proto/gang/gang.sublime-project"
+			],
+			[
+				"pixpil",
+				"/Volumes/prj/web/pixpil/pixpil-flask.sublime-project"
 			],
 			[
 				"mdd",
 				"/Volumes/prj/moai/MDD/MDD.sublime-project"
+			],
+			[
+				"spel",
+				"/Users/tommo/prj/moai/spell/lua/spell.sublime-project"
 			],
 			[
 				"spell",

@@ -98,14 +98,18 @@ void MOAISteerBox2DController::ApplySteerAcceleration( const MOAISteerAccelerati
 	// impulse.y = acc.mLinear.mY * unitsToMeters * mass * delta;
 	// bool wake = true;
 	// body->ApplyLinearImpulse ( impulse, body->GetWorldCenter(), wake );
+	ZLVec3D linearAcc  = acc.mLinear;
+	float   angularAcc = acc.mAngular;
+	this->GetLimiter()->LimitLinearAcceleration  ( linearAcc );
+	this->GetLimiter()->LimitAngularAcceleration ( angularAcc );
 
 	ZLVec3D linearVelocity = this->GetLinearVelocity();
-	linearVelocity.Add( acc.mLinear, delta );
+	linearVelocity.Add( linearAcc, delta );
 	// linearVelocity.mX = b2LinearVelocity.x + acc.mLinear.mX * unitsToMeters * delta;
 	// linearVelocity.mY = b2LinearVelocity.y + acc.mLinear.mY * unitsToMeters * delta;
 
 	float angularVelocity = this->GetAngularVelocity();
-	angularVelocity += acc.mAngular * delta;
+	angularVelocity += angularAcc * delta;
 
 	this->GetLimiter()->LimitLinearVelocity  ( linearVelocity );
 	this->GetLimiter()->LimitAngularVelocity ( angularVelocity );
