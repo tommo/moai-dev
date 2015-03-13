@@ -92,6 +92,40 @@ public:
 	}
 };
 
+//----------------------------------------------------------------//
+//MOAIBox2DAABBQuery
+//----------------------------------------------------------------//
+class MOAIBox2DAABBQuery:
+	public b2QueryCallback {
+private:
+	u32 mCount;
+
+public:
+	
+	friend class MOAIBox2DWorld;
+
+	MOAIBox2DAABBQuery() {
+		this->mCount = 0;
+	}
+
+	bool ReportFixture ( b2Fixture* fixture ){
+		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		MOAIBox2DFixture* moaiFixture = ( MOAIBox2DFixture* ) fixture->GetUserData ();
+		bool shouldContinue = true;
+		this->mCount++;
+		if( moaiFixture ) {
+			lua_pushvalue( state, -1 ); //copy the callback function
+			moaiFixture->PushLuaUserdata( state );
+			state.DebugCall( 1, 1 );
+			shouldContinue = lua_toboolean( state, -1 );
+			lua_pop( state, 1 );
+		}
+		return shouldContinue;
+	}
+
+};
+
+
 //================================================================//
 // MOAIBox2DPrim
 //================================================================//
@@ -901,6 +935,8 @@ int MOAIBox2DWorld::_getRayCast ( lua_State* L ) {
 	}
 }
 
+
+
 //----------------------------------------------------------------//
 /**	@lua	getTimeToSleep
 	@text	See Box2D documentation.
@@ -914,6 +950,36 @@ int MOAIBox2DWorld::_getTimeToSleep ( lua_State* L ) {
 	lua_pushnumber ( state, self->mWorld->GetTimeToSleep ());
 	return 0;
 }
+
+
+
+//----------------------------------------------------------------//
+/**	@lua	queryAABB
+	@text	query bodies inside a AABB boundary
+	
+	@in		MOAIBox2DWorld self
+	@in		number xMin
+	@in		number yMin
+	@in		number xMax
+	@in		number yMax
+	@in		function callback		the filter callback
+	@out	... bodies				MOAIBox2dBody list
+*/
+int MOAIBox2DWorld::_queryAABB ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIBox2DWorld, "UNNNNF" )
+	b2AABB aabb;
+	aabb.lowerBound.x = state.GetValue < float >( 2, 0 ) * self->mUnitsToMeters;
+	aabb.lowerBound.y = state.GetValue < float >( 3, 0 ) * self->mUnitsToMeters;
+	aabb.upperBound.x = state.GetValue < float >( 4, 0 ) * self->mUnitsToMeters;
+	aabb.upperBound.y = state.GetValue < float >( 5, 0 ) * self->mUnitsToMeters;
+	if( !lua_isfunction( state, 6 ) ) {
+		return 0;
+	}
+	MOAIBox2DAABBQuery query;
+	self->mWorld->QueryAABB( &query, aabb );
+	return 0;
+}
+
 
 //----------------------------------------------------------------//
 /**	@lua	setAngularSleepTolerance
@@ -1243,6 +1309,7 @@ void MOAIBox2DWorld::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "getLinearSleepTolerance",	_getLinearSleepTolerance },
 		{ "getRayCast",					_getRayCast },
 		{ "getTimeToSleep",				_getTimeToSleep },
+		{ "queryAABB",					_queryAABB },
 		{ "setAngularSleepTolerance",	_setAngularSleepTolerance },
 		{ "setAutoClearForces",			_setAutoClearForces },
 		{ "setDebugDrawEnabled",		_setDebugDrawEnabled },
