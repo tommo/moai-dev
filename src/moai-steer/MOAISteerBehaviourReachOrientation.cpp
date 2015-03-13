@@ -26,10 +26,17 @@ MOAISteerBehaviourReachOrientation::MOAISteerBehaviourReachOrientation() :
 MOAISteerBehaviourReachOrientation::~MOAISteerBehaviourReachOrientation() {
 }
 
+
+inline float wrapAngle( float angle )
+{
+    float a = angle - 360.0f * floor( angle / 360.0f );
+    if( a > 180.f ) a -= 360.0f;
+    return a;
+}
+
 //----------------------------------------------------------------//
 bool MOAISteerBehaviourReachOrientation::OnCalculate ( MOAISteerAcceleration& acc, double elapsed, double delta ) {
-	float rot = fmod ( this->mTargetOrientation - this->GetOwner()->GetRot(), 360.0f );
-	if ( rot > 180.0f ) rot -= 360.0f;
+	float rot = wrapAngle ( this->mTargetOrientation - this->GetOwner()->GetRot() );
 
 	float targetVelocity = this->GetActualLimiter()->GetMaxAngularSpeed();
 
@@ -45,7 +52,7 @@ bool MOAISteerBehaviourReachOrientation::OnCalculate ( MOAISteerAcceleration& ac
 
 	// Acceleration tries to get to the target rot
 	float targetAcc;
-	targetAcc = ( targetVelocity - this->GetOwner()->GetAngularVelocity() ) / this->mTimeToTarget;
+	targetAcc = ( targetVelocity - this->GetOwner()->GetAngularVelocity() ) / this->mTimeToTarget / delta;
 
 	// Check if the absolute acceleration is too great
 	this->GetActualLimiter()->LimitAngularAcceleration( targetAcc );
