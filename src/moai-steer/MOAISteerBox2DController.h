@@ -27,10 +27,12 @@ public:
 	GET_SET( u32, CollisionMask, mCollisionMask )
 
 
-	virtual ZLVec3D GetLoc();
-	virtual float   GetRot();
-	virtual ZLVec3D GetLinearVelocity();
-	virtual float   GetAngularVelocity();
+	virtual ZLVec3D GetLoc ();
+	virtual float   GetRot ();
+	virtual ZLVec3D GetLinearVelocity  ();
+	virtual float   GetAngularVelocity ();
+	virtual void    SetLinearVelocity  ( const ZLVec3D& v );
+	virtual void    SetAngularVelocity ( float v );
 	virtual void    ApplySteerAcceleration( const MOAISteerAcceleration acc, double elapsed, double delta );
 
 

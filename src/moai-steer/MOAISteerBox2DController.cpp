@@ -87,6 +87,23 @@ float MOAISteerBox2DController::GetAngularVelocity() {
 	return omega;
 }
 
+void MOAISteerBox2DController::SetLinearVelocity  ( const ZLVec3D& v ) {
+	if( !this->mBody ) return;
+	float unitsToMeters = this->mBody->GetUnitsToMeters ();
+	b2Body* body = this->mBody->GetBody();
+	b2Vec2 b2velocity;
+	b2velocity.x = v.mX * unitsToMeters;
+	b2velocity.y = v.mY * unitsToMeters;
+	body->SetLinearVelocity( b2velocity );
+}
+
+void MOAISteerBox2DController::SetAngularVelocity ( float v ) {
+	if( !this->mBody ) return;
+	b2Body* body = this->mBody->GetBody();
+	float b2velocity = v * D2R;
+	body->SetAngularVelocity( b2velocity );
+}
+
 void MOAISteerBox2DController::ApplySteerAcceleration( const MOAISteerAcceleration acc, double elapsed, double delta ) {
 	if( !this->mBody ) return;
 	b2Body* body = this->mBody->GetBody();
