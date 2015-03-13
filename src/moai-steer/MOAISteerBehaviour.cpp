@@ -37,6 +37,17 @@ int MOAISteerBehaviour::_setWeight ( lua_State *L ) {
 	return 0;
 }
 
+int MOAISteerBehaviour::_isEnabled ( lua_State *L ) {
+	MOAI_LUA_SETUP( MOAISteerBehaviour, "UB" )
+	state.Push( self->IsEnabled() );
+	return 1;
+}
+
+int MOAISteerBehaviour::_setEnabled ( lua_State *L ) {
+	MOAI_LUA_SETUP( MOAISteerBehaviour, "UB" )
+	self->SetEnabled( state.GetValue < bool >( 2, 1.0f ) );
+	return 0;
+}
 
 int MOAISteerBehaviour::_getLimiter ( lua_State *L ) {
 	MOAI_LUA_SETUP( MOAISteerBehaviour, "U" )
@@ -91,9 +102,11 @@ void MOAISteerBehaviour::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAINode::RegisterLuaFuncs( state );
 	
 	luaL_Reg regTable [] = {
-		{ "getOwner",      _getOwner  },
-		{ "getParent",     _getParent },
-		{ "setWeight",     _setWeight },
+		{ "getOwner",      _getOwner   },
+		{ "getParent",     _getParent  },
+		{ "setWeight",     _setWeight  },
+		{ "isEnabled",     _isEnabled  },
+		{ "setEnabled",    _setEnabled },
 		{ NULL, NULL }
 	};
 

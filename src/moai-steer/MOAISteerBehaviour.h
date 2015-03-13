@@ -79,6 +79,8 @@ private:
 	static int _getParent     ( lua_State* L );
 	static int _getWeight     ( lua_State* L );
 	static int _setWeight     ( lua_State* L );
+	static int _isEnabled     ( lua_State* L );
+	static int _setEnabled    ( lua_State* L );
 
 	static int _setLimiter    ( lua_State* L );
 	static int _getLimiter    ( lua_State* L );

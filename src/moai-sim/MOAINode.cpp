@@ -10,52 +10,6 @@
 // TODO: remove when setParent is removed
 #include <moai-sim/MOAIProp.h>
 
-//================================================================//
-// MOAIDepLink
-//================================================================//
-class MOAIDepLink {
-private:
-
-	friend class MOAINode;
-
-	// don't need smart pointers; either node's destructor will delete link
-	MOAINode*					mSourceNode;
-	MOAINode*					mDestNode;
-
-	// sibling pointers for the two singly linked lists
-	MOAIDepLink*				mNextInSource;
-	MOAIDepLink*				mNextInDest;
-
-	// the attribute mapping
-	u32							mSourceAttrID;
-	u32							mDestAttrID;
-
-	// cached flag indicating it's safe to pull from source to dest (attribute flags match)
-	bool						mPullable;
-
-	//----------------------------------------------------------------//
-	MOAIDepLink () :
-		mSourceNode ( 0 ),
-		mDestNode ( 0 ),
-		mNextInSource ( 0 ),
-		mNextInDest ( 0 ),
-		mSourceAttrID ( MOAIAttrOp::NULL_ATTR ),
-		mDestAttrID ( MOAIAttrOp::NULL_ATTR ),
-		mPullable ( false ) {
-	}
-
-	//----------------------------------------------------------------//
-	~MOAIDepLink () {
-	}
-
-	//----------------------------------------------------------------//
-	void Update () {
-		this->mPullable =
-			( mSourceAttrID & MOAIAttrOp::ATTR_READ ) &&
-			( mDestAttrID & MOAIAttrOp::ATTR_WRITE ) &&
-			( mSourceAttrID != MOAIAttrOp::NULL_ATTR );
-	}
-};
 
 //================================================================//
 // local

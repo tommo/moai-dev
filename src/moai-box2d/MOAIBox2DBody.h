@@ -50,19 +50,18 @@ private:
 	static int		_isAwake				( lua_State* L );
 	static int		_isBullet				( lua_State* L );
 	static int		_isFixedRotation		( lua_State* L );
-	static int		_isSleepingAllowed	( lua_State* L );
 	static int		_resetMassData			( lua_State* L );
 	static int		_setActive				( lua_State* L );
 	static int		_setAngularDamping		( lua_State* L );
 	static int		_setAngularVelocity		( lua_State* L );
 	static int		_setAwake				( lua_State* L );
-	static int		_setGravityScale				( lua_State* L );
+	static int		_setGravityScale		( lua_State* L );
 	static int		_setBullet				( lua_State* L );
 	static int		_setFixedRotation		( lua_State* L );
 	static int		_setLinearDamping		( lua_State* L );
 	static int		_setLinearVelocity		( lua_State* L );
 	static int		_setMassData			( lua_State* L );
-	static int		_setSleepingAllowed	( lua_State* L );
+	static int		_setSleepingAllowed		( lua_State* L );
 	static int		_setTransform			( lua_State* L );
 	static int		_setType				( lua_State* L );
 	

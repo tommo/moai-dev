@@ -19,6 +19,8 @@ int MOAISteerBehaviourGroup::_pushBehaviour ( lua_State *L ) {
 	MOAISteerBehaviour* behaviour = state.GetLuaObject < MOAISteerBehaviour >( 2, 0 );
 	if( behaviour ) {
 		self->PushBehaviour( behaviour, state.GetValue< float >( 3, behaviour->GetWeight() ) );
+		behaviour->PushLuaUserdata( state );
+		return 1;
 	}
 	return 0;
 }

@@ -31,8 +31,8 @@ private:
 	static int _getLinearAcceleration ( lua_State* L );
 	static int _getAngularAcceleration( lua_State* L );
 
-	static int _setLinearVeloicty     ( lua_State* L );
-	static int _setAngularVeloicty    ( lua_State* L );
+	static int _setLinearVelocity     ( lua_State* L );
+	static int _setAngularVelocity    ( lua_State* L );
 
 
 protected:
@@ -65,7 +65,8 @@ public:
 	virtual float    GetAngularAcceleration() { return mAcceleration.mAngular; };
 
 	virtual void     ApplySteerAcceleration ( const MOAISteerAcceleration acc, double elapsed, double delta ) {};
-
+	virtual void     SetLinearVelocity ( const ZLVec3D& velocity ) {};
+	virtual void     SetAngularVelocity ( float velocity ) {};
 	virtual float    GetRadius() { return mRadius; };
 	virtual void     SetRadius( float radius ) { this->mRadius = radius; };
 

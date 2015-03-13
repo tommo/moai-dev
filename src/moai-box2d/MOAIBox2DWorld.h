@@ -14,6 +14,8 @@ class MOAIBox2DFixture;
 class MOAIBox2DJoint;
 class MOAIBox2DWorld;
 class MOAIBox2DRayCastCallback;
+class MOAIBox2DRayCastCallbackWithLuaCallback;
+class MOAIBox2DAABBQuery;
 
 //================================================================//
 // MOAIBox2DPrim
@@ -71,6 +73,7 @@ private:
 	MOAIBox2DDebugDraw*			mDebugDraw;
 	
 	MOAILuaSharedPtr < MOAIBox2DArbiter > mArbiter;
+	MOAILuaMemberRef			mOnRaycastHit;
 
 	u32		mVelocityIterations;
 	u32		mPositionIterations;
@@ -101,6 +104,7 @@ private:
 	static int		_getLinearSleepTolerance	( lua_State* L );
 	static int		_getRayCast					( lua_State* L );
 	static int		_getTimeToSleep				( lua_State* L );
+	static int		_queryAABB					( lua_State* L );
 	static int		_setAngularSleepTolerance	( lua_State* L );
 	static int		_setAutoClearForces			( lua_State* L );
 	static int		_setDebugDrawEnabled		( lua_State* L );
