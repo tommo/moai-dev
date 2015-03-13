@@ -113,6 +113,20 @@ int MOAISteerController::_getAngularAcceleration ( lua_State *L ) {
 	return 3;
 }
 
+int MOAISteerController::_setLinearVelocity ( lua_State *L ) {
+	MOAI_LUA_SETUP( MOAISteerController, "UNNN" )
+	ZLVec3D vel = state.GetVec3D( 2, 0.0f );
+	self->SetLinearVelocity( vel );
+	return 0;
+}
+
+int MOAISteerController::_setAngularVelocity ( lua_State *L ) {
+	MOAI_LUA_SETUP( MOAISteerController, "UN" )
+	float v = state.GetValue < float >( 2, 0.0f );
+	self->SetAngularVelocity( v );
+	return 0;
+}
+
 
 //----------------------------------------------------------------//
 MOAISteerController::MOAISteerController() :
@@ -206,18 +220,20 @@ void MOAISteerController::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAIAction::RegisterLuaFuncs( state );
 
 	luaL_Reg regTable [] = {
-    { "getRoot",                _getRoot                },
-    { "getLimiter",             _getLimiter             },
-    { "setLimiter",             _setLimiter             },
-    { "pushBehaviour",          _pushBehaviour          },
-    { "removeBehaviour",        _removeBehaviour        },
-    { "clearBehaviours",        _clearBehaviours        },
-    { "getRadius",              _getRadius              },
-    { "setRadius",              _setRadius              },
+		{ "getRoot",                _getRoot                },
+		{ "getLimiter",             _getLimiter             },
+		{ "setLimiter",             _setLimiter             },
+		{ "pushBehaviour",          _pushBehaviour          },
+		{ "removeBehaviour",        _removeBehaviour        },
+		{ "clearBehaviours",        _clearBehaviours        },
+		{ "getRadius",              _getRadius              },
+		{ "setRadius",              _setRadius              },
 		{ "getLoc",                 _getLoc                 },
 		{ "getRot",                 _getRot                 },
 		{ "getAngularVelocity",     _getAngularVelocity     },
 		{ "getLinearVelocity",      _getLinearVelocity      },
+		{ "setAngularVelocity",     _setAngularVelocity     },
+		{ "setLinearVelocity",      _setLinearVelocity      },
 		{ "getAngularSpeed",        _getAngularSpeed        },
 		{ "getLinearSpeed",         _getLinearSpeed         },
 		{ "getAngularAcceleration", _getAngularAcceleration },
