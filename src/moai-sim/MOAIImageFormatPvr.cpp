@@ -8,8 +8,8 @@ SUPPRESS_EMPTY_FILE_WARNING
 #include <moai-sim/MOAIGfxDevice.h>
 #include <moai-sim/MOAIImageFormatPvr.h>
 
-#include <PVRTTexture.h>
-#include <PVRTDecompress.h>
+#include "PVRTTexture.h"
+#include "PVRTDecompress.h"
 
 //================================================================//
 // MOAIPvrMipLevelInfo

@@ -104,39 +104,54 @@ void MOAISteerBox2DController::SetAngularVelocity ( float v ) {
 	body->SetAngularVelocity( b2velocity );
 }
 
+
 void MOAISteerBox2DController::ApplySteerAcceleration( const MOAISteerAcceleration acc, double elapsed, double delta ) {
 	if( !this->mBody ) return;
 	b2Body* body = this->mBody->GetBody();
 	float unitsToMeters = this->mBody->GetUnitsToMeters ();
-	float mass = body->GetMass();
 
-	// b2Vec2 impulse;
-	// impulse.x = acc.mLinear.mX * unitsToMeters * mass * delta;
-	// impulse.y = acc.mLinear.mY * unitsToMeters * mass * delta;
-	// bool wake = true;
-	// body->ApplyLinearImpulse ( impulse, body->GetWorldCenter(), wake );
+
 	ZLVec3D linearAcc  = acc.mLinear;
 	float   angularAcc = acc.mAngular;
+
 	this->GetLimiter()->LimitLinearAcceleration  ( linearAcc );
 	this->GetLimiter()->LimitAngularAcceleration ( angularAcc );
 
-	ZLVec3D linearVelocity = this->GetLinearVelocity();
-	linearVelocity.Add( linearAcc, delta );
-	// linearVelocity.mX = b2LinearVelocity.x + acc.mLinear.mX * unitsToMeters * delta;
-	// linearVelocity.mY = b2LinearVelocity.y + acc.mLinear.mY * unitsToMeters * delta;
+	#ifdef USE_IMPULSE
+		float mass = body->GetMass();
+		b2Vec2 impulse;
+		impulse.x = linearAcc.mX * unitsToMeters * mass * delta;
+		impulse.y = linearAcc.mY * unitsToMeters * mass * delta;
+		body->ApplyLinearImpulse ( impulse, body->GetWorldCenter(), true );
 
-	float angularVelocity = this->GetAngularVelocity();
-	angularVelocity += angularAcc * delta;
+		float inertia = body->GetInertia();
+		float angularImpulse;
+		angularImpulse = angularAcc * inertia * delta;
+		
+		body->ApplyAngularImpulse( angularImpulse, true );
+		//TODO: limit speed
 
-	this->GetLimiter()->LimitLinearVelocity  ( linearVelocity );
-	this->GetLimiter()->LimitAngularVelocity ( angularVelocity );
-	b2Vec2 newVelocity;
-	newVelocity.x = linearVelocity.mX * unitsToMeters;
-	newVelocity.y = linearVelocity.mY * unitsToMeters;
-	body->SetLinearVelocity( newVelocity );
-	
-	float newAngularVelocity = angularVelocity * D2R;
-	body->SetAngularVelocity( newAngularVelocity );
+	#else
+		ZLVec3D linearVelocity = this->GetLinearVelocity();
+		linearVelocity.Add( linearAcc, delta );
+		// linearVelocity.mX = b2LinearVelocity.x + acc.mLinear.mX * unitsToMeters * delta;
+		// linearVelocity.mY = b2LinearVelocity.y + acc.mLinear.mY * unitsToMeters * delta;
+		
+		this->GetLimiter()->LimitLinearVelocity  ( linearVelocity );
+		b2Vec2 newVelocity;
+		newVelocity.x = linearVelocity.mX * unitsToMeters;
+		newVelocity.y = linearVelocity.mY * unitsToMeters;
+		body->SetLinearVelocity( newVelocity );
+		
+		float angularVelocity = this->GetAngularVelocity();
+		angularVelocity += angularAcc * delta;
+
+		this->GetLimiter()->LimitAngularVelocity ( angularVelocity );
+		float newAngularVelocity = angularVelocity * D2R;
+		body->SetAngularVelocity( newAngularVelocity );
+
+	#endif
+
 }
 
 //----------------------------------------------------------------//
