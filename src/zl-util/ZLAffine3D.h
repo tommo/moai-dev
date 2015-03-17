@@ -113,7 +113,7 @@ public:
 	TYPE GetRot () const {
 
 		float rot = ( TYPE )( atan2 ( m [ C0_R1 ], m [ C0_R0 ]) * R2D );
-		return rot;
+		return -rot;
 	}
 
 	//----------------------------------------------------------------//
