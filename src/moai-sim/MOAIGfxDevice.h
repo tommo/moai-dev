@@ -132,12 +132,20 @@ private:
 	MOAILuaSharedPtr < MOAIFrameBuffer > mDefaultBuffer;
 	MOAIFrameBuffer* mFrameBuffer;
 
+	u32				mPassID;
+
+	MOAILuaSharedPtr < MOAIShader > mOverridedShader;
+
 	//----------------------------------------------------------------//
 	static int				_getFrameBuffer				( lua_State* L );
 	static int				_getMaxTextureUnits			( lua_State* L );
+	static int				_getOverridedShader			( lua_State* L );
+	static int				_getPass					( lua_State* L );
 	static int				_getViewSize				( lua_State* L );
 	static int				_isProgrammable				( lua_State* L );
 	static int				_setDefaultTexture			( lua_State* L );
+	static int				_setOverridedShader			( lua_State* L );
+	static int				_setPass					( lua_State* L );
 	static int				_setPenColor				( lua_State* L );
 	static int				_setPenWidth				( lua_State* L );
 	static int				_setPointSize				( lua_State* L );
@@ -181,6 +189,8 @@ public:
 	GET ( ZLColorVec, PenColor, mPenColor )
 	
 	GET ( MOAIFrameBuffer*, DefaultBuffer, mDefaultBuffer )
+
+	GET_SET ( u32, PassID, mPassID )
 	
 	//----------------------------------------------------------------//
 	void					BeginLayer				();
@@ -232,6 +242,7 @@ public:
 	
 	void					Reserve					( u32 size );
 	void					ResetDrawCount			();
+	void					ResetPass				();
 	void					ResetState				();
 	
 	void					SetAmbientColor			( u32 color );
@@ -253,6 +264,7 @@ public:
 	void					SetDepthMask			( bool depthMask );
 	void					SetFrameBuffer			( MOAIFrameBuffer* frameBuffer );
 	bool					SetGfxState				( MOAIGfxState* gfxState );
+	void					SetOverridedShader		( MOAIShader* shader );
 	void					SetPenColor				( u32 color );
 	void					SetPenColor				( const ZLColorVec& colorVec );
 	void					SetPenColor				( float r, float g, float b, float a );

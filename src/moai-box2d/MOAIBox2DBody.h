@@ -70,8 +70,10 @@ private:
 	bool			ApplyAttrOp				( u32 attrID, MOAIAttrOp& attrOp, u32 op );
 	void			BuildLocalToWorldMtx	( ZLAffine3D& localToWorldMtx );
 	void			Clear					();
-	void			SetBody					( b2Body* body );
 	void			OnDepNodeUpdate			();
+
+protected:
+	void			SetBody					( b2Body* body );
 
 public:
 	

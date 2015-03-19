@@ -26,6 +26,12 @@ int MOAIShader::_setProgram ( lua_State* L ) {
 // MOAIShader
 //================================================================//
 
+
+MOAIShaderProgram*	MOAIShader::GetProgram ( u32 passID ) {
+	UNUSED( passID );
+	return this->mProgram;
+}
+
 //----------------------------------------------------------------//
 bool MOAIShader::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 
@@ -56,7 +62,8 @@ bool MOAIShader::ApplyAttrOp ( u32 attrID, MOAIAttrOp& attrOp, u32 op ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIShader::BindUniforms () {
+void MOAIShader::BindUniforms ( u32 passID ) {
+	UNUSED( passID );
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	MOAIShaderProgram* program = this->mProgram;
