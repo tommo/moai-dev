@@ -79,7 +79,9 @@ private:
 	static int		_showDebugLines			( lua_State* L );
 	static int		_wndToWorld				( lua_State* L );
 	static int		_wndToWorldRay			( lua_State* L );
+	static int		_worldToView			( lua_State* L );
 	static int		_worldToWnd				( lua_State* L );
+	static int		_worldToProj			( lua_State* L );
 	
 	//----------------------------------------------------------------//
 	void			AffirmPartition			();
@@ -113,6 +115,8 @@ public:
 	MOAIPartition*		GetPartition			();
 	ZLMatrix4x4			GetWndToWorldMtx		() const;
 	ZLMatrix4x4			GetWorldToWndMtx		() const;
+	ZLMatrix4x4			GetWorldToProjMtx		() const;
+	ZLMatrix4x4			GetWorldToViewMtx		() const;
 						MOAILayer				();
 						~MOAILayer				();
 	u32					OnGetModelBounds		( ZLBox& bounds );
