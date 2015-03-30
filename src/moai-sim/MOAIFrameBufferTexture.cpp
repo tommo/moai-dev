@@ -143,7 +143,13 @@ bool MOAIFrameBufferTexture::OnGPUCreate () {
 	
 		this->mGLTexID = zglCreateTexture ();
 		zglBindTexture ( this->mGLTexID );
-		zglTexImage2D ( 0, ZGL_PIXEL_FORMAT_RGBA, this->mWidth, this->mHeight, ZGL_PIXEL_FORMAT_RGBA, ZGL_PIXEL_TYPE_UNSIGNED_BYTE, 0 );
+		if( this->mColorFormat == ZGL_PIXEL_FORMAT_RGBA32F ) {
+			zglTexImage2D ( 0, ZGL_PIXEL_FORMAT_RGBA32F, this->mWidth, this->mHeight, ZGL_PIXEL_FORMAT_RGBA, ZGL_PIXEL_TYPE_FLOAT, 0 );
+		} else if( this->mColorFormat == ZGL_PIXEL_FORMAT_RGBA16F ) {
+			zglTexImage2D ( 0, ZGL_PIXEL_FORMAT_RGBA16F, this->mWidth, this->mHeight, ZGL_PIXEL_FORMAT_RGBA, ZGL_PIXEL_TYPE_HALF_FLOAT, 0 );
+		} else {
+			zglTexImage2D ( 0, ZGL_PIXEL_FORMAT_RGBA, this->mWidth, this->mHeight, ZGL_PIXEL_FORMAT_RGBA, ZGL_PIXEL_TYPE_UNSIGNED_BYTE, 0 );
+		}
 		zglFramebufferTexture2D ( ZGL_FRAMEBUFFER_TARGET_DRAW_READ, ZGL_FRAMEBUFFER_ATTACHMENT_COLOR, this->mGLTexID, 0 );
 				
 		// refresh tex params on next bind
