@@ -433,6 +433,24 @@ int MOAIParticleScript::_packLiveReg ( lua_State* L ) {
 	return 1;
 }
 
+
+//----------------------------------------------------------------//
+/**	@lua	packReg
+	@text	Pack a register index into a particle script param.
+	
+	@in		number regIdx		Register index to pack.
+	@out	number packed		The packed value.
+*/
+int MOAIParticleScript::_packReg ( lua_State* L ) {
+	MOAILuaState state ( L );
+
+	u8 val = state.GetValue < u8 >( 1, 0 ) + MOAIParticle::TOTAL_PARTICLE_REG - 1;
+	state.Push ( Pack64 ( val, PARAM_TYPE_PARTICLE_REG ));
+
+	return 1;
+}
+
+
 //----------------------------------------------------------------//
 /**	@lua	rand
 	@text	Load a register with a random number from a range.
@@ -770,7 +788,7 @@ void MOAIParticleScript::RegisterLuaClass ( MOAILuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "packConst",			_packConst },
 		{ "packLiveReg",		_packLiveReg },
-		{ "packReg",			_packLiveReg },
+		{ "packReg",			_packReg },
 		{ NULL, NULL }
 	};
 	

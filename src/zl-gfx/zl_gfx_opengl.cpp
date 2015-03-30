@@ -309,10 +309,13 @@ GLenum _remapEnum ( u32 zglEnum ) {
 		#if !defined ( MOAI_OS_ANDROID )
 			case ZGL_PIXEL_FORMAT_RGBA8:					return GL_RGBA8;
 		#endif
-
+		
 		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_ANDROID )
 			case ZGL_PIXEL_FORMAT_BGRA:						return GL_BGRA;
 		#endif
+
+		case ZGL_PIXEL_FORMAT_RGBA16F:						return GL_RGBA16F_ARB;
+		case ZGL_PIXEL_FORMAT_RGBA32F:						return GL_RGBA32F_ARB;
 
 		case ZGL_PIXEL_TYPE_BYTE:							return GL_BYTE;
 
@@ -324,6 +327,7 @@ GLenum _remapEnum ( u32 zglEnum ) {
 		#endif
 
 		case ZGL_PIXEL_TYPE_FLOAT:							return GL_FLOAT;
+		case ZGL_PIXEL_TYPE_HALF_FLOAT:						return GL_HALF_FLOAT;
 		case ZGL_PIXEL_TYPE_INT:							return GL_INT;
 		case ZGL_PIXEL_TYPE_SHORT:							return GL_SHORT;
 		case ZGL_PIXEL_TYPE_UNSIGNED_BYTE:					return GL_UNSIGNED_BYTE;
@@ -441,6 +445,7 @@ GLenum _remapEnum ( u32 zglEnum ) {
 		#endif
 
 		case ZGL_TYPE_FLOAT:							return GL_FLOAT;
+		case ZGL_TYPE_HALF_FLOAT:						return GL_HALF_FLOAT;
 		case ZGL_TYPE_INT:								return GL_INT;
 		case ZGL_TYPE_SHORT:							return GL_SHORT;
 		case ZGL_TYPE_UNSIGNED_BYTE:					return GL_UNSIGNED_BYTE;
@@ -1368,14 +1373,15 @@ void zglBindVertexArray ( u32 vertexArrayID ) {
 u32 zglCreateVertexArray () {
 
 	ASSERT_OPERATION_DEPTH ();
-
-	#ifdef MOAI_OS_ANDROID
-		return 0;
-	#else
-		u32 vertexArrayID;
-		glGenVertexArrays ( 1, &vertexArrayID );
-		return vertexArrayID;
-	#endif
+	// FIXME: random crash on OSX
+	// #ifdef MOAI_OS_ANDROID
+	// 	return 0;
+	// #else
+	// 	u32 vertexArrayID;
+	// 	glGenVertexArrays ( 1, &vertexArrayID );
+	// 	return vertexArrayID;
+	// #endif
+	return 0;
 }
 
 //----------------------------------------------------------------//

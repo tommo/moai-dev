@@ -597,6 +597,70 @@ int MOAILayer::_worldToWnd ( lua_State* L ) {
 	return 3;
 }
 
+
+//----------------------------------------------------------------//
+/**	@lua	worldToView
+	@text	Transform a point from world space with project matrix.
+	
+	@in		MOAILayer self
+	@in		number x
+	@in		number y
+	@in		number Z
+	@out	number x
+	@out	number y
+	@out	number z
+*/
+int MOAILayer::_worldToView ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAILayer, "UNN" )
+
+	ZLVec4D loc;
+	loc.mX = state.GetValue < float >( 2, 0.0f );
+	loc.mY = state.GetValue < float >( 3, 0.0f );
+	loc.mZ = state.GetValue < float >( 4, 0.0f );
+	loc.mW = 1.0f;
+
+	ZLMatrix4x4 worldToView = self->GetWorldToViewMtx ();
+	worldToView.Project ( loc );
+
+	lua_pushnumber ( state, loc.mX );
+	lua_pushnumber ( state, loc.mY );
+	lua_pushnumber ( state, loc.mZ );
+
+	return 3;
+}
+
+
+//----------------------------------------------------------------//
+/**	@lua	worldToProj
+	@text	Transform a point from world space with project matrix.
+	
+	@in		MOAILayer self
+	@in		number x
+	@in		number y
+	@in		number Z
+	@out	number x
+	@out	number y
+	@out	number z
+*/
+int MOAILayer::_worldToProj ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAILayer, "UNN" )
+
+	ZLVec4D loc;
+	loc.mX = state.GetValue < float >( 2, 0.0f );
+	loc.mY = state.GetValue < float >( 3, 0.0f );
+	loc.mZ = state.GetValue < float >( 4, 0.0f );
+	loc.mW = 1.0f;
+
+	ZLMatrix4x4 worldToProj = self->GetWorldToProjMtx ();
+	worldToProj.Project ( loc );
+
+	lua_pushnumber ( state, loc.mX );
+	lua_pushnumber ( state, loc.mY );
+	lua_pushnumber ( state, loc.mZ );
+
+	return 3;
+}
+
 //================================================================//
 // MOAINode
 //================================================================//
@@ -827,6 +891,49 @@ ZLMatrix4x4 MOAILayer::GetWorldToWndMtx () const {
 }
 
 //----------------------------------------------------------------//
+ZLMatrix4x4 MOAILayer::GetWorldToProjMtx () const {
+
+	//ZLMatrix4x4 worldToWnd = this->mCamera ? this->mCamera->GetWorldToWndMtx ( *this->mViewport ) : this->mViewport->GetNormToWndMtx ();
+	
+	ZLMatrix4x4 worldToProj;
+	
+	if ( this->mViewport ) {
+			worldToProj = this->GetViewMtx ();
+			worldToProj.Append ( this->GetProjectionMtx ());
+	}
+	else {
+			worldToProj.Ident ();
+	}
+	
+	ZLMatrix4x4 mtx;
+	mtx.Init ( this->mLocalToWorldMtx );
+	worldToProj.Append ( mtx );
+	
+	return worldToProj;
+}
+
+//----------------------------------------------------------------//
+ZLMatrix4x4 MOAILayer::GetWorldToViewMtx () const {
+
+	//ZLMatrix4x4 worldToWnd = this->mCamera ? this->mCamera->GetWorldToWndMtx ( *this->mViewport ) : this->mViewport->GetNormToWndMtx ();
+	
+	ZLMatrix4x4 worldToView;
+	
+	if ( this->mViewport ) {
+			worldToView = this->GetViewMtx ();
+	}
+	else {
+			worldToView.Ident ();
+	}
+	
+	ZLMatrix4x4 mtx;
+	mtx.Init ( this->mLocalToWorldMtx );
+	worldToView.Append ( mtx );
+	
+	return worldToView;
+}
+
+//----------------------------------------------------------------//
 MOAILayer::MOAILayer () :
 	mParallax ( 1.0f, 1.0f, 1.0f ),
 	mShowDebugLines ( true ),
@@ -921,6 +1028,8 @@ void MOAILayer::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "wndToWorld",				_wndToWorld },
 		{ "wndToWorldRay",			_wndToWorldRay },
 		{ "worldToWnd",				_worldToWnd },
+		{ "worldToView",			_worldToView },
+		{ "worldToProj",			_worldToProj },
 		{ NULL, NULL }
 	};
 	

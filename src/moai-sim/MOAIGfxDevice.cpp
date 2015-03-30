@@ -110,6 +110,71 @@ int MOAIGfxDevice::_setDefaultTexture ( lua_State* L ) {
 	return 0;
 }
 
+
+
+//----------------------------------------------------------------//
+/**	@lua	getOverridedShader
+
+	@out	MOAIShader OverridedShader
+*/
+int MOAIGfxDevice::_getOverridedShader ( lua_State* L ) {
+
+	MOAILuaState state ( L );
+
+	MOAIShader* shader = MOAIGfxDevice::Get ().mOverridedShader;
+	if( shader ) {
+		shader->PushLuaUserdata( state );
+		return 1;
+	}
+	return 0;
+}
+
+
+//----------------------------------------------------------------//
+/**	@lua	setOverridedShader
+
+	@in		MOAIShader OverridedShader
+	@out	nil
+*/
+int MOAIGfxDevice::_setOverridedShader ( lua_State* L ) {
+
+	MOAILuaState state ( L );
+
+	MOAIShader* shader = state.GetLuaObject < MOAIShader >( 1, 0 );
+	MOAIGfxDevice::Get ().SetOverridedShader ( shader );
+	return 0;
+}
+
+
+//----------------------------------------------------------------//
+/**	@lua	setPass
+
+	@in		number passID
+	@out	nil
+*/
+int MOAIGfxDevice::_setPass ( lua_State* L ) {
+
+	MOAILuaState state ( L );
+
+	u32 pass = state.GetValue < u32 >( 1, 1.0f );
+
+	MOAIGfxDevice::Get ().SetPassID ( pass );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@lua	getPass
+
+	@out	number passID
+*/
+int MOAIGfxDevice::_getPass ( lua_State* L ) {
+
+	MOAILuaState state ( L );
+	state.Push ( MOAIGfxDevice::Get ().GetPassID() );
+	return 1;
+}
+
+
 //----------------------------------------------------------------//
 /**	@lua	setPenColor
 
@@ -200,6 +265,7 @@ void MOAIGfxDevice::BeginPrim ( u32 primType ) {
 void MOAIGfxDevice::Clear () {
 
 	this->mDefaultTexture.Set ( *this, 0 );
+	this->mOverridedShader.Set ( *this, 0 );
 
 	if ( this->mBuffer ) {
 		free ( this->mBuffer );
@@ -548,6 +614,7 @@ MOAIGfxDevice::MOAIGfxDevice () :
 	mMajorVersion ( 0 ),
 	mMaxPrims ( 0 ),
 	mMinorVersion ( 0 ),
+	mPassID ( 0 ),
 	mFinalColor32 ( 0xffffffff ),
 	mPenWidth ( 1.0f ),
 	mPointSize ( 1.0f ),
@@ -594,7 +661,7 @@ MOAIGfxDevice::MOAIGfxDevice () :
 MOAIGfxDevice::~MOAIGfxDevice () {
 
 	this->mDefaultBuffer.Set ( *this, 0 );
-	
+
 	// this->ProcessDeleters (); // TODO: same issue as OnGlobalsFinalize
 	this->Clear ();
 }
@@ -621,10 +688,14 @@ void MOAIGfxDevice::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "getFrameBuffer",				_getFrameBuffer },
 		{ "getListener",				&MOAIGlobalEventSource::_getListener < MOAIGfxDevice > },
 		{ "getMaxTextureUnits",			_getMaxTextureUnits },
+		{ "getOverridedShader",			_getOverridedShader },
+		{ "getPass",					_getPass },
 		{ "getViewSize",				_getViewSize },
 		{ "isProgrammable",				_isProgrammable },
 		{ "setDefaultTexture",			_setDefaultTexture },
 		{ "setListener",				&MOAIGlobalEventSource::_setListener < MOAIGfxDevice > },
+		{ "setOverridedShader",			_setOverridedShader },
+		{ "setPass",					_setPass },
 		{ "setPenColor",				_setPenColor },
 		{ "setPenWidth",				_setPenWidth },
 		{ "setPointSize",				_setPointSize },
@@ -657,6 +728,11 @@ void MOAIGfxDevice::Reserve ( u32 size ) {
 	this->mSize = size;
 	this->mTop = 0;
 	this->mBuffer = malloc ( size );
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::ResetPass () {
+	this->mPassID = 0;
 }
 
 //----------------------------------------------------------------//
@@ -901,6 +977,12 @@ bool MOAIGfxDevice::SetGfxState ( MOAIGfxState* gfxState ) {
 	return false;
 }
 
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::SetOverridedShader ( MOAIShader* shader ) {
+	this->mOverridedShader.Set( *this, shader );
+}
+
 //----------------------------------------------------------------//
 void MOAIGfxDevice::SetPenColor ( u32 color ) {
 
@@ -1033,10 +1115,10 @@ void MOAIGfxDevice::SetScreenSpace ( MOAIViewport& viewport ) {
 
 //----------------------------------------------------------------//
 void MOAIGfxDevice::SetShader ( MOAIShader* shader ) {
-
+	if ( this->mOverridedShader ) shader = this->mOverridedShader;
 	if ( shader ) {
-		this->SetShaderProgram ( shader->GetProgram ());
-		shader->BindUniforms ();
+		this->SetShaderProgram ( shader->GetProgram ( this->mPassID ));
+		shader->BindUniforms ( this->mPassID );
 	}
 	else {
 		this->SetShaderProgram ( 0 );
@@ -1285,7 +1367,7 @@ void MOAIGfxDevice::SetViewRect () {
 //----------------------------------------------------------------//
 void MOAIGfxDevice::SetViewRect ( ZLRect rect ) {
 
-	ZLRect deviceRect = rect;
+	ZLRect deviceRect;
 	
 	deviceRect = this->mFrameBuffer->WndRectToDevice ( rect );
 	

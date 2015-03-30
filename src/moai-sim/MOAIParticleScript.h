@@ -132,7 +132,7 @@ private:
 	static int		_norm				( lua_State* L );
 	static int		_packConst			( lua_State* L );
 	static int		_packLiveReg		( lua_State* L );
-	// static int		_packReg			( lua_State* L );
+	static int		_packReg			( lua_State* L );
 	static int		_rand				( lua_State* L );
 	static int		_randVec			( lua_State* L );
 	static int		_set				( lua_State* L );

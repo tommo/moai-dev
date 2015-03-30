@@ -364,6 +364,10 @@ void MOAITextureBase::RegisterLuaClass ( MOAILuaState& state ) {
 	#else
 		state.SetField ( -1, "GL_RGBA8",				( u32 )ZGL_PIXEL_FORMAT_RGBA8 );
 	#endif
+	
+	state.SetField ( -1, "GL_RGBA16F",					( u32 )ZGL_PIXEL_FORMAT_RGBA16F );
+	state.SetField ( -1, "GL_RGBA32F",					( u32 )ZGL_PIXEL_FORMAT_RGBA32F );
+	
 }
 
 //----------------------------------------------------------------//

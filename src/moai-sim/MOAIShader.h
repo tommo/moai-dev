@@ -26,16 +26,16 @@ public:
 
 	DECL_LUA_FACTORY ( MOAIShader )
 
-	GET ( MOAIShaderProgram*, Program, mProgram )
-
 	//----------------------------------------------------------------//
 	bool			ApplyAttrOp				( u32 attrID, MOAIAttrOp& attrOp, u32 op );
-	void			BindUniforms			();
 					MOAIShader				();
 					~MOAIShader				();
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 	void			SetProgram				( MOAIShaderProgram* program );
+
+	virtual MOAIShaderProgram*	GetProgram		( u32 passID );
+	virtual void				BindUniforms	( u32 passID );
 };
 
 #endif
