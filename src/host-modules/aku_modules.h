@@ -61,6 +61,10 @@
 	#include <moai-steer/host.h>
 #endif
 
+#if AKU_WITH_TURBOBADGER
+	#include <moai-tb/host.h>
+#endif
+
 #if AKU_WITH_UNTZ
 	#include <moai-untz/host.h>
 #endif

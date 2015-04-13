@@ -102,6 +102,10 @@ void AKUModulesAppFinalize () {
 		AKUSteerAppFinalize ();
 	#endif
 
+	#if AKU_WITH_TURBOBADGER
+		AKUTurboBadgerAppFinalize();
+	#endif
+
 	#if AKU_WITH_UNTZ
 		AKUUntzAppFinalize ();
 	#endif
@@ -178,6 +182,10 @@ void AKUModulesAppInitialize () {
 		AKUSteerAppInitialize ();
 	#endif
 
+	#if AKU_WITH_TURBOBADGER
+		AKUTurboBadgerAppInitialize();
+	#endif
+
 	#if AKU_WITH_UNTZ
 		AKUUntzAppInitialize ();
 	#endif
@@ -252,6 +260,10 @@ void AKUModulesContextInitialize () {
 
 	#if AKU_WITH_STEER
 		AKUSteerContextInitialize ();
+	#endif
+
+	#if AKU_WITH_TURBOBADGER
+		AKUTurboBadgerContextInitialize();
 	#endif
 
 	#if AKU_WITH_UNTZ

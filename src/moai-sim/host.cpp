@@ -45,6 +45,8 @@ void AKUSimContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAIAnimCurve )
 	REGISTER_LUA_CLASS ( MOAIAnimCurveQuat )
 	REGISTER_LUA_CLASS ( MOAIAnimCurveVec )
+	REGISTER_LUA_CLASS ( MOAIAnimCurveEX )
+	
 	REGISTER_LUA_CLASS ( MOAIBoundsDeck )
 	REGISTER_LUA_CLASS ( MOAIButtonSensor )
 	REGISTER_LUA_CLASS ( MOAICamera )
