@@ -1152,6 +1152,16 @@ int MOAIBox2DWorld::_setUnitsToMeters ( lua_State* L ) {
 	return 0;
 }
 
+int MOAIBox2DWorld::_forceUpdate ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIBox2DWorld, "U" )
+
+	float delta = state.GetValue < u32 >( 2, 0 );
+
+	self->OnUpdate(delta);
+
+	return 0;
+}
+
 //================================================================//
 // MOAIBox2DWorld
 //================================================================//
@@ -1319,6 +1329,7 @@ void MOAIBox2DWorld::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setLinearSleepTolerance",	_setLinearSleepTolerance },
 		{ "setTimeToSleep",				_setTimeToSleep },
 		{ "setUnitsToMeters",			_setUnitsToMeters },
+		{ "forceUpdate", 				_forceUpdate },
 		{ NULL, NULL }
 	};
 	

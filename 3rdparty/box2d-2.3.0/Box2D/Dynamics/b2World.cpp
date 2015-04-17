@@ -1170,6 +1170,24 @@ void b2World::DrawDebugData()
 				}
 			}
 		}
+
+		b2WorldManifold* worldManifold = new b2WorldManifold ();
+		for (b2Contact* c = m_contactManager.m_contactList; c; c = c->GetNext())
+		{
+			
+			c->GetWorldManifold(worldManifold);
+			for (int i = 0; i < c->GetManifold()->pointCount; ++i)
+			{
+				b2Vec2 vertices[4];
+				vertices[0] = worldManifold->points[i] + b2Vec2(-0.01f, -0.01f);
+				vertices[1] = worldManifold->points[i] + b2Vec2(0.01f, -0.01f);
+				vertices[2] = worldManifold->points[i] + b2Vec2(0.01f, 0.01f);
+				vertices[3] = worldManifold->points[i] + b2Vec2(-0.01f, 0.01f);
+
+				m_debugDraw->DrawSolidPolygon(vertices, 4, b2Color(0.3f, 0.9f, 0.9f));
+			}
+		}
+		delete worldManifold;
 	}
 
 	if (flags & b2Draw::e_jointBit)

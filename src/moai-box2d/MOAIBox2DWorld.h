@@ -114,6 +114,7 @@ private:
 	static int		_setLinearSleepTolerance	( lua_State* L );
 	static int		_setTimeToSleep				( lua_State* L );
 	static int		_setUnitsToMeters			( lua_State* L );
+	static int  	_forceUpdate				( lua_State* L );
 	
 	//----------------------------------------------------------------//
 	void			Destroy					();

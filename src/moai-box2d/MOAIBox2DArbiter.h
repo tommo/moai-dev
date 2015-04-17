@@ -30,7 +30,7 @@ private:
 	const b2ContactImpulse*		mImpulse;
 
 	b2Vec2  mContactNormal;
-	b2Vec2* mContactPoints;
+	b2Vec2  mContactPoints[b2_maxManifoldPoints];
 	int   mContactPointCount;
 	float*  mContactSeparations;
 	float	mNormalImpulse;

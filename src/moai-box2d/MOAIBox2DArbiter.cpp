@@ -129,7 +129,7 @@ void MOAIBox2DArbiter::BeginContact ( b2Contact* contact ) {
 	b2WorldManifold* worldManifold = new b2WorldManifold ();
 	contact->GetWorldManifold ( worldManifold );
 	this->mContactNormal = worldManifold->normal;
-	this->mContactPoints = worldManifold->points;
+	memcpy(this->mContactPoints, worldManifold->points, sizeof(b2Vec2) * b2_maxManifoldPoints);
 	this->mContactPointCount = contact->GetManifold()->pointCount;
 	this->mContactSeparations = worldManifold->separations;
 	delete worldManifold;
@@ -158,7 +158,7 @@ void MOAIBox2DArbiter::EndContact ( b2Contact* contact ) {
 	b2WorldManifold* worldManifold = new b2WorldManifold ();
 	contact->GetWorldManifold ( worldManifold );
 	this->mContactNormal = worldManifold->normal;
-	this->mContactPoints = worldManifold->points;
+	memcpy(this->mContactPoints, worldManifold->points, sizeof(b2Vec2) * b2_maxManifoldPoints);
 	this->mContactPointCount = contact->GetManifold()->pointCount;
 	this->mContactSeparations = worldManifold->separations;
 	delete worldManifold;
@@ -225,7 +225,7 @@ void MOAIBox2DArbiter::PostSolve ( b2Contact* contact, const b2ContactImpulse* i
 	b2WorldManifold* worldManifold = new b2WorldManifold ();
 	contact->GetWorldManifold ( worldManifold );
 	this->mContactNormal = worldManifold->normal;
-	this->mContactPoints = worldManifold->points;
+	memcpy(this->mContactPoints, worldManifold->points, sizeof(b2Vec2) * b2_maxManifoldPoints);
 	this->mContactPointCount = contact->GetManifold()->pointCount;
 	this->mContactSeparations = worldManifold->separations;
 	delete worldManifold;
@@ -257,7 +257,7 @@ void MOAIBox2DArbiter::PreSolve ( b2Contact* contact, const b2Manifold* oldManif
 	b2WorldManifold* worldManifold = new b2WorldManifold ();
 	contact->GetWorldManifold ( worldManifold );
 	this->mContactNormal = worldManifold->normal;
-	this->mContactPoints = worldManifold->points;
+	memcpy(this->mContactPoints, worldManifold->points, sizeof(b2Vec2) * b2_maxManifoldPoints);
 	this->mContactPointCount = contact->GetManifold()->pointCount;
 	this->mContactSeparations = worldManifold->separations;
 	delete worldManifold;
