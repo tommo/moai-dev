@@ -154,6 +154,8 @@ public:
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 	void			Render					();
+
+	MOAIBox2DArbiter* GetArbiter			();
 };
 
 #endif

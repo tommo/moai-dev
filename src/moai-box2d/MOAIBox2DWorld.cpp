@@ -1405,3 +1405,12 @@ void MOAIBox2DWorld::ScheduleDestruction ( MOAIBox2DJoint& joint ) {
 	}
 	this->Destroy ();
 }
+
+MOAIBox2DArbiter* MOAIBox2DWorld::GetArbiter()
+{
+	if (mArbiter)
+	{
+		return &(*mArbiter);
+	}
+	return NULL;
+}
