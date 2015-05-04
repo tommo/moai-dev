@@ -62,13 +62,21 @@ class MOAIBox2DRayCastCallbackWithLuaCallback :
 private:
 	friend class MOAIBox2DWorld;
 	float mUnitsToMeters;
+	lua_State* mState;
 
 public:
+
+	MOAIBox2DRayCastCallbackWithLuaCallback(lua_State* L) : mState(L)
+	{
+	}
+
 	//----------------------------------------------------------------//
 	float32 ReportFixture ( b2Fixture* fixture, const b2Vec2& point, const b2Vec2& normal, float32 fraction ) {
-		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		MOAIScopedLuaState state(mState);
 		MOAIBox2DFixture* moaiFixture = ( MOAIBox2DFixture* ) fixture->GetUserData ();
+		
 		lua_pushvalue( state, -1 ); //copy the callback function
+
 		if( moaiFixture ) {
 			moaiFixture->PushLuaUserdata( state );
 		} else {
@@ -78,7 +86,8 @@ public:
 		lua_pushnumber ( state, point.y / this->mUnitsToMeters );
 		lua_pushnumber ( state, normal.x );
 		lua_pushnumber ( state, normal.y );
-		state.DebugCall( 5, 1 );
+		lua_pushnumber ( state, fraction );
+		state.DebugCall( 6, 1 );
 		bool foundHit = lua_toboolean( state, -1 );
 		lua_pop( state, 1 );
 		if ( foundHit ) {
@@ -87,7 +96,7 @@ public:
 			m_normal = normal;
 			return 0.0f;
 		} else {
-			return - 1.0f;
+			return -1.0;
 		}
 	}
 };
@@ -897,7 +906,7 @@ int MOAIBox2DWorld::_getRayCast ( lua_State* L ) {
    
 	MOAIBox2DRayCastCallback* callback;
 	if( lua_isfunction( state, 6 ) ) {
-		callback = new MOAIBox2DRayCastCallbackWithLuaCallback;
+		callback = new MOAIBox2DRayCastCallbackWithLuaCallback(L);
 		(( MOAIBox2DRayCastCallbackWithLuaCallback* )callback)->mUnitsToMeters = self->mUnitsToMeters;
 		//clean stack
 		lua_pop( state, lua_gettop( state ) - 6 );
