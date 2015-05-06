@@ -22,10 +22,31 @@
  */
 int MOAIBox2DArbiter::_getContactNormal ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIBox2DArbiter, "U" )
-	
-	state.Push ( self->mContactNormal.x );
-	state.Push ( self->mContactNormal.y );
+
+	if (self->mFlipContactNormal)
+	{
+		state.Push ( -self->mContactNormal.x );
+		state.Push ( -self->mContactNormal.y );
+	}
+	else
+	{
+		state.Push ( self->mContactNormal.x );
+		state.Push ( self->mContactNormal.y );
+	}
 	return 2;
+}
+
+int MOAIBox2DArbiter::_getContactPoints ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIBox2DArbiter, "U" )
+
+	const float metersToUnits = 1 / self->GetUnitsToMeters();
+	for(int i = 0; i < self->mContactPointCount; ++i)
+	{
+		state.Push( self->mContactPoints[i].x * metersToUnits);
+		state.Push( self->mContactPoints[i].y * metersToUnits);
+	}
+	
+	return self->mContactPointCount * 2;
 }
 
 //----------------------------------------------------------------//
@@ -81,6 +102,19 @@ int MOAIBox2DArbiter::_setContactEnabled ( lua_State* L ) {
 	return 0;
 }
 
+int MOAIBox2DArbiter::_getContactSeparations( lua_State* L) 
+{
+	MOAI_LUA_SETUP ( MOAIBox2DArbiter, "U" )
+
+	const float metersToUnits = 1 / self->GetUnitsToMeters();
+	for(int i = 0; i < self->mContactPointCount; ++i)
+	{
+		state.Push( self->mContactSeparations[i] * metersToUnits);
+	}
+
+	return self->mContactPointCount;
+}
+
 //================================================================//
 // MOAIBox2DArbiter
 //================================================================//
@@ -91,7 +125,15 @@ void MOAIBox2DArbiter::BeginContact ( b2Contact* contact ) {
 	this->mContact = contact;
 	this->mImpulse = 0;
 	
-	this->mContactNormal = b2Vec2();
+	// this->mContactNormal = b2Vec2();
+	b2WorldManifold* worldManifold = new b2WorldManifold ();
+	contact->GetWorldManifold ( worldManifold );
+	this->mContactNormal = worldManifold->normal;
+	memcpy(this->mContactPoints, worldManifold->points, sizeof(b2Vec2) * b2_maxManifoldPoints);
+	this->mContactPointCount = contact->GetManifold()->pointCount;
+	this->mContactSeparations = worldManifold->separations;
+	delete worldManifold;
+
 	this->mNormalImpulse = 0.0f;
 	this->mTangentImpulse = 0.0f;
 	
@@ -101,7 +143,9 @@ void MOAIBox2DArbiter::BeginContact ( b2Contact* contact ) {
 	MOAIBox2DFixture* moaiFixtureA = ( MOAIBox2DFixture* )fixtureA->GetUserData ();
 	MOAIBox2DFixture* moaiFixtureB = ( MOAIBox2DFixture* )fixtureB->GetUserData ();
 	
+	this->mFlipContactNormal = true;
 	moaiFixtureA->HandleCollision ( BEGIN, moaiFixtureB, this );
+	this->mFlipContactNormal = false;
 	moaiFixtureB->HandleCollision ( BEGIN, moaiFixtureA, this );
 }
 
@@ -110,6 +154,14 @@ void MOAIBox2DArbiter::EndContact ( b2Contact* contact ) {
 	
 	this->mContact = contact;
 	this->mImpulse = 0;
+
+	b2WorldManifold* worldManifold = new b2WorldManifold ();
+	contact->GetWorldManifold ( worldManifold );
+	this->mContactNormal = worldManifold->normal;
+	memcpy(this->mContactPoints, worldManifold->points, sizeof(b2Vec2) * b2_maxManifoldPoints);
+	this->mContactPointCount = contact->GetManifold()->pointCount;
+	this->mContactSeparations = worldManifold->separations;
+	delete worldManifold;
 	
 	b2Fixture* fixtureA = contact->GetFixtureA ();
 	b2Fixture* fixtureB = contact->GetFixtureB ();
@@ -117,7 +169,9 @@ void MOAIBox2DArbiter::EndContact ( b2Contact* contact ) {
 	MOAIBox2DFixture* moaiFixtureA = ( MOAIBox2DFixture* )fixtureA->GetUserData ();
 	MOAIBox2DFixture* moaiFixtureB = ( MOAIBox2DFixture* )fixtureB->GetUserData ();
 	
+	this->mFlipContactNormal = true;
 	moaiFixtureA->HandleCollision ( END, moaiFixtureB, this );
+	this->mFlipContactNormal = false;
 	moaiFixtureB->HandleCollision ( END, moaiFixtureA, this );
 }
 
@@ -171,6 +225,9 @@ void MOAIBox2DArbiter::PostSolve ( b2Contact* contact, const b2ContactImpulse* i
 	b2WorldManifold* worldManifold = new b2WorldManifold ();
 	contact->GetWorldManifold ( worldManifold );
 	this->mContactNormal = worldManifold->normal;
+	memcpy(this->mContactPoints, worldManifold->points, sizeof(b2Vec2) * b2_maxManifoldPoints);
+	this->mContactPointCount = contact->GetManifold()->pointCount;
+	this->mContactSeparations = worldManifold->separations;
 	delete worldManifold;
 	
 	b2Manifold* manifold = contact->GetManifold ();
@@ -184,7 +241,9 @@ void MOAIBox2DArbiter::PostSolve ( b2Contact* contact, const b2ContactImpulse* i
 		this->mTangentImpulse += impulse->tangentImpulses [ i ];
 	}
 	
+	this->mFlipContactNormal = true;
 	moaiFixtureA->HandleCollision ( POST_SOLVE, moaiFixtureB, this );
+	this->mFlipContactNormal = false;
 	moaiFixtureB->HandleCollision ( POST_SOLVE, moaiFixtureA, this );
 }
 
@@ -194,6 +253,14 @@ void MOAIBox2DArbiter::PreSolve ( b2Contact* contact, const b2Manifold* oldManif
 	
 	this->mContact = contact;
 	this->mImpulse = 0;
+
+	b2WorldManifold* worldManifold = new b2WorldManifold ();
+	contact->GetWorldManifold ( worldManifold );
+	this->mContactNormal = worldManifold->normal;
+	memcpy(this->mContactPoints, worldManifold->points, sizeof(b2Vec2) * b2_maxManifoldPoints);
+	this->mContactPointCount = contact->GetManifold()->pointCount;
+	this->mContactSeparations = worldManifold->separations;
+	delete worldManifold;
 	
 	b2Fixture* fixtureA = contact->GetFixtureA ();
 	b2Fixture* fixtureB = contact->GetFixtureB ();
@@ -201,7 +268,9 @@ void MOAIBox2DArbiter::PreSolve ( b2Contact* contact, const b2Manifold* oldManif
 	MOAIBox2DFixture* moaiFixtureA = ( MOAIBox2DFixture* )fixtureA->GetUserData ();
 	MOAIBox2DFixture* moaiFixtureB = ( MOAIBox2DFixture* )fixtureB->GetUserData ();
 	
+	this->mFlipContactNormal = true;
 	moaiFixtureA->HandleCollision ( PRE_SOLVE, moaiFixtureB, this );
+	this->mFlipContactNormal = false;
 	moaiFixtureB->HandleCollision ( PRE_SOLVE, moaiFixtureA, this );
 }
 
@@ -227,9 +296,11 @@ void MOAIBox2DArbiter::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "getContactNormal",			_getContactNormal },
+		{ "getContactPoints",			_getContactPoints },
 		{ "getNormalImpulse",			_getNormalImpulse },
 		{ "getTangentImpulse",			_getTangentImpulse },
 		{ "setContactEnabled",			_setContactEnabled },
+		{ "getContactSeparations",		_getContactSeparations },
 		{ "new",						MOAILogMessages::_alertNewIsUnsupported },
 		{ NULL, NULL }
 	};

@@ -124,6 +124,8 @@ void b2Body::SetType(b2BodyType type)
 	}
 
 	m_type = type;
+	// add this flag to force box2d to generate new contact on next update
+	m_world->m_flags |= b2World::e_newFixture;
 
 	ResetMassData();
 

@@ -144,8 +144,8 @@ int MOAIBox2DFixture::_setFilter ( lua_State* L ) {
 	
 	b2Filter filter = self->mFixture->GetFilterData ();
 	
-	filter.categoryBits		= ( uint16 )state.GetValue < u32 >( 2, 0 );
-	filter.maskBits			= ( uint16 )state.GetValue < u32 >( 3, 0xffffffff );
+	filter.categoryBits		= ( uint16 )state.GetValue < u32 >( 2, 1 );
+	filter.maskBits			= ( uint16 )state.GetValue < u32 >( 3, 0xffff );
 	filter.groupIndex		= ( int16 )state.GetValue < int >( 4, ( int )filter.groupIndex );
 	
 	self->mFixture->SetFilterData ( filter );
@@ -335,4 +335,14 @@ void MOAIBox2DFixture::SetFixture ( b2Fixture* fixture ) {
 	if ( fixture ) {
 		fixture->SetUserData ( this );
 	}
+}
+
+MOAIBox2DBody* MOAIBox2DFixture::GetBody()
+{
+	b2Body* body = mFixture->GetBody ();
+	if ( body ) {
+		MOAIBox2DBody* moaiBody = ( MOAIBox2DBody* )body->GetUserData ();
+		return moaiBody;
+	}
+	return NULL;
 }

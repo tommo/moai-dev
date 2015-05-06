@@ -1,1 +1,1 @@
-build.sh -c Debug -p ios $1 $2 $3
+./build.sh -c Debug -p ios $1 $2 $3

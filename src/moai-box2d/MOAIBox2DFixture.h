@@ -57,6 +57,7 @@ public:
 					~MOAIBox2DFixture		();
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
+	MOAIBox2DBody*	GetBody 				();
 };
 
 #endif

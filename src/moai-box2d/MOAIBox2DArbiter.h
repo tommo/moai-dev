@@ -30,10 +30,13 @@ private:
 	const b2ContactImpulse*		mImpulse;
 
 	b2Vec2  mContactNormal;
-	b2Vec2* mContactPoints;
+	b2Vec2  mContactPoints[b2_maxManifoldPoints];
 	int   mContactPointCount;
+	float*  mContactSeparations;
 	float	mNormalImpulse;
 	float	mTangentImpulse;
+	// since b2WorldManifold::normal is A->B, we need to flag the flip when it comes to B->A
+	bool 	mFlipContactNormal;
 
 	/* For reference to get the unitsToMeters value */
 	const MOAIBox2DWorld*       mWorld;
@@ -44,6 +47,7 @@ private:
 	static int		_getNormalImpulse		( lua_State* L );
 	static int		_getTangentImpulse		( lua_State* L );
 	static int		_setContactEnabled		( lua_State* L );
+	static int      _getContactSeparations	( lua_State* L );
 	
 	//----------------------------------------------------------------//
 	void	BeginContact	( b2Contact* contact );
