@@ -23,6 +23,26 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+/**	@lua	clearBuffer
+	@text	Returns the frame buffer associated with the device.
+
+	@out	MOAIFrameBuffer frameBuffer
+*/
+int MOAIGfxDevice::_clearBuffer ( lua_State* L ) {
+
+	MOAILuaState state ( L );
+	bool clearColorBuffer   = state.GetValue < bool >( 1, true );
+	bool clearDepthBuffer   = state.GetValue < bool >( 2, false );
+	bool clearStencilBuffer = state.GetValue < bool >( 3, false );
+	u32 flags = 0;
+	if ( clearColorBuffer ) flags |= ZGL_CLEAR_COLOR_BUFFER_BIT;
+	if ( clearDepthBuffer ) flags |= ZGL_CLEAR_DEPTH_BUFFER_BIT;
+	if ( clearStencilBuffer ) flags |= ZGL_CLEAR_STENCIL_BUFFER_BIT;
+	MOAIGfxDevice::Get ().ClearSurface( flags );
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	getFrameBuffer
 	@text	Returns the frame buffer associated with the device.
 
@@ -81,6 +101,29 @@ int MOAIGfxDevice::_isProgrammable ( lua_State* L ) {
 	lua_pushboolean ( L, gfxDevice.IsProgrammable ());
 	
 	return 1;
+}
+
+
+
+//----------------------------------------------------------------//
+/**	@lua	setClearColor
+
+	@in		number r
+	@in		number g
+	@in		number b
+	@opt	number a	Default value is 1.
+	@out	nil
+*/
+int MOAIGfxDevice::_setClearColor ( lua_State* L ) {
+
+	MOAILuaState state ( L );
+
+	float r = state.GetValue < float >( 1, 0.0f );
+	float g = state.GetValue < float >( 2, 0.0f );
+	float b = state.GetValue < float >( 3, 0.0f );
+	float a = state.GetValue < float >( 4, 0.0f );
+	zglClearColor ( r, g, b, a );
+	return 0;
 }
 
 //----------------------------------------------------------------//
@@ -224,6 +267,41 @@ int MOAIGfxDevice::_setPointSize ( lua_State* L ) {
 	float size = state.GetValue < float >( 1, 1.0f );
 	MOAIGfxDevice::Get ().SetPointSize ( size );
 	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAIGfxDevice::_reserveTexture ( lua_State* L ) {
+	MOAILuaState state ( L );
+	u32 base = state.GetValue < u32 >( 1, 0 );
+	MOAIGfxDevice::Get ().mReservedTextureBase = base;
+	return 0;
+}
+
+int MOAIGfxDevice::_setReservedTexture ( lua_State* L ) {
+	MOAILuaState state ( L );
+	
+	u32 idx						= state.GetValue < u32 >( 1, 1 ) - 1;
+	MOAITextureBase* texture	= state.GetLuaObject < MOAITextureBase >( 2, true );
+	MOAIGfxDevice& device = MOAIGfxDevice::Get ();
+
+	u32 actualIdx = device.mReservedTextureBase + idx;
+	if( actualIdx < device.mTextureUnits.Size() ) {
+		zglBegin();
+		if( texture ) {
+			state.Push( device.SetTexture ( actualIdx, texture ) );
+		} else if( device.mTextureUnits [ actualIdx ] ) {
+			#if USE_OPENGLES1
+				if ( !device.IsProgrammable ()) {
+					zglActiveTexture ( actualIdx );
+					zglDisable ( ZGL_PIPELINE_TEXTURE_2D );
+				}
+			#endif
+			device.mTextureUnits [ actualIdx ] = 0;
+			state.Push( true );
+		}
+		zglEnd();
+	}
+	return 1;
 }
 
 //----------------------------------------------------------------//
@@ -626,6 +704,7 @@ MOAIGfxDevice::MOAIGfxDevice () :
 	mShaderDirty ( false ),
 	mSize ( 0 ),
 	mActiveTextures ( 0 ),
+	mReservedTextureBase ( 8 ),
 	mTextureMemoryUsage ( 0 ),
 	mMaxTextureSize ( 0 ),
 	mTop ( 0 ),
@@ -685,6 +764,7 @@ void MOAIGfxDevice::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "EVENT_RESIZE", ( u32 )EVENT_RESIZE );
 
 	luaL_Reg regTable [] = {
+		{ "clearBuffer",				_clearBuffer },
 		{ "getFrameBuffer",				_getFrameBuffer },
 		{ "getListener",				&MOAIGlobalEventSource::_getListener < MOAIGfxDevice > },
 		{ "getMaxTextureUnits",			_getMaxTextureUnits },
@@ -695,11 +775,14 @@ void MOAIGfxDevice::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "setDefaultTexture",			_setDefaultTexture },
 		{ "setListener",				&MOAIGlobalEventSource::_setListener < MOAIGfxDevice > },
 		{ "setOverridedShader",			_setOverridedShader },
+		{ "setClearColor",				_setClearColor },
 		{ "setPass",					_setPass },
 		{ "setPenColor",				_setPenColor },
 		{ "setPenWidth",				_setPenWidth },
 		{ "setPointSize",				_setPointSize },
 		{ "release",					_release },
+		{ "reserveTexture",				_reserveTexture },
+		{ "setReservedTexture",    		_setReservedTexture },
 		{ NULL, NULL }
 	};
 

@@ -91,6 +91,19 @@ int MOAIGfxResourceMgr::_setResourceLoadingPolicy ( lua_State* L ) {
 	return 0;
 }
 
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIGfxResourceMgr::_update ( lua_State* L ) {
+	MOAILuaState state ( L );
+
+	zglBegin ();
+	MOAIGfxResourceMgr::Get ().Update ();
+	zglEnd ();
+	
+	return 0;
+}
+
 //================================================================//
 // MOAIGfxResourceMgr
 //================================================================//
@@ -146,6 +159,7 @@ void MOAIGfxResourceMgr::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "purgeResources",				_purgeResources },
 		{ "renewResources",				_renewResources },
 		{ "setResourceLoadingPolicy",	_setResourceLoadingPolicy },
+		{ "update",						_update },
 		{ NULL, NULL }
 	};
 

@@ -109,6 +109,7 @@ private:
 	
 	ZLLeanArray < MOAITextureBase* > mTextureUnits;
 	u32				mActiveTextures;
+	u32				mReservedTextureBase;
 	size_t			mTextureMemoryUsage;
 	u32				mMaxTextureSize;
 	size_t			mTop;
@@ -137,18 +138,22 @@ private:
 	MOAILuaSharedPtr < MOAIShader > mOverridedShader;
 
 	//----------------------------------------------------------------//
+	static int				_clearBuffer				( lua_State* L );
 	static int				_getFrameBuffer				( lua_State* L );
 	static int				_getMaxTextureUnits			( lua_State* L );
 	static int				_getOverridedShader			( lua_State* L );
 	static int				_getPass					( lua_State* L );
 	static int				_getViewSize				( lua_State* L );
 	static int				_isProgrammable				( lua_State* L );
+	static int				_setClearColor				( lua_State* L );
 	static int				_setDefaultTexture			( lua_State* L );
 	static int				_setOverridedShader			( lua_State* L );
 	static int				_setPass					( lua_State* L );
 	static int				_setPenColor				( lua_State* L );
 	static int				_setPenWidth				( lua_State* L );
 	static int				_setPointSize				( lua_State* L );
+	static int				_reserveTexture				( lua_State* L );
+	static int				_setReservedTexture			( lua_State* L );
 	static int				_release					( lua_State* L );
 
 	//----------------------------------------------------------------//

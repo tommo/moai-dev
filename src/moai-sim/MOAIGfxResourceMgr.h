@@ -45,6 +45,7 @@ private:
 	static int		_purgeResources				( lua_State* L );
 	static int		_renewResources				( lua_State* L );
 	static int		_setResourceLoadingPolicy	( lua_State* L );
+	static int		_update						( lua_State* L );
 
 	//----------------------------------------------------------------//
 	void			InsertGfxResource		( MOAIGfxResource& resource );
