@@ -109,6 +109,9 @@ public:
 		GLOBAL_WORLD_VIEW,
 		GLOBAL_WORLD_VIEW_PROJ,
 		GLOBAL_WORLD_VIEW_PROJ_NORM,
+		GLOBAL_WORLD_INV,
+		GLOBAL_WORLD_VIEW_INV,
+		GLOBAL_WORLD_VIEW_PROJ_INV,
 	};
 
 	//----------------------------------------------------------------//

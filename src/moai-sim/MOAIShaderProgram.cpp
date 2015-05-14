@@ -482,6 +482,9 @@ void MOAIShaderProgram::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "GLOBAL_WORLD_VIEW",					( u32 )GLOBAL_WORLD_VIEW );
 	state.SetField ( -1, "GLOBAL_WORLD_VIEW_PROJ",				( u32 )GLOBAL_WORLD_VIEW_PROJ );
 	state.SetField ( -1, "GLOBAL_WORLD_VIEW_PROJ_NORM",			( u32 )GLOBAL_WORLD_VIEW_PROJ_NORM );
+	state.SetField ( -1, "GLOBAL_WORLD_INV",					( u32 )GLOBAL_WORLD_INV );
+	state.SetField ( -1, "GLOBAL_WORLD_VIEW_INV",				( u32 )GLOBAL_WORLD_VIEW_INV );
+	state.SetField ( -1, "GLOBAL_WORLD_VIEW_PROJ_INV",			( u32 )GLOBAL_WORLD_VIEW_PROJ_INV );
 }
 
 //----------------------------------------------------------------//
@@ -644,6 +647,39 @@ void MOAIShaderProgram::UpdateGlobals () {
 				}
 				break;
 			}
+			case GLOBAL_WORLD_INV: {
+				ZLMatrix4x4 mtx = world;
+				mtx.Inverse();
+
+				if ( uniform.SetValue ( mtx, true )) {
+					uniform.Bind ();
+				}
+				break;
+			}
+			case GLOBAL_WORLD_VIEW_INV: {
+			
+				ZLMatrix4x4 mtx = world;
+				mtx.Append ( view );
+				mtx.Inverse();
+				
+				if ( uniform.SetValue ( mtx, true )) {
+					uniform.Bind ();
+				}
+				break;
+			}
+			case GLOBAL_WORLD_VIEW_PROJ_INV: {
+			
+				ZLMatrix4x4 mtx = world;
+				mtx.Append ( view );
+				mtx.Append ( proj );
+				mtx.Inverse();
+				
+				if ( uniform.SetValue ( mtx, true )) {
+					uniform.Bind ();
+				}
+				break;
+			}
+			
 		}
 	}
 }
