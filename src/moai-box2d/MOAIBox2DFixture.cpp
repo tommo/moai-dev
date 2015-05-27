@@ -218,6 +218,18 @@ int MOAIBox2DFixture::_setSensor ( lua_State* L ) {
 	return 0;
 }
 
+int MOAIBox2DFixture::_isSensor( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIBox2DFixture, "U" )
+	
+	if ( !self->mFixture ) {
+		MOAILog ( state, MOAILogMessages::MOAIBox2DFixture_MissingInstance );
+		return 0;
+	}
+
+	lua_pushboolean(state, self->mFixture->IsSensor());
+	return 1;
+}
+
 //================================================================//
 // MOAIBox2DFixture
 //================================================================//
@@ -322,6 +334,7 @@ void MOAIBox2DFixture::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setFriction",			_setFriction },
 		{ "setRestitution",			_setRestitution },
 		{ "setSensor",				_setSensor },
+		{ "isSensor",				_isSensor },
 		{ NULL, NULL }
 	};
 	
