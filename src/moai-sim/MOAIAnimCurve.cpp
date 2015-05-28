@@ -20,7 +20,9 @@
 */
 int MOAIAnimCurve::_getValueAtTime ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAnimCurve, "UN" );
-
+	if( self->mKeys.Size() == 0 ) {
+		return 0;
+	}
 	float time = state.GetValue < float >( 2, 0 );
 	float value = self->GetValue ( time );
 	state.Push ( value );
