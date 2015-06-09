@@ -25,14 +25,14 @@ int MOAISteerBehaviour::_getParent ( lua_State *L ) {
 }
 
 int MOAISteerBehaviour::_getWeight ( lua_State *L ) {
-	MOAI_LUA_SETUP( MOAISteerBehaviour, "UF" )
+	MOAI_LUA_SETUP( MOAISteerBehaviour, "U" )
 	state.Push( self->GetWeight() );
 	return 1;
 }
 
 
 int MOAISteerBehaviour::_setWeight ( lua_State *L ) {
-	MOAI_LUA_SETUP( MOAISteerBehaviour, "UF" )
+	MOAI_LUA_SETUP( MOAISteerBehaviour, "UN" )
 	self->SetWeight( state.GetValue < float >( 2, 1.0f ) );
 	return 0;
 }
