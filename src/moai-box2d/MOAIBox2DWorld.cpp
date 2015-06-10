@@ -101,6 +101,72 @@ public:
 	}
 };
 
+class MOAIBox2DRayCastLuaTypedCallback :
+	public b2RayCastCallback {
+
+private:
+	friend class MOAIBox2DWorld;
+	float mUnitsToMeters;
+	lua_State* mState;
+	int mCastType;
+
+public:
+
+	enum {
+		RAYCAST_NEAREST = 0,
+		RAYCAST_ALL,
+		RAYCAST_ANY
+	};
+
+	MOAIBox2DRayCastLuaTypedCallback(lua_State* L, int type) : mState(L), mCastType(type)
+	{
+	}
+
+	//----------------------------------------------------------------//
+	float32 ReportFixture ( b2Fixture* fixture, const b2Vec2& point, const b2Vec2& normal, float32 fraction ) {
+		MOAIScopedLuaState state(mState);
+		MOAIBox2DFixture* moaiFixture = ( MOAIBox2DFixture* ) fixture->GetUserData ();
+		
+		lua_pushvalue( state, -1 ); //copy the callback function
+
+		if( moaiFixture ) {
+			moaiFixture->PushLuaUserdata( state );
+		} else {
+			lua_pushnil( state );
+		}
+		lua_pushnumber ( state, point.x / this->mUnitsToMeters );
+		lua_pushnumber ( state, point.y / this->mUnitsToMeters );
+		lua_pushnumber ( state, normal.x );
+		lua_pushnumber ( state, normal.y );
+		lua_pushnumber ( state, fraction );
+		state.DebugCall( 6, 1 );
+		bool ignoreHit = lua_toboolean( state, -1 );
+		lua_pop( state, 1 );
+		if ( ignoreHit ) {
+			// ignore the shape, continue
+			return -1;
+		}
+		else {
+			// 
+			switch(mCastType)
+			{
+				// check for all shapes
+				case RAYCAST_ALL:
+					return 1;
+
+				// stop whenever hit
+				case RAYCAST_ANY:
+					return 0;
+
+				// find the closest hit
+				case RAYCAST_NEAREST:
+				default:
+					return fraction;
+			}
+		}
+	}
+};
+
 //----------------------------------------------------------------//
 //MOAIBox2DAABBQuery
 //----------------------------------------------------------------//
@@ -944,7 +1010,62 @@ int MOAIBox2DWorld::_getRayCast ( lua_State* L ) {
 	}
 }
 
+int MOAIBox2DWorld::_getRayCastNearest ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIBox2DWorld, "U" )
+	float p1x=state.GetValue < float >( 2, 0 ) * self->mUnitsToMeters;
+	float p1y=state.GetValue < float >( 3, 0 ) * self->mUnitsToMeters;
+	float p2x=state.GetValue < float >( 4, 0 ) * self->mUnitsToMeters;
+	float p2y=state.GetValue < float >( 5, 0 ) * self->mUnitsToMeters;
+ 
+	b2Vec2 p1(p1x,p1y);
+	b2Vec2 p2(p2x,p2y);
+   
+	MOAIBox2DRayCastLuaTypedCallback* callback = new MOAIBox2DRayCastLuaTypedCallback(L, MOAIBox2DRayCastLuaTypedCallback::RAYCAST_NEAREST);
+	callback->mUnitsToMeters = self->mUnitsToMeters;
+	//clean stack
+	lua_pop( state, lua_gettop( state ) - 6 );
 
+	self->mWorld->RayCast(callback, p1, p2);
+	return 0;
+}
+
+int MOAIBox2DWorld::_getRayCastAny ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIBox2DWorld, "U" )
+	float p1x=state.GetValue < float >( 2, 0 ) * self->mUnitsToMeters;
+	float p1y=state.GetValue < float >( 3, 0 ) * self->mUnitsToMeters;
+	float p2x=state.GetValue < float >( 4, 0 ) * self->mUnitsToMeters;
+	float p2y=state.GetValue < float >( 5, 0 ) * self->mUnitsToMeters;
+ 
+	b2Vec2 p1(p1x,p1y);
+	b2Vec2 p2(p2x,p2y);
+   
+	MOAIBox2DRayCastLuaTypedCallback* callback = new MOAIBox2DRayCastLuaTypedCallback(L, MOAIBox2DRayCastLuaTypedCallback::RAYCAST_ANY);
+	callback->mUnitsToMeters = self->mUnitsToMeters;
+	//clean stack
+	lua_pop( state, lua_gettop( state ) - 6 );
+
+	self->mWorld->RayCast(callback, p1, p2);
+	return 0;
+}
+
+int MOAIBox2DWorld::_getRayCastAll ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIBox2DWorld, "U" )
+	float p1x=state.GetValue < float >( 2, 0 ) * self->mUnitsToMeters;
+	float p1y=state.GetValue < float >( 3, 0 ) * self->mUnitsToMeters;
+	float p2x=state.GetValue < float >( 4, 0 ) * self->mUnitsToMeters;
+	float p2y=state.GetValue < float >( 5, 0 ) * self->mUnitsToMeters;
+ 
+	b2Vec2 p1(p1x,p1y);
+	b2Vec2 p2(p2x,p2y);
+   
+	MOAIBox2DRayCastLuaTypedCallback* callback = new MOAIBox2DRayCastLuaTypedCallback(L, MOAIBox2DRayCastLuaTypedCallback::RAYCAST_ALL);
+	callback->mUnitsToMeters = self->mUnitsToMeters;
+	//clean stack
+	lua_pop( state, lua_gettop( state ) - 6 );
+
+	self->mWorld->RayCast(callback, p1, p2);
+	return 0;
+}
 
 //----------------------------------------------------------------//
 /**	@lua	getTimeToSleep
@@ -1327,6 +1448,9 @@ void MOAIBox2DWorld::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "getGravity",					_getGravity },
 		{ "getLinearSleepTolerance",	_getLinearSleepTolerance },
 		{ "getRayCast",					_getRayCast },
+		{ "getRayCastNearest",			_getRayCastNearest },
+		{ "getRayCastAny",				_getRayCastAny },
+		{ "getRayCastAll",				_getRayCastAll },
 		{ "getTimeToSleep",				_getTimeToSleep },
 		{ "queryAABB",					_queryAABB },
 		{ "setAngularSleepTolerance",	_setAngularSleepTolerance },

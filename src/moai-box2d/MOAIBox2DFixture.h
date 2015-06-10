@@ -35,6 +35,7 @@ private:
 	static int	_setFriction			( lua_State* L );
 	static int	_setRestitution			( lua_State* L );
 	static int	_setSensor				( lua_State* L );
+	static int 	_isSensor				( lua_State* L );
 	
 	//----------------------------------------------------------------//
 	void			Clear				();
