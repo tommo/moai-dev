@@ -3,8 +3,13 @@
 int MOAISteerBehaviourPursue::_setup ( lua_State *L ) {
 	MOAI_LUA_SETUP( MOAISteerBehaviourPursue, "UU" )
 	MOAISteerController* target = state.GetLuaObject < MOAISteerController >( 2, 0 );
+	MOAITransformBase* transformTarget = state.GetLuaObject < MOAITransformBase >( 2, 0 );
 	if( target ) {
 		self->SetTarget( target );
+	}
+	else if (transformTarget)
+	{
+		self->SetTarget( transformTarget );
 	}
 	self->SetPredictionTime( state.GetValue < float >( 2, 0.5f ) );
 	return 0;
@@ -21,13 +26,23 @@ MOAISteerBehaviourPursue::MOAISteerBehaviourPursue() :
 
 MOAISteerBehaviourPursue::~MOAISteerBehaviourPursue() {
 	this->mTarget.Set( *this, 0 );
+	this->mTransformTarget.Set( *this, 0 );
 }
 
 //----------------------------------------------------------------//
 bool MOAISteerBehaviourPursue::OnCalculate ( MOAISteerAcceleration& acc, double elapsed, double delta ) {
-	if( !mTarget ) return false;
+	if( !mTarget && !mTransformTarget ) return false;
 	
-	ZLVec3D loc  = this->mTarget->GetLoc();
+	ZLVec3D loc;
+	if (mTarget)
+	{
+		loc = this->mTarget->GetLoc();
+	}
+	else if (mTransformTarget)
+	{
+		loc = this->mTransformTarget->GetWorldLoc();
+	}
+
 	ZLVec3D diff = loc - this->GetOwner()->GetLoc();
 
 	float distanceSqrd   = diff.LengthSqrd();

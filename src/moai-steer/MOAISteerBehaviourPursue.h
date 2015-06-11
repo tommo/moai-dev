@@ -13,6 +13,7 @@ private:
 	virtual bool OnCalculate ( MOAISteerAcceleration& acc, double elapsed, double delta );
 	
 	MOAILuaSharedPtr < MOAISteerController > mTarget;
+	MOAILuaSharedPtr < MOAITransformBase > mTransformTarget;
 
 	float mPredictionTime;
 
@@ -20,6 +21,10 @@ public:
 
 	void SetTarget( MOAISteerController* target ) {
 		this->mTarget.Set( *this, target );
+	}
+
+	void SetTarget( MOAITransformBase* target ) {
+		this->mTransformTarget.Set( *this, target );
 	}
 
 	GET_SET( float, PredictionTime, mPredictionTime )

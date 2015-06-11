@@ -791,6 +791,8 @@ int	MOAIBox2DWorld::_addRopeJoint ( lua_State* L ) {
 	@in		MOAIBox2DBody bodyB
 	@in		number anchorX				in units, in world coordinates, converted to meters
 	@in		number anchorY				in units, in world coordinates, converted to meters
+	@opt	number frequencyHz			in Hz. Default value determined by Box2D
+	@opt	number dampingRatio			Default value determined by Box2D
 	@opt	boolean collideConnected	Default value is false
 	@out	MOAIBox2DJoint joint
 */
@@ -813,8 +815,10 @@ int	MOAIBox2DWorld::_addWeldJoint ( lua_State* L ) {
 	
 	b2WeldJointDef jointDef;
 	jointDef.Initialize ( bodyA->mBody, bodyB->mBody, anchor );
-	
-	jointDef.collideConnected = state.GetValue < bool >( 6, false );
+
+	jointDef.frequencyHz = state.GetValue < float > ( 6, jointDef.frequencyHz );
+	jointDef.dampingRatio = state.GetValue < float > ( 7, jointDef.dampingRatio );
+	jointDef.collideConnected = state.GetValue < bool >( 8, false );
 	
 	MOAIBox2DWeldJoint* joint = new MOAIBox2DWeldJoint ();
 	joint->SetJoint ( self->mWorld->CreateJoint ( &jointDef ));
