@@ -102,7 +102,7 @@ public:
 	GET ( u32, HitGranularity, mHitGranularity )
 	
 	//----------------------------------------------------------------//
-	virtual bool			Contains				( u32 idx, const ZLVec2D& vec );
+	virtual bool			Contains				( u32 idx, const ZLVec2D& vec );	
 	void					Draw					( u32 idx );
 	void					Draw					( u32 idx, float xOff, float yOff, float zOff, float xScl, float yScl, float zScl );
 	ZLBox					GetBounds				();
@@ -110,6 +110,8 @@ public:
 	virtual void			GetCollisionShape		( MOAICollisionShape& shape );
 	virtual void			GetGfxState				( MOAIDeckGfxState& gfxState );
 	virtual bool			Inside					( u32 idx, ZLVec3D vec, float pad );
+	virtual void			PreGridDraw				();
+	virtual void			PostGridDraw			();
 							MOAIDeck				();
 							~MOAIDeck				();
 	void					RegisterLuaClass		( MOAILuaState& state );
