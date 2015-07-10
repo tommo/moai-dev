@@ -51,6 +51,7 @@ private:
 	static int		_propListForPoint		( lua_State* L );
 	static int		_propListForRay			( lua_State* L );
 	static int		_propListForRect		( lua_State* L );
+	static int		_propListForBox			( lua_State* L );
 	static int		_removeProp				( lua_State* L );
 	static int		_reserveLevels			( lua_State* L );
 	static int		_setLevel				( lua_State* L );

@@ -358,6 +358,61 @@ int MOAIPartition::_propListForRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	propListForRect
+	@text	Returns all props under a given world space rect.
+	
+	@in		MOAIPartition self
+	@in		number xMin
+	@in		number yMin
+	@in		number zMin
+	@in		number xMax
+	@in		number yMax
+	@in		number zMax
+	@opt	number sortMode			One of the MOAILayer sort modes. Default value is SORT_NONE.
+	@opt	number xScale			X scale for vector sort. Default value is 0.
+	@opt	number yScale			Y scale for vector sort. Default value is 0.
+	@opt	number zScale			Z scale for vector sort. Default value is 0.
+	@opt	number priorityScale	Priority scale for vector sort. Default value is 1.
+	@opt	number interfaceMask
+	@opt	number queryMask
+	@out	... props				The props under the rect, all pushed onto the stack.
+*/
+int MOAIPartition::_propListForBox ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIPartition, "UNNNNNN" )
+	
+	ZLBox box;
+	
+	box.mMin.mX = state.GetValue < float >( 2, 0.0f );
+	box.mMin.mY = state.GetValue < float >( 3, 0.0f );
+	box.mMin.mZ = state.GetValue < float >( 4, 0.0f );
+	
+	box.mMax.mX = state.GetValue < float >( 5, 0.0f );
+	box.mMax.mY = state.GetValue < float >( 6, 0.0f );
+	box.mMax.mZ = state.GetValue < float >( 7, 0.0f );
+	
+	u32 sortMode = state.GetValue < u32 >( 7, MOAIPartitionResultBuffer::SORT_NONE );
+	float xScale = state.GetValue < float >( 8, 0.0f );
+	float yScale = state.GetValue < float >( 9, 0.0f );
+	float zScale = state.GetValue < float >( 10, 0.0f );
+	float priorityScale = state.GetValue < float >( 11, 1.0f );	
+	u32 interfaceMask	= state.GetValue < u32 >( 12, MASK_ANY );
+	u32 queryMask		= state.GetValue < u32 >( 13, MASK_ANY );
+	
+	MOAIPartitionResultBuffer& buffer = MOAIPartitionResultMgr::Get ().GetBuffer ();
+	
+	u32 total = self->GatherProps ( buffer, 0, box, interfaceMask, queryMask );
+	if ( total ) {
+	
+		buffer.GenerateKeys ( sortMode, xScale, yScale, zScale, priorityScale );
+		buffer.Sort ( sortMode );
+		buffer.PushProps ( L );
+		return total;
+	}
+	return 0;
+}
+
+
+//----------------------------------------------------------------//
 /**	@lua	removeProp
 	@text	Removes a prop from the partition.
 	
@@ -689,6 +744,7 @@ void MOAIPartition::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "propListForPoint",			_propListForPoint },
 		{ "propListForRay",				_propListForRay },
 		{ "propListForRect",			_propListForRect },
+		{ "propListForBox",				_propListForBox },
 		{ "removeProp",					_removeProp },
 		{ "reserveLevels",				_reserveLevels },
 		{ "setLevel",					_setLevel },

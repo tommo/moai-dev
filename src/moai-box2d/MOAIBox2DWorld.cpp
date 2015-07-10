@@ -174,17 +174,19 @@ class MOAIBox2DAABBQuery:
 	public b2QueryCallback {
 private:
 	u32 mCount;
+	lua_State* mState;
 
 public:
 	
 	friend class MOAIBox2DWorld;
 
-	MOAIBox2DAABBQuery() {
+	MOAIBox2DAABBQuery( lua_State* L ) {
 		this->mCount = 0;
+		this->mState = L;
 	}
 
 	bool ReportFixture ( b2Fixture* fixture ){
-		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		MOAIScopedLuaState state(mState);
 		MOAIBox2DFixture* moaiFixture = ( MOAIBox2DFixture* ) fixture->GetUserData ();
 		bool shouldContinue = true;
 		this->mCount++;
@@ -1109,7 +1111,7 @@ int MOAIBox2DWorld::_queryAABB ( lua_State* L ) {
 	if( !lua_isfunction( state, 6 ) ) {
 		return 0;
 	}
-	MOAIBox2DAABBQuery query;
+	MOAIBox2DAABBQuery query( L );
 	self->mWorld->QueryAABB( &query, aabb );
 	return 0;
 }
