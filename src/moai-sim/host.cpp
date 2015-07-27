@@ -80,6 +80,7 @@ void AKUSimContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAIImageTexture )
 	REGISTER_LUA_CLASS ( MOAIInputDevice )
 	REGISTER_LUA_CLASS ( MOAIJoystickSensor )
+	REGISTER_LUA_CLASS ( MOAIJoystickExSensor )
 	REGISTER_LUA_CLASS ( MOAIKeyCode )
 	REGISTER_LUA_CLASS ( MOAIKeyboardSensor )
 	REGISTER_LUA_CLASS ( MOAILayer )
@@ -242,6 +243,18 @@ void AKUEnqueueWheelEvent ( int deviceID, int sensorID, float value ) {
 }
 
 //----------------------------------------------------------------//
+void AKUEnqueueJoystickExButtonEvent ( int deviceID, int sensorID, int buttonID, bool down ) {
+
+	MOAIJoystickExSensor::EnqueueJoystickExButtonEvent ( MOAISim::Get ().GetInputMgr (), ( u8 )deviceID, ( u8 )sensorID, buttonID, down );
+}
+
+//----------------------------------------------------------------//
+void AKUEnqueueJoystickExAxisEvent ( int deviceID, int sensorID, int axisID, float value ) {
+
+	MOAIJoystickExSensor::EnqueueJoystickExAxisEvent ( MOAISim::Get ().GetInputMgr (), ( u8 )deviceID, ( u8 )sensorID, axisID, value );
+}
+
+//----------------------------------------------------------------//
 double AKUGetSimStep () {
 
 	return MOAISim::Get ().GetStep ();
@@ -394,6 +407,12 @@ void AKUSetInputDeviceVector ( int deviceID, int sensorID, char const* name ) {
 void AKUSetInputDeviceWheel ( int deviceID, int sensorID, char const* name ) {
 
 	MOAISim::Get ().GetInputMgr ().SetSensor < MOAIWheelSensor >(( u8 )deviceID, ( u8 )sensorID, name );
+}
+
+//----------------------------------------------------------------//
+void AKUSetInputDeviceJoystickEx ( int deviceID, int sensorID, char const* name ) {
+
+	MOAISim::Get ().GetInputMgr ().SetSensor < MOAIJoystickExSensor >(( u8 )deviceID, ( u8 )sensorID, name );
 }
 
 //----------------------------------------------------------------//

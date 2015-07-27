@@ -68,6 +68,7 @@ AKU_API void			AKUSetInputDevicePointer		( int deviceID, int sensorID, char cons
 AKU_API void			AKUSetInputDeviceTouch			( int deviceID, int sensorID, char const* name );
 AKU_API void			AKUSetInputDeviceVector			( int deviceID, int sensorID, char const* name );
 AKU_API void			AKUSetInputDeviceWheel			( int deviceID, int sensorID, char const* name );
+AKU_API void			AKUSetInputDeviceJoystickEx		( int deviceID, int sensorID, char const* name );
 AKU_API void			AKUSetInputTimebase				( double timebase ); // optional: sets timebase event timestamps
 AKU_API void			AKUSetInputTimestamp			( double timestamp ); // optional: sets timestamp for next input event
 
@@ -86,5 +87,7 @@ AKU_API void			AKUEnqueueTouchEvent			( int deviceID, int sensorID, int touchID,
 AKU_API void			AKUEnqueueTouchEventCancel		( int deviceID, int sensorID );
 AKU_API void			AKUEnqueueVectorEvent			( int deviceID, int sensorID, float x, float y, float z );
 AKU_API void			AKUEnqueueWheelEvent			( int deviceID, int sensorID, float value );
+AKU_API void			AKUEnqueueJoystickExButtonEvent		( int deviceID, int sensorID, int buttonID, bool down );
+AKU_API void			AKUEnqueueJoystickExAxisEvent		( int deviceID, int sensorID, int axisID, float value );
 
 #endif
