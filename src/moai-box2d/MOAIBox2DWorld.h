@@ -119,6 +119,8 @@ private:
 	static int		_setUnitsToMeters			( lua_State* L );
 	static int  	_forceUpdate				( lua_State* L );
 	
+	static int		_getTypedRayCast			( lua_State* L, u32 castType );
+
 	//----------------------------------------------------------------//
 	void			Destroy					();
 	void			SayGoodbye				( b2Fixture* fixture ); 

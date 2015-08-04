@@ -109,14 +109,16 @@ public:
 };
 
 class MOAIBox2DRayCastLuaTypedCallback :
-	public b2RayCastCallback {
+	public MOAIBox2DRayCastCallback {
 
 private:
 	friend class MOAIBox2DWorld;
+
 	float mUnitsToMeters;
 	lua_State* mState;
-	int mCastType;
 	int mCollisionCategoryMask;
+
+	int mCastType;
 
 public:
 
@@ -154,14 +156,18 @@ public:
 		lua_pushnumber ( state, normal.y );
 		lua_pushnumber ( state, fraction );
 		state.DebugCall( 6, 1 );
-		bool ignoreHit = lua_toboolean( state, -1 );
+		bool acceptHit = lua_toboolean( state, -1 );
 		lua_pop( state, 1 );
-		if ( ignoreHit ) {
+		if ( !acceptHit ) {
 			// ignore the shape, continue
 			return -1.0f;
 		}
 		else {
-			// 
+			//
+			m_fixture = fixture;
+			m_point   = point;
+			m_normal  = normal;
+
 			switch(mCastType)
 			{
 				// check for all shapes
@@ -1034,61 +1040,26 @@ int MOAIBox2DWorld::_getRayCast ( lua_State* L ) {
 	}
 }
 
+
 int MOAIBox2DWorld::_getRayCastNearest ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIBox2DWorld, "U" )
-	float p1x=state.GetValue < float >( 2, 0 ) * self->mUnitsToMeters;
-	float p1y=state.GetValue < float >( 3, 0 ) * self->mUnitsToMeters;
-	float p2x=state.GetValue < float >( 4, 0 ) * self->mUnitsToMeters;
-	float p2y=state.GetValue < float >( 5, 0 ) * self->mUnitsToMeters;
-
-	b2Vec2 p1(p1x,p1y);
-	b2Vec2 p2(p2x,p2y);
-
-	u32 categoryMask = 0xffff;
-	if ( lua_isnumber( state, 7 ) ) {
-		categoryMask = lua_tointeger( state, 7 );
-	}
-
-	MOAIBox2DRayCastLuaTypedCallback* callback = new MOAIBox2DRayCastLuaTypedCallback( L, MOAIBox2DRayCastLuaTypedCallback::RAYCAST_NEAREST, categoryMask );
-	callback->mUnitsToMeters = self->mUnitsToMeters;
-	//clean stack
-	lua_pop( state, lua_gettop( state ) - 6 );
-
-	self->mWorld->RayCast(callback, p1, p2);
-	return 0;
+	return MOAIBox2DWorld::_getTypedRayCast( L, MOAIBox2DRayCastLuaTypedCallback::RAYCAST_NEAREST );
 }
 
 int MOAIBox2DWorld::_getRayCastAny ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIBox2DWorld, "U" )
-	float p1x=state.GetValue < float >( 2, 0 ) * self->mUnitsToMeters;
-	float p1y=state.GetValue < float >( 3, 0 ) * self->mUnitsToMeters;
-	float p2x=state.GetValue < float >( 4, 0 ) * self->mUnitsToMeters;
-	float p2y=state.GetValue < float >( 5, 0 ) * self->mUnitsToMeters;
- 
-	b2Vec2 p1(p1x,p1y);
-	b2Vec2 p2(p2x,p2y);
-   
-	u32 categoryMask = 0xffff;
-	if ( lua_isnumber( state, 7 ) ) {
-		categoryMask = lua_tointeger( state, 7 );
-	}
-
-	MOAIBox2DRayCastLuaTypedCallback* callback = new MOAIBox2DRayCastLuaTypedCallback( L, MOAIBox2DRayCastLuaTypedCallback::RAYCAST_ANY, categoryMask );
-
-	callback->mUnitsToMeters = self->mUnitsToMeters;
-	//clean stack
-	lua_pop( state, lua_gettop( state ) - 6 );
-
-	self->mWorld->RayCast(callback, p1, p2);
-	return 0;
+	return MOAIBox2DWorld::_getTypedRayCast( L, MOAIBox2DRayCastLuaTypedCallback::RAYCAST_ANY );
 }
 
+
 int MOAIBox2DWorld::_getRayCastAll ( lua_State* L ) {
+	return MOAIBox2DWorld::_getTypedRayCast( L, MOAIBox2DRayCastLuaTypedCallback::RAYCAST_ALL );
+}
+
+int MOAIBox2DWorld::_getTypedRayCast( lua_State* L, u32 castType ) {
 	MOAI_LUA_SETUP ( MOAIBox2DWorld, "U" )
-	float p1x=state.GetValue < float >( 2, 0 ) * self->mUnitsToMeters;
-	float p1y=state.GetValue < float >( 3, 0 ) * self->mUnitsToMeters;
-	float p2x=state.GetValue < float >( 4, 0 ) * self->mUnitsToMeters;
-	float p2y=state.GetValue < float >( 5, 0 ) * self->mUnitsToMeters;
+	float p1x = state.GetValue < float >( 2, 0 ) * self->mUnitsToMeters;
+	float p1y = state.GetValue < float >( 3, 0 ) * self->mUnitsToMeters;
+	float p2x = state.GetValue < float >( 4, 0 ) * self->mUnitsToMeters;
+	float p2y = state.GetValue < float >( 5, 0 ) * self->mUnitsToMeters;
  
 	b2Vec2 p1(p1x,p1y);
 	b2Vec2 p2(p2x,p2y);
@@ -1098,14 +1069,41 @@ int MOAIBox2DWorld::_getRayCastAll ( lua_State* L ) {
 		categoryMask = lua_tointeger( state, 7 );
 	}
 
-	MOAIBox2DRayCastLuaTypedCallback* callback = new MOAIBox2DRayCastLuaTypedCallback( L, MOAIBox2DRayCastLuaTypedCallback::RAYCAST_ALL, categoryMask );
+	MOAIBox2DRayCastLuaTypedCallback* callback = new MOAIBox2DRayCastLuaTypedCallback( L, castType, categoryMask );
 
 	callback->mUnitsToMeters = self->mUnitsToMeters;
 	//clean stack
 	lua_pop( state, lua_gettop( state ) - 6 );
 
 	self->mWorld->RayCast(callback, p1, p2);
-	return 0;
+
+	if (NULL != callback->m_fixture) {
+		b2Vec2 hitpoint  = callback->m_point;
+		b2Vec2 hitnormal = callback->m_point;
+
+		lua_pushboolean ( state, true );
+
+		// Raycast hit a fixture
+		MOAIBox2DFixture* moaiFixture = ( MOAIBox2DFixture* ) callback->m_fixture->GetUserData ();
+		delete callback;
+		if ( moaiFixture ) {
+			moaiFixture->PushLuaUserdata ( state );
+		} else {
+			//push a nil value if no moaibox2dfixture found
+			lua_pushnil( state );
+		}
+		lua_pushnumber ( state, hitpoint.x / self->mUnitsToMeters );
+		lua_pushnumber ( state, hitpoint.y / self->mUnitsToMeters );
+		lua_pushnumber ( state, hitnormal.x );
+		lua_pushnumber ( state, hitnormal.y );
+		return 6;
+
+	} else {
+		// Raycast did not hit a fixture
+		delete callback;
+		lua_pushboolean( state, false );
+		return 1;
+	}
 }
 
 //----------------------------------------------------------------//
