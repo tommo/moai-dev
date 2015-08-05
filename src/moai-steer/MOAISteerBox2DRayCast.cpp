@@ -12,9 +12,11 @@ public:
 	b2Vec2			m_normal;
 
 	u32 mCollisionMask;
+	bool mIgnoreSensor;
 
 	//----------------------------------------------------------------//
 	MOAISteerBox2DRayCastCallback () {
+		mIgnoreSensor = true;
 		m_fixture = NULL;
 		m_point.SetZero();
 		m_normal.SetZero();
@@ -22,15 +24,16 @@ public:
 
 	//----------------------------------------------------------------//
 	float32 ReportFixture ( b2Fixture* fixture, const b2Vec2& point, const b2Vec2& normal, float32 fraction ) {
+		if( this->mIgnoreSensor && fixture->IsSensor() ) return -1.0f;
+
+		const b2Filter& filter = fixture->GetFilterData();
+		if( ( filter.categoryBits & this->mCollisionMask ) == 0 ) return -1.0f;
+
 		m_fixture = fixture;
 		m_point   = point;
 		m_normal  = normal;
-		const b2Filter& filter = fixture->GetFilterData();
-		if( ( filter.categoryBits & this->mCollisionMask ) != 0 ) { //found collision
-			return 0.0f;
-		} else {
-			return fraction;
-		}
+
+		return fraction;		
 	}
 };
 
@@ -46,12 +49,21 @@ int MOAISteerBox2DRayCast::_setCollisionMask ( lua_State *L ) {
 	return 0;
 }
 
+int MOAISteerBox2DRayCast::_setIgnoreSensor ( lua_State *L ) {
+	MOAI_LUA_SETUP( MOAISteerBox2DRayCast, "UB" )
+	bool ignore = state.GetValue < bool >( 2, true );
+	self->mIgnoreSensor = ignore;
+	return 0;
+}
+
 int MOAISteerBox2DRayCast::_setWorld ( lua_State *L ) {
 	MOAI_LUA_SETUP( MOAISteerBox2DRayCast, "UU" )
 	MOAIBox2DWorld* world = state.GetLuaObject < MOAIBox2DWorld >( 2, 0 );
 	self->SetWorld( world );
 	return 0;
 }
+
+
 
 //----------------------------------------------------------------//
 MOAISteerBox2DRayCast::MOAISteerBox2DRayCast() :
@@ -91,6 +103,7 @@ bool MOAISteerBox2DRayCast::FindCollision ( MOAISteerRayCastResult& result, MOAI
 	}
 	MOAISteerBox2DRayCastCallback callback;
 
+	callback.mIgnoreSensor = this->mIgnoreSensor;
 	callback.mCollisionMask = this->mCollisionMask;
 	world->GetWorld()->RayCast( &callback, p1, p2 );
  
@@ -125,8 +138,9 @@ void MOAISteerBox2DRayCast::RegisterLuaClass ( MOAILuaState& state ) {
 void MOAISteerBox2DRayCast::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAISteerRayCast::RegisterLuaFuncs( state );
 	luaL_Reg regTable [] = {
-		{ "setWorld",            _setWorld         },
 		{ "setCollisionMask",    _setCollisionMask },
+		{ "setIgnoreSensor",     _setIgnoreSensor  },
+		{ "setWorld",            _setWorld         },
 		{ NULL, NULL }
 	};
 

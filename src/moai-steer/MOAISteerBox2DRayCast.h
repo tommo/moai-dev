@@ -7,11 +7,13 @@ class MOAISteerBox2DRayCast:
 	public MOAISteerRayCast
 {
 private:
-	static int _setWorld         ( lua_State* L );
 	static int _setCollisionMask ( lua_State* L );
-
+	static int _setIgnoreSensor  ( lua_State* L );
+	static int _setWorld         ( lua_State* L );
+	
 	u32 mCollisionMask;
 	MOAILuaSharedPtr < MOAIBox2DWorld > mWorld;
+	bool mIgnoreSensor;
 
 public:
 

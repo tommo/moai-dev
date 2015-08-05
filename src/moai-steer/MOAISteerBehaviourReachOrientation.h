@@ -8,6 +8,7 @@ class MOAISteerBehaviourReachOrientation:
 {
 private:
 	static int _setup ( lua_State* L );
+	static int _setTargetOrientation ( lua_State* L );
 
 	//----------------------------------------------------------------//
 protected:

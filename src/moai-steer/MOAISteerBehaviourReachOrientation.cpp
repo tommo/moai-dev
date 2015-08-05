@@ -11,6 +11,13 @@ int MOAISteerBehaviourReachOrientation::_setup ( lua_State *L ) {
 	return 0;
 }
 
+int MOAISteerBehaviourReachOrientation::_setTargetOrientation ( lua_State *L ) {
+	MOAI_LUA_SETUP( MOAISteerBehaviourReachOrientation, "UN" )
+	float target = state.GetValue < float >( 2, 0.0f );
+	self->SetTargetOrientation ( target );
+	return 0;
+}
+
 //----------------------------------------------------------------//
 MOAISteerBehaviourReachOrientation::MOAISteerBehaviourReachOrientation() :
 	mTargetOrientation  ( 0.0f ),
@@ -70,6 +77,7 @@ void MOAISteerBehaviourReachOrientation::RegisterLuaFuncs ( MOAILuaState& state 
 	MOAISteerBehaviour::RegisterLuaFuncs( state );
 	luaL_Reg regTable [] = {
 		{ "setup",    _setup },
+		{ "setTargetOrientation",    _setTargetOrientation },
 		{ NULL, NULL }
 	};
 

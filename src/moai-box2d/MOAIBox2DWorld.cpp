@@ -76,7 +76,7 @@ public:
 	float32 ReportFixture ( b2Fixture* fixture, const b2Vec2& point, const b2Vec2& normal, float32 fraction ) {
 		//check categoryMask first
 		u32 categoryBits = fixture->GetFilterData().categoryBits;
-		if( ( categoryBits && mCollisionCategoryMask ) == 0 ) return -1.0f;
+		if( ( categoryBits & mCollisionCategoryMask ) == 0 ) return -1.0f;
 
 		//callback checking
 		MOAIScopedLuaState state(mState);
@@ -137,7 +137,7 @@ public:
 	float32 ReportFixture ( b2Fixture* fixture, const b2Vec2& point, const b2Vec2& normal, float32 fraction ) {
 		//check categoryMask first
 		u32 categoryBits = fixture->GetFilterData().categoryBits;
-		if( ( categoryBits && mCollisionCategoryMask ) == 0 ) return -1.0f;
+		if( ( categoryBits & mCollisionCategoryMask ) == 0 ) return -1.0f;
 
 		//check callback
 		MOAIScopedLuaState state(mState);

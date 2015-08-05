@@ -10,8 +10,10 @@ public:
 	MOAISteerBox2DAABBProximity* mOwner;	
 	u32 mCount;
 	u32 mMask;
+	bool mIgnoreSensor;
 
 	bool ReportFixture ( b2Fixture* fixture ){
+		if( fixture->IsSensor() && this->mIgnoreSensor ) return true;
 		const b2Filter& filter = fixture->GetFilterData();
 		if( ( filter.categoryBits & this->mMask ) != 0 ) { //found collision
 			b2Body* body = fixture->GetBody(); 
@@ -47,6 +49,14 @@ int MOAISteerBox2DAABBProximity::_setCollisionMask ( lua_State *L ) {
 	return 0;
 }
 
+int MOAISteerBox2DAABBProximity::_setIgnoreSensor ( lua_State *L ) {
+	MOAI_LUA_SETUP( MOAISteerBox2DAABBProximity, "UB" )
+	bool ignore = state.GetValue < bool >( 2, true );
+	self->mIgnoreSensor = ignore;
+	self->mQueryCallback->mIgnoreSensor = ignore;
+	return 0;
+}
+
 int MOAISteerBox2DAABBProximity::_setWorld ( lua_State *L ) {
 	MOAI_LUA_SETUP( MOAISteerBox2DAABBProximity, "UU" )
 	MOAIBox2DWorld* world = state.GetLuaObject < MOAIBox2DWorld >( 2, 0 );
@@ -64,6 +74,7 @@ MOAISteerBox2DAABBProximity::MOAISteerBox2DAABBProximity() :
 		RTTI_EXTEND( MOAISteerProximity )
 	RTTI_END
 	this->mQueryCallback = new MOAISteerBox2DAABBQuery();
+	this->mQueryCallback->mIgnoreSensor = true;
 	this->mQueryCallback->mOwner = this;
 }
 
@@ -119,6 +130,7 @@ void MOAISteerBox2DAABBProximity::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setWorld",         _setWorld         },
 		{ "setRadius",        _setRadius        },
 		{ "setCollisionMask", _setCollisionMask },
+		{ "setIgnoreSensor",  _setIgnoreSensor  },
 		{ NULL, NULL }
 	};
 
