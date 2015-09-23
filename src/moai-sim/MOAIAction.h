@@ -77,6 +77,7 @@ private:
 	static int			_clear					( lua_State* L );
 	static int			_defer					( lua_State* L );
 	static int			_detach					( lua_State* L );
+	static int			_getParent				( lua_State* L );
 	static int			_isActive				( lua_State* L );
 	static int			_isBusy					( lua_State* L );
 	static int			_isDone					( lua_State* L );
@@ -131,6 +132,7 @@ public:
 	void					RegisterLuaClass		( MOAILuaState& state );
 	void					RegisterLuaFuncs		( MOAILuaState& state );
 	void					Start					( MOAIActionTree& tree, bool defer );
+	void					Start					( bool defer );
 	void					Stop					();
 };
 

@@ -11,7 +11,7 @@ int MOAISteerBehaviourPursue::_setup ( lua_State *L ) {
 	{
 		self->SetTarget( transformTarget );
 	}
-	self->SetPredictionTime( state.GetValue < float >( 2, 0.5f ) );
+	self->SetPredictionTime( state.GetValue < float >( 3, 0.5f ) );
 	return 0;
 }
 

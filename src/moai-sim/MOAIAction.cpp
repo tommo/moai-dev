@@ -144,6 +144,28 @@ int MOAIAction::_detach ( lua_State* L ) {
 	return 1;
 }
 
+
+//----------------------------------------------------------------//
+/**	@lua	getParent
+	@text	get parent action
+
+	@in		MOAIAction self
+	@out	MOAIAction parent
+*/
+int MOAIAction::_getParent ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAction, "U" )
+	
+	if ( self->mParent ) {
+		self->mParent->PushLuaUserdata( state );
+	} else {
+		state.Push();
+	}
+
+	return 1;
+
+}
+
+
 //----------------------------------------------------------------//
 /**	@lua	isActive
 	@text	Checks to see if an action is currently in the action tree.
@@ -214,7 +236,7 @@ int MOAIAction::_isPaused ( lua_State* L ) {
 int MOAIAction::_pause ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAction, "U" );
 
-	self->mActionFlags = state.GetValue < bool >( 2, false ) ? self->mActionFlags | FLAGS_IS_PAUSED : self->mActionFlags & ~FLAGS_IS_PAUSED;
+	self->mActionFlags = state.GetValue < bool >( 2, true ) ? self->mActionFlags | FLAGS_IS_PAUSED : self->mActionFlags & ~FLAGS_IS_PAUSED;
 	return 0;
 }
 
@@ -222,7 +244,7 @@ int MOAIAction::_pause ( lua_State* L ) {
 // TODO: doxygen
 int MOAIAction::_setAutoStop ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAction, "U" );
-	self->mActionFlags = state.GetValue < bool >( 2, false ) ? self->mActionFlags | FLAGS_AUTO_STOP : self->mActionFlags & ~FLAGS_AUTO_STOP;
+	self->mActionFlags = state.GetValue < bool >( 2, true ) ? self->mActionFlags | FLAGS_AUTO_STOP : self->mActionFlags & ~FLAGS_AUTO_STOP;
 	return 0;
 }
 
@@ -242,7 +264,7 @@ int MOAIAction::_start ( lua_State* L ) {
 	bool defer				= state.GetValue < bool >( 3, false );
 	
 	if ( !action ) {
-		action = MOAISim::Get ().GetActionMgr ().GetDefaultParent ();
+		action = MOAIActionStackMgr::Get ().GetDefaultParent ();
 	}
 
 	self->Attach ( action, defer );
@@ -483,6 +505,7 @@ void MOAIAction::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "clear",					_clear },
 		{ "defer",					_defer },
 		{ "detach",					_detach },
+		{ "getParent",				_getParent },
 		{ "isActive",				_isActive },
 		{ "isBusy",					_isBusy },
 		{ "isDone",					_isDone },
@@ -596,6 +619,15 @@ void MOAIAction::Start ( MOAIActionTree& tree, bool defer ) {
 	MOAIAction* defaultParent = tree.GetDefaultParent ();
 	this->Attach ( defaultParent, defer );
 	this->mActionFlags &= ~FLAGS_IS_PAUSED;
+}
+
+//----------------------------------------------------------------//
+void MOAIAction::Start ( bool defer ) {
+
+	MOAIAction* defaultParent = MOAIActionStackMgr::Get ().GetDefaultParent ();
+	this->Attach ( defaultParent, defer );
+	this->mActionFlags &= ~FLAGS_IS_PAUSED;
+
 }
 
 //----------------------------------------------------------------//

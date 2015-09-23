@@ -87,7 +87,8 @@ MOAIAction* MOAIActionTree::AffirmRoot () {
 
 //----------------------------------------------------------------//
 MOAIAction* MOAIActionTree::GetDefaultParent () {
-
+	// MOAIAction* parent = MOAIActionStackMgr::Get ().GetDefaultParent ();
+	// if ( parent ) return parent;
 	return this->AffirmRoot ();
 }
 
@@ -124,11 +125,12 @@ void MOAIActionTree::OnUpdate ( double step ) {
 //----------------------------------------------------------------//
 void MOAIActionTree::RegisterLuaClass ( MOAILuaState& state ) {
 	UNUSED ( state );
+	MOAIAction::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIActionTree::RegisterLuaFuncs ( MOAILuaState& state ) {
-
+	MOAIAction::RegisterLuaFuncs ( state );
 	luaL_Reg regTable [] = {
 		{ "getRoot",				_getRoot },
 		{ "setProfilingEnabled",	_setProfilingEnabled },

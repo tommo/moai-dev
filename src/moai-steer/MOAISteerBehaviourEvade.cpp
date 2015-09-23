@@ -6,7 +6,7 @@ int MOAISteerBehaviourEvade::_setup ( lua_State *L ) {
 	if( target ) {
 		self->SetTarget( target );
 	}
-	self->SetPredictionTime( state.GetValue < float >( 2, 0.5f ) );
+	self->SetPredictionTime( state.GetValue < float >( 3, 0.5f ) );
 	return 0;
 }
 

@@ -160,7 +160,7 @@ int MOAINode::_moveAttr ( lua_State* L ) {
 	
 		action->SetLink ( 0, self, attrID, value, mode );
 		action->SetSpan ( length );
-		action->Start ( MOAISim::Get ().GetActionMgr (), false );
+		action->Start ( false );
 		action->PushLuaUserdata ( state );
 
 		return 1;
@@ -220,7 +220,7 @@ int MOAINode::_seekAttr ( lua_State* L ) {
 		action->SetLink ( 0, self, attrID, value - getter.GetValue ( 0.0f ), mode );
 		
 		action->SetSpan ( delay );
-		action->Start ( MOAISim::Get ().GetActionMgr (), false );
+		action->Start ( false );
 		action->PushLuaUserdata ( state );
 
 		return 1;
