@@ -180,6 +180,191 @@ void MOAIClearableView::SetClearColor ( MOAIColor* color ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+/**	@lua	setClearColor
+	@text	At the start of each frame the device will by default automatically
+			render a background color.  Using this function you can set the
+			background color that is drawn each frame.  If you specify no arguments
+			to this function, then automatic redraw of the background color will
+			be turned off (i.e. the previous render will be used as the background).
+
+	@overload
+
+		@in		MOAIFrameBufferRenderCommand self
+		@opt	number red			The red value of the color.
+		@opt	number green		The green value of the color.
+		@opt	number blue			The blue value of the color.
+		@opt	number alpha		The alpha value of the color.
+		@out	nil
+	
+	@overload
+		
+		@in		MOAIFrameBufferRenderCommand self
+		@in		MOAIColor color
+		@out	nil
+*/
+int MOAIFrameBufferRenderCommand::_setClearColor ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIFrameBufferRenderCommand, "U" )
+	
+	// don't clear the color
+	self->mClearFlags &= ~ZGL_CLEAR_COLOR_BUFFER_BIT;
+	self->mClearColor = 0;
+
+	if ( state.GetTop () > 1 ) {
+	
+		float r = state.GetValue < float >( 2, 0.0f );
+		float g = state.GetValue < float >( 3, 0.0f );
+		float b = state.GetValue < float >( 4, 0.0f );
+		float a = state.GetValue < float >( 5, 1.0f );
+		
+		self->mClearColor = ZLColor::PackRGBA ( r, g, b, a );
+		self->mClearFlags |= ZGL_CLEAR_COLOR_BUFFER_BIT;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@lua	setClearDepth
+	@text	At the start of each frame the buffer will by default automatically
+			clear the depth buffer.  This function sets whether or not the depth
+			buffer should be cleared at the start of each frame.
+
+	@in		MOAIFrameBufferRenderCommand self
+	@in		boolean clearDepth	Whether to clear the depth buffer each frame.
+	@out	nil
+*/
+int MOAIFrameBufferRenderCommand::_setClearDepth ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIFrameBufferRenderCommand, "U" )
+	
+	bool clearDepth = state.GetValue < bool >( 2, false );
+	
+	if ( clearDepth ) {
+		self->mClearFlags |= ZGL_CLEAR_DEPTH_BUFFER_BIT;
+	}
+	else {
+		self->mClearFlags &= ~ZGL_CLEAR_DEPTH_BUFFER_BIT;
+	}
+	return 0;
+}
+
+
+//----------------------------------------------------------------//
+/**	@lua	setEnabled
+	@text	setEnabled
+	
+	@in		MOAIFrameBufferRenderCommand self
+	@in		boolean enabled ( default is true )
+	@out	nil
+*/
+int MOAIFrameBufferRenderCommand::_setEnabled ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIFrameBufferRenderCommand, "U" )
+	self->mEnabled = state.GetValue < bool >( 2, true );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@lua	isEnabled
+	@text	check enabled
+	
+	@in		MOAIFrameBufferRenderCommand self
+	@out	boolean enabled
+*/
+int MOAIFrameBufferRenderCommand::_isEnabled ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIFrameBufferRenderCommand, "U" )
+	state.Push( self->mEnabled );
+	return 1;
+}
+
+
+//----------------------------------------------------------------//
+/**	@lua	setFrameBuffer
+	@text	Sets the table to be used for rendering. This should be
+			an array indexed from 1 consisting of MOAIRenderable objects
+			and sub-tables. Objects will be rendered in order starting
+			from index 1 and continuing until 'nil' is encountered.
+	
+	@in		MOAIFrameBufferRenderCommand self
+	@in		MOAIFrameBuffer buffer
+	@out	nil
+*/
+int MOAIFrameBufferRenderCommand::_setFrameBuffer ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIFrameBufferRenderCommand, "UU" )
+	
+	MOAIFrameBuffer* buffer = state.GetLuaObject < MOAIFrameBuffer >( 2, true );
+
+	self->mFrameBuffer.Set ( *self, buffer );
+
+	return 0;
+}
+
+
+//----------------------------------------------------------------//
+/**	@lua	setRenderTable
+	@text	Sets the table to be used for rendering. This should be
+			an array indexed from 1 consisting of MOAIRenderable objects
+			and sub-tables. Objects will be rendered in order starting
+			from index 1 and continuing until 'nil' is encountered.
+	
+	@in		MOAIFrameBufferRenderCommand self
+	@in		table renderTable
+	@out	nil
+*/
+int MOAIFrameBufferRenderCommand::_setRenderTable ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIFrameBufferRenderCommand, "U" )
+	self->mRenderTable.SetRef ( state, 2 );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+MOAIFrameBufferRenderCommand::MOAIFrameBufferRenderCommand () :
+	mClearFlags ( ZGL_CLEAR_COLOR_BUFFER_BIT ),
+	mClearColor ( 0 ),
+	mEnabled    ( true ) {
+	
+	RTTI_BEGIN
+		RTTI_EXTEND ( MOAILuaObject )
+	RTTI_END
+}
+
+//----------------------------------------------------------------//
+MOAIFrameBufferRenderCommand::~MOAIFrameBufferRenderCommand () {
+
+	this->mFrameBuffer.Set ( *this, 0 );
+}
+
+//----------------------------------------------------------------//
+void MOAIFrameBufferRenderCommand::RegisterLuaClass ( MOAILuaState& state ) {
+
+	UNUSED( state );
+}
+
+//----------------------------------------------------------------//
+void MOAIFrameBufferRenderCommand::RegisterLuaFuncs ( MOAILuaState& state ) {
+
+	luaL_Reg regTable [] = {
+		{ "setClearDepth",				_setClearDepth },
+		{ "setClearColor",				_setClearColor },
+		{ "setEnabled",					_setEnabled },
+		{ "isEnabled",					_isEnabled },
+		{ "setFrameBuffer",				_setFrameBuffer },
+		{ "setRenderTable",				_setRenderTable },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAIFrameBufferRenderCommand::Render () {
+	if ( !this->mFrameBuffer ) return;
+	this->mFrameBuffer->Render ( this );
+}
+
+
+//================================================================//
+// local
+//================================================================//
+
+//----------------------------------------------------------------//
 /**	@lua	getPerformanceDrawCount	
 	@text	Returns the number of draw calls last frame.	
 
@@ -342,7 +527,7 @@ void MOAIFrameBuffer::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIFrameBuffer::Render () {
+void MOAIFrameBuffer::Render ( MOAIFrameBufferRenderCommand* command ) {
 
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
 	this->mLastDrawCount = gfxDevice.GetDrawCount ();
@@ -352,15 +537,30 @@ void MOAIFrameBuffer::Render () {
 	
 	//disable scissor rect for clear
 	gfxDevice.SetScissorRect ();
-	this->ClearSurface ();
-	
-	if ( this->mRenderTable ) {
-		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-		state.Push ( this->mRenderTable );
-		this->RenderTable ( state, -1 );
-		state.Pop ( 1 );
-	}
+	if( command ) {
+		u32 clearFlags = this->mClearFlags;
+		u32 clearColor = this->mClearColor;
+		this->mClearFlags = command->mClearFlags;
+		this->mClearColor = command->mClearColor;
+		this->ClearSurface ();
+		if ( command->mRenderTable ) {
+			MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+			state.Push ( command->mRenderTable );
+			this->RenderTable ( state, -1 );
+			state.Pop ( 1 );
+		}
+		this->mClearFlags = clearFlags;
+		this->mClearColor = clearColor;
 
+	} else {
+		this->ClearSurface ();
+		if ( this->mRenderTable ) {
+			MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+			state.Push ( this->mRenderTable );
+			this->RenderTable ( state, -1 );
+			state.Pop ( 1 );
+		}
+	}
 	gfxDevice.Flush ();
 
 	if ( this->mGrabNextFrame ) {

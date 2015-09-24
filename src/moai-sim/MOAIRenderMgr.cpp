@@ -224,10 +224,18 @@ void MOAIRenderMgr::RenderTable ( MOAILuaState& state, int idx ) {
 		int valType = lua_type ( state, -1 );
 			
 		if ( valType == LUA_TUSERDATA ) {
-			MOAIFrameBuffer* frameBuffer = state.GetLuaObject < MOAIFrameBuffer >( -1, false );
-			if ( frameBuffer ) {
-				this->mFrameBuffer = frameBuffer;
-				frameBuffer->Render ();
+			MOAIFrameBufferRenderCommand* command = state.GetLuaObject < MOAIFrameBufferRenderCommand >( -1, false );
+			if ( command ) {
+				if ( command->IsEnabled() && command->GetFrameBuffer() ) {
+					this->mFrameBuffer = command->GetFrameBuffer();
+					command->Render();
+				}
+			} else {
+				MOAIFrameBuffer* frameBuffer = state.GetLuaObject < MOAIFrameBuffer >( -1, false );
+				if ( frameBuffer ) {
+					this->mFrameBuffer = frameBuffer;
+					frameBuffer->Render ( NULL );
+				}
 			}
 		}
 		else if ( valType == LUA_TTABLE ) {

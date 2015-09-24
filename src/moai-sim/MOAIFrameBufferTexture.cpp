@@ -221,10 +221,10 @@ void MOAIFrameBufferTexture::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIFrameBufferTexture::Render () {
+void MOAIFrameBufferTexture::Render ( MOAIFrameBufferRenderCommand* command ) {
 
 	if ( this->PrepareForBind ()) {
-		MOAIFrameBuffer::Render ();
+		MOAIFrameBuffer::Render ( command );
 	}
 }
 

@@ -7,6 +7,9 @@
 class MOAIColor;
 class MOAIImage;
 
+class MOAIFrameBuffer;
+class MOAIFrameBufferRenderCommand;
+
 //================================================================//
 // MOAIClearableView
 //================================================================//
@@ -14,16 +17,18 @@ class MOAIClearableView :
 	public virtual MOAILuaObject {
 private:
 
-	u32				mClearFlags;
-	u32				mClearColor;
-	MOAIColor*		mClearColorNode;
-
 	//----------------------------------------------------------------//
 	static int		_setClearColor			( lua_State* L );
 	static int		_setClearDepth			( lua_State* L );
 
 	//----------------------------------------------------------------//
+
+protected:
 	
+	u32				mClearFlags;
+	u32				mClearColor;
+	MOAIColor*		mClearColorNode;
+
 
 public:
 
@@ -38,6 +43,53 @@ public:
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 	void			SetClearColor			( MOAIColor* color );
 };
+
+
+//================================================================//
+// MOAIFrameBufferRenderCommand
+//================================================================//
+/**	@lua	MOAIFrameBufferRenderCommand
+	@text	
+*/
+class MOAIFrameBufferRenderCommand :
+	public virtual MOAILuaObject {
+private:
+	friend class MOAIFrameBuffer;
+
+	MOAILuaStrongRef						mRenderTable;
+	MOAILuaSharedPtr < MOAIFrameBuffer >	mFrameBuffer;
+
+	u32										mClearFlags;
+	u32										mClearColor;
+
+	bool									mEnabled;
+
+	//----------------------------------------------------------------//
+	static int		_setClearColor		( lua_State* L );
+	static int		_setClearDepth		( lua_State* L );
+	static int		_setEnabled			( lua_State* L );
+	static int		_isEnabled			( lua_State* L );
+	static int		_setFrameBuffer		( lua_State* L );
+	static int		_setRenderTable		( lua_State* L );
+	
+
+public:
+	GET ( MOAIFrameBuffer*, FrameBuffer, mFrameBuffer )
+	IS  ( Enabled, mEnabled, true )
+	
+	DECL_LUA_FACTORY ( MOAIFrameBufferRenderCommand )
+
+	void			Render ();
+
+	//----------------------------------------------------------------//
+					MOAIFrameBufferRenderCommand			();
+					~MOAIFrameBufferRenderCommand			();
+	void			RegisterLuaClass	( MOAILuaState& state );
+	void			RegisterLuaFuncs	( MOAILuaState& state );
+	
+};
+
+
 
 //================================================================//
 // MOAIFrameBuffer
@@ -104,7 +156,7 @@ public:
 	void				SetGLFrameBufferID			( u32 frameBufferID );
 	void				RegisterLuaClass			( MOAILuaState& state );
 	void				RegisterLuaFuncs			( MOAILuaState& state );
-	virtual void		Render						();
+	virtual void		Render						( MOAIFrameBufferRenderCommand* command );
 	ZLRect				WndRectToDevice				( ZLRect rect ) const;
 };
 

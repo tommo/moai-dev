@@ -63,6 +63,7 @@ void AKUSimContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAIEaseDriver )
 	REGISTER_LUA_CLASS ( MOAIEaseType )
 	REGISTER_LUA_CLASS ( MOAIFrameBuffer )
+	REGISTER_LUA_CLASS ( MOAIFrameBufferRenderCommand )
 	REGISTER_LUA_CLASS ( MOAIFrameBufferTexture )
 	REGISTER_LUA_CLASS ( MOAIGfxBuffer )
 	REGISTER_LUA_CLASS ( MOAIGfxDevice )

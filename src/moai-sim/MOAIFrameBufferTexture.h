@@ -49,7 +49,7 @@ public:
 						~MOAIFrameBufferTexture		();
 	void				RegisterLuaClass			( MOAILuaState& state );
 	void				RegisterLuaFuncs			( MOAILuaState& state );
-	void				Render						();
+	void				Render						( MOAIFrameBufferRenderCommand* command );
 	void				SerializeIn					( MOAILuaState& state, MOAIDeserializer& serializer );
 	void				SerializeOut				( MOAILuaState& state, MOAISerializer& serializer );
 };
