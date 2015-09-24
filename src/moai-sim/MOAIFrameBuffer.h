@@ -54,15 +54,6 @@ public:
 class MOAIFrameBufferRenderCommand :
 	public virtual MOAILuaObject {
 private:
-	friend class MOAIFrameBuffer;
-
-	MOAILuaStrongRef						mRenderTable;
-	MOAILuaSharedPtr < MOAIFrameBuffer >	mFrameBuffer;
-
-	u32										mClearFlags;
-	u32										mClearColor;
-
-	bool									mEnabled;
 
 	//----------------------------------------------------------------//
 	static int		_setClearColor		( lua_State* L );
@@ -71,15 +62,28 @@ private:
 	static int		_isEnabled			( lua_State* L );
 	static int		_setFrameBuffer		( lua_State* L );
 	static int		_setRenderTable		( lua_State* L );
-	
+
+protected:
+	MOAILuaStrongRef						mRenderTable;
+	MOAILuaSharedPtr < MOAIFrameBuffer >	mFrameBuffer;
+
+	u32				mClearFlags;
+	u32				mClearColor;
+	bool			mEnabled;
+	MOAIColor*		mClearColorNode;
 
 public:
-	GET ( MOAIFrameBuffer*, FrameBuffer, mFrameBuffer )
-	IS  ( Enabled, mEnabled, true )
+
+	friend class MOAIFrameBuffer;
 	
 	DECL_LUA_FACTORY ( MOAIFrameBufferRenderCommand )
 
+	GET ( MOAIFrameBuffer*, FrameBuffer, mFrameBuffer )
+	IS  ( Enabled, mEnabled, true )
+	
+	void			SetClearColorNode	( MOAIColor* color );
 	void			Render ();
+
 
 	//----------------------------------------------------------------//
 					MOAIFrameBufferRenderCommand			();

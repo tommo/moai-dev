@@ -205,9 +205,16 @@ void MOAIClearableView::SetClearColor ( MOAIColor* color ) {
 int MOAIFrameBufferRenderCommand::_setClearColor ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFrameBufferRenderCommand, "U" )
 	
+	MOAIColor* colorNode = state.GetLuaObject < MOAIColor >( 2, true );
+	if ( colorNode ) {
+		self->SetClearColorNode ( colorNode );
+		self->mClearFlags |= ZGL_CLEAR_COLOR_BUFFER_BIT;
+		return 0;
+	}
+	
 	// don't clear the color
 	self->mClearFlags &= ~ZGL_CLEAR_COLOR_BUFFER_BIT;
-	self->mClearColor = 0;
+	self->SetClearColorNode ( 0 );
 
 	if ( state.GetTop () > 1 ) {
 	
@@ -318,6 +325,7 @@ int MOAIFrameBufferRenderCommand::_setRenderTable ( lua_State* L ) {
 MOAIFrameBufferRenderCommand::MOAIFrameBufferRenderCommand () :
 	mClearFlags ( ZGL_CLEAR_COLOR_BUFFER_BIT ),
 	mClearColor ( 0 ),
+	mClearColorNode ( 0 ),
 	mEnabled    ( true ) {
 	
 	RTTI_BEGIN
@@ -327,7 +335,7 @@ MOAIFrameBufferRenderCommand::MOAIFrameBufferRenderCommand () :
 
 //----------------------------------------------------------------//
 MOAIFrameBufferRenderCommand::~MOAIFrameBufferRenderCommand () {
-
+	this->SetClearColorNode( 0 );
 	this->mFrameBuffer.Set ( *this, 0 );
 }
 
@@ -358,6 +366,17 @@ void MOAIFrameBufferRenderCommand::Render () {
 	if ( !this->mFrameBuffer ) return;
 	this->mFrameBuffer->Render ( this );
 }
+
+//----------------------------------------------------------------//
+void MOAIFrameBufferRenderCommand::SetClearColorNode ( MOAIColor* color ) {
+
+	if ( this->mClearColorNode != color ) {
+		this->LuaRelease ( this->mClearColorNode );
+		this->LuaRetain ( color );
+		this->mClearColorNode = color;
+	}
+}
+
 
 
 //================================================================//
@@ -540,8 +559,10 @@ void MOAIFrameBuffer::Render ( MOAIFrameBufferRenderCommand* command ) {
 	if( command ) {
 		u32 clearFlags = this->mClearFlags;
 		u32 clearColor = this->mClearColor;
+		MOAIColor* clearColorNode = this->mClearColorNode;
 		this->mClearFlags = command->mClearFlags;
 		this->mClearColor = command->mClearColor;
+		this->mClearColorNode = command->mClearColorNode;
 		this->ClearSurface ();
 		if ( command->mRenderTable ) {
 			MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
@@ -551,7 +572,7 @@ void MOAIFrameBuffer::Render ( MOAIFrameBufferRenderCommand* command ) {
 		}
 		this->mClearFlags = clearFlags;
 		this->mClearColor = clearColor;
-
+		this->mClearColorNode = clearColorNode;
 	} else {
 		this->ClearSurface ();
 		if ( this->mRenderTable ) {
