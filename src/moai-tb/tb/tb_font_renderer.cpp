@@ -392,15 +392,7 @@ void TBFontFace::DrawString(int x, int y, const TBColor &color, const char *str,
 			continue;
 		if (TBFontGlyph *glyph = GetGlyph(cp, true))
 		{
-			if (glyph->frag)
-			{
-				TBRect dst_rect(x + glyph->metrics.x, y + glyph->metrics.y + GetAscent(), glyph->frag->Width(), glyph->frag->Height());
-				TBRect src_rect(0, 0, glyph->frag->Width(), glyph->frag->Height());
-				if (glyph->has_rgb)
-					g_renderer->DrawBitmap(dst_rect, src_rect, glyph->frag);
-				else
-					g_renderer->DrawBitmapColored(dst_rect, src_rect, color, glyph->frag);
-			}
+			DrawGlyph(x, y, color, glyph);
 			x += glyph->metrics.advance;
 		}
 		else if (!m_font_renderer) // This is the test font. Use same glyph width as height and draw square.
@@ -412,6 +404,19 @@ void TBFontFace::DrawString(int x, int y, const TBColor &color, const char *str,
 
 	if (m_font_renderer)
 		g_renderer->EndBatchHint();
+}
+
+void TBFontFace::DrawGlyph(int x, int y, const TBColor &color, TBFontGlyph *glyph)
+{
+	if (glyph->frag)
+	{
+		TBRect dst_rect(x + glyph->metrics.x, y + glyph->metrics.y + GetAscent(), glyph->frag->Width(), glyph->frag->Height());
+		TBRect src_rect(0, 0, glyph->frag->Width(), glyph->frag->Height());
+		if (glyph->has_rgb)
+			g_renderer->DrawBitmap(dst_rect, src_rect, glyph->frag);
+		else
+			g_renderer->DrawBitmapColored(dst_rect, src_rect, color, glyph->frag);
+	}
 }
 
 int TBFontFace::GetStringWidth(const char *str, int len)
@@ -455,9 +460,9 @@ TBFontManager::~TBFontManager()
 {
 }
 
-TBFontInfo *TBFontManager::AddFontInfo(const char *filename, const char *name)
+TBFontInfo *TBFontManager::AddFontInfo(const char *filename, const char *name, void* userdata)
 {
-	if (TBFontInfo *fi = new TBFontInfo(filename, name))
+	if (TBFontInfo *fi = new TBFontInfo(filename, name, userdata))
 	{
 		if (m_font_info.Add(fi->GetID(), fi))
 			return fi;
@@ -475,6 +480,7 @@ bool TBFontManager::HasFontFace(const TBFontDescription &font_desc) const
 {
 	return m_fonts.Get(font_desc.GetFontFaceID()) ? true : false;
 }
+
 
 TBFontFace *TBFontManager::GetFontFace(const TBFontDescription &font_desc)
 {
@@ -516,5 +522,6 @@ TBFontFace *TBFontManager::CreateFontFace(const TBFontDescription &font_desc)
 	}
 	return nullptr;
 }
+
 
 }; // namespace tb

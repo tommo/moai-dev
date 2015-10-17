@@ -38,7 +38,7 @@ public:
 	bool			IsDone					();
 
 	void      SetSize  ( float w, float );
-
+	void			RestoreRender ();
 	DECL_LUA_FACTORY ( MOAITBCanvas )
 	MOAITBCanvas();
 	~MOAITBCanvas();

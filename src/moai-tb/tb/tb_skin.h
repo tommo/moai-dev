@@ -298,7 +298,7 @@ public:
 		clone elements in the same file!
 
 		Returns true on success, and all bitmaps referred to also loaded successfully. */
-	bool Load(const char *skin_file, const char *override_skin_file = nullptr);
+	bool Load(const char *skin_file, const char *override_skin_file = nullptr, bool load_bitmap = true);
 
 	/** Unload all bitmaps used in this skin. */
 	void UnloadBitmaps();

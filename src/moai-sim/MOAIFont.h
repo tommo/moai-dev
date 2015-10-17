@@ -115,6 +115,7 @@ public:
 	
 	GET ( cc8*, Filename, mFilename );
 	GET ( MOAIGlyphCache*, Cache, mCache );
+	GET ( MOAIFontReader*, Reader, mReader );
 
 	GET ( int, MinFilter, mMinFilter );
 	GET ( int, MagFilter, mMagFilter );
@@ -150,6 +151,8 @@ public:
 	void				ResizePageList			( u32 size );
 	void				SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
 	void				SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
+	void				SetCache				( MOAIGlyphCache* cache );
+	void				SetReader				( MOAIFontReader* reader );
 };
 
 #endif

@@ -20,6 +20,7 @@ void AKUTurboBadgerContextInitialize () {
 
 	REGISTER_LUA_CLASS ( MOAITBCanvas )
 	REGISTER_LUA_CLASS ( MOAITBMgr )
+	REGISTER_LUA_CLASS ( MOAITBNode )
 
 	REGISTER_MOAI_TB_CLASS ( Widget )
 	REGISTER_MOAI_TB_CLASS ( WidgetEvent )
@@ -51,9 +52,13 @@ void AKUTurboBadgerContextInitialize () {
 	REGISTER_MOAI_TB_CLASS ( Section )
 	REGISTER_MOAI_TB_CLASS ( SectionHeader )
 	
+	REGISTER_MOAI_TB_CLASS ( EditField )
+	
 	REGISTER_MOAI_TB_CLASS ( Window )
 	REGISTER_MOAI_TB_CLASS ( PopupWindow )
 	REGISTER_MOAI_TB_CLASS ( ImageWidget )
+	REGISTER_MOAI_TB_CLASS ( PropContainer )
+
 	MOAITBMgr::Affirm();
 }
 

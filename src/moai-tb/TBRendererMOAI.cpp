@@ -1,77 +1,21 @@
 #include "TBRendererMOAI.h"
 
-//----------------------------------------------------------------//
-//BITMAP TEXTURE
-//----------------------------------------------------------------//
-bool MOAITBBitmapTexture::OnGPUCreate () {
-	return true;
-}
-
-bool MOAITBBitmapTexture::Init ( u32 width, u32 height, u32* data ) {
-	this->mWidth  = width;
-	this->mHeight = height;
-	this->mWrap   = true;
-	this->SetDebugName( "TBBitmapTexture" );
-	if( this->SetData( data ) ) {
-		return true;
-	}
-	return false;
-}
-
-bool MOAITBBitmapTexture::SetData ( u32* data ) {
-	if ( !MOAIGfxDevice::Get ().GetHasContext ()) return false;
-	zglBegin();
-	MOAIGfxDevice::Get ().ClearErrors ();
-
-	if ( !this->mGLTexID ) {
-		this->mGLTexID = zglCreateTexture ();
-		if ( !this->mGLTexID ) return false;
-	}
-
-	this->mGLInternalFormat = ZGL_PIXEL_FORMAT_RGBA;
-	this->mGLPixelType = ZGL_PIXEL_TYPE_UNSIGNED_BYTE;
-	zglBindTexture ( this->mGLTexID );
-	zglTexImage2D (
-		0,
-		this->mGLInternalFormat,
-		this->mWidth,  
-		this->mHeight,  
-		this->mGLInternalFormat,
-		this->mGLPixelType,  
-		data
-	);
-	
-	this->mTextureSize = this->mWidth * this->mHeight * 4;
-
-	if ( MOAIGfxDevice::Get ().LogErrors ()) {
-		this->CleanupOnError ();
-		zglEnd();
-		return false;
-	}
-	
-	MOAIGfxDevice::Get ().ReportTextureAlloc ( this->mDebugName, this->mTextureSize );
-	this->mIsDirty = true;
-	this->DoCPUAffirm();
-	zglEnd();
-	return true;
-}
 
 //----------------------------------------------------------------//
 //BITMAP
 //----------------------------------------------------------------//
 bool TBBitmapMOAI::Init ( u32 width, u32 height, u32* data ) {
-	MOAITBBitmapTexture* tex = new MOAITBBitmapTexture();
+	MOAIImageTexture* tex = new MOAIImageTexture();
+	tex->Init( data, width, height, ZLColor::RGBA_8888 );
+	tex->SetWrap( true );
 	this->mTexture = tex;
 	this->mWidth   = width;
 	this->mHeight  = height;
-	if( !this->mTexture->Init( width, height, data ) ) {
-		return false;
-	}
-	return true;
+	return tex->IsOK();
 }
 
 void TBBitmapMOAI::SetData ( u32* data ) {
-	this->mTexture->SetData( data );
+	this->mTexture->Init( data, this->mWidth, this->mHeight, ZLColor::RGBA_8888 );
 }
 
 TBBitmapMOAI::TBBitmapMOAI() {
@@ -94,6 +38,8 @@ TBBitmap *TBRendererMOAI::CreateBitmap(int width, int height, uint32 *data)
 }
 
 void TBRendererMOAI::BeginPaint(int render_target_w, int render_target_h) {
+	this->mRenderTargetWidth  = render_target_w;
+	this->mRenderTargetHeight = render_target_h;
 	TBRendererBatcher::BeginPaint( render_target_w, render_target_h );
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get();
 	gfxDevice.SetVertexPreset  ( MOAIVertexFormatMgr::XYZWUVC );
@@ -115,7 +61,7 @@ void TBRendererMOAI::EndPaint() {
 void TBRendererMOAI::RenderBatch(Batch *batch) {
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get();
 	
-	MOAITBBitmapTexture* texture = 
+	MOAIImageTexture* texture = 
 		batch->bitmap? static_cast<TBBitmapMOAI*>( batch->bitmap )->mTexture : NULL;
 	gfxDevice.SetTexture( texture );
 
@@ -144,3 +90,49 @@ void TBRendererMOAI::SetClipRect(const TBRect &rect) {
 	mtx.Transform( scRect );
 	gfx.SetScissorRect( scRect );
 }
+
+
+void TBRendererMOAI::RenderMOAIProp( MOAIGraphicsProp* prop ) {
+	this->EndPaint();
+	prop->Render();
+	MOAITBCanvas* currentCanvas = this->mCanvasStack.Top();
+	currentCanvas->RestoreRender ();	
+	this->BeginPaint( this->mRenderTargetWidth, this->mRenderTargetHeight );
+}
+
+void TBRendererMOAI::BeginRenderString() {
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get();
+	this->FlushAllInternal();
+	gfxDevice.SetShaderPreset ( MOAIShaderMgr::FONT_SHADER );
+}
+
+void TBRendererMOAI::EndRenderString() {
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get();
+	gfxDevice.SetShaderPreset ( MOAIShaderMgr::DECK2D_SHADER );
+}
+
+void TBRendererMOAI::RenderMOAIGlyph( int x, int y, const TBColor& color, MOAIFont* font, MOAIGlyph *glyph ) {
+	ZLRect padding;
+	padding.Init( 0.0f, 0.0f, 0.0f, 0.0f );
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get();
+	// Draw the current moaiGlyph
+	MOAITextureBase* glyphTexture = font->GetGlyphTexture ( *glyph );
+	if ( glyphTexture ) {
+		gfxDevice.SetPenColor ( ZLColor::PackRGBA( color.r, color.g, color.b, color.a ) );
+		glyph->Draw( *glyphTexture, 
+			(float)x+m_translation_x, (float)y+m_translation_y, 
+			1.0f, 1.0f, padding );
+	}
+
+}
+
+
+void TBRendererMOAI::PushCanvas( MOAITBCanvas* canvas ) {
+	this->mCanvasStack.Push( canvas );
+}
+
+MOAITBCanvas* TBRendererMOAI::PopCanvas() {
+	MOAITBCanvas* canvas = this->mCanvasStack.Pop();
+	return canvas;
+}
+

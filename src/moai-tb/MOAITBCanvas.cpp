@@ -5,6 +5,9 @@
 #include "animation/tb_animation.h"
 #include "tb_node_tree.h"
 #include "tb_widgets_reader.h"
+
+#include "TBRendererMOAI.h"
+
 //----------------------------------------------------------------//
 // Glue
 //----------------------------------------------------------------//
@@ -133,13 +136,14 @@ void MOAITBCanvas::Draw ( int subPrimID, float lod ) {
 	UNUSED ( subPrimID );
 
 	if ( !this->IsVisible ( lod ) ) return;
-
+	TBRendererMOAI* renderer = static_cast< TBRendererMOAI* >( g_renderer );
 	this->LoadGfxState ();
 	this->LoadVertexTransform ();
 
-	g_renderer->BeginPaint( this->mWidth, this->mHeight );
+	renderer->PushCanvas( this );
+	renderer->BeginPaint( this->mWidth, this->mHeight );
 	this->mRootWidget->InvokePaint(TBWidget::PaintProps());
-	g_renderer->EndPaint();
+	renderer->EndPaint();
 }
 
 //----------------------------------------------------------------//
@@ -176,4 +180,10 @@ void MOAITBCanvas::BuildLocalToWorldMtx ( ZLAffine3D& localToWorldMtx ) {
 		localToWorldMtx.Prepend ( pivot );
 	}
 
+}
+
+
+void MOAITBCanvas::RestoreRender() {
+	this->LoadGfxState ();
+	this->LoadVertexTransform ();
 }

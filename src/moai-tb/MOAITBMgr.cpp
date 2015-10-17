@@ -1,5 +1,7 @@
 #include "moai-tb/MOAITBMgr.h"
-// #include "moai-tb/MOAITBRenderer.h"
+#include "moai-tb/MOAITBFontRenderer.h"
+#include "moai-tb/MOAITBNode.h"
+
 #include "moai-sim/pch.h"
 #include "moai-sim/MOAITexture.h"
 #include "moai-sim/MOAIFont.h"
@@ -11,7 +13,6 @@
 #include "tb_font_renderer.h"
 #include "animation/tb_widget_animation.h"
 
-void register_tbbf_font_renderer();
 
 //----------------------------------------------------------------//
 int MOAITBMgr::_init ( lua_State* L ) {
@@ -21,26 +22,30 @@ int MOAITBMgr::_init ( lua_State* L ) {
 		TBWidgetsAnimationManager::Init();
 		cc8* lngFile = state.GetValue < cc8* >( 1, "" );
 		tb_core_init( mgr.mRenderer, lngFile );
-		register_tbbf_font_renderer();
-
-		g_font_manager->AddFontInfo("resources/default_font/segoe_white_with_shadow.tb.txt", "Segoe");
-		TBFontDescription fd;
-		fd.SetID(TBIDC("Segoe"));
-		fd.SetSize( 20 );
-		g_font_manager->SetDefaultFontDescription(fd);
-
-		TBFontFace *font = g_font_manager->CreateFontFace(g_font_manager->GetDefaultFontDescription());
-		font->RenderGlyphs(" !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~•·åäöÅÄÖ") ;
+		g_font_manager->AddRenderer( new MOAITBFontRenderer() );
+		
 	}
 	return 0;
 }
 
 int MOAITBMgr::_loadSkin( lua_State* L ) {
 	MOAILuaState state ( L );
-	MOAITBMgr& mgr = MOAITBMgr::Get();
+	
 	cc8* skinFile = state.GetValue < cc8* >( 1, "" );
-	cc8* overFile = state.GetValue < cc8* >( 2, 0 );
-	g_tb_skin->Load( skinFile, overFile );
+	bool additive = state.GetValue < bool >( 2, false );
+	bool reloadBitmap = state.GetValue < bool >( 3, true );
+	if ( !additive ) { //destroy old one
+		delete g_tb_skin;
+		g_tb_skin = new TBSkin();
+	}
+	state.Push( (bool)g_tb_skin->Load( skinFile, nullptr, reloadBitmap ) );
+	return 1;
+}
+
+//----------------------------------------------------------------//
+int MOAITBMgr::_reloadBitmap( lua_State* L ) {
+	MOAILuaState state ( L );
+	g_tb_skin->ReloadBitmaps();
 	return 0;
 }
 
@@ -63,13 +68,53 @@ int MOAITBMgr::_setTextureLoader ( lua_State* L ) {
 int MOAITBMgr::_registerFont ( lua_State* L ) {
 	MOAILuaState state ( L );
 	MOAITBMgr& mgr = MOAITBMgr::Get();
-	cc8* faceName = state.GetValue < cc8* >( 1, "" );
+	cc8* fontName = state.GetValue < cc8* >( 1, "" );
 	MOAIFont* font = state.GetLuaObject < MOAIFont > ( 2, 0 );
-	mgr.RegisterFont( faceName, font );
+	mgr.RegisterFont( fontName, font );
 
 	return 0;
 }
 
+
+//----------------------------------------------------------------//
+int MOAITBMgr::_getFont ( lua_State* L ) {
+	MOAILuaState state ( L );
+	MOAITBMgr& mgr = MOAITBMgr::Get();
+	cc8* fontName = state.GetValue < cc8* >( 1, "" );
+	MOAIFont* font = mgr.GetFont( fontName );
+	if( font ) {
+		font->PushLuaUserdata( state );
+		return 1;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAITBMgr::_setDefaultFontFace ( lua_State* L ) {
+	MOAILuaState state ( L );
+	MOAITBMgr& mgr = MOAITBMgr::Get();
+	cc8* fontName = state.GetValue < cc8* >( 1, "" );
+	float size    = state.GetValue < float >( 2, 0.0f );
+
+	MOAIFont* font = mgr.GetFont( fontName );
+	if ( !font ) {
+		state.Push( false );
+		return 0;
+	}
+	if( size <= 0.0f ) {
+		size = font->GetDefaultSize();
+	}
+	TBFontDescription fd;
+	fd.SetID( TBID(fontName) );
+	fd.SetSize( size );
+	g_font_manager->SetDefaultFontDescription( fd );
+
+	TBFontFace *fontface = g_font_manager->CreateFontFace(g_font_manager->GetDefaultFontDescription());
+	fontface->RenderGlyphs(" !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~•·åäöÅÄÖ") ;
+
+	state.Push( true );
+	return 1;
+}
 
 //----------------------------------------------------------------//
 
@@ -84,8 +129,8 @@ int MOAITBMgr::_loadWidgets ( lua_State* L ) {
 	return 0;
 }
 
-//----------------------------------------------------------------//
 
+//----------------------------------------------------------------//
 int MOAITBMgr::_loadWidgetsFromFile ( lua_State* L ) {
 	MOAILuaState state ( L );
 	MOAITBMgr& mgr = MOAITBMgr::Get();
@@ -95,6 +140,31 @@ int MOAITBMgr::_loadWidgetsFromFile ( lua_State* L ) {
 		g_widgets_reader->LoadFile( widget->GetInternal(), fileName );
 	}
 	return 0;
+}
+
+
+//----------------------------------------------------------------//
+int MOAITBMgr::_loadWidgetsFromNodeTree ( lua_State* L ) {
+	MOAILuaState state ( L );
+	MOAITBMgr& mgr = MOAITBMgr::Get();
+	MOAITBWidget* widget = state.GetLuaObject < MOAITBWidget >( 1, 0 );
+	if( widget ) {
+		MOAITBNode* node = state.GetLuaObject < MOAITBNode >( 2, true );
+		if( node ) {
+			g_widgets_reader->LoadNodeTree( widget->GetInternal(), node->GetInternal() );
+		}
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAITBMgr::_loadNodeTree ( lua_State* L ) {
+	MOAILuaState state ( L );
+	cc8* data = state.GetValue < cc8* >( 1, "" );
+	MOAITBNode* node = new MOAITBNode();
+	node->GetInternal()->ReadData( data );
+	node->PushLuaUserdata( state );
+	return 1;
 }
 
 //----------------------------------------------------------------//
@@ -122,13 +192,18 @@ MOAITBMgr::~MOAITBMgr ()
 void MOAITBMgr::RegisterLuaClass(MOAILuaState& state)
 {
 	luaL_Reg regTable[] = {
-		{ "setTextureLoader",    _setTextureLoader },
-		{ "registerFont",        _registerFont },
-		{ "loadSkin",            _loadSkin },
-		{ "init",                _init },
+		{ "getFont",             _registerFont        },
+		{ "registerFont",        _registerFont        },
+		{ "loadSkin",            _loadSkin            },
+		{ "reloadBitmap",        _reloadBitmap        },
+		{ "init",                _init                },
+		{ "setTextureLoader",    _setTextureLoader    },
+		{ "setDefaultFontFace",  _setDefaultFontFace  },
 
 		{ "loadWidgetsFromFile", _loadWidgetsFromFile },
-		{ "loadWidgets",         _loadWidgets },
+		{ "loadWidgets",         _loadWidgets         },
+		{ "loadWidgetsFromNodeTree", _loadWidgetsFromNodeTree },
+		{ "loadNodeTree",         _loadNodeTree         },
 
 		{ NULL, NULL }
 	};
@@ -142,48 +217,10 @@ void MOAITBMgr::RegisterLuaFuncs(MOAILuaState& state)
 	UNUSED(state);
 }
 
-
-// void MOAITBMgr::LoadTexture( TB::Texture* texture ) {
-// 	//TODO: lua callback support
-// 	if( this->mOnLoadTexture ) {
-// 		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-// 		if ( this->mOnLoadTexture.PushRef ( state )) {
-// 			lua_pushstring( state, texture->name.Get().c_str() );
-// 			state.DebugCall ( 1, 1 );
-// 			MOAITextureBase* tex = state.GetLuaObject < MOAITextureBase >( -1, 0 );
-// 			tex->Bind();
-// 			texture->data = tex;
-// 			texture->width = tex->GetWidth();
-// 			texture->height = tex->GetHeight();
-// 		}
-// 	} else {
-// 		//default loader
-// 		zglBegin();
-// 		MOAIImageTexture* tex = new MOAIImageTexture();
-// 		tex->Load( texture->name.c_str(), MOAIImageTransform::TRUECOLOR | MOAIImageTransform::PREMULTIPLY_ALPHA );
-// 		tex->Bind();
-// 		texture->data = tex;
-// 		texture->width = ((MOAIImage *)tex)->GetWidth();
-// 		texture->height = ((MOAIImage *)tex)->GetHeight();
-// 		// printf("loading texture %s\n", texture->name.c_str() );
-// 		// printf("%d,%d\n", tex->GetWidth(), tex->GetHeight() );
-// 		tex->Retain();
-// 		zglEnd();
-// 	}
-// }
-
-// void MOAITBMgr::ReleaseTexture( TB::Texture* texture ) {
-// 	//TODO
-// 	if( texture->data ) {
-// 		MOAITexture* tex = static_cast< MOAITexture* >( texture->data );
-// 		tex->Release();
-// 	}
-// }
-
 void MOAITBMgr::RegisterFont ( STLString faceName, MOAIFont* font ) {
 	MOAIFont* oldFont = NULL;
 	
-	if( this->mFontMap.contains( faceName ) ) {
+	if( this->mFontMap.contains( faceName ) ) { //TODO: remove from tb font registry?
 		oldFont = this->mFontMap[ faceName ];
 		this->LuaRelease( oldFont );
 	}
@@ -195,20 +232,17 @@ void MOAITBMgr::RegisterFont ( STLString faceName, MOAIFont* font ) {
 		this->mFontMap.erase( faceName );
 	}
 
+	g_font_manager->AddFontInfo( "@MOAI", faceName, font );
+
 }
 
-MOAIFont* MOAITBMgr::FindFont ( STLString faceName, float size ) {
-	UNUSED( size ); //TODO: font size adapting
+MOAIFont* MOAITBMgr::GetFont ( STLString faceName ) {
 	if( this->mFontMap.contains( faceName ) ) {
 		return this->mFontMap[ faceName ];
 	} else {
 		return NULL;
 	}
 }
-
-// MOAIFont* MOAITBMgr::FindFont ( TB::Font* font ) {
-// 	return this->FindFont( font->facename.c_str(), font->size );
-// }
 
 
 //----------------------------------------------------------------//
@@ -217,4 +251,69 @@ void TBSystem::RescheduleTimer(double fire_time)
 {
 	// MOAITBMgr& mgr = MOAITBMgr::Get();
 	// mgr.RescheduleTimer();
+}
+
+
+
+//----------------------------------------------------------------//
+MOAITBImageLoader::MOAITBImageLoader():
+	mWidth( 0 ),
+	mHeight( 0 ),
+	mImage( 0 )
+{
+}
+
+MOAITBImageLoader::~MOAITBImageLoader() {
+	if( this->mImage ) {
+		delete this->mImage;
+	}
+}
+
+int MOAITBImageLoader::Width() {
+	return this->mWidth;
+}
+
+int MOAITBImageLoader::Height() {
+	return this->mHeight;
+}
+
+bool MOAITBImageLoader::Init( cc8* filename ) {
+	MOAIImage* img = new MOAIImage();
+	bool succ = img->Load( filename, MOAIImageTransform::TRUECOLOR );
+
+	if( !succ ) {
+		delete img;
+		this->mImage = NULL;
+		return false;
+
+	} else {
+		if( img->GetColorFormat() != ZLColor::RGBA_8888 ) {
+			MOAIImage* converted = new MOAIImage();
+			converted->Convert( *img, ZLColor::RGBA_8888, MOAIImage::TRUECOLOR );
+			delete img;
+			this->mImage = converted;
+		} else {
+			this->mImage = img;
+		}
+		this->mWidth = this->mImage->GetWidth();
+		this->mHeight = this->mImage->GetHeight();
+		return succ;
+
+	}
+}
+
+uint32* MOAITBImageLoader::Data() {
+	if( !this->mImage ) return 0;
+	return (uint32*)this->mImage->GetBitmap();
+}
+
+//----------------------------------------------------------------//
+TBImageLoader *TBImageLoader::CreateFromFile(const char *filename)
+{
+	MOAITBImageLoader* loader = new MOAITBImageLoader();
+	if( loader->Init( filename ) ) {
+		return loader;
+	}
+	delete loader;
+	return nullptr;
 }

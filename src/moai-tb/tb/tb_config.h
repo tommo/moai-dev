@@ -32,7 +32,7 @@
 //#define TB_PREMULTIPLIED_ALPHA
 
 /** Enable to support TBBF fonts (Turbo Badger Bitmap Fonts) */
-#define TB_FONT_RENDERER_TBBF
+// #define TB_FONT_RENDERER_TBBF
 
 /** Enable to support truetype fonts using freetype. */
 //#define TB_FONT_RENDERER_FREETYPE
@@ -47,7 +47,7 @@
 /** Enable to support image loading using stb_image.c (http://nothings.org/).
 	It's a *very unsafe* image library. Use only with images distributed with
 	your app, that you know work! */
-#define TB_IMAGE_LOADER_STB
+// #define TB_IMAGE_LOADER_STB
 
 /** Enable to get TBRendererBatcher, an helper class for renderers that
 	implements batching of draw operations. Subclasses of TBRendererBatcher
@@ -79,9 +79,10 @@
 //#define TB_FILE_POSIX
 
 /** Defines for implementations of TBClipboard. */
-//#define TB_CLIPBOARD_DUMMY // Cross platform. Not integrating with the OS.
+// #define TB_CLIPBOARD_DUMMY // Cross platform. Not integrating with the OS.
 //#define TB_CLIPBOARD_GLFW // Cross platform using glfw API.
 //#define TB_CLIPBOARD_WINDOWS
+// #define TB_CLIPBOARD_SDL
 
 /** Defines for implementations of TBSystem. */
 //#define TB_SYSTEM_LINUX
@@ -98,7 +99,7 @@
 #if defined(_WIN32) || defined(__WIN32__) || defined(__WINDOWS__)
 #define TB_FILE_POSIX
 #define TB_TARGET_WINDOWS
-#define TB_CLIPBOARD_WINDOWS
+#define TB_CLIPBOARD_SDL
 #define TB_SYSTEM_WINDOWS
 #endif
 
@@ -106,16 +107,14 @@
 #define TB_FILE_POSIX
 #define TB_TARGET_LINUX
 #define TB_SYSTEM_LINUX
-// #define TB_CLIPBOARD_GLFW
+#define TB_CLIPBOARD_SDL
 #endif
 
 #ifdef MACOSX
 #define TB_FILE_POSIX
 #define TB_TARGET_MACOSX
 #define TB_SYSTEM_LINUX
-// #define TB_CLIPBOARD_GLFW
-#define TB_CLIPBOARD_DUMMY
-#define TB_FONT_RENDERER_TBBF
+#define TB_CLIPBOARD_SDL
 #endif
 
 #if defined(ANDROID) || defined(__ANDROID__)

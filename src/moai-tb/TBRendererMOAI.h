@@ -6,18 +6,9 @@
 #include "tb_renderer.h"
 #include "renderers/tb_renderer_batcher.h"
 
+#include "MOAITBCanvas.h"
 
 using namespace tb;
-
-class MOAITBBitmapTexture:
-	public MOAITextureBase
-{
-public:
-	bool OnGPUCreate ();
-	bool Init    ( u32 width, u32 height, u32* data );
-	bool SetData ( u32* data );
-};
-
 
 //----------------------------------------------------------------//
 class TBBitmapMOAI:
@@ -25,7 +16,7 @@ class TBBitmapMOAI:
 {
 private:
 	friend class TBRendererMOAI;
-	MOAITBBitmapTexture* mTexture;
+	MOAIImageTexture* mTexture;
 	int mWidth;
 	int mHeight;
 public:
@@ -47,14 +38,25 @@ public:
 class TBRendererMOAI:
 	public TBRendererBatcher
 {
-public:
-	
-	// == TBRenderer ====================================================================
+private:
+	int mRenderTargetWidth;
+	int mRenderTargetHeight;
 
+	ZLLeanStack< MOAITBCanvas* > mCanvasStack;
+public:
+	void PushCanvas( MOAITBCanvas* canvas );
+	MOAITBCanvas* PopCanvas();
+
+	// == TBRenderer ====================================================================
+	void RenderMOAIProp( MOAIGraphicsProp* prop );
 	virtual void BeginPaint(int render_target_w, int render_target_h);
 	virtual void EndPaint();
 
 	virtual TBBitmap *CreateBitmap(int width, int height, uint32 *data);
+
+	void BeginRenderString ();
+	void EndRenderString ();
+	void RenderMOAIGlyph( int x, int y, const TBColor& color, MOAIFont* font, MOAIGlyph *glyph );
 
 	// == TBRendererBatcher ===============================================================
 

@@ -124,13 +124,15 @@ TBSkin::TBSkin()
 	m_frag_manager.SetAddBorder(true);
 }
 
-bool TBSkin::Load(const char *skin_file, const char *override_skin_file)
+bool TBSkin::Load(const char *skin_file, const char *override_skin_file, bool load_bitmap)
 {
 	if (!LoadInternal(skin_file))
 		return false;
 	if (override_skin_file && !LoadInternal(override_skin_file))
 		return false;
-	return ReloadBitmaps();
+	if (load_bitmap)
+		return ReloadBitmaps();
+	return true;
 }
 
 bool TBSkin::LoadInternal(const char *skin_file)

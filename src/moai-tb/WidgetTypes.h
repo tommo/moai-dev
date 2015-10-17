@@ -19,6 +19,9 @@
 #include "moai-tb/MOAITBLayout.h"
 #include "moai-tb/MOAITBImageWidget.h"
 
+#include "moai-tb/MOAITBEditField.h"
+
 #include "moai-tb/MOAITBPopupWindow.h"
+#include "moai-tb/MOAITBPropContainer.h"
 
 #endif

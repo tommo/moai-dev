@@ -159,6 +159,8 @@ public:
 	/** Get height of the font in pixels. */
 	int GetHeight() const { return m_metrics.height; }
 
+	TBFontRenderer* GetFontRenderer() { return m_font_renderer; }
+
 	/** Get the font description that was used to create this font. */
 	TBFontDescription GetFontDescription() const { return m_font_desc; }
 
@@ -166,8 +168,9 @@ public:
 		Note: No glyphs are re-rendered. Only new glyphs are affected. */
 	TBFontEffect *GetEffect() { return &m_effect; }
 
+
 	/** Draw string at position x, y (marks the upper left corner of the text). */
-	void DrawString(int x, int y, const TBColor &color, const char *str, int len = TB_ALL_TO_TERMINATION);
+	virtual void DrawString(int x, int y, const TBColor &color, const char *str, int len = TB_ALL_TO_TERMINATION);
 
 	/** Measure the width of the given string. Should measure len characters or to the null
 		termination (whatever comes first). */
@@ -181,9 +184,13 @@ public:
 	/** Set a background font which will always be rendered behind this one
 	    when calling DrawString. Very usefull to add a shadow effect to a font. */
 	void SetBackgroundFont(TBFontFace *font, const TBColor &col, int xofs, int yofs);
-private:
-	TBID GetHashId(UCS4 cp) const;
+protected:
+
+	/** Draw glyph at position x, y (marks the upper left corner of the text). */
+	virtual void DrawGlyph(int x, int y, const TBColor &color, TBFontGlyph *glyph);
 	TBFontGlyph *GetGlyph(UCS4 cp, bool render_if_needed);
+
+	TBID GetHashId(UCS4 cp) const;
 	TBFontGlyph *CreateAndCacheGlyph(UCS4 cp);
 	void RenderGlyph(TBFontGlyph *glyph);
 	TBFontGlyphCache *m_glyph_cache;
@@ -213,12 +220,20 @@ public:
 		TBFontDescription (See TBFontDescription::SetID) */
 	TBID GetID() const { return m_id; }
 
+	/** Get the user data  */
+	void* GetUserdata() const { return m_userdata; };
+
+	/** Set the user data  */
+	void SetUserdata(void* data) { m_userdata = data; };
+
 private:
 	friend class TBFontManager;
-	TBFontInfo(const char *filename, const char *name) : m_filename(filename), m_name(name), m_id(name) {}
+	TBFontInfo(const char *filename, const char *name, void* userdata) : m_filename(filename), m_name(name), m_id(name), m_userdata(userdata) {}
 	TBStr m_filename;
 	TBStr m_name;
 	TBID m_id;
+	
+	void* m_userdata;
 };
 
 /** TBFontManager creates and owns font faces (TBFontFace) which are looked up from
@@ -246,7 +261,7 @@ public:
 
 	/** Add TBFontInfo for the given font filename, so it can be loaded and identified
 		using the font id in a TBFontDescription. */
-	TBFontInfo *AddFontInfo(const char *filename, const char *name);
+	TBFontInfo *AddFontInfo(const char *filename, const char *name, void* userdata=nullptr);
 
 	/** Get TBFontInfo for the given font id, or nullptr if there is no match. */
 	TBFontInfo *GetFontInfo(const TBID &id) const;

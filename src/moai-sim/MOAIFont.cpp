@@ -240,7 +240,7 @@ int MOAIFont::_rebuildKerningTables ( lua_State* L ) {
 */
 int MOAIFont::_setCache ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFont, "U" )
-	self->mCache.Set ( *self, state.GetLuaObject < MOAIGlyphCache >( 2, true ));
+	self->SetCache( state.GetLuaObject < MOAIGlyphCache >( 2, true ) );
 	return 0;
 }
 
@@ -340,7 +340,7 @@ int MOAIFont::_setImage ( lua_State* L ) {
 */
 int MOAIFont::_setReader ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFont, "U" )
-	self->mReader.Set ( *self, state.GetLuaObject < MOAIFontReader >( 2, true ));
+	self->SetReader( state.GetLuaObject < MOAIFontReader >( 2, true ) );
 	return 0;
 }
 
@@ -822,4 +822,13 @@ void MOAIFont::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) 
 		lua_settable ( state, -3 );
 	}
 	lua_setfield ( state, -2, "mGlyphSets" );
+}
+
+//----------------------------------------------------------------//
+void MOAIFont::SetCache( MOAIGlyphCache* cache ) {
+	this->mCache.Set ( *this, cache );
+}
+
+void MOAIFont::SetReader( MOAIFontReader* reader ) {
+	this->mReader.Set ( *this, reader );
 }
