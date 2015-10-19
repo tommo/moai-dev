@@ -14,12 +14,14 @@ class MOAITBCanvas :
 	public MOAIAction {
 private:
 	
+	static int    _doStep                  ( lua_State* L );
 	static int    _getRootWidget           ( lua_State* L );
 	static int    _setSize                 ( lua_State* L );
 	static int    _sendKeyEvent            ( lua_State* L );
 	static int    _sendMouseWheelEvent     ( lua_State* L );
 	static int    _sendMouseMoveEvent      ( lua_State* L );
 	static int    _sendMouseButtonEvent    ( lua_State* L );
+	static int    _sendMouseScrollEvent    ( lua_State* L );
 
 	//----------------------------------------------------------------//
 	u32						OnGetModelBounds		( ZLBox& bounds );

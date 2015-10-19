@@ -65,6 +65,7 @@ TBWidget::PaintProps::PaintProps()
 
 TBWidget::TBWidget()
 	: m_parent(nullptr)
+	, m_skin(nullptr)
 	, m_opacity(1.f)
 	, m_state(WIDGET_STATE_NONE)
 	, m_gravity(WIDGET_GRAVITY_DEFAULT)
@@ -380,6 +381,14 @@ void TBWidget::SetGravity(WIDGET_GRAVITY g)
 	InvalidateLayout(INVALIDATE_LAYOUT_RECURSIVE);
 }
 
+void TBWidget::SetSkin(TBSkin* skin){
+	m_skin = skin;
+	Invalidate();
+	InvalidateSkinStates();
+	InvalidateLayout(INVALIDATE_LAYOUT_RECURSIVE);
+	OnSkinChanged();
+}
+
 void TBWidget::SetSkinBg(const TBID &skin_bg, WIDGET_INVOKE_INFO info)
 {
 	if (skin_bg == m_skin_bg)
@@ -404,7 +413,7 @@ TBSkinElement *TBWidget::GetSkinBgElement()
 {
 	TBWidgetSkinConditionContext context(this);
 	WIDGET_STATE state = GetAutoState();
-	return g_tb_skin->GetSkinElementStrongOverride(m_skin_bg, static_cast<SKIN_STATE>(state), context);
+	return GetSkin()->GetSkinElementStrongOverride(m_skin_bg, static_cast<SKIN_STATE>(state), context);
 }
 
 TBWidget *TBWidget::FindScrollableWidget(bool scroll_x, bool scroll_y)
@@ -808,7 +817,7 @@ void TBWidget::OnPaintChildren(const PaintProps &paint_props)
 					g_renderer->SetOpacity(opacity);
 
 					TBWidgetSkinConditionContext context(child);
-					g_tb_skin->PaintSkinOverlay(child->m_rect, skin_element, static_cast<SKIN_STATE>(state), context);
+					GetSkin()->PaintSkinOverlay(child->m_rect, skin_element, static_cast<SKIN_STATE>(state), context);
 
 					g_renderer->SetOpacity(old_opacity);
 				}
@@ -826,7 +835,7 @@ void TBWidget::OnPaintChildren(const PaintProps &paint_props)
 		{
 			WIDGET_STATE state = focused_widget->GetAutoState();
 			if (state & SKIN_STATE_FOCUSED)
-				g_tb_skin->PaintSkin(focused_widget->m_rect, TBIDC("generic_focus"), static_cast<SKIN_STATE>(state), context);
+				GetSkin()->PaintSkin(focused_widget->m_rect, TBIDC("generic_focus"), static_cast<SKIN_STATE>(state), context);
 		}
 	}
 
@@ -1135,7 +1144,7 @@ float TBWidget::CalculateOpacityInternal(WIDGET_STATE state, TBSkinElement *skin
 	if (skin_element)
 		opacity *= skin_element->opacity;
 	if (state & WIDGET_STATE_DISABLED)
-		opacity *= g_tb_skin->GetDefaultDisabledOpacity();
+		opacity *= GetSkin()->GetDefaultDisabledOpacity();
 	return opacity;
 }
 
@@ -1163,7 +1172,7 @@ void TBWidget::InvokePaint(const PaintProps &parent_paint_props)
 	// Paint background skin
 	TBRect local_rect(0, 0, m_rect.w, m_rect.h);
 	TBWidgetSkinConditionContext context(this);
-	TBSkinElement *used_element = g_tb_skin->PaintSkin(local_rect, skin_element, static_cast<SKIN_STATE>(state), context);
+	TBSkinElement *used_element = GetSkin()->PaintSkin(local_rect, skin_element, static_cast<SKIN_STATE>(state), context);
 	assert(!!used_element == !!skin_element);
 
 	TB_IF_DEBUG_SETTING(LAYOUT_BOUNDS, g_renderer->DrawRect(local_rect, TBColor(255, 255, 255, 50)));
@@ -1671,6 +1680,16 @@ TBFontDescription TBWidget::GetCalculatedFontDescription() const
 TBFontFace *TBWidget::GetFont() const
 {
 	return g_font_manager->GetFontFace(GetCalculatedFontDescription());
+}
+
+TBSkin *TBWidget::GetSkin() const
+{
+	const TBWidget *tmp = this;
+	while( tmp ) {
+		if( tmp->m_skin ) return tmp->m_skin;
+		tmp = tmp->m_parent;
+	}
+	return g_tb_skin;
 }
 
 }; // namespace tb

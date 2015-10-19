@@ -11,6 +11,7 @@
 #include "tb_font_renderer.h"
 #include "utf8/utf8.h"
 #include <assert.h>
+#include <stdio.h>
 
 namespace tb {
 
@@ -141,6 +142,7 @@ static bool is_never_break_after(const char *str, int ofs)
 
 static bool GetNextFragment(const char *text, TBTextFragmentContentFactory *content_factory, int *frag_len, bool *is_embed)
 {
+
 	if (text[0] == '\t')
 	{
 		*frag_len = 1;
@@ -167,8 +169,21 @@ static bool GetNextFragment(const char *text, TBTextFragmentContentFactory *cont
 		}
 	}
 	int i = 0;
-	while (!is_wordbreak(text[i]))
-		i++;
+	while( 1 ) {
+		int i1 = i;
+		if( is_wordbreak(text[i]) ) break;
+		utf8::move_inc(text, &i1, 8);
+		int d = i1 - i;
+		if( d > 1 ) {
+			if( i == 0 ) i = i1;
+			break;
+		} else if( d == 0 ) {
+			break;
+		}
+		i = i1;
+	}
+	// while (!is_wordbreak(text[i]))
+	// 	i++;
 	if (i == 0)
 		if (is_wordbreak(text[i]))
 			i++;
@@ -902,14 +917,11 @@ void TBBlock::Layout(bool update_fragments, bool propagate_height)
 			bool more = GetNextFragment(&text[ofs], styledit->packed.styling_on ? styledit->content_factory : nullptr, &frag_len, &is_embed);
 
 			TBTextFragment *fragment = new TBTextFragment();
-			if (!fragment)
-				break;
 
 			fragment->Init(this, ofs, frag_len);
 
 			if (is_embed)
 				fragment->content = styledit->content_factory->CreateFragmentContent(&text[ofs], frag_len);
-
 			fragments.AddLast(fragment);
 			ofs += frag_len;
 

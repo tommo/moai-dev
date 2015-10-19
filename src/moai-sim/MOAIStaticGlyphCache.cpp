@@ -31,7 +31,8 @@ MOAIImage* MOAIStaticGlyphCache::GetGlyphImage ( MOAIGlyph& glyph ) {
 
 //----------------------------------------------------------------//
 MOAITextureBase* MOAIStaticGlyphCache::GetGlyphTexture ( MOAIGlyph& glyph ) {
-
+	// if( MOAIGlyph::NULL_PAGE_ID == glyph.GetPageID () ) return NULL;
+	if( 0xffffffff == glyph.GetPageID () ) return NULL;
 	assert ( glyph.GetPageID () < this->mTextures.Size ());
 	return this->mTextures [ glyph.GetPageID ()];
 }

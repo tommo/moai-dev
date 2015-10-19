@@ -81,6 +81,8 @@ void MOAIDynamicGlyphCache::ClearPages () {
 //----------------------------------------------------------------//
 MOAIImage* MOAIDynamicGlyphCache::GetGlyphImage ( MOAIGlyph& glyph ) {
 
+	// if( MOAIGlyph::NULL_PAGE_ID == glyph.GetPageID () ) return NULL;
+	if( 0xffffffff == glyph.GetPageID () ) return NULL;
 	assert ( glyph.GetPageID () < this->mPages.Size ());
 	return this->mPages [ glyph.GetPageID ()]->mImageTexture;
 }
@@ -88,6 +90,8 @@ MOAIImage* MOAIDynamicGlyphCache::GetGlyphImage ( MOAIGlyph& glyph ) {
 //----------------------------------------------------------------//
 MOAITextureBase* MOAIDynamicGlyphCache::GetGlyphTexture ( MOAIGlyph& glyph ) {
 
+	// if( MOAIGlyph::NULL_PAGE_ID == glyph.GetPageID () ) return NULL;
+	if( 0xffffffff == glyph.GetPageID () ) return NULL;
 	assert ( glyph.GetPageID () < this->mPages.Size ());
 	return this->mPages [ glyph.GetPageID ()]->mImageTexture;
 }

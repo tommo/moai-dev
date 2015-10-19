@@ -45,7 +45,7 @@ private:
 	ZLLeanStack< MOAITBCanvas* > mCanvasStack;
 public:
 	void PushCanvas( MOAITBCanvas* canvas );
-	MOAITBCanvas* PopCanvas();
+	void PopCanvas( MOAITBCanvas* canvas );
 
 	// == TBRenderer ====================================================================
 	void RenderMOAIProp( MOAIGraphicsProp* prop );

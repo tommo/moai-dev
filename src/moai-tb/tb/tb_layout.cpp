@@ -216,7 +216,7 @@ int TBLayout::CalculateSpacing()
 
 		assert(SPACING_FROM_SKIN == SKIN_VALUE_NOT_SPECIFIED);
 		if (spacing == SPACING_FROM_SKIN /*|| spacing == SKIN_VALUE_NOT_SPECIFIED*/)
-			spacing = g_tb_skin->GetDefaultSpacing();
+			spacing = GetSkin()->GetDefaultSpacing();
 	}
 	return spacing;
 }
@@ -459,7 +459,7 @@ void TBLayout::OnPaintChildren(const PaintProps &paint_props)
 		else
 			skin_y = TBIDC("TBLayout.fadeout_y");
 
-		DrawEdgeFadeout(padding_rect, skin_x, skin_y,
+		DrawEdgeFadeout( GetSkin(), padding_rect, skin_x, skin_y,
 			m_overflow_scroll,
 			m_overflow_scroll,
 			m_overflow - m_overflow_scroll,

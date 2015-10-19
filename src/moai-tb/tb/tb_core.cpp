@@ -10,7 +10,6 @@
 #include "tb_font_renderer.h"
 #include "tb_addon.h"
 #include "tb_system.h"
-#include "animation/tb_animation.h"
 #include "image/tb_image_manager.h"
 
 namespace tb {
@@ -38,7 +37,6 @@ bool tb_core_init(TBRenderer *renderer, const char *lng_file)
 
 void tb_core_shutdown()
 {
-	TBAnimationManager::AbortAllAnimations();
 	TBShutdownAddons();
 #ifdef TB_IMAGE
 	delete g_image_manager;

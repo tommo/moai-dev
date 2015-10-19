@@ -91,7 +91,6 @@ void TBRendererMOAI::SetClipRect(const TBRect &rect) {
 	gfx.SetScissorRect( scRect );
 }
 
-
 void TBRendererMOAI::RenderMOAIProp( MOAIGraphicsProp* prop ) {
 	this->EndPaint();
 	prop->Render();
@@ -103,7 +102,8 @@ void TBRendererMOAI::RenderMOAIProp( MOAIGraphicsProp* prop ) {
 void TBRendererMOAI::BeginRenderString() {
 	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get();
 	this->FlushAllInternal();
-	gfxDevice.SetShaderPreset ( MOAIShaderMgr::FONT_SHADER );
+	gfxDevice.SetShaderPreset ( MOAIShaderMgr::DECK2D_SHADER );
+	// gfxDevice.SetShaderPreset ( MOAIShaderMgr::FONT_SHADER );
 }
 
 void TBRendererMOAI::EndRenderString() {
@@ -131,8 +131,8 @@ void TBRendererMOAI::PushCanvas( MOAITBCanvas* canvas ) {
 	this->mCanvasStack.Push( canvas );
 }
 
-MOAITBCanvas* TBRendererMOAI::PopCanvas() {
-	MOAITBCanvas* canvas = this->mCanvasStack.Pop();
-	return canvas;
+void TBRendererMOAI::PopCanvas( MOAITBCanvas* canvas ) {
+	MOAITBCanvas* canvas0 = this->mCanvasStack.Pop();
+	assert( canvas == canvas0 );
 }
 

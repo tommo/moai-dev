@@ -348,6 +348,8 @@
 		041C2AC81AAD8F4E005E88B1 /* pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 041C2A3F1AAD8F4D005E88B1 /* pch.cpp */; };
 		041C2AC91AAD8F4E005E88B1 /* pch.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A401AAD8F4D005E88B1 /* pch.h */; };
 		041C2ACA1AAD8F4E005E88B1 /* pch.h in Headers */ = {isa = PBXBuildFile; fileRef = 041C2A401AAD8F4D005E88B1 /* pch.h */; };
+		0433F7FD1BD4811100DE083F /* MOAITBSkin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0433F7FC1BD4811100DE083F /* MOAITBSkin.cpp */; };
+		0433F7FE1BD4811100DE083F /* MOAITBSkin.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0433F7FC1BD4811100DE083F /* MOAITBSkin.cpp */; };
 		0443E6131A8DF2350090F317 /* MOAIGfxBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0443E6121A8DF2350090F317 /* MOAIGfxBuffer.cpp */; };
 		0443E6141A8DF2350090F317 /* MOAIGfxBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0443E6121A8DF2350090F317 /* MOAIGfxBuffer.cpp */; };
 		0443E6161A8DF2490090F317 /* MOAIGfxBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 0443E6151A8DF2490090F317 /* MOAIGfxBuffer.h */; };
@@ -536,16 +538,6 @@
 		04D64F381BD2360200BE6C4B /* pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04D64E3B1BD2360200BE6C4B /* pch.cpp */; };
 		04D64F391BD2360200BE6C4B /* pch.h in Headers */ = {isa = PBXBuildFile; fileRef = 04D64E3C1BD2360200BE6C4B /* pch.h */; };
 		04D64F3A1BD2360200BE6C4B /* pch.h in Headers */ = {isa = PBXBuildFile; fileRef = 04D64E3C1BD2360200BE6C4B /* pch.h */; };
-		04D64F3D1BD2360200BE6C4B /* tb_animation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04D64E401BD2360200BE6C4B /* tb_animation.cpp */; };
-		04D64F3E1BD2360200BE6C4B /* tb_animation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04D64E401BD2360200BE6C4B /* tb_animation.cpp */; };
-		04D64F3F1BD2360200BE6C4B /* tb_animation.h in Headers */ = {isa = PBXBuildFile; fileRef = 04D64E411BD2360200BE6C4B /* tb_animation.h */; };
-		04D64F401BD2360200BE6C4B /* tb_animation.h in Headers */ = {isa = PBXBuildFile; fileRef = 04D64E411BD2360200BE6C4B /* tb_animation.h */; };
-		04D64F411BD2360200BE6C4B /* tb_animation_utils.h in Headers */ = {isa = PBXBuildFile; fileRef = 04D64E421BD2360200BE6C4B /* tb_animation_utils.h */; };
-		04D64F421BD2360200BE6C4B /* tb_animation_utils.h in Headers */ = {isa = PBXBuildFile; fileRef = 04D64E421BD2360200BE6C4B /* tb_animation_utils.h */; };
-		04D64F431BD2360200BE6C4B /* tb_widget_animation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04D64E431BD2360200BE6C4B /* tb_widget_animation.cpp */; };
-		04D64F441BD2360200BE6C4B /* tb_widget_animation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04D64E431BD2360200BE6C4B /* tb_widget_animation.cpp */; };
-		04D64F451BD2360200BE6C4B /* tb_widget_animation.h in Headers */ = {isa = PBXBuildFile; fileRef = 04D64E441BD2360200BE6C4B /* tb_widget_animation.h */; };
-		04D64F461BD2360200BE6C4B /* tb_widget_animation.h in Headers */ = {isa = PBXBuildFile; fileRef = 04D64E441BD2360200BE6C4B /* tb_widget_animation.h */; };
 		04D64F471BD2360200BE6C4B /* tb_image_manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04D64E461BD2360200BE6C4B /* tb_image_manager.cpp */; };
 		04D64F481BD2360200BE6C4B /* tb_image_manager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04D64E461BD2360200BE6C4B /* tb_image_manager.cpp */; };
 		04D64F491BD2360200BE6C4B /* tb_image_manager.h in Headers */ = {isa = PBXBuildFile; fileRef = 04D64E471BD2360200BE6C4B /* tb_image_manager.h */; };
@@ -6206,6 +6198,7 @@
 		041C2A3E1AAD8F4D005E88B1 /* MOAISteerSingleRayConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAISteerSingleRayConfiguration.h; path = "moai-steer/MOAISteerSingleRayConfiguration.h"; sourceTree = "<group>"; };
 		041C2A3F1AAD8F4D005E88B1 /* pch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pch.cpp; path = "moai-steer/pch.cpp"; sourceTree = "<group>"; };
 		041C2A401AAD8F4D005E88B1 /* pch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pch.h; path = "moai-steer/pch.h"; sourceTree = "<group>"; };
+		0433F7FC1BD4811100DE083F /* MOAITBSkin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAITBSkin.cpp; sourceTree = "<group>"; };
 		0443E6121A8DF2350090F317 /* MOAIGfxBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIGfxBuffer.cpp; sourceTree = "<group>"; };
 		0443E6151A8DF2490090F317 /* MOAIGfxBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIGfxBuffer.h; sourceTree = "<group>"; };
 		0443E6191A8DF48C0090F317 /* lpeg.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = lpeg.c; path = "../../3rdparty/lpeg-0.10.2/lpeg.c"; sourceTree = "<group>"; };
@@ -6267,11 +6260,6 @@
 		04D64E3A1BD2360200BE6C4B /* MOAITBWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAITBWindow.h; sourceTree = "<group>"; };
 		04D64E3B1BD2360200BE6C4B /* pch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pch.cpp; sourceTree = "<group>"; };
 		04D64E3C1BD2360200BE6C4B /* pch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pch.h; sourceTree = "<group>"; };
-		04D64E401BD2360200BE6C4B /* tb_animation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tb_animation.cpp; sourceTree = "<group>"; };
-		04D64E411BD2360200BE6C4B /* tb_animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tb_animation.h; sourceTree = "<group>"; };
-		04D64E421BD2360200BE6C4B /* tb_animation_utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tb_animation_utils.h; sourceTree = "<group>"; };
-		04D64E431BD2360200BE6C4B /* tb_widget_animation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tb_widget_animation.cpp; sourceTree = "<group>"; };
-		04D64E441BD2360200BE6C4B /* tb_widget_animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tb_widget_animation.h; sourceTree = "<group>"; };
 		04D64E461BD2360200BE6C4B /* tb_image_manager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tb_image_manager.cpp; sourceTree = "<group>"; };
 		04D64E471BD2360200BE6C4B /* tb_image_manager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tb_image_manager.h; sourceTree = "<group>"; };
 		04D64E481BD2360200BE6C4B /* tb_image_widget.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tb_image_widget.cpp; sourceTree = "<group>"; };
@@ -9981,6 +9969,7 @@
 				04D64E201BD2360200BE6C4B /* MOAITBLayout.h */,
 				04D64E211BD2360200BE6C4B /* MOAITBMgr.cpp */,
 				04D64E221BD2360200BE6C4B /* MOAITBMgr.h */,
+				0433F7FC1BD4811100DE083F /* MOAITBSkin.cpp */,
 				04D64E231BD2360200BE6C4B /* MOAITBNode.cpp */,
 				04D64E241BD2360200BE6C4B /* MOAITBNode.h */,
 				04D64E251BD2360200BE6C4B /* MOAITBPopupWindow.cpp */,
@@ -10019,7 +10008,6 @@
 		04D64E3E1BD2360200BE6C4B /* tb */ = {
 			isa = PBXGroup;
 			children = (
-				04D64E3F1BD2360200BE6C4B /* animation */,
 				04D64E451BD2360200BE6C4B /* image */,
 				04D64E4B1BD2360200BE6C4B /* parser */,
 				04D64E4E1BD2360200BE6C4B /* renderers */,
@@ -10128,18 +10116,6 @@
 				04D64ECB1BD2360200BE6C4B /* utf8 */,
 			);
 			path = tb;
-			sourceTree = "<group>";
-		};
-		04D64E3F1BD2360200BE6C4B /* animation */ = {
-			isa = PBXGroup;
-			children = (
-				04D64E401BD2360200BE6C4B /* tb_animation.cpp */,
-				04D64E411BD2360200BE6C4B /* tb_animation.h */,
-				04D64E421BD2360200BE6C4B /* tb_animation_utils.h */,
-				04D64E431BD2360200BE6C4B /* tb_widget_animation.cpp */,
-				04D64E441BD2360200BE6C4B /* tb_widget_animation.h */,
-			);
-			path = animation;
 			sourceTree = "<group>";
 		};
 		04D64E451BD2360200BE6C4B /* image */ = {
@@ -14796,7 +14772,6 @@
 				04D64FC91BD2360200BE6C4B /* tb_renderer.h in Headers */,
 				04D650211BD2360200BE6C4B /* tb_widgets_reader.h in Headers */,
 				04D64FCD1BD2360200BE6C4B /* tb_scroll_container.h in Headers */,
-				04D64F451BD2360200BE6C4B /* tb_widget_animation.h in Headers */,
 				04D64FEF1BD2360200BE6C4B /* tb_style_edit_content.h in Headers */,
 				04D64FE31BD2360200BE6C4B /* tb_sort.h in Headers */,
 				04559ABD1AD676130046A766 /* MOAISteerLimiter.h in Headers */,
@@ -14810,7 +14785,6 @@
 				04559AC01AD676130046A766 /* MOAISteerBehaviourWander.h in Headers */,
 				04D64FB51BD2360200BE6C4B /* tb_msg.h in Headers */,
 				04D6504F1BD2360200BE6C4B /* WidgetTypes.h in Headers */,
-				04D64F3F1BD2360200BE6C4B /* tb_animation.h in Headers */,
 				04559AC11AD676130046A766 /* MOAISteerLinePath.h in Headers */,
 				04D64EE31BD2360200BE6C4B /* MOAITBCanvas.h in Headers */,
 				04D64F631BD2360200BE6C4B /* tb_bitmap_fragment.h in Headers */,
@@ -14829,7 +14803,6 @@
 				04D64ED71BD2360200BE6C4B /* headers.h in Headers */,
 				04D64F6B1BD2360200BE6C4B /* tb_color.h in Headers */,
 				04D64F191BD2360200BE6C4B /* MOAITBScrollContainer.h in Headers */,
-				04D64F411BD2360200BE6C4B /* tb_animation_utils.h in Headers */,
 				04559AC61AD676130046A766 /* MOAISteerBehaviourCohesion.h in Headers */,
 				04559AC71AD676130046A766 /* MOAISteerBehaviourArrive.h in Headers */,
 				04D64F051BD2360200BE6C4B /* MOAITBMgr.h in Headers */,
@@ -14925,7 +14898,6 @@
 				04D64FCA1BD2360200BE6C4B /* tb_renderer.h in Headers */,
 				04D650221BD2360200BE6C4B /* tb_widgets_reader.h in Headers */,
 				04D64FCE1BD2360200BE6C4B /* tb_scroll_container.h in Headers */,
-				04D64F461BD2360200BE6C4B /* tb_widget_animation.h in Headers */,
 				04D64FF01BD2360200BE6C4B /* tb_style_edit_content.h in Headers */,
 				04D64FE41BD2360200BE6C4B /* tb_sort.h in Headers */,
 				04559B0C1AD6761A0046A766 /* MOAISteerLimiter.h in Headers */,
@@ -14939,7 +14911,6 @@
 				04559B0F1AD6761A0046A766 /* MOAISteerBehaviourWander.h in Headers */,
 				04D64FB61BD2360200BE6C4B /* tb_msg.h in Headers */,
 				04D650501BD2360200BE6C4B /* WidgetTypes.h in Headers */,
-				04D64F401BD2360200BE6C4B /* tb_animation.h in Headers */,
 				04559B101AD6761A0046A766 /* MOAISteerLinePath.h in Headers */,
 				04D64EE41BD2360200BE6C4B /* MOAITBCanvas.h in Headers */,
 				04D64F641BD2360200BE6C4B /* tb_bitmap_fragment.h in Headers */,
@@ -14958,7 +14929,6 @@
 				04D64ED81BD2360200BE6C4B /* headers.h in Headers */,
 				04D64F6C1BD2360200BE6C4B /* tb_color.h in Headers */,
 				04D64F1A1BD2360200BE6C4B /* MOAITBScrollContainer.h in Headers */,
-				04D64F421BD2360200BE6C4B /* tb_animation_utils.h in Headers */,
 				04559B151AD6761A0046A766 /* MOAISteerBehaviourCohesion.h in Headers */,
 				04559B161AD6761A0046A766 /* MOAISteerBehaviourArrive.h in Headers */,
 				04D64F061BD2360200BE6C4B /* MOAITBMgr.h in Headers */,
@@ -18746,6 +18716,7 @@
 				04D64F071BD2360200BE6C4B /* MOAITBNode.cpp in Sources */,
 				04D650331BD2360200BE6C4B /* test_tb_node_ref_tree.cpp in Sources */,
 				04D650311BD2360200BE6C4B /* test_tb_linklist.cpp in Sources */,
+				0433F7FD1BD4811100DE083F /* MOAITBSkin.cpp in Sources */,
 				04D64FED1BD2360200BE6C4B /* tb_style_edit_content.cpp in Sources */,
 				04D64F371BD2360200BE6C4B /* pch.cpp in Sources */,
 				04D64F651BD2360200BE6C4B /* tb_clipboard_dummy.cpp in Sources */,
@@ -18772,7 +18743,6 @@
 				04D64FFD1BD2360200BE6C4B /* tb_tempbuffer.cpp in Sources */,
 				04D64FA71BD2360200BE6C4B /* tb_list.cpp in Sources */,
 				04D64F731BD2360200BE6C4B /* tb_debug.cpp in Sources */,
-				04D64F3D1BD2360200BE6C4B /* tb_animation.cpp in Sources */,
 				04D64F9B1BD2360200BE6C4B /* tb_language.cpp in Sources */,
 				04D64EF11BD2360200BE6C4B /* MOAITBEvent.cpp in Sources */,
 				04D650451BD2360200BE6C4B /* utf8.cpp in Sources */,
@@ -18783,7 +18753,6 @@
 				04D6502F1BD2360200BE6C4B /* test_tb_geometry.cpp in Sources */,
 				04D64F231BD2360200BE6C4B /* MOAITBTabContainer.cpp in Sources */,
 				04D64F551BD2360200BE6C4B /* tb_renderer_batcher.cpp in Sources */,
-				04D64F431BD2360200BE6C4B /* tb_widget_animation.cpp in Sources */,
 				04D64F8F1BD2360200BE6C4B /* tb_hashtable.cpp in Sources */,
 				04D64FB71BD2360200BE6C4B /* tb_node_ref_tree.cpp in Sources */,
 				04D64EE51BD2360200BE6C4B /* MOAITBCheckBox.cpp in Sources */,
@@ -18853,6 +18822,7 @@
 				04D64F081BD2360200BE6C4B /* MOAITBNode.cpp in Sources */,
 				04D650341BD2360200BE6C4B /* test_tb_node_ref_tree.cpp in Sources */,
 				04D650321BD2360200BE6C4B /* test_tb_linklist.cpp in Sources */,
+				0433F7FE1BD4811100DE083F /* MOAITBSkin.cpp in Sources */,
 				04D64FEE1BD2360200BE6C4B /* tb_style_edit_content.cpp in Sources */,
 				04D64F381BD2360200BE6C4B /* pch.cpp in Sources */,
 				04D64F661BD2360200BE6C4B /* tb_clipboard_dummy.cpp in Sources */,
@@ -18879,7 +18849,6 @@
 				04D64FFE1BD2360200BE6C4B /* tb_tempbuffer.cpp in Sources */,
 				04D64FA81BD2360200BE6C4B /* tb_list.cpp in Sources */,
 				04D64F741BD2360200BE6C4B /* tb_debug.cpp in Sources */,
-				04D64F3E1BD2360200BE6C4B /* tb_animation.cpp in Sources */,
 				04D64F9C1BD2360200BE6C4B /* tb_language.cpp in Sources */,
 				04D64EF21BD2360200BE6C4B /* MOAITBEvent.cpp in Sources */,
 				04D650461BD2360200BE6C4B /* utf8.cpp in Sources */,
@@ -18890,7 +18859,6 @@
 				04D650301BD2360200BE6C4B /* test_tb_geometry.cpp in Sources */,
 				04D64F241BD2360200BE6C4B /* MOAITBTabContainer.cpp in Sources */,
 				04D64F561BD2360200BE6C4B /* tb_renderer_batcher.cpp in Sources */,
-				04D64F441BD2360200BE6C4B /* tb_widget_animation.cpp in Sources */,
 				04D64F901BD2360200BE6C4B /* tb_hashtable.cpp in Sources */,
 				04D64FB81BD2360200BE6C4B /* tb_node_ref_tree.cpp in Sources */,
 				04D64EE61BD2360200BE6C4B /* MOAITBCheckBox.cpp in Sources */,

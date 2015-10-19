@@ -964,6 +964,15 @@ public:
 		by GetCalculatedFontDescription) */
 	TBFontFace *GetFont() const;
 
+	/** Get widget skin
+	 */
+	TBSkin *GetSkin() const;
+
+	void SetSkin( TBSkin* skin );
+
+protected:
+	TBSkin *m_skin; 
+
 private:
 	friend class TBWidgetListener;	///< It does iteration of m_listeners for us.
 	TBWidget *m_parent;				///< The parent of this widget

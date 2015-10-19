@@ -15,9 +15,10 @@ class MOAITBMgr :
 private:
 
 	static int _init                   ( lua_State* L );
+	static int _addSkin                ( lua_State* L );
 	static int _loadSkin               ( lua_State* L );
 	static int _reloadBitmap           ( lua_State* L );
-	static int _setTextureLoader       ( lua_State* L );
+	static int _setLookupCallback      ( lua_State* L );
 	static int _registerFont           ( lua_State* L );
 	static int _getFont                ( lua_State* L );
 
@@ -34,12 +35,7 @@ private:
 
 
 	//----------------------------------------------------------------//
-	MOAILuaStrongRef mOnLoadTexture;
-	MOAILuaStrongRef mOnUnloadTexture;
-
-	MOAILuaStrongRef mOnLoadFont;
-	MOAILuaStrongRef mOnUnloadFont;
-
+	MOAILuaStrongRef mLookupCallback;
 	TBRendererMOAI* mRenderer;
 	
 	typedef STLMap < STLString, MOAIFont* >::iterator FontMapIt;
@@ -49,9 +45,7 @@ private:
 public:
 
 	TBRenderer*     GetRenderer() { return this->mRenderer; };
-
-	// void LoadTexture         ( TB::Texture* texture );
-	// void ReleaseTexture      ( TB::Texture* texture );
+	TBImageLoader*  CreateImageLoader( cc8* filename );
 
 	void        RegisterFont   ( STLString faceName, MOAIFont* font );
 	MOAIFont*   GetFont        ( STLString faceName );
