@@ -1,8 +1,10 @@
 #include "MOAITBWidget.h"
 #include "MOAITBMgr.h"
 #include "MOAITBSkin.h"
+#include "tb_widgets.h"
 #include "tb_window.h"
 #include "tb_popup_window.h"
+
 
 //----------------------------------------------------------------//
 //----------------------------------------------------------------//
@@ -226,14 +228,6 @@ MOAITBWidgetRef::~MOAITBWidgetRef () {
 //----------------------------------------------------------------//
 //----------------------------------------------------------------//
 
-int MOAITBWidget::_TBID ( lua_State *L ) {
-	MOAILuaState state ( L );
-	TBID id = GetTBID( state, 1 );
-	state.Push( (u32) id );
-	return 1;
-}
-
-
 int MOAITBWidget::_getTBClassName ( lua_State *L ) {
 	MOAI_LUA_SETUP( MOAITBWidget, "U" )
 	state.Push( self->GetInternal()->GetClassName() );
@@ -260,6 +254,16 @@ int MOAITBWidget::_setRect ( lua_State *L ) {
 int MOAITBWidget::_getRect ( lua_State *L ) {
 	MOAI_LUA_SETUP( MOAITBWidget, "U" )
 	TBRect rect = self->GetInternal()->GetRect();
+	state.Push( rect.x );
+	state.Push( -rect.y );
+	state.Push( rect.w );
+	state.Push( rect.h );
+	return 4;
+}
+
+int MOAITBWidget::_getPaddingRect ( lua_State *L ) {
+	MOAI_LUA_SETUP( MOAITBWidget, "U" )
+	TBRect rect = self->GetInternal()->GetPaddingRect();
 	state.Push( rect.x );
 	state.Push( -rect.y );
 	state.Push( rect.w );
@@ -451,7 +455,6 @@ int MOAITBWidget::_setFixedSize ( lua_State *L ) {
 }
 
 
-
 int MOAITBWidget::_invalidate ( lua_State *L ) {
 	MOAI_LUA_SETUP( MOAITBWidget, "U" )	
 	self->GetInternal()->Invalidate();
@@ -478,6 +481,7 @@ int MOAITBWidget::_invalidateSkinStates ( lua_State *L ) {
 	self->GetInternal()->InvalidateSkinStates();
 	return 0;
 }
+
 
 int MOAITBWidget::_die ( lua_State *L ) {
 	MOAI_LUA_SETUP( MOAITBWidget, "U" )
@@ -578,13 +582,6 @@ int MOAITBWidget::_getAutoState ( lua_State *L ) {
 	u32  stateRaw = self->GetInternal()->GetAutoState();
 	state.Push( stateRaw );
 	return 1;
-}
-
-int MOAITBWidget::_setAutoFocusState ( lua_State *L ) {
-	MOAI_LUA_SETUP( MOAITBWidget, "UB" )
-	bool flag = state.GetValue < bool >( 2, true );
-	self->GetInternal()->SetAutoFocusState( flag );
-	return 0;
 }
 
 int MOAITBWidget::_getOpacity ( lua_State *L ) {
@@ -1145,6 +1142,96 @@ int MOAITBWidget::_createPopupMenu ( lua_State* L ) {
 	//TODO
 	return 0;
 }
+
+//STATIC
+int MOAITBWidget::_TBID ( lua_State *L ) {
+	MOAILuaState state ( L );
+	TBID id = GetTBID( state, 1 );
+	state.Push( (u32) id );
+	return 1;
+}
+
+int MOAITBWidget::_setAutoFocusState ( lua_State *L ) {
+	MOAILuaState state ( L );
+	bool flag = state.GetValue < bool >( 1, true );
+	TBWidget::SetAutoFocusState( flag );
+	return 0;
+}
+
+
+int MOAITBWidget::_getHoveredWidget ( lua_State *L ) {
+	MOAILuaState state ( L );
+	PushTBWidgetOrNil( state, TBWidget::GetHoveredWidget() );
+	return 1;
+}
+
+int MOAITBWidget::_getFocusedWidget ( lua_State *L ) {
+	MOAILuaState state ( L );
+	PushTBWidgetOrNil( state, TBWidget::GetFocusedWidget() );
+	return 1;
+}
+
+int MOAITBWidget::_getCapturedWidget ( lua_State *L ) {
+	MOAILuaState state ( L );
+	PushTBWidgetOrNil( state, TBWidget::GetCapturedWidget() );
+	return 1;
+}
+
+int MOAITBWidget::_sendKeyEvent ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITBWidget, "UNB" )
+	u32  key      = state.GetValue < u32  >( 2, 0 );
+	bool down     = state.GetValue < bool >( 3, true );
+	u32 modifiers = state.GetValue < u32 >( 4, TB_MODIFIER_NONE );
+	self->GetInternal()->InvokeKey( key, TB_KEY_UNDEFINED, (MODIFIER_KEYS)modifiers, down );
+	return 0;
+}
+
+int MOAITBWidget::_sendSpecialKeyEvent ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITBWidget, "UNB" )
+	u32  special  = state.GetValue < u32  >( 2, 0 );
+	bool down     = state.GetValue < bool >( 3, true );
+	u32 modifiers = state.GetValue < u32 >( 4, TB_MODIFIER_NONE );
+	self->GetInternal()->InvokeKey( 0, (SPECIAL_KEY)special, (MODIFIER_KEYS)modifiers, down );
+	return 0;
+}
+
+int MOAITBWidget::_sendMouseMoveEvent ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITBWidget, "UNNNN" )
+	float x  = state.GetValue < float >( 2, 0.0f );
+	float y  = state.GetValue < float >( 3, 0.0f );
+	float dx = state.GetValue < float >( 4, 0.0f );
+	float dy = state.GetValue < float >( 5, 0.0f );
+	u32 modifiers = state.GetValue < u32 >( 6, TB_MODIFIER_NONE );
+	self->GetInternal()->InvokePointerMove( x, y, (MODIFIER_KEYS)modifiers, false );
+	self->mPointerLoc.Init( x, y );
+	return 0;
+}
+
+int MOAITBWidget::_sendMouseButtonEvent ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITBWidget, "UNB" )
+	u32 button    = state.GetValue < u32 >( 2, 0 );
+	bool down     = state.GetValue < bool >( 3, false );
+	u32 modifiers = state.GetValue < u32 >( 4, TB_MODIFIER_NONE );
+	if( down ) {
+		self->GetInternal()->InvokePointerDown( self->mPointerLoc.mX, self->mPointerLoc.mY, 1, (MODIFIER_KEYS)modifiers, false );
+	} else {
+		self->GetInternal()->InvokePointerUp( self->mPointerLoc.mX, self->mPointerLoc.mY, (MODIFIER_KEYS)modifiers, false );
+	}
+	return 0;
+}
+
+int MOAITBWidget::_sendMouseScrollEvent ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITBWidget, "UNN" )
+	float x  = state.GetValue < float >( 2, 0.0f );
+	float y  = state.GetValue < float >( 3, 0.0f );
+	float dx = state.GetValue < float >( 4, 0.0f );
+	float dy = state.GetValue < float >( 5, 0.0f );
+	u32 modifiers = state.GetValue < u32 >( 6, TB_MODIFIER_NONE );
+	self->GetInternal()->InvokeWheel( x, y, dx, dy, (MODIFIER_KEYS)modifiers );
+	return 0;
+}
+
+
 //----------------------------------------------------------------//
 MOAITBWidget::MOAITBWidget () :
 	mInternal( NULL ),
@@ -1258,6 +1345,46 @@ void MOAITBWidget::RegisterLuaClass ( MOAILuaState& state ) {
 
 	state.SetField ( -1, "WIDGET_STATE_ALL",          ( u32 )WIDGET_STATE_ALL     );
 
+	//WIDGET_FOCUS_REASON
+	state.SetField ( -1, "WIDGET_FOCUS_REASON_NAVIGATION",  ( u32 )WIDGET_FOCUS_REASON_NAVIGATION );
+	state.SetField ( -1, "WIDGET_FOCUS_REASON_POINTER",     ( u32 )WIDGET_FOCUS_REASON_POINTER    );
+	state.SetField ( -1, "WIDGET_FOCUS_REASON_UNKNOWN",     ( u32 )WIDGET_FOCUS_REASON_UNKNOWN    );
+
+	//MODIFIER KEY
+	state.SetField ( -1, "MODIFIER_NONE",  (u32)TB_MODIFIER_NONE );
+	state.SetField ( -1, "MODIFIER_CTRL",  (u32)TB_CTRL          );
+	state.SetField ( -1, "MODIFIER_SHIFT", (u32)TB_SHIFT         );
+	state.SetField ( -1, "MODIFIER_ALT",   (u32)TB_ALT           );
+	state.SetField ( -1, "MODIFIER_SUPER", (u32)TB_SUPER         );
+
+	//SPEICIAL KEY
+	state.SetField ( -1, "KEY_UNDEFINED",  (u32)TB_KEY_UNDEFINED );
+	state.SetField ( -1, "KEY_UP",         (u32)TB_KEY_UP        );
+	state.SetField ( -1, "KEY_DOWN",       (u32)TB_KEY_DOWN      );
+	state.SetField ( -1, "KEY_LEFT",       (u32)TB_KEY_LEFT      );
+	state.SetField ( -1, "KEY_RIGHT",      (u32)TB_KEY_RIGHT     );
+	state.SetField ( -1, "KEY_PAGE_UP",    (u32)TB_KEY_PAGE_UP   );
+	state.SetField ( -1, "KEY_PAGE_DOWN",  (u32)TB_KEY_PAGE_DOWN );
+	state.SetField ( -1, "KEY_HOME",       (u32)TB_KEY_HOME      );
+	state.SetField ( -1, "KEY_END",        (u32)TB_KEY_END       );
+	state.SetField ( -1, "KEY_TAB",        (u32)TB_KEY_TAB       );
+	state.SetField ( -1, "KEY_BACKSPACE",  (u32)TB_KEY_BACKSPACE );
+	state.SetField ( -1, "KEY_INSERT",     (u32)TB_KEY_INSERT    );
+	state.SetField ( -1, "KEY_DELETE",     (u32)TB_KEY_DELETE    );
+	state.SetField ( -1, "KEY_ENTER",      (u32)TB_KEY_ENTER     );
+	state.SetField ( -1, "KEY_ESC",        (u32)TB_KEY_ESC       );
+	state.SetField ( -1, "KEY_F1",         (u32)TB_KEY_F1        );
+	state.SetField ( -1, "KEY_F2",         (u32)TB_KEY_F2        );
+	state.SetField ( -1, "KEY_F3",         (u32)TB_KEY_F3        );
+	state.SetField ( -1, "KEY_F4",         (u32)TB_KEY_F4        );
+	state.SetField ( -1, "KEY_F5",         (u32)TB_KEY_F5        );
+	state.SetField ( -1, "KEY_F6",         (u32)TB_KEY_F6        );
+	state.SetField ( -1, "KEY_F7",         (u32)TB_KEY_F7        );
+	state.SetField ( -1, "KEY_F8",         (u32)TB_KEY_F8        );
+	state.SetField ( -1, "KEY_F9",         (u32)TB_KEY_F9        );
+	state.SetField ( -1, "KEY_F10",        (u32)TB_KEY_F10       );
+	state.SetField ( -1, "KEY_F11",        (u32)TB_KEY_F11       );
+	state.SetField ( -1, "KEY_F12",        (u32)TB_KEY_F12       );
 	//AXIS
 	state.SetField ( -1, "AXIS_X",      ( u32 )AXIS_X     );
 	state.SetField ( -1, "AXIS_Y",      ( u32 )AXIS_Y     );
@@ -1287,8 +1414,12 @@ void MOAITBWidget::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "WIDGET_GRAVITY_DEFAULT",    ( u32 ) WIDGET_GRAVITY_DEFAULT    );
 
 	luaL_Reg regTable [] = {
-		{ "new",             MOAILogMessages::_alertNewIsUnsupported },
-		{ "TBID",            _TBID },
+		{ "new",               _new },
+		{ "setAutoFocusState", _setAutoFocusState  },
+		{ "getHoveredWidget",  _getHoveredWidget   },
+		{ "getFocusedWidget",  _getFocusedWidget   },
+		{ "getCapturedWidget", _getCapturedWidget  },
+		{ "TBID",              _TBID },
 		{ NULL, NULL }
 	};
 	luaL_register ( state, 0, regTable );
@@ -1304,6 +1435,8 @@ void MOAITBWidget::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 		{ "getRect",               _getRect              },
 		{ "setRect",               _setRect              },
+		{ "getPaddingRect",        _getPaddingRect       },
+
 		{ "getLoc",                _getLoc               },
 		{ "setLoc",                _setLoc               },
 		{ "seekLoc",               _seekLoc              },
@@ -1340,7 +1473,6 @@ void MOAITBWidget::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "getStateRaw",           _getStateRaw          },
 		{ "setStateRaw",           _setStateRaw          },
 		{ "getAutoState",          _getAutoState         },
-		{ "setAutoFocusState",     _setAutoFocusState    },
 		
 		{ "getOpacity",            _getOpacity           },
 		{ "setOpacity",            _setOpacity           },
@@ -1427,6 +1559,13 @@ void MOAITBWidget::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 		{ "createPopupWindow",     _createPopupWindow    },
 		{ "createPopupMenu",       _createPopupMenu      },
+
+		{ "sendMouseMoveEvent",    _sendMouseMoveEvent   },
+		{ "sendMouseButtonEvent",  _sendMouseButtonEvent },
+		{ "sendMouseScrollEvent",  _sendMouseScrollEvent },
+		{ "sendKeyEvent",          _sendKeyEvent         },
+		{ "sendSpecialKeyEvent",   _sendSpecialKeyEvent  },
+
 		{ NULL, NULL }
 	};
 	

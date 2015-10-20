@@ -230,6 +230,21 @@ void TBWidget::SetAutoFocusState(bool on)
 		focused_widget->Invalidate();
 }
 
+TBWidget* TBWidget::GetHoveredWidget()
+{
+	return hovered_widget;
+}
+
+TBWidget* TBWidget::GetFocusedWidget()
+{
+	return focused_widget;
+}
+
+TBWidget* TBWidget::GetCapturedWidget()
+{
+	return captured_widget;
+}
+
 void TBWidget::SetOpacity(float opacity)
 {
 	opacity = Clamp(opacity, 0.f, 1.f);

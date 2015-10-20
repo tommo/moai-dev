@@ -13,6 +13,22 @@ class MOAITBWidget;
 class MOAITBWidgetRef;
 class MOAITBWidgetListener;
 
+#define MOAI_TB_NEW( ThisClass )\
+	static int _new ( lua_State* L ) {\
+		MOAILuaState state ( L );\
+		ThisClass *widget = new ThisClass();\
+		widget->Init();\
+		widget->PushLuaUserdata( state );\
+		return 1;\
+	}	
+
+#define MOAI_TB_GET_INTERNAL( TBClazz )\
+	inline TBClazz* GetInternal() { return static_cast< TBClazz* >( this->mInternal ); }
+
+#define MOAI_TB_CREATE_INTERNAL( TBClazz )\
+	TBWidget* CreateInternal() { return new TBClazz(); }
+
+
 //----------------------------------------------------------------//
 class MOAITBWidgetRef :
 	public TBTypedObject
@@ -91,9 +107,14 @@ private:
 	friend class MOAITBWidgetRef;
 	friend class MOAITBWidgetListener;
 
+	ZLVec2D   mPointerLoc;
 
 	//----------------------------------------------------------------//
-	static int _TBID             ( lua_State* L );
+	static int _TBID              ( lua_State* L );
+	static int _setAutoFocusState ( lua_State* L );
+	static int _getHoveredWidget  ( lua_State* L );
+	static int _getFocusedWidget  ( lua_State* L );
+	static int _getCapturedWidget ( lua_State* L );
 
 	//----------------------------------------------------------------//
 	static int _getTBClassName   ( lua_State* L );
@@ -101,6 +122,7 @@ private:
 
 	static int _getRect          ( lua_State* L );
 	static int _setRect          ( lua_State* L );
+	static int _getPaddingRect   ( lua_State* L );
 	static int _getLoc           ( lua_State* L );
 	static int _setLoc           ( lua_State* L );
 	static int _seekLoc          ( lua_State* L );
@@ -120,6 +142,7 @@ private:
 	static int _invalidateStates ( lua_State* L );
 	static int _invalidateSkinStates ( lua_State* L );
 	static int _invalidateLayout ( lua_State* L );
+	
 	static int _die              ( lua_State* L );
 	static int _isDying          ( lua_State* L );
 
@@ -138,7 +161,6 @@ private:
 	static int _getStateRaw      ( lua_State* L );
 	static int _setStateRaw      ( lua_State* L );
 	static int _getAutoState     ( lua_State* L );
-	static int _setAutoFocusState( lua_State* L );
 
 	static int _getOpacity       ( lua_State* L );
 	static int _setOpacity       ( lua_State* L );
@@ -225,6 +247,15 @@ private:
 
 	static int _createPopupWindow   ( lua_State* L );
 	static int _createPopupMenu     ( lua_State* L );
+
+	static int _sendKeyEvent         ( lua_State* L );
+	static int _sendSpecialKeyEvent  ( lua_State* L );
+	static int _sendMouseWheelEvent  ( lua_State* L );
+	static int _sendMouseMoveEvent   ( lua_State* L );
+	static int _sendMouseButtonEvent ( lua_State* L );
+	static int _sendMouseScrollEvent ( lua_State* L );
+
+	MOAI_TB_NEW( MOAITBWidget )
 
 	//----------------------------------------------------------------//
 	void OnInternalLost ();
@@ -337,20 +368,5 @@ public://STATIC
 
 };
 
-
-#define MOAI_TB_NEW( ThisClass )\
-	static int _new ( lua_State* L ) {\
-		MOAILuaState state ( L );\
-		ThisClass *widget = new ThisClass();\
-		widget->Init();\
-		widget->PushLuaUserdata( state );\
-		return 1;\
-	}	
-
-#define MOAI_TB_GET_INTERNAL( TBClazz )\
-	inline TBClazz* GetInternal() { return static_cast< TBClazz* >( this->mInternal ); }
-
-#define MOAI_TB_CREATE_INTERNAL( TBClazz )\
-	TBWidget* CreateInternal() { return new TBClazz(); }
 
 #endif

@@ -437,11 +437,6 @@ public:
 		the define TB_ALWAYS_SHOW_EDIT_FOCUS. */
 	WIDGET_STATE GetAutoState() const;
 
-	/** Set if the state WIDGET_STATE_FOCUSED should be set automatically for the focused widget.
-		This value is set to true when moving focus by keyboard, and set to off when clicking
-		with the pointer. */
-	static void SetAutoFocusState(bool on);
-
 	/** Set opacity for this widget and its children from 0.0 - 1.0.
 		If opacity is 0 (invisible), the widget won't receive any input. */
 	void SetOpacity(float opacity);
@@ -969,6 +964,16 @@ public:
 	TBSkin *GetSkin() const;
 
 	void SetSkin( TBSkin* skin );
+
+
+	/** Set if the state WIDGET_STATE_FOCUSED should be set automatically for the focused widget.
+		This value is set to true when moving focus by keyboard, and set to off when clicking
+		with the pointer. */
+	static void SetAutoFocusState(bool on);
+
+	static TBWidget* GetHoveredWidget();
+	static TBWidget* GetFocusedWidget();
+	static TBWidget* GetCapturedWidget();
 
 protected:
 	TBSkin *m_skin; 

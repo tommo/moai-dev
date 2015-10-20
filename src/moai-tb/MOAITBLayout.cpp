@@ -90,6 +90,31 @@ MOAITBLayout::~MOAITBLayout () {
 
 //----------------------------------------------------------------//
 void MOAITBLayout::RegisterLuaClass ( MOAILuaState& state ) {
+	//LAYOUT_SIZE	
+	state.SetField ( -1, "SIZE_GRAVITY",                      (u32)LAYOUT_SIZE_GRAVITY                        );
+	state.SetField ( -1, "SIZE_PREFERRED",                    (u32)LAYOUT_SIZE_PREFERRED                      );
+	state.SetField ( -1, "SIZE_AVAILABLE",                    (u32)LAYOUT_SIZE_AVAILABLE                      );
+
+	//LAYOUT_POSITION
+	state.SetField( -1, "POSITION_CENTER",                    (u32 )LAYOUT_POSITION_CENTER                    );
+	state.SetField( -1, "POSITION_LEFT_TOP",                  (u32 )LAYOUT_POSITION_LEFT_TOP                  );
+	state.SetField( -1, "POSITION_RIGHT_BOTTOM",              (u32 )LAYOUT_POSITION_RIGHT_BOTTOM              );
+	state.SetField( -1, "POSITION_GRAVITY",                   (u32 )LAYOUT_POSITION_GRAVITY                   );
+	//LAYOUT_DISTRIBUTION
+	state.SetField( -1, "DISTRIBUTION_PREFERRED",             (u32 )LAYOUT_DISTRIBUTION_PREFERRED             );
+	state.SetField( -1, "DISTRIBUTION_AVAILABLE",             (u32 )LAYOUT_DISTRIBUTION_AVAILABLE             );
+	state.SetField( -1, "DISTRIBUTION_GRAVITY",               (u32 )LAYOUT_DISTRIBUTION_GRAVITY               );
+	// DISTRIBUTION_POSITION
+	state.SetField( -1, "DISTRIBUTION_POSITION_CENTER",       (u32 )LAYOUT_DISTRIBUTION_POSITION_CENTER       );
+	state.SetField( -1, "DISTRIBUTION_POSITION_LEFT_TOP",     (u32 )LAYOUT_DISTRIBUTION_POSITION_LEFT_TOP     );
+	state.SetField( -1, "DISTRIBUTION_POSITION_RIGHT_BOTTOM", (u32 )LAYOUT_DISTRIBUTION_POSITION_RIGHT_BOTTOM );
+	//LAYOUT_ORDER
+	state.SetField( -1, "ORDER_BOTTOM_TO_TOP",                (u32 )LAYOUT_ORDER_BOTTOM_TO_TOP                );
+	state.SetField( -1, "ORDER_TOP_TO_BOTTOM",                (u32 )LAYOUT_ORDER_TOP_TO_BOTTOM                );
+	//LAYOUT_OVERFLOW
+	state.SetField( -1, "OVERFLOW_CLIP",                      (u32 )LAYOUT_OVERFLOW_CLIP                      );
+	state.SetField( -1, "OVERFLOW_SCROLL",                    (u32 )LAYOUT_OVERFLOW_SCROLL                    );
+
 	MOAITBWidget::RegisterLuaClass( state );
 	luaL_Reg regTable [] = {
 		{ "new", _new },
