@@ -970,6 +970,15 @@ void ZLColorVec::Add ( const ZLColorVec& c ) {
 }
 
 //----------------------------------------------------------------//
+void ZLColorVec::Sub ( const ZLColorVec& c ) {
+
+	this->mR -= c.mR;
+	this->mG -= c.mG;
+	this->mB -= c.mB;
+	this->mA -= c.mA;
+}
+
+//----------------------------------------------------------------//
 bool ZLColorVec::Compare ( const ZLColorVec& c ) {
 
 	if ((( mR != c.mR ) || ( mR != c.mR )) ||

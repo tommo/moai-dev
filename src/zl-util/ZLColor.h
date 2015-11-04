@@ -123,6 +123,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	void			Add					( const ZLColorVec& c );
+	void			Sub					( const ZLColorVec& c );
 	bool			Compare				( const ZLColorVec& c );
 	bool			Compare				( const ZLColorVec& c, float res );
 	void			FromHSV				( float h, float s, float v );
@@ -158,6 +159,22 @@ public:
 		        	  this->mG * other.mG,
 		        	  this->mB * other.mB,
 		        	  this->mA * other.mA);
+	}
+
+	//----------------------------------------------------------------//
+	ZLColorVec operator+(const ZLColorVec &other) const {
+		return ZLColorVec(this->mR + other.mR,
+		        	  this->mG + other.mG,
+		        	  this->mB + other.mB,
+		        	  this->mA + other.mA);
+	}
+
+	//----------------------------------------------------------------//
+	ZLColorVec operator-(const ZLColorVec &other) const {
+		return ZLColorVec(this->mR - other.mR,
+		        	  this->mG - other.mG,
+		        	  this->mB - other.mB,
+		        	  this->mA - other.mA);
 	}
 	
 	//----------------------------------------------------------------//

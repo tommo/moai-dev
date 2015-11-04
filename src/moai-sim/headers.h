@@ -13,6 +13,7 @@
 #include <moai-sim/MOAIAnimCurveBase.h>
 #include <moai-sim/MOAIAnimCurveQuat.h>
 #include <moai-sim/MOAIAnimCurveVec.h>
+#include <moai-sim/MOAIAnimCurveColor.h>
 #include <moai-sim/MOAIAnimCurveEX.h>
 #include <moai-sim/MOAIAttrOp.h>
 #include <moai-sim/MOAIBlendMode.h>
@@ -25,6 +26,7 @@
 #include <moai-sim/MOAICollisionShape.h>
 #include <moai-sim/MOAICollisionWorld.h>
 #include <moai-sim/MOAIColor.h>
+#include <moai-sim/MOAIColorRamp.h>
 #include <moai-sim/MOAICompassSensor.h>
 #include <moai-sim/MOAICoroutine.h>
 #include <moai-sim/MOAIDebugLines.h>

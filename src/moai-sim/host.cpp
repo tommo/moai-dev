@@ -45,6 +45,7 @@ void AKUSimContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAIAnimCurve )
 	REGISTER_LUA_CLASS ( MOAIAnimCurveQuat )
 	REGISTER_LUA_CLASS ( MOAIAnimCurveVec )
+	REGISTER_LUA_CLASS ( MOAIAnimCurveColor )
 	REGISTER_LUA_CLASS ( MOAIAnimCurveEX )
 	
 	REGISTER_LUA_CLASS ( MOAIBoundsDeck )
@@ -55,6 +56,7 @@ void AKUSimContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAICollisionProp )
 	REGISTER_LUA_CLASS ( MOAICollisionWorld )
 	REGISTER_LUA_CLASS ( MOAIColor )
+	REGISTER_LUA_CLASS ( MOAIColorRamp )
 	REGISTER_LUA_CLASS ( MOAICompassSensor )
 	REGISTER_LUA_CLASS ( MOAICoroutine )
 	REGISTER_LUA_CLASS ( MOAIDebugLines )
