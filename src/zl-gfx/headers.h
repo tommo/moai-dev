@@ -77,6 +77,7 @@ enum {
 
 	ZGL_FRAMEBUFFER_ATTACHMENT_COLOR,
 	ZGL_FRAMEBUFFER_ATTACHMENT_DEPTH,
+	ZGL_FRAMEBUFFER_ATTACHMENT_DEPTH_STENCIL,
 	ZGL_FRAMEBUFFER_ATTACHMENT_STENCIL,
 
 	ZGL_FRAMEBUFFER_STATUS_COMPLETE,
@@ -96,6 +97,7 @@ enum {
 	ZGL_PIPELINE_DEPTH,
 	ZGL_PIPELINE_NORMAL_ARRAY,
 	ZGL_PIPELINE_SCISSOR,
+	ZGL_PIPELINE_STENCIL,
 	ZGL_PIPELINE_TEXTURE_2D,
 	ZGL_PIPELINE_TEXTURE_COORD_ARRAY,
 	ZGL_PIPELINE_VERTEX_ARRAY,
@@ -121,6 +123,7 @@ enum {
 
 
 	ZGL_PIXEL_FORMAT_DEPTH_COMPONENT16,
+	ZGL_PIXEL_FORMAT_DEPTH24_STENCIL8,
 	ZGL_PIXEL_FORMAT_STENCIL_INDEX8,
 
 	ZGL_PIXEL_TYPE_BYTE,
@@ -184,6 +187,24 @@ enum {
 	ZGL_SHADER_TYPE_FRAGMENT,
 	ZGL_SHADER_TYPE_GEOMETRY,
 	ZGL_SHADER_TYPE_VERTEX,
+
+	ZGL_STENCIL_OP_DECR,
+	ZGL_STENCIL_OP_DECR_WRAP,
+	ZGL_STENCIL_OP_INCR,
+	ZGL_STENCIL_OP_INCR_WRAP,
+	ZGL_STENCIL_OP_INVERT,
+	ZGL_STENCIL_OP_KEEP,
+	ZGL_STENCIL_OP_REPLACE,
+	ZGL_STENCIL_OP_ZERO,
+
+	ZGL_STENCIL_ALWAYS,
+	ZGL_STENCIL_EQUAL,
+	ZGL_STENCIL_LESS,
+	ZGL_STENCIL_LEQUAL,
+	ZGL_STENCIL_GEQUAL,
+	ZGL_STENCIL_GREATER,
+	ZGL_STENCIL_NEVER,
+	ZGL_STENCIL_NOTEQUAL,
 
 	ZGL_STRING_VENDOR,
 	ZGL_STRING_VERSION,
@@ -254,6 +275,7 @@ extern void		zglBlendMode			( u32 mode );
 extern void		zglClear				( u32 mask );
 extern void		zglClearColor			( float r, float g, float b, float a );
 extern void		zglColor				( float r, float g, float b, float a );
+extern void		zglColorMask			( bool maskR, bool maskG, bool maskB, bool maskA );
 extern void		zglCullFace				( u32 mode );
 extern void		zglDeleteBuffer			( u32 buffer );
 extern void		zglDeleteFramebuffer	( u32 buffer );
@@ -280,6 +302,9 @@ extern void		zglMultMatrix			( const float* matrix );
 extern void		zglPointSize			( float size );
 extern void		zglReadPixels			( s32 x, s32 y, u32 width, u32 height, void* data );
 extern void		zglScissor				( s32 x, s32 y, u32 w, u32 h );
+extern void		zglStencilFunc			( u32 stencilFunc, u32 ref, u32 mask );
+extern void		zglStencilMask			( u32 mask );
+extern void		zglStencilOp			( u32 sfail, u32 dpfail, u32 dppass );
 extern void		zglViewport				( s32 x, s32 y, u32 w, u32 h );
 
 //----------------------------------------------------------------//

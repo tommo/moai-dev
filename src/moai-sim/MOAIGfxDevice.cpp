@@ -364,17 +364,20 @@ void MOAIGfxDevice::ClearErrors () {
 
 //----------------------------------------------------------------//
 void MOAIGfxDevice::ClearSurface ( u32 clearFlags ) {
+	if ( !clearFlags ) return;
 
-	if ( clearFlags ) {
-		if (( clearFlags & ZGL_CLEAR_DEPTH_BUFFER_BIT ) && !this->mDepthMask ) {
-			zglDepthMask ( true );
-			zglClear ( clearFlags );
-			zglDepthMask ( false );
-		}
-		else {
-			zglClear ( clearFlags );
-		}
-	}
+	bool clearDepth   = clearFlags & ZGL_CLEAR_DEPTH_BUFFER_BIT;
+	bool clearStencil = clearFlags & ZGL_CLEAR_STENCIL_BUFFER_BIT;
+
+	if ( clearDepth ) zglDepthMask ( true );
+	if ( clearStencil ) zglStencilMask( 0xff );
+	//todo colormask?
+
+	zglClear ( clearFlags );
+
+	if ( clearDepth ) zglDepthMask ( this->mDepthMask );	
+	if ( clearStencil ) zglStencilMask ( this->mStencilMode.mMask );	
+	
 }
 
 //----------------------------------------------------------------//
@@ -703,6 +706,7 @@ MOAIGfxDevice::MOAIGfxDevice () :
 	mShaderProgram ( 0 ),
 	mShaderDirty ( false ),
 	mSize ( 0 ),
+	mStencilEnabled ( false ),
 	mActiveTextures ( 0 ),
 	mReservedTextureBase ( 8 ),
 	mTextureMemoryUsage ( 0 ),
@@ -849,6 +853,10 @@ void MOAIGfxDevice::ResetState () {
 	// turn off blending
 	zglDisable ( ZGL_PIPELINE_BLEND );
 	this->mBlendEnabled = false;
+
+	// turn off stencil
+	zglDisable ( ZGL_PIPELINE_STENCIL );
+	this->mStencilEnabled = false;
 	
 	// disable backface culling
 	zglDisable ( ZGL_PIPELINE_CULL );
@@ -974,6 +982,34 @@ void MOAIGfxDevice::SetBufferScale ( float scale ) {
 void MOAIGfxDevice::SetBufferSize ( u32 width, u32 height ) {
 
 	this->mDefaultBuffer->SetBufferSize ( width, height );
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::SetColorMask () {
+
+	this->SetColorMask( true, true, true, true );
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::SetColorMask ( u32 packed ) {
+
+	if( packed != this->mColorMask ) {
+		this->Flush();
+		this->mColorMask = packed;
+		bool maskR = packed & 1;
+		bool maskG = ( packed >> 1 ) & 1;
+		bool maskB = ( packed >> 2 ) & 1;
+		bool maskA = ( packed >> 3 ) & 1;
+		zglColorMask( maskR, maskG, maskB, maskA );
+	}
+
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::SetColorMask ( bool maskR, bool maskG, bool maskB, bool maskA ) {
+
+	u32 packed = maskR | ( maskG << 1 ) | ( maskB << 2 ) | ( maskA << 3 );
+	this->SetColorMask( packed );
 }
 
 //----------------------------------------------------------------//
@@ -1227,6 +1263,37 @@ void MOAIGfxDevice::SetShaderProgram ( MOAIShaderProgram* program ) {
 		}
 	}
 	this->mShaderDirty = true;
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::SetStencilMode () {
+	if ( this->mStencilEnabled ) {
+		this->Flush ();
+		zglDisable ( ZGL_PIPELINE_STENCIL );
+		this->mStencilEnabled = false;
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxDevice::SetStencilMode ( const MOAIStencilMode& stencilMode ) {
+	if( !stencilMode.mFunc ) { return this->SetStencilMode(); }
+
+	if ( !this->mStencilEnabled ) {
+		this->Flush ();
+		zglEnable ( ZGL_PIPELINE_STENCIL );
+		this->mStencilMode = stencilMode;
+		zglStencilFunc ( this->mStencilMode.mFunc, this->mStencilMode.mFuncRef, this->mStencilMode.mFuncMask );
+		zglStencilOp ( this->mStencilMode.mSFail, this->mStencilMode.mDPFail, this->mStencilMode.mDPPass );
+		zglStencilMask ( this->mStencilMode.mMask );
+		this->mStencilEnabled = true;
+	}
+	else if ( !this->mStencilMode.IsSame ( stencilMode )) {
+		this->Flush ();
+		this->mStencilMode = stencilMode;
+		zglStencilFunc ( this->mStencilMode.mFunc, this->mStencilMode.mFuncRef, this->mStencilMode.mFuncMask );
+		zglStencilOp ( this->mStencilMode.mSFail, this->mStencilMode.mDPFail, this->mStencilMode.mDPPass );
+		zglStencilMask ( this->mStencilMode.mMask );
+	}
 }
 
 //----------------------------------------------------------------//

@@ -178,6 +178,27 @@ int MOAIGraphicsProp::_setBlendMode ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	setColorMask
+	@text	Sets and enables face culling.
+	
+	@in		MOAIGraphicsProp self
+	@opt	boolean maskR
+	@opt	boolean maskG
+	@opt	boolean maskB
+	@opt	boolean maskA
+	@out	nil
+*/
+int MOAIGraphicsProp::_setColorMask ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGraphicsProp, "UBBBB" )
+	bool maskR = state.GetValue < bool >( 2, true );
+	bool maskG = state.GetValue < bool >( 3, true );
+	bool maskB = state.GetValue < bool >( 4, true );
+	bool maskA = state.GetValue < bool >( 5, true );
+	self->SetColorMask( maskR, maskG, maskB, maskA );
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	setCullMode
 	@text	Sets and enables face culling.
 	
@@ -301,6 +322,41 @@ int MOAIGraphicsProp::_setShader ( lua_State* L ) {
 	MOAIShader* shader = state.GetLuaObject < MOAIShader >( 2, true );
 	self->SetDependentMember < MOAIShader >( self->mShader, shader );
 	
+	return 0;
+}
+
+
+//----------------------------------------------------------------//
+int MOAIGraphicsProp::_setStencilTest ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGraphicsProp, "UNN" )
+
+	int func = state.GetValue < int >( 2, 0 );
+	int ref  = state.GetValue < int >( 3, 0 );
+	int mask = state.GetValue < int >( 4, 0xff );
+
+	self->mStencilMode.SetStencilFunc( func, ref, mask );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAIGraphicsProp::_setStencilOp ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGraphicsProp, "UNNN" )
+
+	int sfail  = state.GetValue < int >( 2, ZGL_STENCIL_OP_KEEP );
+	int dpfail = state.GetValue < int >( 3, ZGL_STENCIL_OP_KEEP );
+	int dppass = state.GetValue < int >( 4, ZGL_STENCIL_OP_REPLACE );
+
+	self->mStencilMode.SetStencilOp( sfail, dpfail, dppass );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+int MOAIGraphicsProp::_setStencilMask ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGraphicsProp, "U" )
+
+	int mask  = state.GetValue < int >( 2, 0xff );
+
+	self->mStencilMode.SetStencilMask( mask );
 	return 0;
 }
 
@@ -646,10 +702,12 @@ void MOAIGraphicsProp::LoadGfxState () {
 	gfxDevice.SetGfxState ( gfxState.GetTexture ());
 
 	gfxDevice.SetPenColor ( this->mColor );
+	gfxDevice.SetColorMask ( this->mColorMask );
 	gfxDevice.SetCullFunc ( this->mCullMode );
 	gfxDevice.SetDepthFunc ( this->mDepthTest );
 	gfxDevice.SetDepthMask ( this->mDepthMask );
 	gfxDevice.SetBlendMode ( this->mBlendMode );
+	gfxDevice.SetStencilMode ( this->mStencilMode );
 	
 	if ( this->mScissorRect ) {
 		ZLRect scissorRect = this->mScissorRect->GetScissorRect ( gfxDevice.GetWorldToWndMtx ());		
@@ -686,6 +744,7 @@ MOAIGraphicsProp::MOAIGraphicsProp () :
 	mBillboard ( BILLBOARD_NONE ),
 	mCullMode ( 0 ),
 	mDepthTest ( 0 ),
+	mColorMask ( 0xf ),
 	mDepthMask ( true ),
 	mLODFlags ( DEFAULT_LOD_FLAGS ),
 	mLODMin ( 0.0f ),
@@ -740,6 +799,9 @@ void MOAIGraphicsProp::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "BLEND_ADD",					( u32 )MOAIBlendMode::BLEND_ADD );
 	state.SetField ( -1, "BLEND_MULTIPLY",				( u32 )MOAIBlendMode::BLEND_MULTIPLY );
 	state.SetField ( -1, "BLEND_NORMAL",				( u32 )MOAIBlendMode::BLEND_NORMAL );
+	state.SetField ( -1, "BLEND_ALPHA",					( u32 )MOAIBlendMode::BLEND_ALPHA );
+	state.SetField ( -1, "BLEND_MASK",					( u32 )MOAIBlendMode::BLEND_MASK );
+	state.SetField ( -1, "BLEND_SOLID",					( u32 )MOAIBlendMode::BLEND_SOLID );
 	
 	state.SetField ( -1, "GL_FUNC_ADD",					( u32 )ZGL_BLEND_MODE_ADD );
 	state.SetField ( -1, "GL_FUNC_SUBTRACT",			( u32 )ZGL_BLEND_MODE_SUBTRACT );
@@ -767,6 +829,25 @@ void MOAIGraphicsProp::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "DEPTH_TEST_GREATER_EQUAL",	( u32 )ZGL_DEPTH_GEQUAL );
 	state.SetField ( -1, "DEPTH_TEST_ALWAYS",			( u32 )ZGL_DEPTH_ALWAYS );
 	
+	state.SetField ( -1, "STENCIL_TEST_DISABLE",		( u32 )0 );
+	state.SetField ( -1, "STENCIL_TEST_NEVER",			( u32 )ZGL_STENCIL_NEVER );
+	state.SetField ( -1, "STENCIL_TEST_LESS",			( u32 )ZGL_STENCIL_LESS );
+	state.SetField ( -1, "STENCIL_TEST_EQUAL",			( u32 )ZGL_STENCIL_EQUAL );
+	state.SetField ( -1, "STENCIL_TEST_LESS_EQUAL",		( u32 )ZGL_STENCIL_LEQUAL );
+	state.SetField ( -1, "STENCIL_TEST_GREATER",		( u32 )ZGL_STENCIL_GREATER );
+	state.SetField ( -1, "STENCIL_TEST_NOTEQUAL",		( u32 )ZGL_STENCIL_NOTEQUAL );
+	state.SetField ( -1, "STENCIL_TEST_GREATER_EQUAL",	( u32 )ZGL_STENCIL_GEQUAL );
+	state.SetField ( -1, "STENCIL_TEST_ALWAYS",			( u32 )ZGL_STENCIL_ALWAYS );
+
+	state.SetField ( -1, "STENCIL_OP_DECR",				( u32 ) ZGL_STENCIL_OP_DECR );
+	state.SetField ( -1, "STENCIL_OP_DECR_WRAP",		( u32 ) ZGL_STENCIL_OP_DECR_WRAP );
+	state.SetField ( -1, "STENCIL_OP_INCR",				( u32 ) ZGL_STENCIL_OP_INCR );
+	state.SetField ( -1, "STENCIL_OP_INCR_WRAP",		( u32 ) ZGL_STENCIL_OP_INCR_WRAP );
+	state.SetField ( -1, "STENCIL_OP_INVERT",			( u32 ) ZGL_STENCIL_OP_INVERT );
+	state.SetField ( -1, "STENCIL_OP_KEEP",				( u32 ) ZGL_STENCIL_OP_KEEP );
+	state.SetField ( -1, "STENCIL_OP_REPLACE",			( u32 ) ZGL_STENCIL_OP_REPLACE );
+	state.SetField ( -1, "STENCIL_OP_ZERO",				( u32 ) ZGL_STENCIL_OP_ZERO );
+
 	state.SetField ( -1, "CULL_NONE",					( u32 )0 );
 	state.SetField ( -1, "CULL_ALL",					( u32 )ZGL_CULL_ALL );
 	state.SetField ( -1, "CULL_BACK",					( u32 )ZGL_CULL_BACK );
@@ -791,6 +872,7 @@ void MOAIGraphicsProp::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setBillboard",		_setBillboard },
 		{ "setBlendEquation",	_setBlendEquation },
 		{ "setBlendMode",		_setBlendMode },
+		{ "setColorMask",		_setColorMask },
 		{ "setCullMode",		_setCullMode },
 		{ "setDepthMask",		_setDepthMask },
 		{ "setDepthTest",		_setDepthTest },
@@ -798,6 +880,9 @@ void MOAIGraphicsProp::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "setParent",			_setParent },
 		{ "setScissorRect",		_setScissorRect },
 		{ "setShader",			_setShader },
+		{ "setStencilMask",		_setStencilMask },
+		{ "setStencilOp",		_setStencilOp },
+		{ "setStencilTest",		_setStencilTest },
 		{ "setTexture",			_setTexture },
 		{ "setUVTransform",		_setUVTransform },
 		{ "setVisible",			_setVisible },
@@ -829,9 +914,20 @@ void MOAIGraphicsProp::SerializeOut ( MOAILuaState& state, MOAISerializer& seria
 	MOAIRenderable::SerializeOut ( state, serializer );
 }
 
+
+//----------------------------------------------------------------//
+void MOAIGraphicsProp::SetColorMask ( bool maskR, bool maskG, bool maskB, bool maskA ) {
+
+	u32 packed = maskR | ( maskG << 1 ) | ( maskB << 2 ) | ( maskA << 3 );
+	this->mColorMask = packed;
+
+}
+
 //----------------------------------------------------------------//
 void MOAIGraphicsProp::SetVisible ( bool visible ) {
 
 	this->mFlags = visible ? this->mFlags | FLAGS_LOCAL_VISIBLE : this->mFlags & ~FLAGS_LOCAL_VISIBLE;
 	this->ScheduleUpdate ();
 }
+
+

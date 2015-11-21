@@ -238,6 +238,7 @@ GLenum _remapEnum ( u32 zglEnum ) {
 
 		case ZGL_FRAMEBUFFER_ATTACHMENT_COLOR:				return GL_COLOR_ATTACHMENT0;
 		case ZGL_FRAMEBUFFER_ATTACHMENT_DEPTH:				return GL_DEPTH_ATTACHMENT;
+		case ZGL_FRAMEBUFFER_ATTACHMENT_DEPTH_STENCIL:		return GL_DEPTH_STENCIL_ATTACHMENT;
 		case ZGL_FRAMEBUFFER_ATTACHMENT_STENCIL:			return GL_STENCIL_ATTACHMENT;
 
 		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY ) && !defined ( MOAI_OS_ANDROID )
@@ -262,6 +263,7 @@ GLenum _remapEnum ( u32 zglEnum ) {
 		#endif
 		case ZGL_PIPELINE_CULL:								return GL_CULL_FACE;
 		case ZGL_PIPELINE_DEPTH:							return GL_DEPTH_TEST;
+		case ZGL_PIPELINE_STENCIL:							return GL_STENCIL_TEST;
 
 		#if !defined ( MOAI_OS_NACL )
 			case ZGL_PIPELINE_NORMAL_ARRAY:					return GL_NORMAL_ARRAY;
@@ -279,6 +281,8 @@ GLenum _remapEnum ( u32 zglEnum ) {
 		case ZGL_PIXEL_FORMAT_LUMINANCE:					return GL_LUMINANCE;
 		case ZGL_PIXEL_FORMAT_LUMINANCE_ALPHA:				return GL_LUMINANCE_ALPHA;
 		case ZGL_PIXEL_FORMAT_DEPTH_COMPONENT16:			return GL_DEPTH_COMPONENT16;
+		case ZGL_PIXEL_FORMAT_DEPTH24_STENCIL8:				return GL_DEPTH24_STENCIL8;
+		case ZGL_PIXEL_FORMAT_STENCIL_INDEX8:				return GL_STENCIL_INDEX8;
 
 
 		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY ) && !defined ( MOAI_OS_ANDROID )
@@ -397,6 +401,24 @@ GLenum _remapEnum ( u32 zglEnum ) {
 		#endif
 
 		case ZGL_SHADER_TYPE_VERTEX:					return GL_VERTEX_SHADER;
+
+		case ZGL_STENCIL_OP_DECR:						return GL_DECR;
+		case ZGL_STENCIL_OP_DECR_WRAP:					return GL_DECR_WRAP;
+		case ZGL_STENCIL_OP_INCR:						return GL_INCR;
+		case ZGL_STENCIL_OP_INCR_WRAP:					return GL_INCR_WRAP;
+		case ZGL_STENCIL_OP_INVERT:						return GL_INVERT;
+		case ZGL_STENCIL_OP_KEEP:						return GL_KEEP;
+		case ZGL_STENCIL_OP_REPLACE:					return GL_REPLACE;
+		case ZGL_STENCIL_OP_ZERO:						return GL_ZERO;
+
+		case ZGL_STENCIL_ALWAYS:						return GL_ALWAYS;
+		case ZGL_STENCIL_EQUAL:							return GL_EQUAL;
+		case ZGL_STENCIL_LESS:							return GL_LESS;
+		case ZGL_STENCIL_LEQUAL:						return GL_LEQUAL;
+		case ZGL_STENCIL_GEQUAL:						return GL_GEQUAL;
+		case ZGL_STENCIL_GREATER:						return GL_GREATER;
+		case ZGL_STENCIL_NEVER:							return GL_NEVER;
+		case ZGL_STENCIL_NOTEQUAL:						return GL_NOTEQUAL;
 
 		case ZGL_STRING_VENDOR:							return GL_VENDOR;
 		case ZGL_STRING_VERSION:						return GL_VERSION;
@@ -655,6 +677,15 @@ void zglColor ( float r, float g, float b, float a ) {
 }
 
 //----------------------------------------------------------------//
+void zglColorMask ( bool maskR, bool maskG, bool maskB, bool maskA ) {
+	
+	ASSERT_OPERATION_DEPTH ();
+
+	glColorMask( maskR, maskG, maskB, maskA );
+	
+}
+
+//----------------------------------------------------------------//
 void zglCullFace ( u32 mode ) {
 
 	ASSERT_OPERATION_DEPTH ();
@@ -901,6 +932,28 @@ void zglScissor ( s32 x, s32 y, u32 w, u32 h ) {
 	ASSERT_OPERATION_DEPTH ();
 	glScissor (( GLint )x, ( GLint )y, ( GLsizei )w, ( GLsizei )h );
 }
+
+//----------------------------------------------------------------//
+void zglStencilFunc ( u32 stencilFunc, u32 ref, u32 mask ) {
+
+	ASSERT_OPERATION_DEPTH ();
+	glStencilFunc ( _remapEnum ( stencilFunc ), ref, mask );
+}
+
+//----------------------------------------------------------------//
+void zglStencilMask ( u32 mask ) {
+
+	ASSERT_OPERATION_DEPTH ();
+	glStencilMask ( mask );
+}
+
+//----------------------------------------------------------------//
+void zglStencilOp ( u32 sfail, u32 dpfail, u32 dppass ) {
+
+	ASSERT_OPERATION_DEPTH ();
+	glStencilOp ( _remapEnum(sfail), _remapEnum(dpfail), _remapEnum(dppass) );
+}
+
 
 //----------------------------------------------------------------//
 void zglViewport ( s32 x, s32 y, u32 w, u32 h ) {

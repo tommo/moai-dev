@@ -115,25 +115,36 @@ bool MOAIFrameBufferTexture::OnGPUCreate () {
 		zglBindRenderbuffer ( this->mGLDepthBufferID );
 		zglRenderbufferStorage ( this->mDepthFormat, this->mWidth, this->mHeight );
 	}
-	
-	if ( this->mStencilFormat ) {
-		this->mGLStencilBufferID = zglCreateRenderbuffer ();
-		zglBindRenderbuffer ( this->mGLStencilBufferID );
-		zglRenderbufferStorage ( this->mStencilFormat, this->mWidth, this->mHeight );
-	}
-	
+
+
 	zglBindFramebuffer ( ZGL_FRAMEBUFFER_TARGET_DRAW_READ, this->mGLFrameBufferID );
 	
+	//bind color buffer
 	if ( this->mGLColorBufferID ) {
 		zglFramebufferRenderbuffer ( ZGL_FRAMEBUFFER_TARGET_DRAW_READ, ZGL_FRAMEBUFFER_ATTACHMENT_COLOR, this->mGLColorBufferID );
 	}
 	
-	if ( this->mGLDepthBufferID ) {
-		zglFramebufferRenderbuffer ( ZGL_FRAMEBUFFER_TARGET_DRAW_READ, ZGL_FRAMEBUFFER_ATTACHMENT_DEPTH, this->mGLDepthBufferID );
-	}
 	
-	if ( this->mGLStencilBufferID ) {
-		zglFramebufferRenderbuffer ( ZGL_FRAMEBUFFER_TARGET_DRAW_READ, ZGL_FRAMEBUFFER_ATTACHMENT_STENCIL, this->mGLStencilBufferID );
+	if( this->mDepthFormat == ZGL_PIXEL_FORMAT_DEPTH24_STENCIL8 ) {
+		//packed depth/stencil buffer
+		if ( this->mGLDepthBufferID ) {
+			zglFramebufferRenderbuffer ( ZGL_FRAMEBUFFER_TARGET_DRAW_READ, ZGL_FRAMEBUFFER_ATTACHMENT_DEPTH, this->mGLDepthBufferID );
+			zglFramebufferRenderbuffer ( ZGL_FRAMEBUFFER_TARGET_DRAW_READ, ZGL_FRAMEBUFFER_ATTACHMENT_STENCIL, this->mGLDepthBufferID );
+		}
+	} else {
+		//bind depth buffer and stencil buffer separately
+		if ( this->mStencilFormat ) {
+			this->mGLStencilBufferID = zglCreateRenderbuffer ();
+			zglBindRenderbuffer ( this->mGLStencilBufferID );
+			zglRenderbufferStorage ( this->mStencilFormat, this->mWidth, this->mHeight );
+		}
+		
+		if ( this->mGLDepthBufferID ) {
+			zglFramebufferRenderbuffer ( ZGL_FRAMEBUFFER_TARGET_DRAW_READ, ZGL_FRAMEBUFFER_ATTACHMENT_DEPTH, this->mGLDepthBufferID );
+		}
+		if ( this->mGLStencilBufferID ) {
+			zglFramebufferRenderbuffer ( ZGL_FRAMEBUFFER_TARGET_DRAW_READ, ZGL_FRAMEBUFFER_ATTACHMENT_STENCIL, this->mGLStencilBufferID );
+		}
 	}
 	
 	// TODO: handle error; clear

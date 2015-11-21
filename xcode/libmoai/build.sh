@@ -7,7 +7,7 @@
 #----------------------------------------------------------------#
 
 # osx_schemes="libmoai-osx libmoai-osx-3rdparty libmoai-osx-fmod-ex libmoai-osx-luaext libmoai-osx-untz libmoai-osx-zl-core libmoai-osx-zl-vfs "
-osx_schemes="libmoai-osx libmoai-osx-sim libmoai-osx-apple libmoai-osx-3rdparty-core libmoai-osx-3rdparty-crypto libmoai-osx-3rdparty-sdl libmoai-osx-luaext libmoai-osx-zl-core libmoai-osx-zl-vfs libmoai-osx-fmod-designer libmoai-osx-box2d libmoai-osx-http-client libmoai-osx-untz libmoai-osx-crypto libmoai-osx-zl-crypto libmoai-osx-steer libmoai-osx-turbobadger"
+osx_schemes="libmoai-osx libmoai-osx-sim libmoai-osx-apple libmoai-osx-3rdparty-core libmoai-osx-3rdparty-crypto libmoai-osx-3rdparty-sdl libmoai-osx-luaext libmoai-osx-zl-core libmoai-osx-zl-vfs libmoai-osx-fmod-designer libmoai-osx-box2d libmoai-osx-http-client libmoai-osx-untz libmoai-osx-crypto libmoai-osx-zl-crypto libmoai-osx-steer libmoai-osx-turbobadger libmoai-osx-sdl"
 osx_sdks=( "macosx" )
 osx_architectures_macosx=( "i386" )
 

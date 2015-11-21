@@ -438,6 +438,10 @@
 		04A7001F1B5E242600E2E822 /* MOAIJoystickExSensor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04A7001C1B5E242600E2E822 /* MOAIJoystickExSensor.cpp */; };
 		04A700201B5E242600E2E822 /* MOAIJoystickExSensor.h in Headers */ = {isa = PBXBuildFile; fileRef = 04A7001D1B5E242600E2E822 /* MOAIJoystickExSensor.h */; };
 		04A700211B5E242600E2E822 /* MOAIJoystickExSensor.h in Headers */ = {isa = PBXBuildFile; fileRef = 04A7001D1B5E242600E2E822 /* MOAIJoystickExSensor.h */; };
+		04CDFBED1BFBA65B00B13C6A /* MOAIStencilMode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04CDFBEB1BFBA65B00B13C6A /* MOAIStencilMode.cpp */; };
+		04CDFBEE1BFBA65B00B13C6A /* MOAIStencilMode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04CDFBEB1BFBA65B00B13C6A /* MOAIStencilMode.cpp */; };
+		04CDFBEF1BFBA65B00B13C6A /* MOAIStencilMode.h in Headers */ = {isa = PBXBuildFile; fileRef = 04CDFBEC1BFBA65B00B13C6A /* MOAIStencilMode.h */; };
+		04CDFBF01BFBA65B00B13C6A /* MOAIStencilMode.h in Headers */ = {isa = PBXBuildFile; fileRef = 04CDFBEC1BFBA65B00B13C6A /* MOAIStencilMode.h */; };
 		04D64ED71BD2360200BE6C4B /* headers.h in Headers */ = {isa = PBXBuildFile; fileRef = 04D64E0A1BD2360200BE6C4B /* headers.h */; };
 		04D64ED81BD2360200BE6C4B /* headers.h in Headers */ = {isa = PBXBuildFile; fileRef = 04D64E0A1BD2360200BE6C4B /* headers.h */; };
 		04D64ED91BD2360200BE6C4B /* host.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 04D64E0B1BD2360200BE6C4B /* host.cpp */; };
@@ -6218,6 +6222,8 @@
 		0498B0871B2804BB001F123A /* bit.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = bit.c; path = "../../3rdparty/LuaBitOp-1.0.2/bit.c"; sourceTree = "<group>"; };
 		04A7001C1B5E242600E2E822 /* MOAIJoystickExSensor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIJoystickExSensor.cpp; sourceTree = "<group>"; };
 		04A7001D1B5E242600E2E822 /* MOAIJoystickExSensor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIJoystickExSensor.h; sourceTree = "<group>"; };
+		04CDFBEB1BFBA65B00B13C6A /* MOAIStencilMode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIStencilMode.cpp; sourceTree = "<group>"; };
+		04CDFBEC1BFBA65B00B13C6A /* MOAIStencilMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIStencilMode.h; sourceTree = "<group>"; };
 		04D64E0A1BD2360200BE6C4B /* headers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = headers.h; sourceTree = "<group>"; };
 		04D64E0B1BD2360200BE6C4B /* host.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = host.cpp; sourceTree = "<group>"; };
 		04D64E0C1BD2360200BE6C4B /* host.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = host.h; sourceTree = "<group>"; };
@@ -11160,6 +11166,8 @@
 				89BE6FE4173AD0CA00DFE837 /* MOAIRenderMgr.h */,
 				89BE6FE5173AD0CA00DFE837 /* MOAIScissorRect.cpp */,
 				89BE6FE6173AD0CA00DFE837 /* MOAIScissorRect.h */,
+				04CDFBEB1BFBA65B00B13C6A /* MOAIStencilMode.cpp */,
+				04CDFBEC1BFBA65B00B13C6A /* MOAIStencilMode.h */,
 				89BE701A173AD0CB00DFE837 /* MOAIVertexFormat.cpp */,
 				89BE701B173AD0CB00DFE837 /* MOAIVertexFormat.h */,
 				89BE701C173AD0CB00DFE837 /* MOAIVertexFormatMgr.cpp */,
@@ -15146,6 +15154,7 @@
 				CD4C3EDA180A63BB00C02381 /* MOAITimer.h in Headers */,
 				CD4C3EBB180A63BB00C02381 /* MOAIShaderMgr.h in Headers */,
 				CD4C3EE2180A63BB00C02381 /* MOAITransformBase.h in Headers */,
+				04CDFBEF1BFBA65B00B13C6A /* MOAIStencilMode.h in Headers */,
 				CD4C3E86180A63BB00C02381 /* MOAIPartitionResultBuffer.h in Headers */,
 				CD4C3E88180A63BB00C02381 /* MOAIPartitionResultMgr.h in Headers */,
 				CD4C3EC6180A63BB00C02381 /* MOAISurfaceSampler2D.h in Headers */,
@@ -15368,6 +15377,7 @@
 				CDE36E631A5F6C970095E863 /* MOAIImageFormatJpg.h in Headers */,
 				04E6CFAA1BEA17D500B8F76B /* MOAIColorRamp.h in Headers */,
 				0443E6171A8DF2490090F317 /* MOAIGfxBuffer.h in Headers */,
+				04CDFBF01BFBA65B00B13C6A /* MOAIStencilMode.h in Headers */,
 				CD4C4017180A63C200C02381 /* headers.h in Headers */,
 				CD4C4042180A63C200C02381 /* MOAICompassSensor.h in Headers */,
 				04D8360B1BE9FE750071DE2A /* MOAIAnimCurveColor.h in Headers */,
@@ -18937,6 +18947,7 @@
 				CD4C3E26180A63BB00C02381 /* MOAIFrameBuffer.cpp in Sources */,
 				CD4C3E07180A63BB00C02381 /* MOAICameraAnchor2D.cpp in Sources */,
 				CD4C3E75180A63BB00C02381 /* MOAIParticlePlugin.cpp in Sources */,
+				04CDFBED1BFBA65B00B13C6A /* MOAIStencilMode.cpp in Sources */,
 				CD4C3E6D180A63BB00C02381 /* MOAIParticleDistanceEmitter.cpp in Sources */,
 				CD4C3EB4180A63BB00C02381 /* MOAIScriptNode.cpp in Sources */,
 				CD14014D1A0CC5B40065AEE7 /* MOAIVectorSensor.cpp in Sources */,
@@ -19105,6 +19116,7 @@
 				CD4C40A1180A63C200C02381 /* MOAIParticleEmitter.cpp in Sources */,
 				CD73A601188F0AD200DFACDB /* MOAICollisionWorld.cpp in Sources */,
 				CD4C405C180A63C200C02381 /* MOAIFreeTypeFontReader.cpp in Sources */,
+				04CDFBEE1BFBA65B00B13C6A /* MOAIStencilMode.cpp in Sources */,
 				CD73A60D188F0AEC00DFACDB /* MOAIGraphicsProp2D.cpp in Sources */,
 				CD4C404D180A63C200C02381 /* MOAIEaseDriver.cpp in Sources */,
 				CD4C40FD180A63C200C02381 /* MOAITextDesigner.cpp in Sources */,

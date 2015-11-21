@@ -5,6 +5,7 @@
 #define	MOAIGFXDEVICE_H
 
 #include <moai-sim/MOAIBlendMode.h>
+#include <moai-sim/MOAIStencilMode.h>
 #include <moai-sim/MOAIColor.h>
 #include <moai-sim/MOAIFrameBuffer.h>
 #include <moai-sim/MOAIImage.h>
@@ -64,6 +65,7 @@ private:
 	int				mCullFunc;
 	int				mDepthFunc;
 	bool			mDepthMask;
+	u32				mColorMask;
 
 	MOAIBlendMode	mBlendMode;
 	bool			mBlendEnabled;
@@ -106,7 +108,11 @@ private:
 	MOAIShaderProgram*		mShaderProgram;
 	bool					mShaderDirty;
 	u32						mSize;
-	
+
+	MOAIStencilMode	mStencilMode;
+	u32				mStencilEnabled;
+
+
 	ZLLeanArray < MOAITextureBase* > mTextureUnits;
 	u32				mActiveTextures;
 	u32				mReservedTextureBase;
@@ -188,6 +194,7 @@ public:
 	GET ( const ZLFrustum&, ViewVolume, mViewVolume )
 	
 	GET ( MOAIBlendMode, BlendMode, mBlendMode )
+	GET ( MOAIStencilMode, StencilMode, mStencilMode )
 	
 	GET ( ZLColorVec, AmbientColor, mAmbientColor )
 	GET ( ZLColorVec, FinalColor, mFinalColor )
@@ -257,16 +264,21 @@ public:
 	void					SetBlendMode			();
 	void					SetBlendMode			( const MOAIBlendMode& blendMode );
 	void					SetBlendMode			( int srcFactor, int dstFactor, int equation = 0 );
-	
+
 	void					SetBufferScale			( float scale );
 	void					SetBufferSize			( u32 width, u32 height );
 	
+	void					SetColorMask			();
+	void					SetColorMask			( u32 packedMask );
+	void					SetColorMask			( bool maskR, bool maskG, bool maskB, bool maskA );
+
 	void					SetCullFunc				();
 	void					SetCullFunc				( int cullFunc );
 
 	void					SetDepthFunc			();
 	void					SetDepthFunc			( int depthFunc );
 	void					SetDepthMask			( bool depthMask );
+
 	void					SetFrameBuffer			( MOAIFrameBuffer* frameBuffer );
 	bool					SetGfxState				( MOAIGfxState* gfxState );
 	void					SetOverridedShader		( MOAIShader* shader );
@@ -282,6 +294,10 @@ public:
 	void					SetShader				( MOAIShader* shader = 0 );
 	void					SetShaderPreset			( u32 preset );
 	void					SetShaderProgram		( MOAIShaderProgram* program = 0 );
+
+	void					SetStencilMode			();
+	void					SetStencilMode			( const MOAIStencilMode& stencilMode );
+
 	bool					SetTexture				();
 	bool					SetTexture				( MOAITextureBase* texture );
 	bool					SetTexture				( MOAIMultiTexture* multi );

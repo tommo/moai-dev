@@ -5,6 +5,7 @@
 #define	MOAIGRAPHICSPROP_H
 
 #include <moai-sim/MOAIBlendMode.h>
+#include <moai-sim/MOAIStencilMode.h>
 #include <moai-sim/MOAIColor.h>
 #include <moai-sim/MOAIProp.h>
 #include <moai-sim/MOAIRenderable.h>
@@ -86,12 +87,16 @@ private:
 	static int		_setBlendEquation	( lua_State* L );
 	static int		_setBlendMode		( lua_State* L );
 	static int		_setCullMode		( lua_State* L );
+	static int		_setColorMask		( lua_State* L );
 	static int		_setDepthMask		( lua_State* L );
 	static int		_setDepthTest		( lua_State* L );
 	static int		_setLODLimits		( lua_State* L );
 	static int		_setParent			( lua_State* L );
 	static int		_setScissorRect		( lua_State* L );
 	static int		_setShader			( lua_State* L );
+	static int		_setStencilMask		( lua_State* L );
+	static int		_setStencilOp		( lua_State* L );
+	static int		_setStencilTest		( lua_State* L );
 	static int		_setTexture			( lua_State* L );
 	static int		_setUVTransform		( lua_State* L );
 	static int		_setVisible			( lua_State* L );
@@ -112,11 +117,14 @@ protected:
 	MOAILuaSharedPtr < MOAIGfxState >		mTexture;
 	MOAILuaSharedPtr < MOAITransformBase >	mUVTransform;
 	MOAILuaSharedPtr < MOAIScissorRect >	mScissorRect;
-	
+
 	int										mCullMode;
 	int										mDepthTest;
 	bool									mDepthMask;
 	MOAIBlendMode							mBlendMode;
+	MOAIStencilMode							mStencilMode;
+
+	u32										mColorMask;
 	
 	u32										mLODFlags;
 	float									mLODMin;
@@ -172,7 +180,10 @@ public:
 	GET_SET ( int, DepthTest, mDepthTest )
 	GET_SET ( bool, DepthMask, mDepthMask )
 	GET_SET ( const MOAIBlendMode&, BlendMode, mBlendMode )
+	GET_SET ( const MOAIStencilMode&, StencilMode, mStencilMode )
 	GET_SET ( u32, LODFlags, mLODFlags )
+
+	void	SetColorMask ( bool maskR, bool maskG, bool maskB, bool maskA );
 
 	//----------------------------------------------------------------//
 	bool				ApplyAttrOp				( u32 attrID, MOAIAttrOp& attrOp, u32 op );

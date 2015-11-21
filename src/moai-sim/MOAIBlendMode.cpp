@@ -30,8 +30,23 @@ void MOAIBlendMode::GetBlendFactors ( u32 blend, int& srcFactor, int& dstFactor 
 			dstFactor = ZGL_BLEND_FACTOR_ONE;
 			break;
 		}
+		case BLEND_ALPHA: {
+			srcFactor = ZGL_BLEND_FACTOR_SRC_ALPHA;
+			dstFactor = ZGL_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA;
+			break;
+		}
+		case BLEND_MASK: {
+			srcFactor = ZGL_BLEND_FACTOR_ZERO;
+			dstFactor = ZGL_BLEND_FACTOR_SRC_ALPHA;
+			break;
+		}
 		case BLEND_MULTIPLY: {
 			srcFactor = ZGL_BLEND_FACTOR_DST_COLOR;
+			dstFactor = ZGL_BLEND_FACTOR_ZERO;
+			break;
+		}
+		case BLEND_SOLID: {
+			srcFactor = ZGL_BLEND_FACTOR_ONE;
 			dstFactor = ZGL_BLEND_FACTOR_ZERO;
 			break;
 		}

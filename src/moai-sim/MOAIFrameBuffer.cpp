@@ -87,6 +87,30 @@ int MOAIClearableView::_setClearDepth ( lua_State* L ) {
 	return 0;
 }
 
+//----------------------------------------------------------------//
+/**	@lua	setClearStencil
+	@text	At the start of each frame the buffer will by default automatically
+			clear the Stencil buffer.  This function sets whether or not the Stencil
+			buffer should be cleared at the start of each frame.
+
+	@in		MOAIClearableView self
+	@in		boolean clearStencil	Whether to clear the Stencil buffer each frame.
+	@out	nil
+*/
+int MOAIClearableView::_setClearStencil ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIClearableView, "U" )
+	
+	bool clearStencil = state.GetValue < bool >( 2, false );
+	
+	if ( clearStencil ) {
+		self->mClearFlags |= ZGL_CLEAR_STENCIL_BUFFER_BIT;
+	}
+	else {
+		self->mClearFlags &= ~ZGL_CLEAR_STENCIL_BUFFER_BIT;
+	}
+	return 0;
+}
+
 //================================================================//
 // MOAIClearableView
 //================================================================//
@@ -158,6 +182,7 @@ void MOAIClearableView::RegisterLuaFuncs ( MOAILuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "setClearColor",				_setClearColor },
 		{ "setClearDepth",				_setClearDepth },
+		{ "setClearStencil",			_setClearStencil },
 		{ NULL, NULL }
 	};
 
@@ -249,6 +274,30 @@ int MOAIFrameBufferRenderCommand::_setClearDepth ( lua_State* L ) {
 	}
 	else {
 		self->mClearFlags &= ~ZGL_CLEAR_DEPTH_BUFFER_BIT;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@lua	setClearStencil
+	@text	At the start of each frame the buffer will by default automatically
+			clear the Stencil buffer.  This function sets whether or not the Stencil
+			buffer should be cleared at the start of each frame.
+
+	@in		MOAIFrameBufferRenderCommand self
+	@in		boolean clearStencil	Whether to clear the Stencil buffer each frame.
+	@out	nil
+*/
+int MOAIFrameBufferRenderCommand::_setClearStencil ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIFrameBufferRenderCommand, "U" )
+	
+	bool clearStencil = state.GetValue < bool >( 2, false );
+	
+	if ( clearStencil ) {
+		self->mClearFlags |= ZGL_CLEAR_STENCIL_BUFFER_BIT;
+	}
+	else {
+		self->mClearFlags &= ~ZGL_CLEAR_STENCIL_BUFFER_BIT;
 	}
 	return 0;
 }
@@ -351,6 +400,7 @@ void MOAIFrameBufferRenderCommand::RegisterLuaFuncs ( MOAILuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "setClearDepth",				_setClearDepth },
 		{ "setClearColor",				_setClearColor },
+		{ "setClearStencil",			_setClearStencil },
 		{ "setEnabled",					_setEnabled },
 		{ "isEnabled",					_isEnabled },
 		{ "setFrameBuffer",				_setFrameBuffer },

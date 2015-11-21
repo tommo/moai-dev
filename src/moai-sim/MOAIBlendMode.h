@@ -13,7 +13,10 @@ public:
 	enum {
 		BLEND_NORMAL,
 		BLEND_ADD,
+		BLEND_ALPHA,
+		BLEND_MASK,
 		BLEND_MULTIPLY,
+		BLEND_SOLID,
 	};
 	
 	int				mEquation;

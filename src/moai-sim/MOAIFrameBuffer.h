@@ -20,6 +20,7 @@ private:
 	//----------------------------------------------------------------//
 	static int		_setClearColor			( lua_State* L );
 	static int		_setClearDepth			( lua_State* L );
+	static int		_setClearStencil		( lua_State* L );
 
 	//----------------------------------------------------------------//
 
@@ -58,6 +59,7 @@ private:
 	//----------------------------------------------------------------//
 	static int		_setClearColor		( lua_State* L );
 	static int		_setClearDepth		( lua_State* L );
+	static int		_setClearStencil	( lua_State* L );
 	static int		_setEnabled			( lua_State* L );
 	static int		_isEnabled			( lua_State* L );
 	static int		_setFrameBuffer		( lua_State* L );
