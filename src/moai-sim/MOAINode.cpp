@@ -261,6 +261,31 @@ int MOAINode::_setAttr ( lua_State* L ) {
 	return 0;
 }
 
+
+//----------------------------------------------------------------//
+/**	@lua	setAttrUnsafe
+	@text	Sets the value of an attribute, without checking attr existence.
+	
+	@in		MOAINode self
+	@in		number attrID
+	@in		number value
+	@out	nil
+*/
+int MOAINode::_setAttrUnsafe ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAINode, "UNN" );
+	
+	u32 attrID = state.GetValue < u32 >( 2, 0 );
+	float value = state.GetValue < float >( 3, 0.0f );
+	MOAIAttrOp setter;
+	setter.SetValue ( value, MOAIAttrOp::ATTR_TYPE_FLOAT );
+
+	self->ApplyAttrOp ( attrID, setter, MOAIAttrOp::SET );
+	self->ScheduleUpdate ();
+	
+	return 0;
+}
+
+
 //----------------------------------------------------------------//
 /**	@lua	setAttrLink
 	@text	Sets a *pull* attribute connecting an attribute in the
@@ -584,6 +609,7 @@ void MOAINode::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "scheduleUpdate",			_scheduleUpdate },
 		{ "seekAttr",				_seekAttr },
 		{ "setAttr",				_setAttr },
+		{ "setAttrUnsafe",			_setAttrUnsafe },
 		{ "setAttrLink",			_setAttrLink },
 		{ "setNodeLink",			_setNodeLink },
 		{ NULL, NULL }
