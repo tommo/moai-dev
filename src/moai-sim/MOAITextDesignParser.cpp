@@ -347,6 +347,8 @@ void MOAITextDesignParser::BuildLayout () {
 				
 				if ( this->mDesigner->mWordBreak == MOAITextDesigner::WORD_BREAK_CHAR ) {
 					this->AcceptToken ();
+				} else if ( !isalnum( c ) ) {
+					this->AcceptToken ();
 				}
 			}
 			
