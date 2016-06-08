@@ -8,7 +8,7 @@ int MOAISteerBehaviourGroup::_setGroupType ( lua_State *L ) {
 }
 
 int MOAISteerBehaviourGroup::_setEpsilon ( lua_State *L ) {
-	MOAI_LUA_SETUP( MOAISteerBehaviourGroup, "UF" )
+	MOAI_LUA_SETUP( MOAISteerBehaviourGroup, "UN" )
 	float epsilon = state.GetValue < float >( 2, 0.1f );
 	self->SetEpsilon( epsilon );
 	return 0;

@@ -89,6 +89,23 @@ ZLRect MOAIGlyph::GetRect ( float x, float y, float xScale, float yScale ) const
 	return rect;
 }
 
+ZLRect MOAIGlyph::GetRect ( float x, float y, const ZLRect& padding, float xScale, float yScale ) const {
+
+	x += this->mBearingX * xScale;
+	y -= this->mBearingY * yScale;
+
+	ZLRect rect;
+
+	rect.Init (
+		x + ( padding.mXMin * xScale ),
+		y + ( padding.mYMin * yScale ),
+		x + (( this->mWidth + padding.mXMax ) * xScale ),
+		y + (( this->mHeight + padding.mYMax ) * yScale )
+	);
+	return rect;
+}
+
+
 //----------------------------------------------------------------//
 MOAIGlyph::MOAIGlyph () :
 	mCode ( NULL_CODE_ID ),

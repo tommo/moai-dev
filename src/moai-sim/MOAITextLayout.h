@@ -111,11 +111,14 @@ public:
 	void				ApplyHighlights			();
 	void				ClearHighlight			( u32 base, u32 top );
 	void				ClearHighlights			();
+	u32					CountLines				();
 	u32					CountSprites			();
 	void				Draw					( u32 reveal );
 	void				DrawDebug				();
 	bool				GetBounds				( ZLRect& rect );
+	bool				GetBounds				( u32 reveal, ZLRect& rect );
 	bool				GetBoundsForRange		( u32 idx, u32 size, ZLRect& rect );
+	bool				GetLineSpriteIndex		( u32 line, u32& start, u32& end );
 						MOAITextLayout			();
 						~MOAITextLayout			();
 	void				RemoveHighlight			( MOAITextHighlight& highlight );

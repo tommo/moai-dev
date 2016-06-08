@@ -50,6 +50,7 @@ private:
 	//----------------------------------------------------------------//
 	static int		_clearAttrLink		( lua_State* L );
 	static int		_clearNodeLink		( lua_State* L );
+	static int		_flushUpdate		( lua_State* L );
 	static int		_forceUpdate		( lua_State* L );
 	static int		_getAttr			( lua_State* L );
 	static int		_getAttrLink		( lua_State* L );
@@ -126,6 +127,7 @@ public:
 	void			ClearNodeLink			( MOAINode& srcNode );
 	void			DepNodeUpdate			();
 	void			ForceUpdate				();
+	void			FlushUpdate				();
 	u32				GetAttrFlags			( u32 attrID );
 					MOAINode				();
 					~MOAINode				();

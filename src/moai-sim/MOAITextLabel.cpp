@@ -75,6 +75,20 @@ int MOAITextLabel::_getGlyphScale ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	getLineCount
+	@text	Returns line count of rendered text
+
+	@in		MOAITextLabel self
+	@out	number lineCount
+*/
+int MOAITextLabel::_getLineCount ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextLabel, "U" )
+	self->Refresh();
+	state.Push ( self->mLayout.CountLines() );
+	return 1;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	getLineSpacing
 	@text	Returns the spacing between lines (in pixels).
 
@@ -87,6 +101,33 @@ int MOAITextLabel::_getLineSpacing ( lua_State* L ) {
 	lua_pushnumber ( state, self->mDesigner.GetLineSpacing ());
 	return 1;
 }
+
+//----------------------------------------------------------------//
+/**	@lua	getLineSpriteIndex
+	@text	Returns the sprite index of specified line
+
+	@in		MOAITextLabel self
+	@in		number line
+	@out	number indexStart
+	@out	number indexEnd 
+*/
+int MOAITextLabel::_getLineSpriteIndex ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextLabel, "UN" )
+
+	self->Refresh ();
+
+	u32 line = state.GetValue < u32 >( 2, 1 ) - 1;
+	u32 start = 0;
+	u32 end   = 0;
+	if ( self->mLayout.GetLineSpriteIndex ( line, start, end ) ) {
+		state.Push( start );
+		state.Push( end );
+		return 2;
+	} else {
+		return 0;
+	}
+}
+
 
 //----------------------------------------------------------------//
 /**	@lua	getRect
@@ -106,6 +147,57 @@ int MOAITextLabel::_getRect ( lua_State* L ) {
 
 	return 4;
 }
+
+//----------------------------------------------------------------//
+/**	@lua	getReveal
+	@text	Returns revealed character count of the text box.
+
+	@in		MOAITextLabel self
+	@out	number reveal
+*/
+int MOAITextLabel::_getReveal ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextLabel, "U" )
+
+	state.Push ( self->mReveal );
+
+	return 1;
+}
+
+//----------------------------------------------------------------//
+/**	@lua	getRevealedTextBounds
+	@text	Returns boundary of the revealed text.
+
+	@in		MOAITextLabel self
+	@out	number xMin
+	@out	number yMin
+	@out	number xMax
+	@out	number yMax
+*/
+int MOAITextLabel::_getRevealedTextBounds ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextLabel, "U" )
+
+	ZLRect rect;
+	
+	self->Refresh ();
+	u32 reveal = state.GetValue < u32 >( 2, self->mReveal );
+	if ( self->mLayout.GetBounds ( reveal, rect ) ) {
+
+		rect.Bless ();
+			
+		lua_pushnumber ( state, rect.mXMin );
+		lua_pushnumber ( state, rect.mYMin );
+		lua_pushnumber ( state, rect.mXMax );
+		lua_pushnumber ( state, rect.mYMax );
+		
+		return 4;
+
+	} else {
+
+		return 0;
+
+	}
+}
+
 
 //----------------------------------------------------------------//
 /**	@lua	getStyle
@@ -1028,8 +1120,12 @@ void MOAITextLabel::RegisterLuaFuncs ( MOAILuaState& state ) {
 		{ "clearHighlights",		_clearHighlights },
 		{ "getAlignment",			_getAlignment },
 		{ "getGlyphScale",			_getGlyphScale },
+		{ "getLineCount",			_getLineCount },
 		{ "getLineSpacing",			_getLineSpacing },
+		{ "getLineSpriteIndex",		_getLineSpriteIndex },
 		{ "getRect",				_getRect },
+		{ "getReveal",				_getReveal },
+		{ "getRevealedTextBounds",	_getRevealedTextBounds },
 		{ "getStyle",				_getStyle },
 		{ "getText",				_getText },
 		{ "getTextBounds",			_getTextBounds },

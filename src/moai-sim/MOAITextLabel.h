@@ -157,9 +157,12 @@ protected:
 	static int			_clearHighlights		( lua_State* L );
 	static int			_getAlignment			( lua_State* L );
 	static int			_getGlyphScale			( lua_State* L );
+	static int			_getLineCount			( lua_State* L );
 	static int			_getLineSpacing			( lua_State* L );
+	static int			_getLineSpriteIndex		( lua_State* L );
 	static int			_getRect				( lua_State* L );
 	static int			_getReveal				( lua_State* L );
+	static int			_getRevealedTextBounds	( lua_State* L );
 	static int			_getSpool				( lua_State* L );
 	static int			_getStyle				( lua_State* L );
 	static int			_getText				( lua_State* L );

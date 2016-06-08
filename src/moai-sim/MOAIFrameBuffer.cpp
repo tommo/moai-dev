@@ -487,6 +487,31 @@ int MOAIFrameBuffer::_grabNextFrame ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	grabCurrentFrame
+	@text	Save the next frame rendered to 
+
+	@in		MOAIFrameBuffer self
+	@in		MOAIImage image			Image to save current buffer to
+	@out	nil
+*/
+int MOAIFrameBuffer::_grabCurrentFrame ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIFrameBuffer, "UU" )
+
+	MOAIImage* image = state.GetLuaObject < MOAIImage >( 2, true );
+	
+	zglBegin();
+	
+	MOAIGfxDevice& gfxDevice = MOAIGfxDevice::Get ();
+	gfxDevice.Flush();
+	gfxDevice.SetFrameBuffer ( self );
+	self->GrabImage( image );
+	
+	zglEnd();
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	setRenderTable
 	@text	Sets the table to be used for rendering. This should be
 			an array indexed from 1 consisting of MOAIRenderable objects
@@ -587,6 +612,7 @@ void MOAIFrameBuffer::RegisterLuaFuncs ( MOAILuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "getPerformanceDrawCount",	_getPerformanceDrawCount },
 		{ "getRenderTable",				_getRenderTable },
+		{ "grabCurrentFrame",			_grabCurrentFrame },
 		{ "grabNextFrame",				_grabNextFrame },
 		{ "setRenderTable",				_setRenderTable },
 		{ NULL, NULL }

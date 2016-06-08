@@ -34,6 +34,7 @@ protected:
 	b2Fixture*		m_fixture;
 	b2Vec2			m_point;
 	b2Vec2			m_normal;
+	u32             m_category_mask;
 
 public:
 
@@ -42,10 +43,18 @@ public:
 		m_fixture = NULL;
 		m_point.SetZero();
 		m_normal.SetZero();
+		m_category_mask = 0xffff;
+	}
+
+	void SetCategoryMask( u32 mask ) {
+		m_category_mask = mask;
 	}
 
 	//----------------------------------------------------------------//
 	float32 ReportFixture ( b2Fixture* fixture, const b2Vec2& point, const b2Vec2& normal, float32 fraction ) {
+		u32 categoryBits = fixture->GetFilterData().categoryBits;
+		if( ( categoryBits & m_category_mask ) == 0 ) return -1.0f;
+
 		m_fixture = fixture;
 		m_point = point;
 		m_normal = normal;
@@ -63,12 +72,11 @@ private:
 	friend class MOAIBox2DWorld;
 	float mUnitsToMeters;
 	lua_State* mState;
-	u32 mCollisionCategoryMask;
 
 public:
 
-	MOAIBox2DRayCastCallbackWithLuaCallback( lua_State* L, u32 collisionCategoryMask )
-	: mState(L), mCollisionCategoryMask( collisionCategoryMask )
+	MOAIBox2DRayCastCallbackWithLuaCallback( lua_State* L )
+	:mState( L )
 	{
 	}
 
@@ -76,7 +84,7 @@ public:
 	float32 ReportFixture ( b2Fixture* fixture, const b2Vec2& point, const b2Vec2& normal, float32 fraction ) {
 		//check categoryMask first
 		u32 categoryBits = fixture->GetFilterData().categoryBits;
-		if( ( categoryBits & mCollisionCategoryMask ) == 0 ) return -1.0f;
+		if( ( categoryBits & m_category_mask ) == 0 ) return -1.0f;
 
 		//callback checking
 		MOAIScopedLuaState state(mState);
@@ -95,15 +103,15 @@ public:
 		lua_pushnumber ( state, normal.y );
 		lua_pushnumber ( state, fraction );
 		state.DebugCall( 6, 1 );
-		bool foundHit = lua_toboolean( state, -1 );
+		bool acceptHit = lua_toboolean( state, -1 );
 		lua_pop( state, 1 );
-		if ( foundHit ) {
+		if ( !acceptHit ) {
+			return -1.0;
+		} else {
 			m_fixture = fixture;
 			m_point = point;
 			m_normal = normal;
 			return 0.0f;
-		} else {
-			return -1.0;
 		}
 	}
 };
@@ -114,13 +122,8 @@ class MOAIBox2DRayCastLuaTypedCallback :
 private:
 	friend class MOAIBox2DWorld;
 
-	float mUnitsToMeters;
-	lua_State* mState;
-	int mCollisionCategoryMask;
-
-	int mCastType;
-
 public:
+	int mCastType;
 
 	enum {
 		RAYCAST_NEAREST = 0,
@@ -128,8 +131,8 @@ public:
 		RAYCAST_ANY
 	};
 
-	MOAIBox2DRayCastLuaTypedCallback(lua_State* L, int type, u32 collisionCategoryMask )
-	: mState(L), mCastType(type), mCollisionCategoryMask( collisionCategoryMask )
+	MOAIBox2DRayCastLuaTypedCallback( int type )
+	:mCastType( type )
 	{
 	}
 
@@ -137,7 +140,51 @@ public:
 	float32 ReportFixture ( b2Fixture* fixture, const b2Vec2& point, const b2Vec2& normal, float32 fraction ) {
 		//check categoryMask first
 		u32 categoryBits = fixture->GetFilterData().categoryBits;
-		if( ( categoryBits & mCollisionCategoryMask ) == 0 ) return -1.0f;
+		if( ( categoryBits & m_category_mask ) == 0 ) return -1.0f;
+
+		m_fixture = fixture;
+		m_point   = point;
+		m_normal  = normal;
+
+		switch(mCastType)
+		{
+			// check for all shapes
+			case RAYCAST_ALL:
+				return 1.0f;
+
+			// stop whenever hit
+			case RAYCAST_ANY:
+				return 0.0f;
+
+			// find the closest hit
+			case RAYCAST_NEAREST:
+			default:
+				return fraction;
+		}
+	}
+};
+
+
+class MOAIBox2DRayCastLuaTypedCallbackWithLuaCallback :
+	public MOAIBox2DRayCastLuaTypedCallback {
+
+private:
+	friend class MOAIBox2DWorld;
+	lua_State* mState;
+	float mUnitsToMeters;
+
+public:
+
+	MOAIBox2DRayCastLuaTypedCallbackWithLuaCallback(lua_State* L, int type )
+	:MOAIBox2DRayCastLuaTypedCallback( type ), mState( L )
+	{
+	}
+
+	//----------------------------------------------------------------//
+	float32 ReportFixture ( b2Fixture* fixture, const b2Vec2& point, const b2Vec2& normal, float32 fraction ) {
+		//check categoryMask first
+		u32 categoryBits = fixture->GetFilterData().categoryBits;
+		if( ( categoryBits & m_category_mask ) == 0 ) return -1.0f;
 
 		//check callback
 		MOAIScopedLuaState state(mState);
@@ -163,11 +210,9 @@ public:
 			return -1.0f;
 		}
 		else {
-			//
 			m_fixture = fixture;
 			m_point   = point;
 			m_normal  = normal;
-
 			switch(mCastType)
 			{
 				// check for all shapes
@@ -995,20 +1040,22 @@ int MOAIBox2DWorld::_getRayCast ( lua_State* L ) {
  
 	b2Vec2 p1(p1x,p1y);
 	b2Vec2 p2(p2x,p2y);
-   
+   	
+   	u32 categoryMask = 0xffff;
+	if ( lua_isnumber( state, 7 ) ) {
+		categoryMask = lua_tointeger( state, 7 );
+	}
+
 	MOAIBox2DRayCastCallback* callback;
 	if( lua_isfunction( state, 6 ) ) {
-		u32 categoryMask = 0xffff;
-		if ( lua_isnumber( state, 7 ) ) {
-			categoryMask = lua_tointeger( state, 7 );
-		}
-		callback = new MOAIBox2DRayCastCallbackWithLuaCallback( L, categoryMask );
+		callback = new MOAIBox2DRayCastCallbackWithLuaCallback( L );
 		(( MOAIBox2DRayCastCallbackWithLuaCallback* )callback)->mUnitsToMeters = self->mUnitsToMeters;
 		//clean stack
 		lua_pop( state, lua_gettop( state ) - 6 );
 	} else {
-		callback = new MOAIBox2DRayCastCallback;
+		callback = new MOAIBox2DRayCastCallback();
 	}
+	callback->SetCategoryMask( categoryMask );
 	self->mWorld->RayCast(callback, p1, p2);
  
 	if (NULL != callback->m_fixture) {
@@ -1069,15 +1116,19 @@ int MOAIBox2DWorld::_getTypedRayCast( lua_State* L, u32 castType ) {
 		categoryMask = lua_tointeger( state, 7 );
 	}
 
-	MOAIBox2DRayCastLuaTypedCallback* callback = new MOAIBox2DRayCastLuaTypedCallback( L, castType, categoryMask );
-
-	callback->mUnitsToMeters = self->mUnitsToMeters;
-	//clean stack
-	lua_pop( state, lua_gettop( state ) - 6 );
-
+	MOAIBox2DRayCastCallback* callback;
+	if( lua_isfunction( state, 6 ) ) {
+		callback = new MOAIBox2DRayCastLuaTypedCallbackWithLuaCallback( L, castType );
+		(( MOAIBox2DRayCastLuaTypedCallbackWithLuaCallback* )callback)->mUnitsToMeters = self->mUnitsToMeters;
+		//clean stack
+		lua_pop( state, lua_gettop( state ) - 6 );
+	} else {
+		callback = new MOAIBox2DRayCastCallback;
+	}
+	callback->SetCategoryMask( categoryMask );
 	self->mWorld->RayCast(callback, p1, p2);
 
-	if (NULL != callback->m_fixture) {
+	if ( NULL != callback->m_fixture ) {
 		b2Vec2 hitpoint  = callback->m_point;
 		b2Vec2 hitnormal = callback->m_point;
 

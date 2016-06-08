@@ -50,6 +50,23 @@ int MOAIRenderMgr::_getRenderCount ( lua_State* L ) {
 	return 1;
 }
 
+
+int MOAIRenderMgr::_renderTable( lua_State* L ) {
+	MOAILuaState state ( L );
+	
+	MOAIGfxDevice& device = MOAIGfxDevice::Get ();
+
+	zglBegin ();
+
+	MOAIGfxResourceMgr::Get ().Update ();
+	
+	device.ResetPass();
+	MOAIRenderMgr::Get ().RenderTable( state, 1 );
+
+	zglEnd ();
+
+	return 0;
+}
 //================================================================//
 // DOXYGEN
 //================================================================//
@@ -163,6 +180,7 @@ void MOAIRenderMgr::RegisterLuaClass ( MOAILuaState& state ) {
 		{ "getBufferTable",				_getBufferTable },
 		{ "getPerformanceDrawCount",	_getPerformanceDrawCount },
 		{ "getRenderCount",				_getRenderCount },
+		{ "renderTable",				_renderTable },
 		{ "setBufferTable",				_setBufferTable },
 		{ NULL, NULL }
 	};

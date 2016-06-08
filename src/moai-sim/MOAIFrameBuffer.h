@@ -132,6 +132,7 @@ protected:
 	MOAILuaStrongRef	mRenderTable;
 
 	//----------------------------------------------------------------//
+	static int			_grabCurrentFrame			( lua_State* L );	
 	static int			_grabNextFrame				( lua_State* L );
 	static int			_getPerformanceDrawCount    ( lua_State* L );
 	static int			_getRenderTable				( lua_State* L );

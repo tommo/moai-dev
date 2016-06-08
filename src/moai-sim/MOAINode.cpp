@@ -53,6 +53,22 @@ int MOAINode::_clearNodeLink ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	flushUpdate
+	@text	Evaluates the dependency graph for this node if it's 
+			scheduled
+	
+	@in		MOAINode self
+	@out	nil
+*/
+int MOAINode::_flushUpdate ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAINode, "U" );
+
+	self->FlushUpdate ();
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	forceUpdate
 	@text	Evaluates the dependency graph for this node. Typically,
 			the entire active dependency graph is evaluated once per
@@ -489,11 +505,18 @@ MOAIDepLink* MOAINode::FindNodeLink ( MOAINode& srcNode ) {
 }
 
 //----------------------------------------------------------------//
+void MOAINode::FlushUpdate () {
+
+	this->DepNodeUpdate ();
+}
+
+//----------------------------------------------------------------//
 void MOAINode::ForceUpdate () {
 
 	this->ScheduleUpdate ();
 	this->DepNodeUpdate ();
 }
+
 
 //----------------------------------------------------------------//
 u32 MOAINode::GetAttrFlags ( u32 attrID ) {
@@ -601,6 +624,7 @@ void MOAINode::RegisterLuaFuncs ( MOAILuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "clearAttrLink",			_clearAttrLink },
 		{ "clearNodeLink",			_clearNodeLink },
+		{ "flushUpdate",			_flushUpdate },
 		{ "forceUpdate",			_forceUpdate },
 		{ "getAttr",				_getAttr },
 		{ "getAttrLink",			_getAttrLink },

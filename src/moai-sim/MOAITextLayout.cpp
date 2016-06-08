@@ -196,6 +196,13 @@ void MOAITextLayout::CompactHighlights () {
 }
 
 //----------------------------------------------------------------//
+u32 MOAITextLayout::CountLines () {
+
+	return this->mLines.GetTop ();
+}
+
+
+//----------------------------------------------------------------//
 u32 MOAITextLayout::CountSprites () {
 
 	return this->mSprites.GetTop ();
@@ -324,6 +331,38 @@ bool MOAITextLayout::GetBounds ( ZLRect& rect ) {
 }
 
 //----------------------------------------------------------------//
+bool MOAITextLayout::GetBounds ( u32 reveal, ZLRect& rect ) {
+
+	bool result = false;
+	
+	if ( !reveal ) return false;
+
+	u32 size = this->mSprites.GetTop ();
+	for ( u32 i = 0; ( i < size ) && ( i < reveal ); ++i ) {
+		MOAITextSprite& sprite = this->mSprites [ i ];
+		MOAIGlyph& glyph = *sprite.mGlyph;
+
+		if ( glyph.mWidth > 0.0f ) {
+
+			ZLRect glyphRect = glyph.GetRect (
+				sprite.mPen.mX, sprite.mPen.mY, 
+				sprite.mStyle->mPadding, 
+				sprite.mScale.mX, sprite.mScale.mY
+			);
+
+			if ( result ) {
+				rect.Grow ( glyphRect );
+			}
+			else {
+				rect = glyphRect;
+				result = true;
+			}
+		}
+	}
+	return result;
+}
+
+//----------------------------------------------------------------//
 bool MOAITextLayout::GetBoundsForRange ( u32 idx, u32 size, ZLRect& rect ) {
 
 	if ( !size ) return false;
@@ -365,6 +404,18 @@ bool MOAITextLayout::GetBoundsForRange ( u32 idx, u32 size, ZLRect& rect ) {
 	}
 	return result;
 }
+
+//----------------------------------------------------------------//
+bool MOAITextLayout::GetLineSpriteIndex ( u32 line, u32& start, u32& end ) {
+
+	if ( line >= this->mLines.GetTop() ) return false;
+
+	start = this->mLines[ line ].mStart;
+	start = start + this->mLines[ line ].mSize;
+	return true;
+	
+}
+
 
 //----------------------------------------------------------------//
 MOAITextLayout::MOAITextLayout () :

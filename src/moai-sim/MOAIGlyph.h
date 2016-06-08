@@ -57,6 +57,7 @@ public:
 	void			Draw				( MOAITextureBase& texture, float x, float y, float xScale, float yScale, const ZLRect& padding ) const;
 	MOAIKernVec		GetKerning			( u32 name ) const;
 	ZLRect			GetRect				( float x, float y, float xScale = 1.0f, float yScale = 1.0f ) const;
+	ZLRect			GetRect				( float x, float y, const ZLRect& padding, float xScale = 1.0f, float yScale = 1.0f ) const;
 					MOAIGlyph			();
 					~MOAIGlyph			();
 	void			ReserveKernTable	( u32 total );
