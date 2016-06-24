@@ -23,6 +23,7 @@ class MOAILuaObject :
 private:
 
 	bool					mCollected;
+	u32						mActiveUserdataCount;
 	MOAILuaWeakRef			mUserdata;			// ref to userdata (weak)
 	MOAILuaStrongRef		mFinalizer;			// ref to finalizer (strong)
 
