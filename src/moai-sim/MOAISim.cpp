@@ -106,6 +106,7 @@ int MOAISim::_exitFullscreenMode ( lua_State* L ) {
 // TODO: deprecate
 int MOAISim::_forceGC ( lua_State* L ) {
 	UNUSED ( L );
+	MOAILuaRuntime::Get ().PurgeUserdataCache ();
 	MOAILuaRuntime::Get ().ForceGarbageCollection ();
 	return 0;
 }
@@ -750,6 +751,8 @@ void MOAISim::RegisterLuaClass ( MOAILuaState& state ) {
 	state.SetField ( -1, "EVENT_PAUSE",		( u32 )EVENT_PAUSE );
 	state.SetField ( -1, "EVENT_RESUME",	( u32 )EVENT_RESUME );
 	state.SetField ( -1, "EVENT_STEP",		( u32 )EVENT_STEP );
+	state.SetField ( -1, "EVENT_PRE_GC",	( u32 )EVENT_PRE_GC );
+	state.SetField ( -1, "EVENT_POST_GC",	( u32 )EVENT_POST_GC );
 
 	state.SetField ( -1, "SIM_LOOP_FORCE_STEP",		( u32 )SIM_LOOP_FORCE_STEP );
 	state.SetField ( -1, "SIM_LOOP_ALLOW_BOOST",	( u32 )SIM_LOOP_ALLOW_BOOST );
@@ -865,11 +868,15 @@ double MOAISim::StepSim ( double step, u32 multiplier ) {
 		
 		if ( this->mGCActive ) {
 		
+			this->InvokeListener ( EVENT_PRE_GC );
 			// empty the userdata cache
 			MOAILuaRuntime::Get ().PurgeUserdataCache ();
 		
 			// crank the garbage collector
 			lua_gc ( state, LUA_GCSTEP, this->mGCStep );
+
+			this->InvokeListener ( EVENT_POST_GC );
+
 		}
 	}
 	return ZLDeviceTime::GetTimeInSeconds () - time;

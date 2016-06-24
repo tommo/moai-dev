@@ -110,7 +110,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIAction )
 	
 	enum {
-		EVENT_ACTION_PRE_UPDATE,
+		EVENT_ACTION_PRE_UPDATE = MOAINode::TOTAL_EVENTS, //reserved for case of multiple inheritance < Node, Action >
 		EVENT_ACTION_POST_UPDATE,
 		EVENT_START,
 		EVENT_STOP,

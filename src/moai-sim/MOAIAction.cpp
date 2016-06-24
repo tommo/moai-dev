@@ -355,14 +355,17 @@ void MOAIAction::Attach ( MOAIAction* parent, bool defer ) {
 	}
 	
 	if ( parent ) {
-	
+		
 		this->mParent = parent;
 		parent->mChildren.PushBack ( this->mLink );
+
+		if (( parent->mActionFlags & FLAGS_IS_UPDATING ) && ( !parent->mChildIt )) {
+			this->Retain (); // extra retain
+			parent->mChildIt = &this->mLink; // in case more actions are added
+		}
+		
 		this->ResetPass ( defer ? parent->mPass + 1 : parent->mPass );
 		
-		// if ( !parent->mChildIt ) {
-		// 	parent->mChildIt = &this->mLink;
-		// }
 	}
 	
 	if (( !oldParent ) && parent ) {

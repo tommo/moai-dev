@@ -67,6 +67,8 @@ private:
 		EVENT_PAUSE,
 		EVENT_RESUME,
 		EVENT_STEP,
+		EVENT_PRE_GC,
+		EVENT_POST_GC,
 	};
 
 	u32				mLoopState;
